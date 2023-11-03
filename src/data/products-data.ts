@@ -1,0 +1,198 @@
+import { productsType } from "@/interFace/interFace";
+import thumb1 from "../../public/assets/img/products/product-thumb-01.png";
+import thumb2 from "../../public/assets/img/products/product-thumb-02.png";
+import thumb3 from "../../public/assets/img/products/product-thumb-03.png";
+import thumb4 from "../../public/assets/img/products/product-thumb-04.png";
+import thumb5 from "../../public/assets/img/products/product-thumb-05.png";
+import thumb6 from "../../public/assets/img/products/product-thumb-06.png";
+import thumb7 from "../../public/assets/img/products/product-thumb-07.png";
+import thumb8 from "../../public/assets/img/products/product-thumb-08.png";
+import thumb9 from "../../public/assets/img/products/product-thumb-09.png";
+import thumb10 from "../../public/assets/img/products/product-thumb-10.png";
+import thumb11 from "../../public/assets/img/products/product-thumb-11.png";
+import thumb12 from "../../public/assets/img/products/product-thumb-12.png";
+import thumb13 from "../../public/assets/img/products/product-thumb-13.png";
+import thumb14 from "../../public/assets/img/products/product-thumb-14.png";
+import thumb15 from "../../public/assets/img/products/product-thumb-15.png";
+import thumb16 from "../../public/assets/img/products/product-thumb-16.png";
+
+const products_data: productsType[] = [
+  {
+    id: 1,
+    image: thumb1,
+    title: "Turn Yourself",
+    category: "Data Science",
+    level: "Beginner",
+    price: 24.0,
+    oldPrice: 0,
+    rating: 5,
+    quantity: 0,
+  },
+  {
+    id: 2,
+    image: thumb2,
+    title: "Art of Not Giving",
+    category: "Development",
+    level: "Intermediate",
+    price: 12.0,
+    oldPrice: 0,
+    rating: 4,
+    quantity: 0,
+  },
+  {
+    id: 3,
+    image: thumb3,
+    title: "Attract Women",
+    category: "Business",
+    level: "Expert",
+    price: 35.0,
+    oldPrice: 75.0,
+    rating: 5,
+    quantity: 0,
+  },
+  {
+    id: 4,
+    image: thumb4,
+    title: "Think and Grow Rich",
+    category: "Development",
+    level: "Beginner",
+    price: 16.0,
+    oldPrice: 0,
+    rating: 4,
+    quantity: 0,
+  },
+  {
+    id: 5,
+    image: thumb5,
+    title: "Best Inspirational",
+    category: "Business",
+    level: "Intermediate",
+    price: 22.0,
+    oldPrice: 0,
+    rating: 5,
+    quantity: 0,
+  },
+  {
+    id: 6,
+    image: thumb6,
+    title: "The Power of Evil",
+    category: "Life Style",
+    level: "Expert",
+    price: 0,
+    oldPrice: 0,
+    rating: 4,
+    quantity: 0,
+  },
+  {
+    id: 7,
+    image: thumb7,
+    title: "Turn Yourself",
+    category: "Data Science",
+    level: "Beginner",
+    price: 24.0,
+    oldPrice: 0,
+    rating: 5,
+    quantity: 0,
+  },
+  {
+    id: 8,
+    image: thumb8,
+    title: "Memoirs of a Geisha",
+    category: "Life Style",
+    level: "Intermediate",
+    price: 13.0,
+    oldPrice: 0,
+    rating: 4,
+    quantity: 0,
+  },
+  {
+    id: 9,
+    image: thumb9,
+    title: "Very First Sight",
+    category: "Development",
+    level: "Expert",
+    price: 22.0,
+    oldPrice: 0,
+    rating: 4,
+    quantity: 0,
+  },
+  {
+    id: 10,
+    image: thumb10,
+    title: "The Almanack",
+    category: "Data Science",
+    level: "Beginner",
+    price: 24.0,
+    oldPrice: 0,
+    rating: 5,
+    quantity: 0,
+  },
+  {
+    id: 11,
+    image: thumb11,
+    title: "Wealth and Happiness",
+    category: "Life Style",
+    level: "Intermediate",
+    price: 24.0,
+    oldPrice: 75.5,
+    rating: 5,
+    quantity: 0,
+  },
+  {
+    id: 12,
+    image: thumb12,
+    title: "Rabbit drawing book",
+    category: "Business",
+    level: "Expert",
+    price: 23.0,
+    oldPrice: 0,
+    rating: 4,
+    quantity: 0,
+  },
+  {
+    id: 13,
+    image: thumb13,
+    title: "Time Management",
+    category: "Business",
+    level: "Beginner",
+    price: 32.0,
+    oldPrice: 0,
+    rating: 5,
+    quantity: 0,
+  },
+  {
+    id: 14,
+    image: thumb14,
+    title: "Startup Dream",
+    category: "Development",
+    level: "Intermediate",
+    price: 21.0,
+    oldPrice: 0,
+    rating: 2,
+    quantity: 0,
+  },
+  {
+    id: 15,
+    image: thumb15,
+    title: "Positive Attitude",
+    category: "Life Style",
+    level: "Expert",
+    price: 75.0,
+    oldPrice: 75.5,
+    rating: 3,
+    quantity: 0,
+  },
+  {
+    id: 16,
+    image: thumb16,
+    title: "Options Handboo",
+    category: "Data Science",
+    level: "Beginner",
+    price: 11.0,
+    oldPrice: 0,
+    rating: 1,
+    quantity: 0,
+  },
+];
+
+export default products_data;

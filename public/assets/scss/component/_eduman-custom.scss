@@ -1,0 +1,310 @@
+/*----------
+
+05. category style
+
+----------*/
+
+@use "../abstract" as *;
+
+.menu-bar.d-xl-none.ml-20 {
+	margin-top: -12px;
+}
+
+.rc__thumb.mr-20 img {
+	width: 75px !important;
+	height: 75px !important;
+	border-radius: 6px;
+}
+
+//update code 
+.edu-rating {
+	ul {
+		i {
+			color: #ffb013;
+		}
+	}
+}
+
+//header cart update code
+.cartmini__widget {
+	.cartmini__inner {
+		.edu-cart {
+			text-align: center;
+			font-size: 20px;
+			font-weight: 700;
+		}
+	}
+}
+
+
+.login__title {
+	font-size: 35px;
+	margin-bottom: 20px;
+}
+
+.login__register-now p a {
+	color: $e-blue;
+	font-weight: 600;
+}
+
+.price__tab-btn .nav-tabs {
+	border: none;
+}
+
+.price__tab-btn .nav-tabs .nav-link {
+	background: transparent;
+	padding: 0 15px;
+	font-size: 14px;
+	color: #121317;
+	font-weight: 500;
+	height: 36px;
+	line-height: 34px;
+	border: 2px solid #edeef3;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	text-transform: capitalize;
+}
+
+.price__tab-btn .nav-tabs .nav-link.active {
+	background: $e-blue;
+	color: $white;
+	border-color: $e-blue;
+}
+
+.course__tab-btn .nav-tabs {
+	border: none;
+}
+
+.course__tab-btn .nav-tabs .nav-item .nav-link {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	border: none;
+	width: 30px;
+	height: 30px;
+	background: transparent;
+	padding: 0;
+	margin-right: 6px;
+}
+
+.course__tab-btn .nav-tabs .nav-item .nav-link svg {
+	width: 14px;
+	height: 14px !important;
+}
+
+.course__tab-btn .nav-tabs .nav-item .nav-link.active {
+	background: $e-blue;
+}
+
+.course__tab-btn .nav-tabs .nav-item .nav-link.active svg.grid .st0 {
+	fill: none;
+	stroke: $white;
+}
+
+.course__tab-btn .nav-tabs .nav-item .nav-link.active svg .st0 {
+	fill: $white;
+}
+
+.edu-input-fill {
+	color: #6f7172;
+}
+
+.edu-header2 {
+	box-shadow: 0px 10px 20px 0px rgba(8, 0, 42, 0.08);
+
+	.header__search input {
+		border: 1px solid #dedede;
+	}
+}
+
+.coupon-content input::placeholder,
+.coupon-checkout-content input::placeholder {
+	color: #6f7172;
+}
+
+//header cart update code
+.cartmini__widget {
+	.cartmini__inner {
+		.edu-cart {
+			text-align: center;
+			font-size: 24px;
+			color: #0e1133;
+			font-family: Hind, sans-serif;
+			font-weight: 700;
+			line-height: 1.2;
+			margin-top: 30px;
+			transition: all .3s ease-out 0s;
+		}
+	}
+}
+
+.body-overlay {
+	z-index: 999;
+}
+
+.edu-btn {
+	display: inline-block;
+	height: 55px;
+	line-height: 53px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 500;
+	color: $white;
+	border: 1px solid #3444F1;
+	background-color: #3444F1;
+	padding: 0 40px;
+	@include border-radius(4px);
+	@include transition(0.3s);
+	border: 1px solid transparent;
+
+	&:hover {
+		color: $heading-color;
+		background-color: $white;
+		border: 1px solid #3444F1;
+		color: #3444F1;
+	}
+
+	&:focus {
+		color: $white;
+		border: 1px solid transparent;
+	}
+}
+
+.main-menu ul li.menu-item-has-children::after {
+	position: absolute;
+	content: "\f107";
+	font-size: 12px;
+	color: #212237;
+	top: 50%;
+	transform: translateY(-50%);
+	right: -14px;
+	font-family: "Font Awesome 5 Pro";
+	transition: all 0.3s ease-out 0s;
+}
+
+// update-code
+.e-btn-ins {
+	display: inline-block;
+	height: 50px;
+	line-height: 48px;
+	text-align: center;
+	padding: 0 25px;
+	color: #0e1133;
+	border-radius: 4px;
+	font-weight: 500;
+	border: 2px solid #d7d9e3;
+	background: transparent;
+
+	&:hover {
+		color: $white;
+		background-color: $e-blue;
+		line-height: 48px;
+		outline: none;
+		border: 2px solid $e-blue;
+	}
+}
+
+.sign__input-wrapper {
+	& .forgot-heading {
+		font-size: 32px;
+		color: #0e1133;
+		text-transform: capitalize;
+		z-index: 1;
+		margin-bottom: 16px;
+
+	}
+
+	p {
+		font-family: Roboto, sans-serif;
+		font-size: 16px;
+		font-weight: 400;
+		margin-bottom: 15px;
+		line-height: 26px;
+	}
+}
+
+.sign__wrapper {
+	padding: 50px 30px;
+}
+
+.sign__input {
+	& .forgot-input {
+		padding: 0 20px;
+	}
+}
+
+.main-menu.main-menu-3 ul li.menu-item-has-children::after {
+	color: $white;
+}
+.header-five.header__area.header__transparent.header__padding.header__white.sticky,
+.header__area.header__transparent.header__padding-2.sticky {
+	.main-menu.main-menu-3 ul li.menu-item-has-children::after {
+		color: $heading-color;
+	}
+}
+
+#trolley-cart path {
+	@media #{$sm, $xs} {
+		fill: $white;
+	}
+}
+
+.course__tab-btn .nav-tabs .nav-item .nav-link svg.grid .st0 {
+	fill: none;
+	stroke: #53545b;
+	stroke-width: 1.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.header-five {
+	.header__cart::after {
+		display: none;
+	}
+
+	&.sticky {
+
+
+		#trolley-cart path {
+			fill: #000;
+		}
+	}
+}
+
+
+// checkbox class
+
+/* CSS */
+.checkbox-label {
+	display: inline-block;
+	position: relative;
+	padding-left: 30px;
+	/* Adjust the spacing as needed */
+	cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.checkbox-label::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 20px;
+	/* Adjust the size as needed */
+	height: 20px;
+	/* Adjust the size as needed */
+	border: 2px solid #007bff;
+	/* Blue color for the border */
+	background-color: transparent;
+}
+
+.checkbox-label input[type="checkbox"]:checked+.checkbox-label::before {
+	background-color: #007bff;
+	/* Blue color when checked */
+}
