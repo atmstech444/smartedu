@@ -37,23 +37,23 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
           case "/home-2":
             return <HeaderTwo />;
           case "/home-3":
-            return <HeaderThere />;
+            return <HeaderTwo />;
           case "/instructor-details":
-            return <HeaderFour />;
+            return <HeaderTwo />;
           case "/event-details":
-            return <HeaderFour />;
+            return <HeaderTwo />;
           case "/error":
-            return <HeaderFour />;
+            return <HeaderTwo />;
           case "/sign-in":
-            return <HeaderFour />;
+            return <HeaderTwo />;
           case "/sign-up":
             return <HeaderTwo />;
           case "/forgot-password":
-            return <HeaderFour />;
+            return <HeaderTwo />;
           case "/policy-privacy":
-            return <HeaderFour />;
+            return <HeaderTwo />;
           default:
-            return <HeaderFive />;
+            return <HeaderTwo />;
         }
       })()}
       {children}

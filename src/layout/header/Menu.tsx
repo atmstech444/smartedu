@@ -7,10 +7,7 @@ const Menu = () => {
     <>
       {mobile_menu_data?.length &&
         mobile_menu_data?.map((item) => (
-          <li
-            key={item.id}
-            className={item.hasDropdown ? "menu-item-has-children mr-15" : ""}
-          >
+          <li key={item.id} className={item.hasDropdown ? "menu-item-has-children mr-15" : ""}>
             <Link href={item.link}> {item.title} </Link>
             {item.hasDropdown === true && (
               <ul className="submenu">

@@ -11,70 +11,19 @@ import { AppContext } from "@/contextApi/AppProvider";
 
 const HeaderTwo = () => {
   const scrollDirection = useScrollDirection(null);
-  const { toggleSideMenu, sideMenuOpen } = useContext(
-    AppContext
-  ) as AppContextType;
+  const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
   return (
     <>
       <header>
-        <div
-          id="header-sticky"
-          className={`header__area header__transparent header__padding-2 ${
-            scrollDirection === "down" ? "sticky" : ""
-          }`}
-        >
+        <div id="header-sticky" className={`header__area header__transparent header__padding-2 ${scrollDirection === "down" ? "sticky" : ""}`}>
           <div className="container">
             <div className="row align-items-center">
               <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-2 col-sm-4 col-6">
                 <div className="header__left d-flex">
                   <div className="logo">
                     <Link href="/">
-                      <Image
-                        src={Logo}
-                        style={{ width: "100%", height: "auto" }}
-                        alt="logo"
-                      />
+                      <Image src={Logo} style={{ width: "100%", height: "auto" }} alt="logo" />
                     </Link>
-                  </div>
-                  <div className="header__category d-none d-lg-block">
-                    <nav>
-                      <ul>
-                        <li>
-                          <Link
-                            href="/course-grid"
-                            className="cat-menu d-flex align-items-center"
-                          >
-                            <div className="cat-dot-icon d-inline-block">
-                              <HeaderCatDotIcon />
-                            </div>
-                            <span>Category</span>
-                          </Link>
-                          <ul className="cat-submenu">
-                            <li>
-                              <Link href="/course-details">
-                                English Learning
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/course-details">
-                                Web Development
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/course-details">Logo Design</Link>
-                            </li>
-                            <li>
-                              <Link href="/course-details">
-                                Motion Graphics
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/course-details">Video Edition</Link>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </nav>
                   </div>
                 </div>
               </div>
@@ -87,17 +36,19 @@ const HeaderTwo = () => {
                       </ul>
                     </nav>
                   </div>
-                  <div className="header__btn header__btn-2 ml-50 d-none d-sm-block">
-                    <Link href="/sign-up" className="e-btn">
-                      Sign up
+                  <div style={{ display: "flex", gap: "24px", marginLeft: "50px", alignItems: "center" }}>
+                    <div className="header__btn header__btn-2 d-none d-sm-block">
+                      <Link href="/sign-in" className="e-btn" style={{ fontSize: "18px" }}>
+                        შესვლა
+                      </Link>
+                    </div>
+                    <Link href="/sign-up" style={{ color: "black", fontSize: "18px" }}>
+                      რეგისტრაცია
                     </Link>
                   </div>
+
                   <div className="sidebar__menu d-xl-none">
-                    <div
-                      onClick={toggleSideMenu}
-                      className="sidebar-toggle-btn ml-30"
-                      id="sidebar-toggle"
-                    >
+                    <div onClick={toggleSideMenu} className="sidebar-toggle-btn ml-30" id="sidebar-toggle">
                       <span className="line"></span>
                       <span className="line"></span>
                       <span className="line"></span>
@@ -110,10 +61,7 @@ const HeaderTwo = () => {
         </div>
       </header>
       <MobileMenu />
-      <div
-        onClick={toggleSideMenu}
-        className={sideMenuOpen ? "body-overlay opened" : "body-overlay"}
-      ></div>
+      <div onClick={toggleSideMenu} className={sideMenuOpen ? "body-overlay opened" : "body-overlay"}></div>
     </>
   );
 };

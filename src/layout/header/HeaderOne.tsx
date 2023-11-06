@@ -17,17 +17,13 @@ import HeaderCategory from "./component/HeaderCategory";
 const HeaderOne = () => {
   const scrollDirection = useScrollDirection(null);
 
-  const { toggleSideMenu, sideMenuOpen } = useContext(
-    AppContext
-  ) as AppContextType;
+  const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
 
   const [cartOpen, setCartOpen] = useState(false);
 
   // redux import
   const dispatch = useDispatch();
-  const cartProducts = useSelector(
-    (state: RootState) => state.cart.cartProducts
-  );
+  const cartProducts = useSelector((state: RootState) => state.cart.cartProducts);
   const uniqueProductIds = new Set();
   cartProducts.forEach((product) => uniqueProductIds.add(product.id));
 
@@ -36,23 +32,14 @@ const HeaderOne = () => {
   return (
     <>
       <header>
-        <div
-          id="header-sticky"
-          className={`header__area header__transparent header__padding ${
-            scrollDirection === "down" ? "sticky" : ""
-          }`}
-        >
+        <div id="header-sticky" className={`header__area header__transparent header__padding ${scrollDirection === "down" ? "sticky" : ""}`}>
           <div className="container-fluid">
             <div className="row align-items-center">
               <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-2 col-sm-4 col-6">
                 <div className="header__left d-flex">
                   <div className="logo">
                     <Link href="/">
-                      <Image
-                        src={HeaderLogo}
-                        style={{ width: "100%", height: "auto" }}
-                        alt="logo"
-                      />
+                      <Image src={HeaderLogo} style={{ width: "100%", height: "auto" }} alt="logo" />
                     </Link>
                   </div>
                   <HeaderCategory />
@@ -85,10 +72,7 @@ const HeaderOne = () => {
                           <svg viewBox="0 0 24 24">
                             <circle className="st0" cx="9" cy="21" r="1" />
                             <circle className="st0" cx="20" cy="21" r="1" />
-                            <path
-                              className="st0"
-                              d="M1,1h4l2.7,13.4c0.2,1,1,1.6,2,1.6h9.7c1,0,1.8-0.7,2-1.6L23,6H6"
-                            />
+                            <path className="st0" d="M1,1h4l2.7,13.4c0.2,1,1,1.6,2,1.6h9.7c1,0,1.8-0.7,2-1.6L23,6H6" />
                           </svg>
                         </div>
                         <span className="cart-item">{quantityProduct}</span>
@@ -106,10 +90,7 @@ const HeaderOne = () => {
                         <svg viewBox="0 0 24 24">
                           <circle className="st0" cx="9" cy="21" r="1" />
                           <circle className="st0" cx="20" cy="21" r="1" />
-                          <path
-                            className="st0"
-                            d="M1,1h4l2.7,13.4c0.2,1,1,1.6,2,1.6h9.7c1,0,1.8-0.7,2-1.6L23,6H6"
-                          />
+                          <path className="st0" d="M1,1h4l2.7,13.4c0.2,1,1,1.6,2,1.6h9.7c1,0,1.8-0.7,2-1.6L23,6H6" />
                         </svg>
                       </div>
                       <span className="cart-item">{quantityProduct}</span>
@@ -121,11 +102,7 @@ const HeaderOne = () => {
                     </Link>
                   </div>
                   <div className="sidebar__menu d-xl-none">
-                    <div
-                      onClick={toggleSideMenu}
-                      className="sidebar-toggle-btn ml-30"
-                      id="sidebar-toggle"
-                    >
+                    <div onClick={toggleSideMenu} className="sidebar-toggle-btn ml-30" id="sidebar-toggle">
                       <span className="line"></span>
                       <span className="line"></span>
                       <span className="line"></span>
@@ -138,15 +115,9 @@ const HeaderOne = () => {
         </div>
       </header>
       <HeaderCart cartOpen={cartOpen} setCartOpen={setCartOpen} />
-      <div
-        onClick={() => setCartOpen(false)}
-        className={cartOpen ? "body-overlay opened" : "body-overlay"}
-      ></div>
+      <div onClick={() => setCartOpen(false)} className={cartOpen ? "body-overlay opened" : "body-overlay"}></div>
       <MobileMenu />
-      <div
-        onClick={toggleSideMenu}
-        className={sideMenuOpen ? "body-overlay opened" : "body-overlay"}
-      ></div>
+      <div onClick={toggleSideMenu} className={sideMenuOpen ? "body-overlay opened" : "body-overlay"}></div>
     </>
   );
 };
