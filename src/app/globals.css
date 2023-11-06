@@ -10,3 +10,17 @@
 .logo {
   width: 150px;
 }
+
+.main-menu ul li a {
+  font-size: 18px !important;
+}
+.hero__promotion-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero__promotion.education {
+  right: -6% !important;
+  left: auto !important;
+}

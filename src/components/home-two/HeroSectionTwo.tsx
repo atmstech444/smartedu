@@ -25,17 +25,13 @@ const HeroSectionTwo = () => {
             <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
               <div className="hero__content hero__content-2 p-relative z-index-1">
                 <h3 className="hero__title hero__title-2">
-                  Launch your <br /> Own
                   <span className="yellow-shape">
-                    {" "}
-                    online <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="yellow-shape" />{" "}
+                    დაიწყე სწავლა ონლაინ <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="yellow-shape" />{" "}
                   </span>
-                  learning Platform
                 </h3>
-                <h4>Unlimited access to all 60+ instructors.</h4>
-                <p>2 passes (with access to all classes) for $240</p>
-
-                <div className="hero__search">
+                {/* <h4>Unlimited access to all 60+ instructors.</h4>
+                <p>2 passes (with access to all classes) for $240</p> */}
+                {/* <div className="hero__search">
                   <form action="#">
                     <div className="hero__search-input mb-10">
                       <input type="text" placeholder="What do you want to learn?" />
@@ -45,7 +41,7 @@ const HeroSectionTwo = () => {
                     </div>
                   </form>
                   <p>You`re guaranteed to find something that`s right for you.</p>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
@@ -61,8 +57,7 @@ const HeroSectionTwo = () => {
                       </span>
                     </div>
                     <div className="hero__promotion-text">
-                      <h5>Congratulation</h5>
-                      <p>Your admission completed</p>
+                      <h5>თქვენზე მორგებული მეთოდოლოგია</h5>
                     </div>
                   </div>
                   <div className="hero__promotion education d-none d-lg-flex white-bg layer" data-depth="0.2">
@@ -79,13 +74,13 @@ const HeroSectionTwo = () => {
                     <div className="hero__promotion-text">
                       <h5>
                         <span className="counter">
-                          <CountUpContent number={450} text="K"></CountUpContent>
+                          <CountUpContent number={40} text="+"></CountUpContent>
                         </span>
                       </h5>
-                      <p>Assisted Student</p>
+                      <p>სტუდენტი</p>
                     </div>
                   </div>
-                  <div className="hero__class d-none d-lg-flex layer" data-depth="0.3">
+                  {/* <div className="hero__class d-none d-lg-flex layer" data-depth="0.3">
                     <div className="hero__class-thumb mr-15">
                       <Image src={HeroImageTwo} style={{ width: "auto", height: "auto" }} alt="img not found" />
                     </div>
@@ -94,8 +89,8 @@ const HeroSectionTwo = () => {
                       <p>Tomorrow is our</p>
                       <Link href="/contact">Join Now</Link>
                     </div>
-                  </div>
-                  <div className="hero__mic">
+                  </div> */}
+                  {/* <div className="hero__mic">
                     <span>
                       <svg viewBox="0 0 512 512">
                         <g>
@@ -115,7 +110,7 @@ const HeroSectionTwo = () => {
                         </g>
                       </svg>
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

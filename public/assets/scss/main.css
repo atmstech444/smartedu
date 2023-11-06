@@ -27997,7 +27997,7 @@ label {
 }
 .main-menu ul li a {
   display: inline-block;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: #0e1133;
   padding: 35px 0;
@@ -28932,7 +28932,7 @@ label {
 .hero__promotion {
   position: absolute !important;
   left: -7% !important;
-  top: 44% !important;
+  top: 25% !important;
   border-radius: 4px;
   box-shadow: 0px 30px 60px 0px rgba(1, 11, 60, 0.14);
   padding: 15px 20px;
@@ -28957,9 +28957,8 @@ label {
   }
 }
 .hero__promotion.education {
-  bottom: 28% !important;
+  bottom: 40% !important;
   top: auto !important;
-  left: -11% !important;
 }
 .hero__promotion-icon span {
   display: inline-block;
