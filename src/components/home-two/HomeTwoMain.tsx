@@ -9,14 +9,16 @@ import BlogSection from "./BlogSection";
 import CtaSectionTwo from "./CtaSectionTwo";
 import CounterSection from "../about/CounterSection";
 import AboutSectionTwo from "../about/AboutSection";
+import CategorySection from "../home/CategorySection";
 
 const HomeTwoMain = () => {
   return (
     <>
       <HeroSectionTwo />
-      <ServiceSection />
-      <AboutSectionTwo />
+      <CategorySection />
       <CourseSectionOne />
+      {/* <ServiceSection /> */}
+      {/* <AboutSectionTwo /> */}
       <SkillineSection />
       <WhyChoose />
       <CounterSection />
