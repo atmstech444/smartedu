@@ -13,7 +13,7 @@ const CourseSectionOne = ({ courseTitle }: any) => {
   return (
     <section className="course__area pt-115 pb-120 grey-bg">
       <div className="container">
-        <div className="row align-items-end">
+        <div className="row" style={{ display: "flex", justifyContent: "space-between" }}>
           <div className="col-xxl-5 col-xl-6 col-lg-6">
             <div className="section__title-wrapper mb-60">
               <h2 className="section__title">
@@ -29,30 +29,13 @@ const CourseSectionOne = ({ courseTitle }: any) => {
               </p>
             </div>
           </div>
-          <div className="col-xxl-7 col-xl-6 col-lg-6">
-            <div className="portfolio-button mb-60">
-              <div className="masonary-menu filter-button-group">
-                <Link href="/course-grid" className={activeCategory === "" ? "active" : "category-btn"}>
-                  See All
-                  {/* <span className="port-red">[06]</span> */}
-                </Link>
-                {/* {course_category.length &&
-                  course_category.map((item) => (
-                    <button
-                      onClick={() => setActiveCategory(item.category)}
-                      className={
-                        activeCategory === item.category
-                          ? "active"
-                          : "category-btn"
-                      }
-                      key={item.id}
-                      type="button"
-                    >
-                      {item?.category}{" "}
-                      <span className="port-red">[{filterData.length}]</span>
-                    </button>
-                  ))} */}
-              </div>
+          <div className="col-xxl-5 col-xl-6 col-lg-6">
+            <div style={{ marginTop: window.innerWidth > 1064 ? "90px" : "0px" }} className="category__more float-md-end fix">
+              <Link href="/course-grid" className="link-btn">
+                View all Categories
+                <i className="fas fa-arrow-right"></i>
+                <i className="fas fa-arrow-right"></i>
+              </Link>
             </div>
           </div>
         </div>

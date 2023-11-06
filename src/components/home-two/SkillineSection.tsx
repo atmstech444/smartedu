@@ -15,51 +15,18 @@ const SkillineSection = () => {
               <h2 className="section__title">
                 What is{" "}
                 <span className="yellow-bg-big">
-                  Skilline?{" "}
-                  <Image
-                    src={YellowImg}
-                    style={{ width: "auto", height: "auto" }}
-                    alt="img not found"
-                  />
+                  Skilline? <Image src={YellowImg} style={{ width: "auto", height: "auto" }} alt="img not found" />
                 </span>
               </h2>
-              <p>
-                Sloshed faff about me old mucker blatant bubble and squeak hanky
-                panky some dodgy chav bevvy arse chimney pot I, ruddy plastered
-                buggered smashing blow off {`I'm`} telling up the kyver he
-                legged it bleeder jolly good,{" "}
-              </p>
+              <p>Sloshed faff about me old mucker blatant bubble and squeak hanky panky some dodgy chav bevvy arse chimney pot I, ruddy plastered buggered smashing blow off {`I'm`} telling up the kyver he legged it bleeder jolly good, </p>
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-xxl-5 offset-xl-1 col-xl-5 offset-xl-1 col-lg-6">
-            <div className="what__item transition-3 mb-30 p-relative fix">
-              <div className="what__thumb w-img">
-                <Image
-                  src={WhatThumb1}
-                  style={{ width: "100%", height: "auto" }}
-                  alt="img not found"
-                />
-              </div>
-              <div className="what__content p-absolute text-center">
-                <h3 className="what__title white-color">
-                  Mostly <br /> Online Learning
-                </h3>
-                <Link href="/course-grid" className="e-btn e-btn-border-2">
-                  Start a class today
-                </Link>
-              </div>
-            </div>
-          </div>
+        <div className="row" style={{ display: "flex", justifyContent: "center" }}>
           <div className="col-xxl-5 col-xl-5 col-lg-6">
             <div className="what__item transition-3 mb-30 p-relative fix">
               <div className="what__thumb w-img">
-                <Image
-                  src={WhatThumb2}
-                  style={{ width: "100%", height: "auto" }}
-                  alt="img not found"
-                />
+                <Image src={WhatThumb2} style={{ width: "100%", height: "auto" }} alt="img not found" />
               </div>
               <div className="what__content p-absolute text-center">
                 <h3 className="what__title white-color">

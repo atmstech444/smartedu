@@ -19,12 +19,12 @@ const HomeTwoMain = () => {
       <CourseSectionOne />
       {/* <ServiceSection /> */}
       {/* <AboutSectionTwo /> */}
-      <SkillineSection />
       <WhyChoose />
-      <CounterSection />
+      <SkillineSection />
+      {/* <CounterSection />
       <TestimonialSection />
       <BlogSection />
-      <CtaSectionTwo />
+      <CtaSectionTwo /> */}
     </>
   );
 };
