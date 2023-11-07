@@ -18,10 +18,7 @@ const CopyrightArea = ({ wrapperClass, footerClass }: any) => {
                   : "footer__copyright text-center"
               }
             >
-              <p>
-                © 2023 Educal, All Rights Reserved. Design By{" "}
-                <Link href="/">Theme Pure</Link>
-              </p>
+              <p>© 2023 Smarteducation, ყველა უფლება დაცულია</p>
             </div>
           </div>
         </div>
