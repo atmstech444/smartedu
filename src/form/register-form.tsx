@@ -26,7 +26,7 @@ const RegisterForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="sign__input-wrapper">
-        <h5>Full Name</h5>
+        <h5>სახელი გვარი</h5>
         <div className="sign__input mb-25">
           <input
             name="name"
@@ -34,7 +34,7 @@ const RegisterForm = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             type="text"
-            placeholder="Full name"
+            placeholder="სახელი გვარი"
             id="name"
             required
           />
@@ -43,7 +43,7 @@ const RegisterForm = () => {
         </div>
 
         <div className="sign__input-wrapper mb-25">
-          <h5>Work email</h5>
+          <h5>ელ. ფოსტა</h5>
           <div className="sign__input">
             <input
               name="email"
@@ -51,7 +51,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type="email"
-              placeholder="Enter your email"
+              placeholder="ელ. ფოსტა"
               id="email"
               required
             />
@@ -61,7 +61,7 @@ const RegisterForm = () => {
         </div>
 
         <div className="sign__input-wrapper mb-25">
-          <h5>Password</h5>
+          <h5>პარლი</h5>
           <div className="sign__input">
             <input
               name="password"
@@ -69,7 +69,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type={showPass ? "text" : "password"}
-              placeholder="Password"
+              placeholder="პაროლი"
               id="password"
               required
             />
@@ -79,7 +79,7 @@ const RegisterForm = () => {
         </div>
 
         <div className="sign__input-wrapper mb-10">
-          <h5>Re-Password</h5>
+          <h5>გაიმეორე პაროლი</h5>
           <div className="sign__input">
             <input
               name="passwordConfirmation"
@@ -87,7 +87,7 @@ const RegisterForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type={showConPass ? "text" : "password"}
-              placeholder="Confirm Password"
+              placeholder="გაიმეორე პაროლი"
               id="passwordConfirmation"
               required
             />
@@ -102,17 +102,17 @@ const RegisterForm = () => {
         <div className="sign__agree d-flex align-items-center">
           <input className="m-check-input" type="checkbox" id="m-agree" />
           <label className="m-check-label" htmlFor="m-agree">
-            I agree to the <Link href="#">Terms & Conditions</Link>
+            ვეთანხმები <Link href="#">წესებს და პრიობებს</Link>
           </label>
         </div>
       </div>
       <button className="e-btn w-100">
         {" "}
-        <span></span> Sign Up
+        <span></span> რეგისტრაცია
       </button>
       <div className="sign__new text-center mt-20">
         <p>
-          Already in Markit ? <Link href="/sign-in"> Sign In</Link>
+          რეგისტრირებული ხარ? <Link href="/sign-in">შესვლა</Link>
         </p>
       </div>
     </form>

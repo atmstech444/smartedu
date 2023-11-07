@@ -35375,7 +35375,7 @@ p.checkout-coupon input[type=text]:focus {
 }
 .sign__input i {
   position: absolute;
-  top: 48%;
+  top: 30px;
   transform: translateY(-50%);
   left: 25px;
   font-size: 14px;
