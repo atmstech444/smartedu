@@ -26,18 +26,6 @@ const mobile_menu_data: MenuItem[] = [
 
   {
     id: 3,
-    title: "ბლოგი",
-    link: "/blog",
-    pluseIncon: true,
-    // hasDropdown: true,
-    // submenus: [
-    //   { title: "Blog", link: "/blog" },
-    //   { title: "Blog Details", link: "/blog-details" },
-    // ],
-  },
-
-  {
-    id: 4,
     hasDropdown: false,
     title: "კონტაქტი",
     link: "/contact",

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import BreadcrumbImage from "../../../../public/assets/img/page-title/page-title-2.jpg";
+import BreadcrumbImage from "../../../../public/assets/img/page-title/page-title.png";
 import React, { ReactNode } from "react";
 
 interface BreadcrumbTwoProps {

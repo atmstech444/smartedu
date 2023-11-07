@@ -14,10 +14,9 @@ const CategorySection = () => {
               <h2 className="section__title">
                 ჩვენი <br />
                 <span className="yellow-bg">
-                  პოპულარული
+                  მიმართულებები
                   <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="img not found" /> <br />
                 </span>
-                მიმართულებები
               </h2>
             </div>
           </div>
