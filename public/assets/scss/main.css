@@ -25757,7 +25757,7 @@ p {
 }
 
 .footer-bg {
-  background: #0e1133;
+  background: rgb(237, 238, 243);
 }
 
 /*--
@@ -35490,7 +35490,7 @@ p.checkout-coupon input[type=text]:focus {
 .footer__widget-title {
   padding-top: 5px;
   font-size: 20px;
-  color: #ffffff;
+  color: #000;
 }
 .footer__widget-title-2 {
   color: #0e1133;
@@ -35498,7 +35498,7 @@ p.checkout-coupon input[type=text]:focus {
 .footer__widget-body p {
   font-size: 16px;
   line-height: 24px;
-  color: #a1a2ab;
+  color: #53545b;
   margin-bottom: 30px;
 }
 .footer__widget-body-2 p {
@@ -35542,14 +35542,21 @@ p.checkout-coupon input[type=text]:focus {
   background: transparent;
   color: #d2173f;
 }
+.footer__social ul li a.tiktok {
+  background: #ffffff;
+  border-color: #000000;
+}
+.footer__social ul li a.tiktok:hover {
+  border-color: none;
+}
 .footer__link ul li:not(:last-child) {
   margin-bottom: 4px;
 }
 .footer__link ul li a {
-  color: #a1a2ab;
+  color: #53545b;
 }
 .footer__link ul li a:hover {
-  color: #ffffff;
+  color: #0e1133;
 }
 .footer__link-2 ul li a {
   color: #53545b;
@@ -37637,4 +37644,4 @@ div.tagcloud a:hover {
     left: 100px;
     top: 0;
   }
-}
+}/*# sourceMappingURL=main.css.map */

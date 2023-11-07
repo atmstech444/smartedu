@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import FooterLogo from "../../../public/assets/img/logo/logo-2.png";
+import FooterLogo from "../../../public/assets/img/logo/logo.png";
 import Image from "next/image";
 import CopyrightArea from "./copyright-area";
 
@@ -19,36 +19,46 @@ const Footer = () => {
                         <Link href="/">
                           <Image
                             src={FooterLogo}
-                            style={{ width: "auto", height: "auto" }}
-                            alt="img not found"
+                            style={{ width: "100%", height: "auto" }}
+                            alt="logo"
                           />
                         </Link>
                       </div>
                     </div>
                     <div className="footer__widget-body">
-                      <p>
-                        Great lesson ideas and lesson plans for ESL teachers!
-                        Educators can customize lesson plans to best.
-                      </p>
-
+                      <p>არაფორმალური განათლების აკადემია</p>
                       <div className="footer__social">
                         <ul>
                           <li>
-                            <Link href="https://www.facebook.com/">
+                            <Link href="https://www.facebook.com/smarteducation.ge/?show_switched_toast=0&show_invite_to_follow=0&show_switched_tooltip=0&show_podcast_settings=0&show_community_review_changes=0&show_community_rollback=0&show_follower_visibility_disclosure=0">
                               <i className="fab fa-facebook-f"></i>
                             </Link>
                           </li>
                           <li>
-                            <Link href="https://twitter.com/" className="tw">
-                              <i className="fab fa-twitter"></i>
+                            <Link
+                              href="https://www.linkedin.com/company/thesmart-education/"
+                              className="tw"
+                            >
+                              <i className="fa-brands fa-linkedin-in"></i>
                             </Link>
                           </li>
                           <li>
                             <Link
-                              href="https://www.pinterest.com/"
+                              href="https://www.instagram.com/thesmart.education/?igshid=OGQ5ZDc2ODk2ZA%3D%3D"
                               className="pin"
                             >
-                              <i className="fab fa-pinterest-p"></i>
+                              <i className="fa-brands fa-instagram"></i>
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="http://www.tiktok.com/@thesmart.education"
+                              className="tiktok"
+                            >
+                              <i
+                                className="fa-brands fa-tiktok"
+                                style={{ color: "#000000" }}
+                              ></i>
                             </Link>
                           </li>
                         </ul>
@@ -59,62 +69,25 @@ const Footer = () => {
                 <div className="col-xxl-2 offset-xxl-1 col-xl-2 offset-xl-1 col-lg-3 offset-lg-0 col-md-2 offset-md-1 col-sm-5 offset-sm-1">
                   <div className="footer__widget mb-50">
                     <div className="footer__widget-head mb-22">
-                      <h3 className="footer__widget-title">Company</h3>
+                      <h3 className="footer__widget-title">ნავიგაცია</h3>
                     </div>
                     <div className="footer__widget-body">
                       <div className="footer__link">
                         <ul>
                           <li>
-                            <Link href="/about">About</Link>
+                            <Link href="/about">მთავარი</Link>
                           </li>
                           <li>
-                            <Link href="/course-grid">Courses</Link>
+                            <Link href="/course-grid">ჩვენ შესახებ</Link>
                           </li>
                           <li>
-                            <Link href="/event-details">Events</Link>
+                            <Link href="/event-details">კონტაქტი</Link>
                           </li>
                           <li>
-                            <Link href="/instructor">Instructor</Link>
+                            <Link href="/instructor">წესები და პირობები</Link>
                           </li>
                           <li>
-                            <Link href="/instructor">Career</Link>
-                          </li>
-                          <li>
-                            <Link href="/instructor">Become a Teacher</Link>
-                          </li>
-                          <li>
-                            <Link href="/contact">Contact</Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-2 col-xl-2 col-lg-2 offset-lg-0 col-md-3 offset-md-1 col-sm-6">
-                  <div className="footer__widget mb-50">
-                    <div className="footer__widget-head mb-22">
-                      <h3 className="footer__widget-title">Platform</h3>
-                    </div>
-                    <div className="footer__widget-body">
-                      <div className="footer__link">
-                        <ul>
-                          <li>
-                            <Link href="/instructor">Browse Library</Link>
-                          </li>
-                          <li>
-                            <Link href="/instructor">Library</Link>
-                          </li>
-                          <li>
-                            <Link href="/instructor">Partners</Link>
-                          </li>
-                          <li>
-                            <Link href="/blog">News & Blogs</Link>
-                          </li>
-                          <li>
-                            <Link href="/about">FAQs</Link>
-                          </li>
-                          <li>
-                            <Link href="/course-grid">Tutorials</Link>
+                            <Link href="/instructor">კონფიდენციარულობა</Link>
                           </li>
                         </ul>
                       </div>
@@ -124,25 +97,20 @@ const Footer = () => {
                 <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-5 col-sm-6">
                   <div className="footer__widget footer__pl-70 mb-50">
                     <div className="footer__widget-head mb-22">
-                      <h3 className="footer__widget-title">Subscribe</h3>
+                      <h3 className="footer__widget-title">გამოწერა</h3>
                     </div>
                     <div className="footer__widget-body">
                       <div className="footer__subscribe">
                         <form action="#">
                           <div className="footer__subscribe-input mb-15">
-                            <input
-                              type="email"
-                              placeholder="Your email address"
-                            />
+                            <input type="email" placeholder="ელ-ფოსტა" />
                             <button type="submit">
                               <i className="fas fa-arrow-right"></i>
                               <i className="fas fa-arrow-right"></i>
                             </button>
                           </div>
                         </form>
-                        <p>
-                          Get the latest news and updates right at your inbox.
-                        </p>
+                        <p>მიიღეთ სიახლეები პირდაპირ თქვენს ელ-ფოსტაზე.</p>
                       </div>
                     </div>
                   </div>
