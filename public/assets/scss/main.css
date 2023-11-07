@@ -32761,6 +32761,12 @@ p.checkout-coupon input[type=text]:focus {
   color: #30a820;
   padding-right: 9px;
 }
+.about__area:nth-child(3) {
+  padding-top: 0px !important;
+}
+.about__area:nth-child(3) .container .row {
+  flex-direction: row-reverse;
+}
 
 @media (max-width: 575px) {
   .about__thumb.ml-100 {
@@ -37644,4 +37650,4 @@ div.tagcloud a:hover {
     left: 100px;
     top: 0;
   }
-}/*# sourceMappingURL=main.css.map */
+}

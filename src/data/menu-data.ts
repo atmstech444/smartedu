@@ -23,9 +23,14 @@ const mobile_menu_data: MenuItem[] = [
     link: "/course-grid",
     pluseIncon: true,
   },
-
   {
     id: 3,
+    hasDropdown: false,
+    title: "ჩვენ შესახებ",
+    link: "/about",
+  },
+  {
+    id: 4,
     hasDropdown: false,
     title: "კონტაქტი",
     link: "/contact",

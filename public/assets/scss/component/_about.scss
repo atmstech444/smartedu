@@ -118,6 +118,12 @@
             }
         }
     }
+    &__area:nth-child(3){
+        padding-top:0px !important;
+        .container .row{
+            flex-direction: row-reverse;
+        }
+    }
 }
 
 .about__thumb.ml-100 {
