@@ -17,7 +17,7 @@ const CourseDetailsMain = ({ id }: idType) => {
   const course: any = courses_data.find((item) => item.id == id);
   return (
     <>
-      <Breadcrumb title="Course Details" subTitle="Course Details" />
+      <Breadcrumb title="Course Details"  />
       <section className="page__title-area pt-120 pb-90">
         <PageTItleShape />
         <div className="container">
