@@ -12,23 +12,19 @@ const CategorySection = () => {
           <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-8">
             <div className="section__title-wrapper mb-45">
               <h2 className="section__title">
-                Explore <br />
-                Our{" "}
+                ჩვენი <br />
                 <span className="yellow-bg">
-                  Popular{" "}
-                  <Image
-                    src={YellowBg} style={{width:'auto', height:"auto"}}
-                    alt="img not found"
-                  />{" "}
+                  პოპულარული
+                  <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="img not found" /> <br />
                 </span>
-                Courses
+                მიმართულებები
               </h2>
             </div>
           </div>
           <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-4">
             <div className="category__more mb-50 float-md-end fix">
               <Link href="/course-grid" className="link-btn">
-                View all Category
+                ყველა მიმართულება
                 <i className="fas fa-arrow-right"></i>
                 <i className="fas fa-arrow-right"></i>
               </Link>
@@ -37,19 +33,12 @@ const CategorySection = () => {
         </div>
         <div className="row">
           {category_data.slice(0, 9).map((item) => (
-            <div
-              key={item.id}
-              className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6"
-            >
+            <div key={item.id} className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6">
               <div className="category__item mb-30 transition-3 d-flex align-items-center">
-                <div className="category__icon mr-30">
-                  {item.icon && <item.icon />}
-                </div>
+                <div className="category__icon mr-30">{item.icon && <item.icon />}</div>
                 <div className="category__content">
                   <h4 className="category__title">
-                    <Link href={`/course-details/${item.id}`}>
-                      {item.title}
-                    </Link>
+                    <Link href={`/course-details/${item.id}`}>{item.title}</Link>
                   </h4>
                   <p>{item.desc}</p>
                 </div>

@@ -17,22 +17,19 @@ const CourseSectionOne = ({ courseTitle }: any) => {
           <div className="col-xxl-5 col-xl-6 col-lg-6">
             <div className="section__title-wrapper mb-60">
               <h2 className="section__title">
-                Find the Right <br /> Online{" "}
+                იპოვე შენთვის სასურველი <br />
                 <span className="yellow-bg yellow-bg-big">
-                  Course
+                  კურსი
                   <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="image not found" />
                 </span>{" "}
-                for you
+                ონლაინ
               </h2>
-              <p>
-                You {`don't`} have to struggle alone, {`you've`} got our assistance and help.
-              </p>
             </div>
           </div>
           <div className="col-xxl-5 col-xl-6 col-lg-6">
             <div style={{ marginTop: window.innerWidth > 1064 ? "90px" : "0px" }} className="category__more float-md-end fix">
               <Link href="/course-grid" className="link-btn">
-                View all Categories
+                ყველა კურსი
                 <i className="fas fa-arrow-right"></i>
                 <i className="fas fa-arrow-right"></i>
               </Link>
