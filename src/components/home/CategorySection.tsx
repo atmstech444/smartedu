@@ -15,7 +15,7 @@ const CategorySection = () => {
                 ჩვენი <br />
                 <span className="yellow-bg">
                   მიმართულებები
-                  <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="img not found" /> <br />
+                  <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="img not found" /> 
                 </span>
               </h2>
             </div>

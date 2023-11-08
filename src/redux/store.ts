@@ -5,12 +5,6 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import { configureStore as configureStoreRTK } from '@reduxjs/toolkit';
 import { wishlistSlice } from './slices/wishlist-slice';
 
-
-
-
-
-// RootState and AppDispatch declarations
-
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,

@@ -25,3 +25,14 @@
   left: auto !important;
 }
 
+@media (max-width: 480px) {
+  .section__title {
+    font-size: 24px !important;
+  }
+}
+span.yellow-shape img {
+  bottom: -5px !important;
+}
+span.yellow-bg-big img {
+  bottom: 0px !important;
+}

@@ -41,7 +41,7 @@ const HeaderTwo = () => {
                         შესვლა
                       </Link>
                     </div>
-                    <Link href="/sign-up" style={{ color: "black", fontSize: "18px" }}>
+                    <Link href="/sign-up" className="d-none d-sm-block" style={{ color: "black", fontSize: "18px" }}>
                       რეგისტრაცია
                     </Link>
                   </div>

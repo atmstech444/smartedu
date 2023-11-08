@@ -13,16 +13,15 @@ const CourseSectionOne = ({ courseTitle }: any) => {
   return (
     <section className="course__area pt-115 pb-120 grey-bg">
       <div className="container">
-        <div className="row" style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className="row" style={{ display: "flex", justifyContent: "space-between", marginBottom: window.innerWidth < 481 ? "50px" : "0px" }}>
           <div className="col-xxl-5 col-xl-6 col-lg-6">
             <div className="section__title-wrapper mb-60">
               <h2 className="section__title">
-                იპოვე შენთვის სასურველი <br />
+                ჩვენი <br />
                 <span className="yellow-bg yellow-bg-big">
-                  კურსი
+                  კურსები
                   <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="image not found" />
-                </span>{" "}
-                ონლაინ
+                </span>
               </h2>
             </div>
           </div>

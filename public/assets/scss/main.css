@@ -32676,6 +32676,8 @@ p.checkout-coupon input[type=text]:focus {
 }
 .about__thumb-wrapper {
   position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 @media (max-width: 575px) {
   .about__banner {
@@ -32766,6 +32768,29 @@ p.checkout-coupon input[type=text]:focus {
 }
 .about__area:nth-child(3) .container .row {
   flex-direction: row-reverse;
+}
+.about__area .container {
+  max-width: none;
+  width: 100%;
+}
+.about__area .container .row {
+  display: flex;
+  flex-wrap: no-wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.about__area .container .side {
+  width: 30%;
+  min-width: 370px;
+}
+.about__area .container .text {
+  max-width: 50%;
+}
+@media (max-width: 480px) {
+  .about__area .container .text {
+    max-width: none;
+    width: 100%;
+  }
 }
 
 @media (max-width: 575px) {
