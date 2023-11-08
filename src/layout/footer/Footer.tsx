@@ -12,15 +12,22 @@ const Footer = () => {
           <div className="footer__top pt-190 pb-40">
             <div className="container">
               <div className="row">
-                <div className="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-6">
                   <div className="footer__widget mb-50">
                     <div className="footer__widget-head mb-22">
                       <div className="footer__logo">
                         <Link href="/">
                           <Image
                             src={FooterLogo}
-                            style={{ width: "100%", height: "auto" }}
                             alt="logo"
+                            className="img-fluid d-none d-sm-block"
+                          />
+                        </Link>
+                        <Link href="/">
+                          <Image
+                            src={FooterLogo}
+                            alt="logo"
+                            className="img-fluid d-block d-sm-none w-50 h-auto"
                           />
                         </Link>
                       </div>
@@ -66,7 +73,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xxl-2 offset-xxl-1 col-xl-2 offset-xl-1 col-lg-3 offset-lg-0 col-md-2 offset-md-1 col-sm-5 offset-sm-1">
+                <div className="col-xxl-2 offset-xxl-2 col-xl-2 offset-xl-1 col-lg-3 offset-lg-1 col-md-2 offset-md-2 col-sm-5 offset-sm-1">
                   <div className="footer__widget mb-50">
                     <div className="footer__widget-head mb-22">
                       <h3 className="footer__widget-title">ნავიგაცია</h3>
@@ -94,7 +101,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-5 col-sm-6">
+                <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-5 offset-xl-1 col-sm-6">
                   <div className="footer__widget footer__pl-70 mb-50">
                     <div className="footer__widget-head mb-22">
                       <h3 className="footer__widget-title">გამოწერა</h3>
