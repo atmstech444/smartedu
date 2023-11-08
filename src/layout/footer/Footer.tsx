@@ -37,12 +37,18 @@ const Footer = () => {
                       <div className="footer__social">
                         <ul>
                           <li>
-                            <Link href="https://www.facebook.com/smarteducation.ge/?show_switched_toast=0&show_invite_to_follow=0&show_switched_tooltip=0&show_podcast_settings=0&show_community_review_changes=0&show_community_rollback=0&show_follower_visibility_disclosure=0">
+                            <Link
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              href="https://www.facebook.com/smarteducation.ge/?show_switched_toast=0&show_invite_to_follow=0&show_switched_tooltip=0&show_podcast_settings=0&show_community_review_changes=0&show_community_rollback=0&show_follower_visibility_disclosure=0"
+                            >
                               <i className="fab fa-facebook-f"></i>
                             </Link>
                           </li>
                           <li>
                             <Link
+                              target="_blank"
+                              rel="noopener noreferrer"
                               href="https://www.linkedin.com/company/thesmart-education/"
                               className="tw"
                             >
@@ -51,6 +57,8 @@ const Footer = () => {
                           </li>
                           <li>
                             <Link
+                              target="_blank"
+                              rel="noopener noreferrer"
                               href="https://www.instagram.com/thesmart.education/?igshid=OGQ5ZDc2ODk2ZA%3D%3D"
                               className="pin"
                             >
@@ -59,6 +67,8 @@ const Footer = () => {
                           </li>
                           <li>
                             <Link
+                              target="_blank"
+                              rel="noopener noreferrer"
                               href="http://www.tiktok.com/@thesmart.education"
                               className="tiktok"
                             >
