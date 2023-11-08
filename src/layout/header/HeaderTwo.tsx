@@ -7,10 +7,13 @@ import Menu from "./Menu";
 import MobileMenu from "./component/MobileMenu";
 import { AppContextType } from "@/interFace/interFace";
 import { AppContext } from "@/contextApi/AppProvider";
+import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
 
 const HeaderTwo = () => {
   const scrollDirection = useScrollDirection(null);
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
+  const isAuthorized = true;
+  const nameSurname = "ნანუკა როინიშვილი";
   return (
     <>
       <header>
@@ -35,16 +38,26 @@ const HeaderTwo = () => {
                       </ul>
                     </nav>
                   </div>
-                  <div style={{ display: "flex", gap: "24px", marginLeft: "50px", alignItems: "center" }}>
-                    <div className="header__btn header__btn-2 d-none d-sm-block">
-                      <Link href="/sign-in" className="e-btn" style={{ fontSize: "18px" }}>
-                        შესვლა
+                  {isAuthorized ? (
+                    <>
+                      <Link href="/profile" style={{ margin: "0px", color: "black", fontSize: "18px", display: "flex", gap: "16px", marginLeft: "50px", alignItems: "center" }}>
+                        <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
+                        {nameSurname}
+                      </Link>
+                      <i style={{cursor:'pointer'}}  className="fa-solid fa-arrow-right-from-bracket ml-20"></i>
+                    </>
+                  ) : (
+                    <div style={{ display: "flex", gap: "24px", marginLeft: "50px", alignItems: "center" }}>
+                      <div className="header__btn header__btn-2 d-none d-sm-block">
+                        <Link href="/sign-in" className="e-btn" style={{ fontSize: "18px" }}>
+                          შესვლა
+                        </Link>
+                      </div>
+                      <Link href="/sign-up" className="d-none d-sm-block" style={{ color: "black", fontSize: "18px" }}>
+                        რეგისტრაცია
                       </Link>
                     </div>
-                    <Link href="/sign-up" className="d-none d-sm-block" style={{ color: "black", fontSize: "18px" }}>
-                      რეგისტრაცია
-                    </Link>
-                  </div>
+                  )}
 
                   <div className="sidebar__menu d-xl-none">
                     <div onClick={toggleSideMenu} className="sidebar-toggle-btn ml-30" id="sidebar-toggle">

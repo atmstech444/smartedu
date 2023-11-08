@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { productsType } from "@/interFace/interFace";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
@@ -15,9 +15,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     cart_product: (state, { payload }: PayloadAction<productsType>) => {
-      const productIndex = state.cartProducts.findIndex(
-        (item) => item.id === payload.id
-      );
+      const productIndex = state.cartProducts.findIndex((item) => item.id === payload.id);
       if (productIndex >= 0) {
         state.cartProducts[productIndex].quantity! += 1;
         toast.info("Increase Product Quantity", {
@@ -32,27 +30,21 @@ export const cartSlice = createSlice({
       }
     },
     remove_cart_product: (state, { payload }: PayloadAction<productsType>) => {
-      state.cartProducts = state.cartProducts.filter(
-        (item) => item.id !== payload.id
-      );
+      state.cartProducts = state.cartProducts.filter((item) => item.id !== payload.id);
       toast.error(`remove from your cart`, {
         position: "top-left",
       });
     },
 
     clear_cart: (state) => {
-      const confirmMsg = window.confirm(
-        "Are you sure deleted your all cart items ?"
-      );
+      const confirmMsg = window.confirm("Are you sure deleted your all cart items ?");
       if (confirmMsg) {
         state.cartProducts = [];
       }
     },
 
     decrease_quantity: (state, { payload }: PayloadAction<productsType>) => {
-      const cartIndex = state.cartProducts.findIndex(
-        (item) => item.id === payload.id
-      );
+      const cartIndex = state.cartProducts.findIndex((item) => item.id === payload.id);
       if (cartIndex >= 0 && state.cartProducts[cartIndex]?.quantity) {
         state.cartProducts[cartIndex].quantity! -= 1;
         toast.error(`Decrease cart quantity`, {
@@ -63,11 +55,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const {
-  cart_product,
-  remove_cart_product,
-  clear_cart,
-  decrease_quantity,
-} = cartSlice.actions;
+export const { cart_product, remove_cart_product, clear_cart, decrease_quantity } = cartSlice.actions;
 
 export default cartSlice.reducer;
