@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import ErrorMsg from "./error-msg";
 import { register_schema } from "@/utils/validation-schema";
 import Link from "next/link";
+import { POST_Register } from "@/api/POST_Register";
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
@@ -20,7 +21,8 @@ const RegisterForm = () => {
     },
     validationSchema: register_schema,
     onSubmit: (values, { resetForm }) => {
-      resetForm();
+      // resetForm();
+      POST_Register(values);
     },
   });
   return (

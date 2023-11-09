@@ -1,12 +1,33 @@
 "use client";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
 import Image from "next/image";
-import Link from "next/link";
+import MyCourses from "./courses/MyCourses";
+import Settings from "./settings/Settings";
+import Profile from "./profile/Profile";
+export type pageType = "profile" | "my-courses" | "settings";
+
 const ProfilePage = () => {
   const nameSurname = "ნანუკა როინიშვილი";
+
+  const [page, setPage] = useState<pageType>("profile");
+  let pageToRender: React.ReactNode;
+
+  switch (page) {
+    case "profile":
+      pageToRender = <Profile />;
+      break;
+    case "my-courses":
+      pageToRender = <MyCourses />;
+      break;
+    case "settings":
+      pageToRender = <Settings />;
+      break;
+    default:
+      break;
+  }
   return (
     <Wrapper>
       <Main>
@@ -17,11 +38,27 @@ const ProfilePage = () => {
               <P>{nameSurname}</P>
             </ProfileInfo>
             <Navigation>
-              <NavItem>
+              <NavItem
+                onClick={() => {
+                  setPage("profile");
+                }}
+              >
+                <I className="fal fa-user"></I>
+                <P>პროფილი</P>
+              </NavItem>
+              <NavItem
+                onClick={() => {
+                  setPage("my-courses");
+                }}
+              >
                 <I className="fal fa-book"></I>
                 <P>ჩემი კურსები</P>
               </NavItem>
-              <NavItem>
+              <NavItem
+                onClick={() => {
+                  setPage("settings");
+                }}
+              >
                 <I className="fal fa-gear"></I>
                 <P>პარამეტრები</P>
               </NavItem>
@@ -31,6 +68,7 @@ const ProfilePage = () => {
               </NavItem>
             </Navigation>
           </ProfileMenu>
+          <OpenedPage>{pageToRender}</OpenedPage>
         </Content>
       </Main>
     </Wrapper>
@@ -56,6 +94,13 @@ const I = styled.i`
   color: black;
 `;
 
+const OpenedPage = styled.div`
+  width: 100%;
+  min-height: 100%;
+  background-color: white;
+  border-radius: 8px;
+`;
+
 const Main = styled.main`
   background-color: #f3f4f8;
   min-height: 100dvh;
@@ -68,6 +113,8 @@ const Content = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding-block: 64px;
+  display: flex;
+  gap: 36px;
   @media (max-width: 1400px) {
     max-width: 1140px;
   }
@@ -81,6 +128,7 @@ const Content = styled.div`
 
 const ProfileMenu = styled.div`
   width: 350px;
+  height: fit-content;
   background-color: white;
   border-radius: 8px;
   padding: 24px;

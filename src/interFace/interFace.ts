@@ -143,3 +143,12 @@ export interface productsType {
   rating: number;
   quantity: number;
 }
+
+export interface userType {
+  name: string;
+  surname: string;
+  email: string;
+  updated_at: string;
+  created_at: string;
+  id: number;
+}

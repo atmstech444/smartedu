@@ -12,7 +12,7 @@ import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
 const HeaderTwo = () => {
   const scrollDirection = useScrollDirection(null);
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
-  const isAuthorized = true;
+  const isAuthorized = false;
   const nameSurname = "ნანუკა როინიშვილი";
   return (
     <>
@@ -44,7 +44,7 @@ const HeaderTwo = () => {
                         <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
                         {nameSurname}
                       </Link>
-                      <i style={{cursor:'pointer'}}  className="fa-solid fa-arrow-right-from-bracket ml-20"></i>
+                      <i style={{ cursor: "pointer" }} className="fa-solid fa-arrow-right-from-bracket ml-20"></i>
                     </>
                   ) : (
                     <div style={{ display: "flex", gap: "24px", marginLeft: "50px", alignItems: "center" }}>
