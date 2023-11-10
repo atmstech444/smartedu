@@ -54,7 +54,7 @@ const RegisterForm = () => {
         </div>
 
         <div className="sign__input-wrapper mb-25">
-          <h5>პარლი</h5>
+          <h5>პაროლი</h5>
           <div className="sign__input">
             <input name="password" value={values.password} onChange={handleChange} onBlur={handleBlur} type={showPass ? "text" : "password"} placeholder="პაროლი" id="password" required />
             <i className="fal fa-lock"></i>

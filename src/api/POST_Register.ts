@@ -1,11 +1,6 @@
 import { userType } from "@/interFace/interFace";
-import axios, { AxiosRequestConfig } from "axios";
-export const API_PATH = "http://192.168.96.63/smarteducation/public/api/";
-const token = "";
-const headers = {
-  Authorization: `Bearer ${token}`,
-  "Content-Type": "application/json",
-};
+import axios from "axios";
+import { API_PATH } from "./API_PATH";
 
 export interface POST_Register_Success {
   message: string;
