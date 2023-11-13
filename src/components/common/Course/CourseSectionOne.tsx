@@ -4,7 +4,7 @@ import YellowBg from "../../../../public/assets/img/shape/yellow-bg.png";
 import Image from "next/image";
 import Link from "next/link";
 import courses_data from "@/data/courses-data";
-import course_category from "@/data/course-category-filter-data";
+import styled from "styled-components";
 
 const CourseSectionOne = ({ courseTitle }: any) => {
   const [activeCategory, setActiveCategory] = useState("");
@@ -13,7 +13,7 @@ const CourseSectionOne = ({ courseTitle }: any) => {
   return (
     <section className="course__area pt-115 pb-120 grey-bg">
       <div className="container">
-        <div className="row" style={{ display: "flex", justifyContent: "space-between", marginBottom: window.innerWidth < 481 ? "50px" : "0px" }}>
+        <Div2 className="row">
           <div className="col-xxl-5 col-xl-6 col-lg-6">
             <div className="section__title-wrapper mb-60">
               <h2 className="section__title">
@@ -26,15 +26,15 @@ const CourseSectionOne = ({ courseTitle }: any) => {
             </div>
           </div>
           <div className="col-xxl-5 col-xl-6 col-lg-6">
-            <div style={{ marginTop: window.innerWidth > 1064 ? "90px" : "0px" }} className="category__more float-md-end fix">
+            <Div className="category__more float-md-end fix">
               <Link href="/course-grid" className="link-btn">
                 ყველა კურსი
                 <i className="fas fa-arrow-right"></i>
                 <i className="fas fa-arrow-right"></i>
               </Link>
-            </div>
+            </Div>
           </div>
-        </div>
+        </Div2>
         <div className="row">
           {activeCategory === "" ? (
             <>
@@ -160,5 +160,19 @@ const CourseSectionOne = ({ courseTitle }: any) => {
     </section>
   );
 };
+
+const Div2 = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 480px) {
+    margin-bottom: 50px;
+  }
+`;
+
+const Div = styled.div`
+  @media (min-width: 1064px) {
+    margin-top: 90px;
+  }
+`;
 
 export default CourseSectionOne;

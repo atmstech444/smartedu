@@ -8,16 +8,23 @@ import MobileMenu from "./component/MobileMenu";
 import { AppContextType } from "@/interFace/interFace";
 import { AppContext } from "@/contextApi/AppProvider";
 import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "@/redux/store";
 
 const HeaderTwo = () => {
   const scrollDirection = useScrollDirection(null);
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
-  const isAuthorized = false;
+
+  const isAuthorized = useAppSelector((state) => state.user.value);
   const nameSurname = "ნანუკა როინიშვილი";
   return (
     <>
       <header>
-        <div id="header-sticky" style={{ backdropFilter: "blur(16px)", backgroundColor: scrollDirection === "down" ? "white" : "rgba(256,256,256)" }} className={`header__area header__transparent header__padding-2 ${scrollDirection === "down" ? "sticky" : ""}`}>
+        <div
+          id="header-sticky"
+          style={{ backdropFilter: "blur(16px)", backgroundColor: scrollDirection === "down" ? "white" : "rgba(256,256,256)" }}
+          className={`header__area header__transparent header__padding-2 ${scrollDirection === "down" ? "sticky" : ""}`}
+        >
           <div className="container">
             <div className="row align-items-center">
               <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-2 col-sm-4 col-6">

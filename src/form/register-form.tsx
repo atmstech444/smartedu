@@ -1,17 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import { useFormik } from "formik";
-// internal
 import ErrorMsg from "./error-msg";
 import { register_schema } from "@/utils/validation-schema";
 import Link from "next/link";
 import { POST_Register } from "@/api/POST_Register";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
   const [showPass, setShowPass] = useState(false);
   const [showConPass, setShowConPass] = useState(false);
+  const router = useRouter();
+
   // use formik
-  const { handleChange, handleSubmit, handleBlur, errors, values, touched } = useFormik({
+  const { handleChange, handleSubmit, handleBlur, errors, values, touched, setErrors } = useFormik({
     initialValues: {
       name: "",
       surname: "",
@@ -20,11 +22,11 @@ const RegisterForm = () => {
       passwordConfirmation: "",
     },
     validationSchema: register_schema,
-    onSubmit: (values, { resetForm }) => {
-      // resetForm();
-      POST_Register(values);
+    onSubmit: async (values) => {
+      POST_Register(values, setErrors, router);
     },
   });
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="sign__input-wrapper">
@@ -79,6 +81,7 @@ const RegisterForm = () => {
           </label>
         </div>
       </div>
+
       <button className="e-btn w-100">
         {" "}
         <span></span> რეგისტრაცია

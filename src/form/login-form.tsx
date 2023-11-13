@@ -4,10 +4,14 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import { login_schema } from "@/utils/validation-schema";
 import ErrorMsg from "./error-msg";
-// internal
+import { POST_Login } from "@/api/POST_Login";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
   // use formik
   const { handleChange, handleSubmit, handleBlur, errors, values, touched } = useFormik({
     initialValues: {
@@ -15,8 +19,8 @@ const LoginForm = () => {
       password: "",
     },
     validationSchema: login_schema,
-    onSubmit: (values, { resetForm }) => {
-      resetForm();
+    onSubmit: (values, { resetForm, setErrors }) => {
+      POST_Login(values, setErrors, router, dispatch);
     },
   });
   return (

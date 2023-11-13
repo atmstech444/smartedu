@@ -17,46 +17,29 @@ import MobileMenu from "./component/MobileMenu";
 
 const HeaderFive = () => {
   const scrollDirection = useScrollDirection(null);
-  const { toggleSideMenu, sideMenuOpen } = useContext(
-    AppContext
-  ) as AppContextType;
+  const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
   const [cartOpen, setCartOpen] = useState(false);
   // redux import
   const dispatch = useDispatch();
-  const cartProducts = useSelector(
-    (state: RootState) => state.cart.cartProducts
-  );
+  // const cartProducts = useSelector(
+  //   (state: RootState) => state.cart.cartProducts
+  // );
   const uniqueProductIds = new Set();
-  cartProducts.forEach((product) => uniqueProductIds.add(product.id));
+  // cartProducts.forEach((product) => uniqueProductIds.add(product.id));
   const quantityProduct = uniqueProductIds.size;
 
   return (
     <>
       <header>
-        <div
-          id="header-sticky"
-          className={`header-five header__area header__transparent header__padding header__white ${
-            scrollDirection === "down" ? "sticky" : ""
-          }`}
-        >
+        <div id="header-sticky" className={`header-five header__area header__transparent header__padding header__white ${scrollDirection === "down" ? "sticky" : ""}`}>
           <div className="container-fluid">
             <div className="row align-items-center">
               <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-2 col-sm-4 col-6">
                 <div className="header__left d-flex">
                   <div className="logo">
                     <Link href="/">
-                      <Image
-                        className="logo-white"
-                        src={logoWhite}
-                        style={{ width: "auto", height: "auto" }}
-                        alt="img not found"
-                      />
-                      <Image
-                        className="logo-black"
-                        src={logoBlack}
-                        style={{ width: "auto", height: "auto" }}
-                        alt="img not found"
-                      />
+                      <Image className="logo-white" src={logoWhite} style={{ width: "auto", height: "auto" }} alt="img not found" />
+                      <Image className="logo-black" src={logoBlack} style={{ width: "auto", height: "auto" }} alt="img not found" />
                     </Link>
                   </div>
                   <HeaderCategory />
@@ -107,11 +90,7 @@ const HeaderFive = () => {
                     </Link>
                   </div>
                   <div className="sidebar__menu d-xl-none">
-                    <div
-                      onClick={toggleSideMenu}
-                      className="sidebar-toggle-btn ml-30"
-                      id="sidebar-toggle"
-                    >
+                    <div onClick={toggleSideMenu} className="sidebar-toggle-btn ml-30" id="sidebar-toggle">
                       <span className="line"></span>
                       <span className="line"></span>
                       <span className="line"></span>
@@ -124,15 +103,9 @@ const HeaderFive = () => {
         </div>
       </header>
       <HeaderCart cartOpen={cartOpen} setCartOpen={setCartOpen} />
-      <div
-        onClick={() => setCartOpen(false)}
-        className={cartOpen ? "body-overlay opened" : "body-overlay"}
-      ></div>
+      <div onClick={() => setCartOpen(false)} className={cartOpen ? "body-overlay opened" : "body-overlay"}></div>
       <MobileMenu />
-      <div
-        onClick={toggleSideMenu}
-        className={sideMenuOpen ? "body-overlay opened" : "body-overlay"}
-      ></div>
+      <div onClick={toggleSideMenu} className={sideMenuOpen ? "body-overlay opened" : "body-overlay"}></div>
     </>
   );
 };

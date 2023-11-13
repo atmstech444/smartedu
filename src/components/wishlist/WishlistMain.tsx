@@ -6,8 +6,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Image from "next/image";
-import { cart_product } from "@/redux/slices/cartSlice";
-import { remove_wishlist_product } from "@/redux/slices/wishlist-slice";
 
 const WishlistMain = () => {
   const handleSubmit = (event: any) => {
@@ -15,15 +13,12 @@ const WishlistMain = () => {
   };
   const dispatch = useDispatch();
 
-  const wishlistProducts = useSelector(
-    (state: RootState) => state.wist.cartProducts
-  );
   return (
     <>
       <BreadcrumbTwo titleTwo="My Wishlist" subTitleTwo="Wishlist" />
       <section className="cart-area pt-100 pb-100">
         <div className="container">
-          {wishlistProducts.length === 0 && (
+          {/* {wishlistProducts.length === 0 && (
             <div className="container">
               <div className="text-center">
                 <h3>Your wishlist is empty</h3>
@@ -103,7 +98,7 @@ const WishlistMain = () => {
                 </form>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </section>
     </>

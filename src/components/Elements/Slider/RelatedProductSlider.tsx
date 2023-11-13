@@ -7,8 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { productsType } from "@/interFace/interFace";
-import { cart_product } from "@/redux/slices/cartSlice";
-import { wishlist_product } from "@/redux/slices/wishlist-slice";
 import ProductModal from "@/components/common/ProductModel";
 
 const RelatedProductSlider = () => {
@@ -27,10 +25,6 @@ const RelatedProductSlider = () => {
   };
 
   const dispatch = useDispatch();
-
-  const handleAddToCart = (product: productsType) => {
-    dispatch(cart_product(product));
-  };
 
   return (
     <>
@@ -74,34 +68,21 @@ const RelatedProductSlider = () => {
                   <SwiperSlide key={item.id}>
                     <div className="product-items text-center">
                       <div className="product-img">
-                        <Link href={`/shop-details/${item.id}`}>
-                          {item.image && (
-                            <Image
-                              src={item.image}
-                              style={{ width: "100%", height: "auto" }}
-                              alt="product-img"
-                            />
-                          )}
-                        </Link>
+                        <Link href={`/shop-details/${item.id}`}>{item.image && <Image src={item.image} style={{ width: "100%", height: "auto" }} alt="product-img" />}</Link>
                         <div className="shop-quick-view">
                           <ul>
                             <li>
-                              <button onClick={() => handleAddToCart(item)}>
+                              <button>
                                 <i className="fal fa-cart-arrow-down"></i>
                               </button>
                             </li>
                             <li>
-                              <button
-                                onClick={() => dispatch(wishlist_product(item))}
-                              >
+                              <button>
                                 <i className="fal fa-heart"></i>
                               </button>
                             </li>
                             <li onClick={() => setModalData(item)}>
-                              <span
-                                data-bs-toggle="modal"
-                                data-bs-target="#productModalId"
-                              >
+                              <span data-bs-toggle="modal" data-bs-target="#productModalId">
                                 <i className="fal fa-eye"></i>
                               </span>
                             </li>
@@ -110,16 +91,10 @@ const RelatedProductSlider = () => {
                       </div>
                       <div className="product-content">
                         <h4>
-                          <Link href={`/shop-details/${item.id}`}>
-                            {item.title}
-                          </Link>
+                          <Link href={`/shop-details/${item.id}`}>{item.title}</Link>
                         </h4>
-                        <span>
-                          {item.price === 0 ? "Free" : `$${item.price}`}
-                        </span>
-                        <div className="edu-check-star">
-                          {getRating(item.rating)}
-                        </div>
+                        <span>{item.price === 0 ? "Free" : `$${item.price}`}</span>
+                        <div className="edu-check-star">{getRating(item.rating)}</div>
                       </div>
                     </div>
                   </SwiperSlide>

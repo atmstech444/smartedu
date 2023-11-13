@@ -23,9 +23,9 @@ const HeaderOne = () => {
 
   // redux import
   const dispatch = useDispatch();
-  const cartProducts = useSelector((state: RootState) => state.cart.cartProducts);
+  // const cartProducts = useSelector((state: RootState) => state.cart.cartProducts);
   const uniqueProductIds = new Set();
-  cartProducts.forEach((product) => uniqueProductIds.add(product.id));
+  // cartProducts.forEach((product) => uniqueProductIds.add(product.id));y
 
   const quantityProduct = uniqueProductIds.size;
 

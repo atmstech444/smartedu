@@ -4,16 +4,16 @@ import { useSelector } from "react-redux";
 
 const CheckoutOrder = () => {
   const [shipingCast, setShipingCast] = useState(0);
-  const cartProducts = useSelector(
-    (state: RootState) => state.cart.cartProducts
-  );
+  // const cartProducts = useSelector(
+  //   (state: RootState) => state.cart.cartProducts
+  // );
 
-  const totalPrice = cartProducts.reduce((total, product) => {
-    if (typeof product.price === "number" && product.price !== 0) {
-      return total + (product.price ?? 0) * (product.quantity ?? 0);
-    }
-    return total;
-  }, 0);
+  // const totalPrice = cartProducts.reduce((total, product) => {
+  //   if (typeof product.price === "number" && product.price !== 0) {
+  //     return total + (product.price ?? 0) * (product.quantity ?? 0);
+  //   }
+  //   return total;
+  // }, 0);
 
   return (
     <div className="your-order mb-30 ">
@@ -27,7 +27,7 @@ const CheckoutOrder = () => {
             </tr>
           </thead>
           <tbody>
-            {cartProducts.length ? (
+            {/* {cartProducts.length ? (
               <>
                 {cartProducts.map((item) => (
                   <tr key={item.id}>
@@ -50,37 +50,25 @@ const CheckoutOrder = () => {
               </>
             ) : (
               <></>
-            )}
+            )} */}
           </tbody>
           <tfoot>
             <tr className="cart-subtotal">
               <th>Cart Subtotal</th>
-              <td>
-                <span className="amount">${totalPrice}</span>
-              </td>
+              <td>{/* <span className="amount">${totalPrice}</span> */}</td>
             </tr>
             <tr className="shipping">
               <th>Shipping</th>
               <td>
                 <ul>
                   <li>
-                    <input
-                      type="radio"
-                      onClick={() => setShipingCast(7)}
-                      name="Shipping"
-                      id="ShippingCost"
-                    />
+                    <input type="radio" onClick={() => setShipingCast(7)} name="Shipping" id="ShippingCost" />
                     <label htmlFor="ShippingCost">
                       Flat Rate: <span className="amount">$7.00</span>
                     </label>
                   </li>
                   <li>
-                    <input
-                      type="radio"
-                      onClick={() => setShipingCast(0)}
-                      name="Shipping"
-                      id="FreeShipping"
-                    />
+                    <input type="radio" onClick={() => setShipingCast(0)} name="Shipping" id="FreeShipping" />
                     <label htmlFor="FreeShipping">Free Shipping:</label>
                   </li>
                   <li></li>
@@ -90,9 +78,7 @@ const CheckoutOrder = () => {
             <tr className="order-total">
               <th>Order Total</th>
               <td>
-                <strong>
-                  <span className="amount">${totalPrice + shipingCast}</span>
-                </strong>
+                <strong>{/* <span className="amount">${totalPrice + shipingCast}</span> */}</strong>
               </td>
             </tr>
           </tfoot>
@@ -103,23 +89,11 @@ const CheckoutOrder = () => {
         <div className="accordion" id="checkoutAccordion">
           <div className="accordion-item">
             <h2 className="accordion-header" id="paymentTwo">
-              <button
-                className="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#payment"
-                aria-expanded="false"
-                aria-controls="payment"
-              >
+              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#payment" aria-expanded="false" aria-controls="payment">
                 Payment Method
               </button>
             </h2>
-            <div
-              id="payment"
-              className="accordion-collapse collapse"
-              aria-labelledby="paymentTwo"
-              data-bs-parent="#checkoutAccordion"
-            >
+            <div id="payment" className="accordion-collapse collapse" aria-labelledby="paymentTwo" data-bs-parent="#checkoutAccordion">
               <div className="accordion-body">
                 <p>You need to pay it with your prefable methods</p>
                 <div className="payment-option mb-10">

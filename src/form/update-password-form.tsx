@@ -51,7 +51,7 @@ const UpdatePasswordForm = () => {
         </div>
       </div>
 
-      <button style={{ marginTop: "32px" }} className="e-btn w-100">
+      <button style={{ marginTop: "31px" }} className="e-btn w-100">
         {" "}
         <span></span> შენახვა
       </button>

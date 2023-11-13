@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { cart_product, decrease_quantity } from "@/redux/slices/cartSlice";
 import thumb1 from "../../../public/assets/img/products/product-thumb-01.png";
 import thumb2 from "../../../public/assets/img/products/product-thumb-02.png";
 import thumb3 from "../../../public/assets/img/products/product-thumb-03.png";
@@ -22,26 +21,8 @@ interface productDataType {
   price: number;
 }
 
-const ProductModal: React.FC<{ modalData: productDataType }> = ({
-  modalData,
-}) => {
+const ProductModal: React.FC<{ modalData: productDataType }> = ({ modalData }) => {
   const dispatch = useDispatch();
-
-  const handleAddToCart = (product: productsType) => {
-    dispatch(cart_product(product));
-  };
-  const handleDecressCart = (product: productsType) => {
-    dispatch(decrease_quantity(product));
-  };
-
-  const cartProducts = useSelector(
-    (state: RootState) => state.cart.cartProducts
-  );
-
-  const totalPrice = cartProducts.reduce(
-    (total, product) => total + (product.price ?? 0) * (product.quantity ?? 0),
-    0
-  );
 
   const getRating = (ratingsNum: any) => {
     let empty_rating_count = 5 - ratingsNum;
@@ -55,19 +36,9 @@ const ProductModal: React.FC<{ modalData: productDataType }> = ({
     return ratings;
   };
 
-  const myData = cartProducts.find((item) => item.id === modalData.id);
-
   return (
-    <div
-      className="modal fade"
-      id="productModalId"
-      role="dialog"
-      aria-hidden="true"
-    >
-      <div
-        className="modal-dialog modal-dialog-centered product__modal"
-        role="document"
-      >
+    <div className="modal fade" id="productModalId" role="dialog" aria-hidden="true">
+      <div className="modal-dialog modal-dialog-centered product__modal" role="document">
         <div className="modal-content">
           <div className="product__modal-wrapper p-relative">
             <div className="product__modal-close p-absolute">
@@ -80,136 +51,44 @@ const ProductModal: React.FC<{ modalData: productDataType }> = ({
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                   <div className="product__modal-box">
                     <div className="tab-content" id="modalTabContent">
-                      <div
-                        className="tab-pane fade show active"
-                        id="nav1"
-                        role="tabpanel"
-                        aria-labelledby="nav1-tab"
-                      >
+                      <div className="tab-pane fade show active" id="nav1" role="tabpanel" aria-labelledby="nav1-tab">
+                        <div className="product__modal-img w-img">{modalData.image && <Image src={modalData.image} style={{ width: "100%", height: "auto" }} alt="img not found" />}</div>
+                      </div>
+                      <div className="tab-pane fade" id="nav2" role="tabpanel" aria-labelledby="nav2-tab">
                         <div className="product__modal-img w-img">
-                          {modalData.image && (
-                            <Image
-                              src={modalData.image}
-                              style={{ width: "100%", height: "auto" }}
-                              alt="img not found"
-                            />
-                          )}
+                          <Image src={thumb2} style={{ width: "100%", height: "auto" }} alt="img not found" />
                         </div>
                       </div>
-                      <div
-                        className="tab-pane fade"
-                        id="nav2"
-                        role="tabpanel"
-                        aria-labelledby="nav2-tab"
-                      >
+                      <div className="tab-pane fade" id="nav3" role="tabpanel" aria-labelledby="nav3-tab">
                         <div className="product__modal-img w-img">
-                          <Image
-                            src={thumb2}
-                            style={{ width: "100%", height: "auto" }}
-                            alt="img not found"
-                          />
+                          <Image src={thumb3} style={{ width: "100%", height: "auto" }} alt="img not found" />
                         </div>
                       </div>
-                      <div
-                        className="tab-pane fade"
-                        id="nav3"
-                        role="tabpanel"
-                        aria-labelledby="nav3-tab"
-                      >
+                      <div className="tab-pane fade" id="nav4" role="tabpanel" aria-labelledby="nav4-tab">
                         <div className="product__modal-img w-img">
-                          <Image
-                            src={thumb3}
-                            style={{ width: "100%", height: "auto" }}
-                            alt="img not found"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        className="tab-pane fade"
-                        id="nav4"
-                        role="tabpanel"
-                        aria-labelledby="nav4-tab"
-                      >
-                        <div className="product__modal-img w-img">
-                          <Image
-                            src={thumb4}
-                            style={{ width: "100%", height: "auto" }}
-                            alt="img not found"
-                          />
+                          <Image src={thumb4} style={{ width: "100%", height: "auto" }} alt="img not found" />
                         </div>
                       </div>
                     </div>
                     <ul className="nav nav-tabs" id="modalTab" role="tablist">
                       <li className="nav-item" role="presentation">
-                        <button
-                          className="nav-link active"
-                          id="nav1-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#nav1"
-                          type="button"
-                          role="tab"
-                          aria-controls="nav1"
-                          aria-selected="true"
-                        >
-                          <Image
-                            src={thumb1}
-                            style={{ width: "100%", height: "auto" }}
-                            alt="img not found"
-                          />
+                        <button className="nav-link active" id="nav1-tab" data-bs-toggle="tab" data-bs-target="#nav1" type="button" role="tab" aria-controls="nav1" aria-selected="true">
+                          <Image src={thumb1} style={{ width: "100%", height: "auto" }} alt="img not found" />
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
-                        <button
-                          className="nav-link"
-                          id="nav2-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#nav2"
-                          type="button"
-                          role="tab"
-                          aria-controls="nav2"
-                          aria-selected="false"
-                        >
-                          <Image
-                            src={thumb2}
-                            style={{ width: "100%", height: "auto" }}
-                            alt="img not found"
-                          />
+                        <button className="nav-link" id="nav2-tab" data-bs-toggle="tab" data-bs-target="#nav2" type="button" role="tab" aria-controls="nav2" aria-selected="false">
+                          <Image src={thumb2} style={{ width: "100%", height: "auto" }} alt="img not found" />
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
-                        <button
-                          className="nav-link"
-                          id="nav3-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#nav3"
-                          type="button"
-                          role="tab"
-                          aria-controls="nav3"
-                          aria-selected="false"
-                        >
-                          <Image
-                            src={thumb3}
-                            style={{ width: "100%", height: "auto" }}
-                            alt="img not found"
-                          />
+                        <button className="nav-link" id="nav3-tab" data-bs-toggle="tab" data-bs-target="#nav3" type="button" role="tab" aria-controls="nav3" aria-selected="false">
+                          <Image src={thumb3} style={{ width: "100%", height: "auto" }} alt="img not found" />
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
-                        <button
-                          className="nav-link"
-                          id="nav4-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#nav4"
-                          type="button"
-                          role="tab"
-                          aria-controls="nav4"
-                          aria-selected="false"
-                        >
-                          <Image
-                            src={thumb4}
-                            style={{ width: "100%", height: "auto" }}
-                            alt="img not found"
-                          />
+                        <button className="nav-link" id="nav4-tab" data-bs-toggle="tab" data-bs-target="#nav4" type="button" role="tab" aria-controls="nav4" aria-selected="false">
+                          <Image src={thumb4} style={{ width: "100%", height: "auto" }} alt="img not found" />
                         </button>
                       </li>
                     </ul>
@@ -245,39 +124,22 @@ const ProductModal: React.FC<{ modalData: productDataType }> = ({
                       </div>
                     </div>
                     <div className="product__price">
-                      <span>
-                        {modalData?.price === 0
-                          ? "FREE"
-                          : `$${modalData?.price}`}
-                      </span>
+                      <span>{modalData?.price === 0 ? "FREE" : `$${modalData?.price}`}</span>
                     </div>
                     <div className="product__modal-form">
                       <div className="product-quantity-cart mb-30">
                         <div className="product-quantity-form">
                           <form onSubmit={(e) => e.preventDefault()}>
-                            <button
-                              onClick={() => handleDecressCart(modalData)}
-                              className="cart-minus"
-                            >
+                            <button className="cart-minus">
                               <i className="far fa-minus"></i>
                             </button>
-                            <input
-                              className="cart-input m-0"
-                              readOnly
-                              value={myData?.quantity || 0}
-                            />
-                            <button
-                              onClick={() => handleAddToCart(modalData)}
-                              className="cart-plus"
-                            >
+                            <input className="cart-input m-0" readOnly value={0} />
+                            <button className="cart-plus">
                               <i className="far fa-plus"></i>
                             </button>
                           </form>
                         </div>
-                        <div
-                          data-bs-dismiss="modal"
-                          onClick={() => dispatch(cart_product(modalData))}
-                        >
+                        <div data-bs-dismiss="modal">
                           <Link href="/cart" className="edu-btn">
                             View Cart
                           </Link>

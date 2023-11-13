@@ -4,11 +4,11 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import {
-  cart_product,
-  decrease_quantity,
-  remove_cart_product,
-} from "@/redux/slices/cartSlice";
+// import {
+//   cart_product,
+//   decrease_quantity,
+//   remove_cart_product,
+// } from "@/redux/slices/cartSlice";
 import { productsType } from "@/interFace/interFace";
 
 interface HeaderCartProps {
@@ -18,17 +18,17 @@ interface HeaderCartProps {
 
 const HeaderCart: React.FC<HeaderCartProps> = ({ setCartOpen, cartOpen }) => {
   const dispatch = useDispatch();
-  const handleRemoveCart = (product: productsType) => {
-    dispatch(remove_cart_product(product));
-  };
+  // const handleRemoveCart = (product: productsType) => {
+  //   dispatch(remove_cart_product(product));
+  // };
 
-  const cartProducts = useSelector(
-    (state: RootState) => state.cart.cartProducts
-  );
-  const totalPrice = cartProducts.reduce(
-    (total, product) => total + (product.price ?? 0) * (product.quantity ?? 0),
-    0
-  );
+  // const cartProducts = useSelector(
+  //   (state: RootState) => state.cart.cartProducts
+  // );
+  // const totalPrice = cartProducts.reduce(
+  //   (total, product) => total + (product.price ?? 0) * (product.quantity ?? 0),
+  //   0
+  // );
 
   return (
     <div className="cartmini__area">
@@ -49,7 +49,7 @@ const HeaderCart: React.FC<HeaderCartProps> = ({ setCartOpen, cartOpen }) => {
         </div>
         <div className="cartmini__widget">
           <div className="cartmini__inner">
-            {cartProducts.length === 0 && (
+            {/* {cartProducts.length === 0 && (
               <h3 className="edu-cart">Your cart is empty</h3>
             )}
             {cartProducts.length >= 1 && (
@@ -123,7 +123,7 @@ const HeaderCart: React.FC<HeaderCartProps> = ({ setCartOpen, cartOpen }) => {
                   </div>
                 </div>
               </>
-            )}
+            )} */}
           </div>
         </div>
       </div>
