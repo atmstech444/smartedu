@@ -9,13 +9,20 @@ import { AppContextType } from "@/interFace/interFace";
 import { AppContext } from "@/contextApi/AppProvider";
 import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
 import { useSelector } from "react-redux";
-import { useAppSelector } from "@/redux/store";
-
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { POST_Logout } from "@/api/POST_Logout";
+import { useRouter } from "next/navigation";
 const HeaderTwo = () => {
   const scrollDirection = useScrollDirection(null);
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
-
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const isAuthorized = useAppSelector((state) => state.user.value);
+  const logout = () => {
+    if (isAuthorized?.token) {
+      POST_Logout({ token: isAuthorized?.token }, router, dispatch);
+    }
+  };
   const nameSurname = "ნანუკა როინიშვილი";
   return (
     <>
@@ -51,7 +58,7 @@ const HeaderTwo = () => {
                         <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
                         {nameSurname}
                       </Link>
-                      <i style={{ cursor: "pointer" }} className="fa-solid fa-arrow-right-from-bracket ml-20"></i>
+                      <i onClick={logout} style={{ cursor: "pointer" }} className="fa-solid fa-arrow-right-from-bracket ml-20"></i>
                     </>
                   ) : (
                     <div style={{ display: "flex", gap: "24px", marginLeft: "50px", alignItems: "center" }}>

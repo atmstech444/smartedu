@@ -6,7 +6,7 @@ export default function Course() {
     <Wrapper>
       <Header>
         <Icon />
-        <Title>Course name</Title>
+        <Title>კურსის სახელი</Title>
       </Header>
       <ProgressText>57%</ProgressText>
       <Progress max={100} value={57} />
@@ -29,7 +29,6 @@ const Button = styled.button`
 const Progress = styled.progress`
   width: 100%;
   margin-top: 30px;
-  
 `;
 
 const ProgressText = styled.p`

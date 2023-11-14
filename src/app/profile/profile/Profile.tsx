@@ -1,9 +1,15 @@
 import styled from "styled-components";
 import Course from "./Course";
+import InfoBox from "./InfoBox";
 
 export default function Profile() {
   return (
     <Wrapper>
+      <Flexbox>
+        <InfoBox infoTitle="ჩემი კურსები" infoValue="20+" />
+        <InfoBox infoTitle="ნანახი საათები" infoValue="340+" />
+        <InfoBox infoTitle="გავლილი კურსები" infoValue="5+" />
+      </Flexbox>
       <Title>განაგრძე ყურება</Title>
       <Flexbox>
         <Course />
@@ -25,6 +31,7 @@ const Title = styled.p`
   margin-bottom: 20px;
   color: black;
   font-weight: 600;
+  margin-top: 30px;
 `;
 
 const Flexbox = styled.div`

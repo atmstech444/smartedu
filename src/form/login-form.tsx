@@ -7,11 +7,14 @@ import ErrorMsg from "./error-msg";
 import { POST_Login } from "@/api/POST_Login";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
+import ServerError from "./ServerError";
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
+  const [serverError, setServerError] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
+
   // use formik
   const { handleChange, handleSubmit, handleBlur, errors, values, touched } = useFormik({
     initialValues: {
@@ -20,9 +23,10 @@ const LoginForm = () => {
     },
     validationSchema: login_schema,
     onSubmit: (values, { resetForm, setErrors }) => {
-      POST_Login(values, setErrors, router, dispatch);
+      POST_Login(values, setErrors, router, dispatch, setServerError);
     },
   });
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="sign__input-wrapper mb-25">
@@ -55,6 +59,7 @@ const LoginForm = () => {
           <Link href="/forgot-password">დაგავიწყდა პაროლი?</Link>
         </div>
       </div>
+      <ServerError error={serverError} />
       <button className="e-btn  w-100">
         {" "}
         <span></span> შესვლა

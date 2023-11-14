@@ -1,17 +1,35 @@
 "use client";
 import Wrapper from "@/layout/DefaultWrapper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
 import Image from "next/image";
 import MyCourses from "./courses/MyCourses";
 import Settings from "./settings/Settings";
 import Profile from "./profile/Profile";
+import { POST_Logout } from "@/api/POST_Logout";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useRouter } from "next/navigation";
+
 export type pageType = "profile" | "my-courses" | "settings";
 
 const ProfilePage = () => {
   const nameSurname = "ნანუკა როინიშვილი";
+  const token = useAppSelector((state) => state.user.value?.token);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
+  const logout = () => {
+    if (token) {
+      POST_Logout({ token }, router, dispatch);
+    }
+  };
+
+  useEffect(()=>{
+    if(!token){
+      router.push("/sign-in")
+    }
+  },[])
   const [page, setPage] = useState<pageType>("profile");
   let pageToRender: React.ReactNode;
 
@@ -62,7 +80,7 @@ const ProfilePage = () => {
                 <I className="fal fa-gear"></I>
                 <P>პარამეტრები</P>
               </NavItem>
-              <NavItem>
+              <NavItem onClick={logout}>
                 <I className="fal fa-arrow-right-from-bracket"></I>
                 <P>გასვლა</P>
               </NavItem>

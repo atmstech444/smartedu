@@ -1,4 +1,3 @@
-import { userType } from "@/interFace/interFace";
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
@@ -19,9 +18,10 @@ export interface POST_Login_Error {
   email?: string[];
   password?: string[];
   passwordConfirmation?: string[];
+  message?: string;
 }
 
-export async function POST_Login(data: POST_Login_Params, setErrors: any, router: any, dispatch: any) {
+export async function POST_Login(data: POST_Login_Params, setErrors: any, router: any, dispatch: any, setServerError: any) {
   const axiosInstance = axios.create();
   axiosInstance.interceptors.request.use((config) => {
     config.headers["Accept-Language"] = "ka";
@@ -37,7 +37,11 @@ export async function POST_Login(data: POST_Login_Params, setErrors: any, router
     router.push("/profile");
     return response.data;
   } catch (error: any) {
-    let errors = error.response.data.errors as POST_Login_Error;
-    setErrors(errors);
+    if (error.response.data.message) {
+      setServerError(error.response.data.message);
+    } else {
+      let errors = error.response.data.errors as POST_Login_Error;
+      setErrors(errors);
+    }
   }
 }
