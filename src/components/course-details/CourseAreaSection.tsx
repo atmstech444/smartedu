@@ -21,12 +21,12 @@ const CourseAreaSection = ({ course }: any) => {
             </p>
           </div>
         </div>
-        <div className="course__update mr-80 mb-30">
+        {/* <div className="course__update mr-80 mb-30">
           <h5>Last Update:</h5>
           <p>July 24, 2023</p>
-        </div>
+        </div> */}
         <div className="course__rating-2 mb-30">
-          <h5>Review:</h5>
+          <h5>შეფასება:</h5>
           <div className="course__rating-inner d-flex align-items-center">
             <ul>
               <li>

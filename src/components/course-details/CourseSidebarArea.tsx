@@ -31,7 +31,7 @@ const CourseSidebarArea = ({ course }: any) => {
         </div>
         <SidebarVideoArea course={course} />
 
-        <div className="course__sidebar-widget-2 white-bg mb-20">
+        {/* <div className="course__sidebar-widget-2 white-bg mb-20">
           <div className="course__sidebar-course">
             <h3 className="course__sidebar-title">Related courses</h3>
             <ul>
@@ -71,7 +71,7 @@ const CourseSidebarArea = ({ course }: any) => {
               ))}
             </ul>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

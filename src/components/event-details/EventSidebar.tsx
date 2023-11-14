@@ -11,18 +11,8 @@ const EventSidebar = () => {
     <div className="events__sidebar pl-70">
       <div className="events__sidebar-widget white-bg mb-20">
         <div className="events__sidebar-shape">
-          <Image
-            className="events-sidebar-img-2"
-            src={shape1}
-            style={{ width: "auto", height: "auto" }}
-            alt="image not found"
-          />
-          <Image
-            className="events-sidebar-img-3"
-            src={shape2}
-            style={{ width: "auto", height: "auto" }}
-            alt="image not found"
-          />
+          <Image className="events-sidebar-img-2" src={shape1} style={{ width: "auto", height: "auto" }} alt="image not found" />
+          <Image className="events-sidebar-img-3" src={shape2} style={{ width: "auto", height: "auto" }} alt="image not found" />
         </div>
         <div className="events__info">
           <div className="events__info-meta mb-25 d-flex align-items-center justify-content-between">
@@ -33,7 +23,7 @@ const EventSidebar = () => {
               <h5 className="old-price">$142.00</h5>
             </div>
             <div className="events__info-discount">
-              <span>68% OFF</span>
+              <span>-68% </span>
             </div>
           </div>
           <div className="events__info-content mb-35">
@@ -81,11 +71,7 @@ const EventSidebar = () => {
         <div className="events__sponsor">
           <h3 className="events__sponsor-title">Sponsors</h3>
           <div className="events__sponsor-thumb mb-35">
-            <Image
-              src={sponsorLogo}
-              style={{ width: "auto", height: "auto" }}
-              alt="image not found"
-            />
+            <Image src={sponsorLogo} style={{ width: "auto", height: "auto" }} alt="image not found" />
           </div>
           <div className="events__sponsor-info">
             <h3>Thomas R. Toe</h3>

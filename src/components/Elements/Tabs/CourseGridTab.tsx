@@ -9,7 +9,7 @@ const CourseGridTab = () => {
   return (
     <section className="course__area pt-120 pb-120">
       <div className="container">
-        <div className="course__tab-inner grey-bg-2 mb-50">
+        {/* <div className="course__tab-inner grey-bg-2 mb-50">
           <div className="row align-items-center">
             <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6">
               <div className="course__tab-wrapper d-flex align-items-center">
@@ -48,7 +48,7 @@ const CourseGridTab = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-xxl-12">
             <div className="course__tab-conent">

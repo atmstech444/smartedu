@@ -17,7 +17,7 @@ const CourseDetailsMain = ({ id }: idType) => {
   const course: any = courses_data.find((item) => item.id == id);
   return (
     <>
-      <Breadcrumb title="Course Details"  />
+      <Breadcrumb title="კურსის დეტალები" />
       <section className="page__title-area pt-120 pb-90">
         <PageTItleShape />
         <div className="container">
@@ -33,106 +33,49 @@ const CourseDetailsMain = ({ id }: idType) => {
                 <div className="course__tab-2 mb-45">
                   <ul className="nav nav-tabs" id="courseTab" role="tablist">
                     <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link active"
-                        id="description-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#description"
-                        type="button"
-                        role="tab"
-                        aria-controls="description"
-                        aria-selected="true"
-                      >
+                      <button className="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">
                         {" "}
-                        <i className="fas fa-ribbon"></i>{" "}
-                        <span>Discription</span>{" "}
+                        <i className="fas fa-ribbon"></i> <span>აღწერა</span>{" "}
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link "
-                        id="curriculum-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#curriculum"
-                        type="button"
-                        role="tab"
-                        aria-controls="curriculum"
-                        aria-selected="false"
-                      >
+                      <button className="nav-link " id="curriculum-tab" data-bs-toggle="tab" data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum" aria-selected="false">
                         {" "}
-                        <i className="fas fa-book"></i> <span>Curriculum</span>{" "}
+                        <i className="fas fa-book"></i> <span>სილაბუსი</span>{" "}
                       </button>
                     </li>
-                    <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        id="review-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#review"
-                        type="button"
-                        role="tab"
-                        aria-controls="review"
-                        aria-selected="false"
-                      >
+                    {/* <li className="nav-item" role="presentation">
+                      <button className="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">
                         {" "}
                         <i className="far fa-star"></i> <span>Reviews</span>{" "}
                       </button>
                     </li>
                     <li className="nav-item" role="presentation">
-                      <button
-                        className="nav-link"
-                        id="member-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#member"
-                        type="button"
-                        role="tab"
-                        aria-controls="member"
-                        aria-selected="false"
-                      >
+                      <button className="nav-link" id="member-tab" data-bs-toggle="tab" data-bs-target="#member" type="button" role="tab" aria-controls="member" aria-selected="false">
                         {" "}
                         <i className="fal fa-user"></i> <span>Members</span>{" "}
                       </button>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
                 <div className="course__tab-content mb-95">
                   <div className="tab-content" id="courseTabContent">
-                    <div
-                      className="tab-pane fade show active"
-                      id="description"
-                      role="tabpanel"
-                      aria-labelledby="description-tab"
-                    >
+                    <div className="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                       <CourseDescription />
                     </div>
-                    <div
-                      className="tab-pane fade"
-                      id="curriculum"
-                      role="tabpanel"
-                      aria-labelledby="curriculum-tab"
-                    >
+                    <div className="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                       <CourseTabAccordion />
                     </div>
-                    <div
-                      className="tab-pane fade"
-                      id="review"
-                      role="tabpanel"
-                      aria-labelledby="review-tab"
-                    >
+                    <div className="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                       <CourseReview />
                     </div>
-                    <div
-                      className="tab-pane fade"
-                      id="member"
-                      role="tabpanel"
-                      aria-labelledby="member-tab"
-                    >
+                    <div className="tab-pane fade" id="member" role="tabpanel" aria-labelledby="member-tab">
                       <CourseMember />
                     </div>
                     <ShareCourse />
                   </div>
                 </div>
-                <CourseRelated />
+                {/* <CourseRelated /> */}
               </div>
             </div>
             <CourseSidebarArea course={course} />

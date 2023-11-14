@@ -226,7 +226,7 @@ const CourseArea = () => {
                 </div>
               </div>
             </div>
-            <SidebarSearch />
+            {/* <SidebarSearch /> */}
           </div>
         </div>
       </section>

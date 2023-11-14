@@ -49,7 +49,7 @@ const SidebarVideoArea: React.FC<{ course: Course }> = ({ course }: any) => {
               <h5 className="old-price">$129.00</h5>
             </div>
             <div className="course__video-discount">
-              <span>68% OFF</span>
+              <span>- 68%</span>
             </div>
           </div>
           <div className="course__video-content mb-35">
@@ -63,7 +63,7 @@ const SidebarVideoArea: React.FC<{ course: Course }> = ({ course }: any) => {
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>Instructor :</span> Eleanor Fant
+                    <span>ტუტორი :</span> Eleanor Fant
                   </h5>
                 </div>
               </li>
@@ -76,7 +76,7 @@ const SidebarVideoArea: React.FC<{ course: Course }> = ({ course }: any) => {
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>Lectures :</span>14
+                    <span>ლექციები :</span>14
                   </h5>
                 </div>
               </li>
@@ -98,11 +98,11 @@ const SidebarVideoArea: React.FC<{ course: Course }> = ({ course }: any) => {
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>Duration :</span>6 weeks
+                    <span>ხანგრძილობა :</span>6 weeks
                   </h5>
                 </div>
               </li>
-              <li className="d-flex align-items-center">
+              {/* <li className="d-flex align-items-center">
                 <div className="course__video-icon">
                   <svg>
                     <path className="st0" d="M13.3,14v-1.3c0-1.5-1.2-2.7-2.7-2.7H5.3c-1.5,0-2.7,1.2-2.7,2.7V14" />
@@ -114,7 +114,7 @@ const SidebarVideoArea: React.FC<{ course: Course }> = ({ course }: any) => {
                     <span>Enrolled :</span>20 students
                   </h5>
                 </div>
-              </li>
+              </li> */}
               <li className="d-flex align-items-center">
                 <div className="course__video-icon">
                   <svg>
@@ -125,22 +125,20 @@ const SidebarVideoArea: React.FC<{ course: Course }> = ({ course }: any) => {
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>Language :</span>English
+                    <span>ენა :</span>English
                   </h5>
                 </div>
               </li>
             </ul>
           </div>
           <div className="course__payment mb-35">
-            <h3>Payment:</h3>
-            <Link href="#">
+            <h3>გადახდა:</h3>
+            {/* <Link href="#">
               <Image src={PaymentImg} style={{ width: "auto", height: "auto" }} alt="image not found" />
-            </Link>
+            </Link> */}
           </div>
           <div className="course__enroll-btn">
-            <button className="e-btn e-btn-7 w-100">
-              Add To Cart <i className="fa-regular fa-cart-shopping"></i>
-            </button>
+            <button className="e-btn e-btn-7 w-100">მოითხოვე ინვოისი</button>
           </div>
         </div>
       </div>

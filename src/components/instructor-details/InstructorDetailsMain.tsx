@@ -86,7 +86,7 @@ const InstructorDetailsMain = ({ id }: idType) => {
                     <span>{Instructor?.category}</span>
                   </div>
                   <div className="teacher__rating">
-                    <h5>Review:</h5>
+                    <h5>შეფასება:</h5>
                     <div className="teacher__rating-inner d-flex align-items-center">
                       <ul>
                         <li>

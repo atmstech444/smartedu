@@ -43,7 +43,7 @@ const SidebarSearch = () => {
         <CourseSidebarLan />
         <SidebarPriceFIlter />
         <SidebarSkillLevel />
-        <SidebarRelatedCourse />
+        {/* <SidebarRelatedCourse /> */}
       </div>
     </div>
   );
