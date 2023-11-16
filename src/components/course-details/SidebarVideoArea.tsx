@@ -1,39 +1,32 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import CourseVideoImg from "../../../public/assets/img/course/video/course-video.jpg";
-import PaymentImg from "../../../public/assets/img/course/payment/payment-1.png";
 import ModalVideo from "react-modal-video";
 import { useDispatch } from "react-redux";
-import { productsType } from "@/interFace/interFace";
-interface Course {
-  id: number;
-  videoUrl: string;
-  quantity: number;
-}
+import { I_Course_Details } from "@/api/GET_CourseDetails";
+import { API_STORAGE } from "@/api/API_PATH";
+import styled from "styled-components";
 
-const SidebarVideoArea: React.FC<{ course: Course }> = ({ course }: any) => {
+const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { course: I_Course_Details }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [videoId, setVideoId] = useState(" ");
+  const [closeVisible, setCloseVisible] = useState(false);
+
   const openVideoModal = (id: any) => {
     setIsOpen(!isOpen);
-    setVideoId(id);
   };
-
-  const dispatch = useDispatch();
 
   return (
     <>
       <div className="course__sidebar-widget-2 white-bg mb-20">
         <div className="course__video">
           <div className="course__video-thumb w-img mb-25">
-            <Image src={CourseVideoImg} style={{ width: "100%", height: "auto" }} alt="image not found" />
+            <img src={API_STORAGE + course.cover_image} style={{ width: "100%", height: "150px" }} alt="image not found" />
             <div className="course__video-play">
               <button
                 className="play-btn"
                 onClick={() => {
-                  openVideoModal(course.videoUrl);
+                  openVideoModal(API_STORAGE + course.intro);
                 }}
               >
                 {" "}
@@ -142,9 +135,49 @@ const SidebarVideoArea: React.FC<{ course: Course }> = ({ course }: any) => {
           </div>
         </div>
       </div>
-      <ModalVideo channel="youtube" isOpen={isOpen} videoId={videoId} onClose={() => setIsOpen(false)} />
+      {isOpen && (
+        <VideoModel
+          src={API_STORAGE + course.intro}
+          onPlay={() => {
+            setCloseVisible(true);
+          }}
+          playsInline
+          loop
+          autoPlay
+        />
+      )}
+      {closeVisible && (
+        <CloseVideo
+          onClick={() => {
+            setIsOpen(false);
+            setCloseVisible(false);
+          }}
+          className="fas fa-close"
+        ></CloseVideo>
+      )}
     </>
   );
 };
+
+const CloseVideo = styled.i`
+  position: fixed;
+  top: 25dvh;
+  right: 25vw;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  color: white;
+  font-size: 40px;
+  font-weight: 400;
+  cursor: pointer;
+`;
+
+const VideoModel = styled.video`
+  width: 50vw;
+  position: fixed;
+  top: 50dvh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+`;
 
 export default SidebarVideoArea;

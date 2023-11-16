@@ -1,11 +1,11 @@
-import courses_data from "@/data/courses-data";
-import CourseGridIconOne from "@/svg/course-grid-icon-one";
-import CourseGridIconTwo from "@/svg/course-grid-icon-two";
-import Image from "next/image";
+"use client";
+import { API_STORAGE } from "@/api/API_PATH";
+import { I_Course } from "@/api/GET_Courses";
+import { useAppSelector } from "@/redux/store";
 import Link from "next/link";
-import React from "react";
 
 const CourseGridTab = () => {
+  const courses: I_Course[] = useAppSelector((state) => state.courses.courses);
   return (
     <section className="course__area pt-120 pb-120">
       <div className="container">
@@ -55,16 +55,16 @@ const CourseGridTab = () => {
               <div className="tab-content" id="courseTabContent">
                 <div className="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
                   <div className="row">
-                    {courses_data.slice(8, 17).map((item) => (
+                    {courses.map((item) => (
                       <div key={item.id} className="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
                         <div className="course__item white-bg mb-30 fix">
                           <div className="course__thumb w-img p-relative fix">
                             <Link href={`/course-details/${item.id}`}>
-                              <Image src={item.image} style={{ width: "100%", height: "auto" }} alt="image not found" />
+                              <img src={API_STORAGE + item.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
                             </Link>
                             <div className="course__tag">
-                              <Link href={`/course-details/${item.id}`} className={item.categoryClass ? `${item.categoryClass}` : ""}>
-                                {item.category}
+                              <Link href={`/course-details/${item.id}`} className={item.category.title ? `${item.category.title}` : ""}>
+                                {item.category.title}
                               </Link>
                             </div>
                           </div>
@@ -73,13 +73,13 @@ const CourseGridTab = () => {
                               <div className="course__lesson">
                                 <span>
                                   <i className="far fa-book-alt"></i>
-                                  {item.lesson} Lesson
+                                  {item.lectures_count} Lesson
                                 </span>
                               </div>
                               <div className="course__rating">
                                 <span>
                                   <i className="fas fa-star"></i>
-                                  {item.ratingAve} ({item.ratingCount})
+                                  RATING RATING
                                 </span>
                               </div>
                             </div>
@@ -88,21 +88,23 @@ const CourseGridTab = () => {
                             </h3>
                             <div className="course__teacher d-flex align-items-center">
                               <div className="course__teacher-thumb mr-15">
-                                <Image src={item.tutorImg} style={{ width: "auto", height: "auto" }} alt="image not found" />
+                                <img src={API_STORAGE + item.lecturer.image} style={{ width: "auto", height: "auto" }} alt="image not found" />
                               </div>
                               <h6>
-                                <Link href="/instructor-details">{item.author}</Link>
+                                <Link href="/instructor-details">
+                                  {item.lecturer.first_name} {item.lecturer.last_name}
+                                </Link>
                               </h6>
                             </div>
                           </div>
                           <div className="course__more d-flex justify-content-between align-items-center">
                             <div className="course__status d-flex align-items-center">
-                              <span className={item.priceClass ? `${item.priceClass}` : ""}>{item.price === 0 ? "Free" : `$${item.price}.00`}</span>
-                              <span className="old-price">{item.oldPrice === 0 ? " " : `$${item.oldPrice}.00`}</span>
+                              <span className={item.price ? `${item.price}` : ""}>{item.price}</span>
+                              {/* <span className="old-price">{item.oldPrice === 0 ? " " : `$${item.oldPrice}.00`}</span> */}
                             </div>
                             <div className="course__btn">
                               <Link href={`/course-details/${item.id}`} className="link-btn">
-                                Know Details
+                                დეტალები
                                 <i className="far fa-arrow-right"></i>
                                 <i className="far fa-arrow-right"></i>
                               </Link>
@@ -113,7 +115,7 @@ const CourseGridTab = () => {
                     ))}
                   </div>
                 </div>
-                <div className="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
+                {/* <div className="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
                   <div className="row">
                     {courses_data.slice(17, 23).map((item) => (
                       <div key={item.id} className="col-xxl-12">
@@ -191,7 +193,7 @@ const CourseGridTab = () => {
                       </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

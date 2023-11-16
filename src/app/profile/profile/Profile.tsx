@@ -6,9 +6,9 @@ export default function Profile() {
   return (
     <Wrapper>
       <Flexbox>
-        <InfoBox infoTitle="ჩემი კურსები" infoValue="20+" />
-        <InfoBox infoTitle="ნანახი საათები" infoValue="340+" />
-        <InfoBox infoTitle="გავლილი კურსები" infoValue="5+" />
+        <InfoBox infoTitle="ჩემი კურსები" infoValue="20" />
+        <InfoBox infoTitle="ნანახი საათები" infoValue="340" />
+        <InfoBox infoTitle="გავლილი კურსები" infoValue="5" />
       </Flexbox>
       <Title>განაგრძე ყურება</Title>
       <Flexbox>

@@ -8,12 +8,12 @@ if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap");
 }
 import { usePathname } from "next/navigation";
-import HeaderOne from "./header/HeaderOne";
 import HeaderTwo from "./header/HeaderTwo";
-import HeaderThere from "./header/HeaderThere";
-import HeaderFour from "./header/HeaderFour";
-import HeaderFive from "./header/HeaderFive";
 import FooterTwo from "./footer/footerTwo";
+import store, { useAppDispatch } from "@/redux/store";
+import { GET_Courses } from "@/api/GET_Courses";
+import { setCourses } from "@/redux/slices/coursesSlice";
+import { Provider } from "react-redux";
 
 interface WrapperProps {
   children: React.ReactNode;
@@ -21,6 +21,14 @@ interface WrapperProps {
 
 const Wrapper: React.FC<WrapperProps> = ({ children }) => {
   const pathName = usePathname();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    GET_Courses().then((res) => {
+      if (res) {
+        dispatch(setCourses(res));
+      }
+    });
+  }, []);
   useEffect(() => {
     setTimeout(() => {
       animationCreate();
