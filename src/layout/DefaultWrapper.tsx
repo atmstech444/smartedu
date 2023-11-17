@@ -4,9 +4,11 @@ import React, { useEffect } from "react";
 import { animationCreate } from "@/utils/utils";
 import Footer from "./footer/Footer";
 import BacktoTop from "@/components/common/backToTop/BacktoTop";
+
 if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap");
 }
+
 import { usePathname } from "next/navigation";
 import HeaderTwo from "./header/HeaderTwo";
 import FooterTwo from "./footer/footerTwo";

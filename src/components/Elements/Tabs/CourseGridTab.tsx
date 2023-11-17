@@ -1,33 +1,12 @@
+"use client";
 import { API_STORAGE } from "@/api/API_PATH";
 import { I_Course } from "@/api/GET_Courses";
 import { useAppSelector } from "@/redux/store";
 import Link from "next/link";
 
 const CourseGridTab = () => {
-  // const courses: I_Course[] = useAppSelector((state) => state.courses.courses);
-  const courses = [
-    {
-      id: 1,
-      title: "Earum a libero dolor",
-      cover_image: "courses/covers/20231115124222_6554bcae9cef4.png",
-      price: "244.00",
-      lecturer_id: 1,
-      course_category_id: 3,
-      lectures_count: 1,
-      category: {
-        id: 3,
-        title: "პროგრამირება",
-        description: "",
-      },
-      lecturer: {
-        id: 1,
-        first_name: "dasdas",
-        last_name: "dasdas",
-        description: "dasdasdasda",
-        image: "lecturers/20231115124052_6554bc549a37f.png",
-      },
-    },
-  ];
+  const courses: I_Course[] = useAppSelector((state) => state.courses.courses);
+
   return (
     <section className="course__area pt-120 pb-120">
       <div className="container">

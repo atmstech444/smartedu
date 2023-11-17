@@ -1,15 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import YellowBg from "../../../../public/assets/img/shape/yellow-bg.png";
 import Image from "next/image";
 import Link from "next/link";
-import courses_data from "@/data/courses-data";
 import styled from "styled-components";
 import { useAppSelector } from "@/redux/store";
 import { API_STORAGE } from "@/api/API_PATH";
 
-const CourseSectionOne = ({ courseTitle }: any) => {
+const CourseSectionOne = () => {
   const courses = useAppSelector((state) => state.courses.courses);
+  console.log(courses);
   return (
     <section className="course__area pt-115 pb-120 grey-bg">
       <div className="container">

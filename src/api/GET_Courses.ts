@@ -1,7 +1,6 @@
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 
-
 export interface POST_Login_Success {
   courses: I_Course[];
 }
