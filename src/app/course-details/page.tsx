@@ -2,8 +2,8 @@ import CourseDetailsMain from "@/components/course-details/CourseDetailsMain";
 import Wrapper from "@/layout/DefaultWrapper";
 import React from "react";
 
-const page = ({ params }: { params: { id: number } }) => {
-  const id = params.id;
+const CourseDetailsPage = () => {
+  const id = 1;
   return (
     <Wrapper>
       <main>
@@ -13,4 +13,4 @@ const page = ({ params }: { params: { id: number } }) => {
   );
 };
 
-export default page;
+export default CourseDetailsPage;

@@ -58,7 +58,7 @@ const CourseDescription = () => {
             </li>
           </ul>
         </div>
-        {/* <div className="course__instructor mb-45">
+        <div className="course__instructor mb-45">
           <h3>Other Instructors</h3>
           <div className="course__instructor-wrapper d-md-flex align-items-center">
             <div className="course__instructor-item d-flex align-items-center mr-70">
@@ -101,7 +101,7 @@ const CourseDescription = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </>
   );

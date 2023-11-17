@@ -1,10 +1,11 @@
+import Link from "next/link";
 import React from "react";
 import SidebarVideoArea from "./SidebarVideoArea";
 import Image from "next/image";
 import CourseDotImg from "../../../public/assets/img/course/course-dot.png";
-import { I_Course_Details } from "@/api/GET_CourseDetails";
+import courses_data from "@/data/courses-data";
 
-const CourseSidebarArea = ({ course }: { course: I_Course_Details }) => {
+const CourseSidebarArea = ({ course }: any) => {
   const getRating = (ratingsNum: any) => {
     let empty_rating_count = 5 - ratingsNum;
     let ratings = [];
@@ -21,11 +22,16 @@ const CourseSidebarArea = ({ course }: { course: I_Course_Details }) => {
     <div className="col-xxl-4 col-xl-4 col-lg-4">
       <div className="course__sidebar pl-70 p-relative">
         <div className="course__shape">
-          <Image className="course-dot" style={{ width: "auto", height: "auto" }} src={CourseDotImg} alt="image not found" />
+          <Image
+            className="course-dot"
+            style={{ width: "auto", height: "auto" }}
+            src={CourseDotImg}
+            alt="image not found"
+          />
         </div>
-        {course && <SidebarVideoArea course={course} />}
+        <SidebarVideoArea course={course} />
 
-        {/* <div className="course__sidebar-widget-2 white-bg mb-20">
+        <div className="course__sidebar-widget-2 white-bg mb-20">
           <div className="course__sidebar-course">
             <h3 className="course__sidebar-title">Related courses</h3>
             <ul>
@@ -65,7 +71,7 @@ const CourseSidebarArea = ({ course }: { course: I_Course_Details }) => {
               ))}
             </ul>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
