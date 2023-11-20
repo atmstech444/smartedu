@@ -38,4 +38,7 @@ const Flexbox = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;

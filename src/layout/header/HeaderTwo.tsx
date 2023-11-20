@@ -8,7 +8,6 @@ import MobileMenu from "./component/MobileMenu";
 import { AppContextType } from "@/interFace/interFace";
 import { AppContext } from "@/contextApi/AppProvider";
 import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
-import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { POST_Logout } from "@/api/POST_Logout";
 import { useRouter } from "next/navigation";
@@ -17,13 +16,13 @@ const HeaderTwo = () => {
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const isAuthorized = useAppSelector((state) => state.user.value);
+  const user = useAppSelector((state) => state.user.user);
   const logout = () => {
-    if (isAuthorized?.token) {
-      POST_Logout({ token: isAuthorized?.token }, router, dispatch);
+    if (user) {
+      POST_Logout({ token: user.token }, router, dispatch);
     }
   };
-  const nameSurname = "ნანუკა როინიშვილი";
+
   return (
     <>
       <header>
@@ -52,13 +51,15 @@ const HeaderTwo = () => {
                       </ul>
                     </nav>
                   </div>
-                  {isAuthorized ? (
+                  {user ? (
                     <>
                       <Link href="/profile" style={{ margin: "0px", color: "black", fontSize: "18px", display: "flex", gap: "16px", marginLeft: "50px", alignItems: "center" }}>
                         <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
-                        {nameSurname}
+                        <p style={{ margin: 0 }} className="only-des">
+                          {user.name + " " + user.surname}
+                        </p>
                       </Link>
-                      <i onClick={logout} style={{ cursor: "pointer" }} className="fa-solid fa-arrow-right-from-bracket ml-20"></i>
+                      <i onClick={logout} style={{ cursor: "pointer" }} className="only-des fa-solid fa-arrow-right-from-bracket ml-20"></i>
                     </>
                   ) : (
                     <div style={{ display: "flex", gap: "24px", marginLeft: "50px", alignItems: "center" }}>

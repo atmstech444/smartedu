@@ -70,7 +70,8 @@ const CourseDetailsMain = ({ id }: idType) => {
                   <div className="course__tab-content mb-95">
                     <div className="tab-content" id="courseTabContent">
                       <div className="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                        <CourseDescription />
+                        
+                        <CourseDescription desc={course.description} />
                       </div>
                       <div className="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                         <CourseTabAccordion />
@@ -81,7 +82,7 @@ const CourseDetailsMain = ({ id }: idType) => {
                       <div className="tab-pane fade" id="member" role="tabpanel" aria-labelledby="member-tab">
                         <CourseMember />
                       </div>
-                      <ShareCourse />
+                      {/* <ShareCourse /> */}
                     </div>
                   </div>
                   {/* <CourseRelated /> */}

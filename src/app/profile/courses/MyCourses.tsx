@@ -44,6 +44,9 @@ const A = styled.a`
 const CourseWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
   padding-block: 24px;
   row-gap: 20px;
 `;

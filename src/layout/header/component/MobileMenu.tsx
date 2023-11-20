@@ -5,9 +5,20 @@ import React, { useContext } from "react";
 import Logo from "../../../../public/assets/img/logo/logo.png";
 import Image from "next/image";
 import MenuTwo from "./MenuTwo";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { POST_Logout } from "@/api/POST_Logout";
 
 const MobileMenu = () => {
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.user);
+  const logout = () => {
+    if (user) {
+      POST_Logout({ token: user.token }, router, dispatch);
+    }
+  };
   return (
     <div className={sideMenuOpen ? "sidebar__area open" : "sidebar__area"}>
       <div className="sidebar__wrapper">
@@ -29,16 +40,20 @@ const MobileMenu = () => {
             <ul>
               <MenuTwo />
             </ul>
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px", marginTop: "50px", alignItems: "center" }}>
-              <div className="header__btn header__btn-2 ">
-                <Link onClick={toggleSideMenu} href="/sign-in" className="e-btn" style={{ fontSize: "18px" }}>
-                  შესვლა
+            {user ? (
+              <i onClick={logout} style={{ cursor: "pointer", fontSize: "24px" }} className="only-mob fa-solid fa-arrow-right-from-bracket mt-20"></i>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "24px", marginTop: "50px", alignItems: "center" }}>
+                <div className="header__btn header__btn-2 ">
+                  <Link onClick={toggleSideMenu} href="/sign-in" className="e-btn" style={{ fontSize: "18px" }}>
+                    შესვლა
+                  </Link>
+                </div>
+                <Link onClick={toggleSideMenu} href="/sign-up" style={{ color: "black", fontSize: "18px" }}>
+                  რეგისტრაცია
                 </Link>
               </div>
-              <Link onClick={toggleSideMenu} href="/sign-up" style={{ color: "black", fontSize: "18px" }}>
-                რეგისტრაცია
-              </Link>
-            </div>
+            )}
           </div>
         </div>
       </div>

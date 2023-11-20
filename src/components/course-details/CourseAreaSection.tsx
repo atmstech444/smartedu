@@ -12,7 +12,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
             <img src={API_STORAGE + course.lecturer.image} style={{ width: "auto", height: "auto" }} alt="image not found" />
           </div>
           <div className="course__teacher-info-3">
-            <h5>Teacher</h5>
+            <h5>მენტორი</h5>
             <p>
               <Link href="#">
                 {course.lecturer.first_name} {course.lecturer.last_name}
@@ -64,7 +64,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
         </div>
       </div>
       <div className="course__img w-img mb-30">
-        <img src={API_STORAGE + course.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
+        <img src={API_STORAGE + course.cover_image} style={{ width: "100%", height: "400px" }} alt="image not found" />
       </div>
     </>
   );

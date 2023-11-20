@@ -48,7 +48,7 @@ const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { 
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>ტუტორი :</span> {course.lecturer.first_name} {course.lecturer.last_name}
+                    <span>მენტორი :</span> {course.lecturer.first_name} {course.lecturer.last_name}
                   </h5>
                 </div>
               </li>

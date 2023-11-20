@@ -5,6 +5,16 @@ import { setUser } from "@/redux/slices/userSlice";
 
 export interface POST_Login_Success {
   token: string;
+  user: {
+    id: number;
+    name: string;
+    surname: string;
+    email: string;
+    email_verified_at: null | string;
+    is_admin: number;
+    created_at: string;
+    updated_at: string;
+  };
 }
 
 export interface POST_Login_Params {
@@ -33,7 +43,16 @@ export async function POST_Login(data: POST_Login_Params, setErrors: any, router
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
-    dispatch(setUser(response.data));
+
+    const { user, token } = response.data;
+
+    dispatch(
+      setUser({
+        ...user,
+        token,
+      })
+    );
+
     router.push("/profile");
     return response.data;
   } catch (error: any) {

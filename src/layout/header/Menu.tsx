@@ -3,6 +3,8 @@ import Link from "next/link";
 import React from "react";
 
 const Menu = () => {
+  
+
   return (
     <>
       {mobile_menu_data?.length &&
@@ -21,6 +23,7 @@ const Menu = () => {
             )}
           </li>
         ))}
+      
     </>
   );
 };

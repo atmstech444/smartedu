@@ -10,26 +10,26 @@ import Profile from "./profile/Profile";
 import { POST_Logout } from "@/api/POST_Logout";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
+import MobileNavigation from "./MobileNavigation";
 
 export type pageType = "profile" | "my-courses" | "settings";
 
 const ProfilePage = () => {
-  const nameSurname = "ნანუკა როინიშვილი";
-  const token = useAppSelector((state) => state.user.value?.token);
+  const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const logout = () => {
-    if (token) {
-      POST_Logout({ token }, router, dispatch);
+    if (user) {
+      POST_Logout({ token: user.token }, router, dispatch);
     }
   };
 
-  useEffect(()=>{
-    if(!token){
-      router.push("/sign-in")
+  useEffect(() => {
+    if (!user) {
+      router.push("/sign-in");
     }
-  },[])
+  }, []);
   const [page, setPage] = useState<pageType>("profile");
   let pageToRender: React.ReactNode;
 
@@ -50,13 +50,16 @@ const ProfilePage = () => {
     <Wrapper>
       <Main>
         <Content>
-          <ProfileMenu>
+          <ProfileMenu className="only-des">
             <ProfileInfo>
               <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
-              <P>{nameSurname}</P>
+              <P>
+                {user?.name} {user?.surname}
+              </P>
             </ProfileInfo>
             <Navigation>
               <NavItem
+                isActive={page === "profile"}
                 onClick={() => {
                   setPage("profile");
                 }}
@@ -65,6 +68,7 @@ const ProfilePage = () => {
                 <P>პროფილი</P>
               </NavItem>
               <NavItem
+                isActive={page === "my-courses"}
                 onClick={() => {
                   setPage("my-courses");
                 }}
@@ -73,6 +77,7 @@ const ProfilePage = () => {
                 <P>ჩემი კურსები</P>
               </NavItem>
               <NavItem
+                isActive={page === "settings"}
                 onClick={() => {
                   setPage("settings");
                 }}
@@ -80,22 +85,27 @@ const ProfilePage = () => {
                 <I className="fal fa-gear"></I>
                 <P>პარამეტრები</P>
               </NavItem>
-              <NavItem onClick={logout}>
+              <NavItem2 onClick={logout}>
                 <I className="fal fa-arrow-right-from-bracket"></I>
                 <P>გასვლა</P>
-              </NavItem>
+              </NavItem2>
             </Navigation>
           </ProfileMenu>
           <OpenedPage>{pageToRender}</OpenedPage>
         </Content>
       </Main>
+      <MobileNavigation page={page} setPage={setPage}/>
     </Wrapper>
   );
 };
 
 export default ProfilePage;
+const P = styled.div`
+  margin: 0;
+  color: black;
+`;
 
-const NavItem = styled.div`
+const NavItem = styled.div<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   gap: 16px;
@@ -103,13 +113,32 @@ const NavItem = styled.div`
   border-radius: 4px;
   padding: 8px;
   padding-left: 16px;
+  background-color: ${(props) => (props.isActive ? "#f3f4f8" : "transparent")};
   &:hover {
     background-color: #f3f4f8;
   }
 `;
+const NavItem2 = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 8px;
+  padding-left: 16px;
+`;
 
 const I = styled.i`
   color: black;
+`;
+
+const Navigation = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+  border-top: 1px solid #f3f4f8;
+  padding-top: 20px;
 `;
 
 const OpenedPage = styled.div`
@@ -122,7 +151,10 @@ const OpenedPage = styled.div`
 const Main = styled.main`
   background-color: #f3f4f8;
   min-height: 100dvh;
-  padding-top: 96px;
+  padding-top: 66px;
+  @media (max-width: 1080px) {
+    padding-top: 46px;
+  }
 `;
 
 const Content = styled.div`
@@ -156,18 +188,4 @@ const ProfileInfo = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
-`;
-
-const P = styled.div`
-  margin: 0;
-  color: black;
-`;
-
-const Navigation = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 20px;
-  border-top: 1px solid #f3f4f8;
-  padding-top: 20px;
 `;

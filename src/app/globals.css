@@ -36,3 +36,15 @@ span.yellow-shape img {
 span.yellow-bg-big img {
   bottom: 0px !important;
 }
+
+@media (min-width: 1080px) {
+  .only-mob {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  .only-des {
+    display: none !important;
+  }
+}
