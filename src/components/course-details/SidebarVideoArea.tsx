@@ -138,6 +138,7 @@ const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { 
           playsInline
           loop
           autoPlay
+          muted
         />
       )}
       {closeVisible && (
