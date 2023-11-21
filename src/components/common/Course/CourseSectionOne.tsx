@@ -9,7 +9,6 @@ import { API_STORAGE } from "@/api/API_PATH";
 
 const CourseSectionOne = () => {
   const courses = useAppSelector((state) => state.courses.courses);
-  console.log(courses);
   return (
     <section className="course__area pt-115 pb-120 grey-bg">
       <div className="container">

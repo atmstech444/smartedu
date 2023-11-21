@@ -3,7 +3,7 @@ import mobile_menu_data from "@/data/menu-data";
 import Link from "next/link";
 import React, { useState } from "react";
 
-const MenuTwo = () => {
+const MenuTwo = ({ close }: { close: any }) => {
   const [submenuOpen, setSubmenuOpen] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -19,29 +19,17 @@ const MenuTwo = () => {
           <li
             onClick={() => handleMenuToggle(item.id)}
             key={item.id}
-            className={`${
-              item.hasDropdown && submenuOpen === item.id && open === true
-                ? "menu-item-has-children has-droupdown active"
-                : `${
-                    item.hasDropdown
-                      ? "menu-item-has-children has-droupdown"
-                      : ""
-                  }`
-            }`}
+            className={`${item.hasDropdown && submenuOpen === item.id && open === true ? "menu-item-has-children has-droupdown active" : `${item.hasDropdown ? "menu-item-has-children has-droupdown" : ""}`}`}
           >
-            <Link href="#!"> {item.title} </Link>
+            <Link onClick={close} href={item.link}>
+              {" "}
+              {item.title}{" "}
+            </Link>
             {item.hasDropdown === true && (
               <ul
-                className={
-                  item.submenus && submenuOpen === item.id && open === true
-                    ? "submenu active"
-                    : "submenu"
-                }
+                className={item.submenus && submenuOpen === item.id && open === true ? "submenu active" : "submenu"}
                 style={{
-                  display:
-                    item.submenus && submenuOpen === item.id && open === true
-                      ? "block"
-                      : "none",
+                  display: item.submenus && submenuOpen === item.id && open === true ? "block" : "none",
                 }}
               >
                 {item?.submenus?.length &&

@@ -38,7 +38,7 @@ const MobileMenu = () => {
           </div>
           <div className="mm-menu">
             <ul>
-              <MenuTwo />
+              <MenuTwo close={toggleSideMenu} />
             </ul>
             {user ? (
               <i onClick={logout} style={{ cursor: "pointer", fontSize: "24px" }} className="only-mob fa-solid fa-arrow-right-from-bracket mt-20"></i>
