@@ -69,7 +69,7 @@ const CourseSectionOne = () => {
                   </h3>
                   <div className="course__teacher d-flex align-items-center">
                     <div className="course__teacher-thumb mr-15">
-                      <img src={API_STORAGE + item.lecturer.image} style={{ width: "auto", height: "auto" }} alt="image not found" />
+                      <img src={API_STORAGE + item.lecturer.image} style={{ width: "50px", height: "50px" }} alt="image not found" />
                     </div>
                     <h6>
                       <Link href="/instructor-details">
