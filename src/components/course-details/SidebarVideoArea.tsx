@@ -130,49 +130,69 @@ const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { 
         </div>
       </div>
       {isOpen && (
-        <VideoModel
-          src={API_STORAGE + course.intro}
-          onPlay={() => {
-            setCloseVisible(true);
-          }}
-          playsInline
-          loop
-          autoPlay
-          muted
-        />
-      )}
-      {closeVisible && (
-        <CloseVideo
-          onClick={() => {
-            setIsOpen(false);
-            setCloseVisible(false);
-          }}
-          className="fas fa-close"
-        ></CloseVideo>
+        <VideoWrapper>
+          <VideoModel
+            src={API_STORAGE + course.intro}
+            onPlay={() => {
+              setCloseVisible(true);
+            }}
+            playsInline
+            loop
+            autoPlay
+            muted
+            controls
+          />
+          {closeVisible && (
+            <CloseVideo
+              onClick={() => {
+                setIsOpen(false);
+                setCloseVisible(false);
+              }}
+              className="fas fa-close"
+            ></CloseVideo>
+          )}
+        </VideoWrapper>
       )}
     </>
   );
 };
 
 const CloseVideo = styled.i`
-  position: fixed;
-  top: 25dvh;
-  right: 25vw;
+  position: absolute;
+  top: 19dvh;
+  right: 20vw;
   transform: translate(-50%, -50%);
   z-index: 60;
   color: white;
   font-size: 40px;
   font-weight: 400;
   cursor: pointer;
+  @media (max-width: 480px) {
+    top: 32dvh;
+    right: 16px;
+  }
+`;
+
+const VideoWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5000;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const VideoModel = styled.video`
   width: 50vw;
-  position: fixed;
-  top: 50dvh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
-  z-index: 50;
+
+  @media (max-width: 480px) {
+    width: 100vw;
+  }
 `;
 
 export default SidebarVideoArea;
