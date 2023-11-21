@@ -17,18 +17,10 @@ const Footer = () => {
                     <div className="footer__widget-head mb-22">
                       <div className="footer__logo">
                         <Link href="/">
-                          <Image
-                            src={FooterLogo}
-                            alt="logo"
-                            className="img-fluid d-none d-sm-block"
-                          />
+                          <Image src={FooterLogo} alt="logo" className="img-fluid d-none d-sm-block" />
                         </Link>
                         <Link href="/">
-                          <Image
-                            src={FooterLogo}
-                            alt="logo"
-                            className="img-fluid d-block d-sm-none w-50 h-auto"
-                          />
+                          <Image src={FooterLogo} alt="logo" className="img-fluid d-block d-sm-none w-50 h-auto" />
                         </Link>
                       </div>
                     </div>
@@ -37,45 +29,23 @@ const Footer = () => {
                       <div className="footer__social">
                         <ul>
                           <li>
-                            <Link
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              href="https://www.facebook.com/smarteducation.ge/?show_switched_toast=0&show_invite_to_follow=0&show_switched_tooltip=0&show_podcast_settings=0&show_community_review_changes=0&show_community_rollback=0&show_follower_visibility_disclosure=0"
-                            >
+                            <Link target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/smarteducation.ge/">
                               <i className="fab fa-facebook-f"></i>
                             </Link>
                           </li>
                           <li>
-                            <Link
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              href="https://www.linkedin.com/company/thesmart-education/"
-                              className="tw"
-                            >
+                            <Link target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/thesmart-education/" className="tw">
                               <i className="fa-brands fa-linkedin-in"></i>
                             </Link>
                           </li>
                           <li>
-                            <Link
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              href="https://www.instagram.com/thesmart.education/?igshid=OGQ5ZDc2ODk2ZA%3D%3D"
-                              className="pin"
-                            >
+                            <Link target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/thesmart.education/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" className="pin">
                               <i className="fa-brands fa-instagram"></i>
                             </Link>
                           </li>
                           <li>
-                            <Link
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              href="http://www.tiktok.com/@thesmart.education"
-                              className="tiktok"
-                            >
-                              <i
-                                className="fa-brands fa-tiktok"
-                                style={{ color: "#000000" }}
-                              ></i>
+                            <Link target="_blank" rel="noopener noreferrer" href="http://www.tiktok.com/@thesmart.education" className="tiktok">
+                              <i className="fa-brands fa-tiktok" style={{ color: "#000000" }}></i>
                             </Link>
                           </li>
                         </ul>
@@ -92,19 +62,19 @@ const Footer = () => {
                       <div className="footer__link">
                         <ul>
                           <li>
-                            <Link href="/about">მთავარი</Link>
+                            <Link href="/">მთავარი</Link>
                           </li>
                           <li>
-                            <Link href="/course-grid">ჩვენ შესახებ</Link>
+                            <Link href="/about">ჩვენ შესახებ</Link>
                           </li>
                           <li>
-                            <Link href="/event-details">კონტაქტი</Link>
+                            <Link href="/contact">კონტაქტი</Link>
                           </li>
                           <li>
-                            <Link href="/instructor">წესები და პირობები</Link>
+                            <Link href="/terms-conditions">წესები და პირობები</Link>
                           </li>
                           <li>
-                            <Link href="/instructor">კონფიდენციარულობა</Link>
+                            <Link href="/policy-privacy">კონფიდენციარულობა</Link>
                           </li>
                         </ul>
                       </div>
