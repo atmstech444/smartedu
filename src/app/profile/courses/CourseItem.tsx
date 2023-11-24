@@ -22,13 +22,13 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
             <div className="course__lesson">
               <span>
                 <i className="far fa-book-alt"></i>
-                *Empty* Lesson
+                {course.lectures_count} Lesson
               </span>
             </div>
             <div className="course__rating">
               <span>
                 <i className="fas fa-star"></i>
-                *EMPTY* *EMPTY*
+                4.5 (45)
               </span>
             </div>
           </div>

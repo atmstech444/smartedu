@@ -20,6 +20,7 @@ export interface I_MyCourse {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
+  lectures_count: number;
   lecturer: {
     id: number;
     first_name: string;
