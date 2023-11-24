@@ -85,7 +85,7 @@ const CourseSectionOne = () => {
                   </div>
                   <div className="course__btn">
                     <Link href={`/course-details/${item.id}`} className="link-btn">
-                      დეტალები
+                      გაიგე მეტი
                       <i className="fas fa-arrow-right"></i>
                       <i className="fas fa-arrow-right"></i>
                     </Link>

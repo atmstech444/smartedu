@@ -16,7 +16,7 @@ const CartMain = () => {
 
   return (
     <>
-      <BreadcrumbTwo titleTwo="My Cart" subTitleTwo="My Cart" />
+      {/* <BreadcrumbTwo titleTwo="My Cart" subTitleTwo="My Cart" /> */}
       
     </>
   );

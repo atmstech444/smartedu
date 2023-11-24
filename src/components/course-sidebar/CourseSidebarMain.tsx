@@ -5,7 +5,7 @@ import CourseArea from "./CourseArea";
 const CourseSidebarMain = () => {
   return (
     <>
-      <Breadcrumb title="Courses" />
+      {/* <Breadcrumb title="Courses" /> */}
       <CourseArea />
     </>
   );

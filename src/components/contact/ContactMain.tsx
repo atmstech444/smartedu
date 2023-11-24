@@ -13,7 +13,7 @@ import ContactContent from "./ContactContent";
 const ContactMain = () => {
   return (
     <>
-      <Breadcrumb title="Contact" />
+      {/* <Breadcrumb title="Contact" /> */}
       <section className="contact__area pt-115 pb-120">
         <div className="container">
           <div className="row">

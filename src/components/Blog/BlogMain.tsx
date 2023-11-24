@@ -8,7 +8,7 @@ import BreadcrumbTwo from "../common/BreadcrumbTwo/BreadcrumbTwo";
 const BlogMain = () => {
   return (
     <>
-      <BreadcrumbTwo titleTwo="Blog Grid" subTitleTwo="Blog Grid" />
+      {/* <BreadcrumbTwo titleTwo="Blog Grid" subTitleTwo="Blog Grid" /> */}
       <section className="blog__area pt-120 pb-120">
         <div className="container">
           <div className="row">

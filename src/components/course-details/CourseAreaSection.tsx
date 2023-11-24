@@ -12,7 +12,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
             <img src={API_STORAGE + course.lecturer.image} style={{ width: "auto", height: "auto" }} alt="image not found" />
           </div>
           <div className="course__teacher-info-3">
-            <h5>მენტორი</h5>
+            <h5>ტუტორი</h5>
             <p>
               <Link href="#">
                 {course.lecturer.first_name} {course.lecturer.last_name}

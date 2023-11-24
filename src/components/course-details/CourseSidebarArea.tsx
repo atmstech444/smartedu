@@ -4,7 +4,7 @@ import Image from "next/image";
 import CourseDotImg from "../../../public/assets/img/course/course-dot.png";
 import { I_Course_Details } from "@/api/GET_CourseDetails";
 
-const CourseSidebarArea = ({ course , isBought}: { course: I_Course_Details, isBought:boolean }) => {
+const CourseSidebarArea = ({ course, isBought }: { course: I_Course_Details; isBought: boolean }) => {
   return (
     <div className="col-xxl-4 col-xl-4 col-lg-4">
       <div className="course__sidebar pl-70 p-relative">

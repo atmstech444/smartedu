@@ -6,7 +6,7 @@ import CheckoutArea from "./CheckoutArea";
 const CheckoutMain = () => {
   return (
     <>
-      <BreadcrumbTwo titleTwo="Checkout" subTitleTwo="Checkout" />
+      {/* <BreadcrumbTwo titleTwo="Checkout" subTitleTwo="Checkout" /> */}
       <CouponArea />
       <CheckoutArea />
     </>

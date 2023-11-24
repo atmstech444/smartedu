@@ -5,7 +5,7 @@ import CourseGridTab from "../Elements/Tabs/CourseGridTab";
 const CourseGridMain = () => {
   return (
     <>
-      <Breadcrumb title="კურსები" />
+      {/* <Breadcrumb title="კურსები" /> */}
       <CourseGridTab />
     </>
   );

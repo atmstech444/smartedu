@@ -67,7 +67,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>მენტორი :</span> {course.lecturer.first_name} {course.lecturer.last_name}
+                    <span>ტუტორი :</span> {course.lecturer.first_name} {course.lecturer.last_name}
                   </h5>
                 </div>
               </li>

@@ -74,7 +74,7 @@ const CourseGridTab = () => {
                               <div className="course__lesson">
                                 <span>
                                   <i className="far fa-book-alt"></i>
-                                  {item.lectures_count} ლექცია
+                                  {item.lectures_count} გაკვეთილი
                                 </span>
                               </div>
                               <div className="course__rating">
@@ -105,7 +105,7 @@ const CourseGridTab = () => {
                             </div>
                             <div className="course__btn">
                               <Link href={`/course-details/${item.id}`} className="link-btn">
-                                დეტალები
+                                გაიგე მეტი
                                 <i className="far fa-arrow-right"></i>
                                 <i className="far fa-arrow-right"></i>
                               </Link>

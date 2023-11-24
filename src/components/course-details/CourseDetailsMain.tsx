@@ -30,7 +30,7 @@ const CourseDetailsMain = ({ id }: idType) => {
 
   return (
     <>
-      <Breadcrumb title="კურსის დეტალები" />
+      {/* <Breadcrumb title="კურსის დეტალები" /> */}
       <section className="page__title-area pt-120 pb-90">
         <PageTItleShape />
         {course && (

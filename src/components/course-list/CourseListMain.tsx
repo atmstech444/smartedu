@@ -10,7 +10,7 @@ import CourseGridIconTwo from "@/svg/course-grid-icon-two";
 const CourseListMain = () => {
   return (
     <>
-      <Breadcrumb title="Courses" subTitle="Courses" />
+      {/* <Breadcrumb title="Courses" subTitle="Courses" /> */}
       <section className="course__area pt-120 pb-120">
         <div className="container">
           <div className="course__tab-inner grey-bg-2 mb-50">
