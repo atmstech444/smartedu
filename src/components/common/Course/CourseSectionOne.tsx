@@ -63,7 +63,7 @@ const CourseSectionOne = () => {
                       </span>
                     </div>
                   </div>
-                  <h3 className="course__title">
+                  <h3 className="course__title" style={{ height: "48px" }}>
                     <Link href={`/course-details/${item.id}`}>{item.title}</Link>
                   </h3>
                   <div className="course__teacher d-flex align-items-center">

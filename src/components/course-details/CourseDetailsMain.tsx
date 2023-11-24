@@ -82,7 +82,7 @@ const CourseDetailsMain = ({ id }: idType) => {
                       <div className="tab-pane fade" id="member" role="tabpanel" aria-labelledby="member-tab">
                         <CourseMember />
                       </div>
-                      {/* <ShareCourse /> */}
+                      <ShareCourse />
                     </div>
                   </div>
                   {/* <CourseRelated /> */}

@@ -9,7 +9,7 @@ const HomeTwoMain = () => {
   return (
     <>
       <HeroSectionTwo />
-      <CategorySection />
+      {/* <CategorySection /> */}
       <CourseSectionOne />
       <WhyChoose />
       <SkillineSection />

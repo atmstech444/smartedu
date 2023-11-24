@@ -3,13 +3,30 @@ import React, { useState } from "react";
 import { I_Course_Details } from "@/api/GET_CourseDetails";
 import { API_STORAGE } from "@/api/API_PATH";
 import styled from "styled-components";
+import { POST_Purchase } from "@/api/POST_Purchase";
+import { useAppSelector } from "@/redux/store";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { course: I_Course_Details }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [closeVisible, setCloseVisible] = useState(false);
-
+  const user = useAppSelector((state) => state.user.user);
+  const router = useRouter();
   const openVideoModal = (id: any) => {
     setIsOpen(!isOpen);
+  };
+
+  const purchase = () => {
+    if (user) {
+      POST_Purchase({ token: user?.token, course_id: course.id });
+    } else {
+      toast.error("გაიარე ავტორიზაცია", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      router.push("/sign-in");
+    }
   };
 
   return (
@@ -125,7 +142,9 @@ const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { 
             </Link> */}
           </div>
           <div className="course__enroll-btn">
-            <button className="e-btn e-btn-7 w-100">მოითხოვე ინვოისი</button>
+            <button onClick={purchase} className="e-btn e-btn-7 w-100">
+              ყიდვა
+            </button>
           </div>
         </div>
       </div>

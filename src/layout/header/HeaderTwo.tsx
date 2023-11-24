@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Logo from "../../../public/assets/img/logo/logo.png";
 import Image from "next/image";
 import useScrollDirection from "@/hooks/sticky-header";
@@ -11,6 +11,7 @@ import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { POST_Logout } from "@/api/POST_Logout";
 import { useRouter } from "next/navigation";
+import { GET_MyCourses } from "@/api/GET_MyCourses";
 const HeaderTwo = () => {
   const scrollDirection = useScrollDirection(null);
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
@@ -22,6 +23,12 @@ const HeaderTwo = () => {
       POST_Logout({ token: user.token }, router, dispatch);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      GET_MyCourses({ token: user.token }, dispatch);
+    }
+  }, [user]);
 
   return (
     <>

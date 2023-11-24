@@ -30,7 +30,6 @@ export async function POST_Logout(data: POST_Login_Params, router: any, dispatch
     router.push("/");
 
     const response = await axios.post<POST_Login_Success>(API_PATH + "auth/logout", null, config);
-    console.log(response);
     toast.success("გასვლა წარმატებით განხორციელდა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,

@@ -8,6 +8,7 @@ import { POST_Login } from "@/api/POST_Login";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import ServerError from "./ServerError";
+import { GET_MyCourses } from "@/api/GET_MyCourses";
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
@@ -22,8 +23,9 @@ const LoginForm = () => {
       password: "",
     },
     validationSchema: login_schema,
-    onSubmit: (values, { resetForm, setErrors }) => {
+    onSubmit: async (values, {  setErrors }) => {
       POST_Login(values, setErrors, router, dispatch, setServerError);
+      
     },
   });
 

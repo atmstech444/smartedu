@@ -18,9 +18,7 @@ const UpdatePasswordForm = () => {
       passwordConfirmation: "",
     },
     validationSchema: register_schema,
-    onSubmit: (values, { resetForm }) => {
-      console.log(values);
-    },
+    onSubmit: (values, { resetForm }) => {},
   });
   return (
     <form onSubmit={handleSubmit}>

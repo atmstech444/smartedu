@@ -3,13 +3,14 @@ import Image from "next/image";
 import Empty_Courses from "../../../../public/assets/img/profile/empty-courses.jpg";
 import styled from "styled-components";
 import CourseItem from "./CourseItem";
+import { useAppSelector } from "@/redux/store";
 export default function MyCourses() {
-  const [courses, setCourses] = useState([1, 1, 1, 1, 1]);
+  const courses = useAppSelector((state) => state.myCourses.courses);
   if (courses.length > 0) {
     return (
       <CourseWrapper>
         {courses.map((item, index) => (
-          <CourseItem key={"sf" + index} />
+          <CourseItem course={item} key={"sf" + index} />
         ))}
       </CourseWrapper>
     );
@@ -30,6 +31,7 @@ const EmptyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 36px;
 `;
 
 const P = styled.p`
