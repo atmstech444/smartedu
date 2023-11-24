@@ -8,7 +8,7 @@ import { useAppSelector } from "@/redux/store";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { course: I_Course_Details }) => {
+const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBought: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [closeVisible, setCloseVisible] = useState(false);
   const user = useAppSelector((state) => state.user.user);
@@ -18,14 +18,16 @@ const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { 
   };
 
   const purchase = () => {
-    if (user) {
-      POST_Purchase({ token: user?.token, course_id: course.id });
-    } else {
-      toast.error("გაიარე ავტორიზაცია", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
-      router.push("/sign-in");
+    if (!isBought) {
+      if (user) {
+        POST_Purchase({ token: user?.token, course_id: course.id });
+      } else {
+        toast.error("გაიარე ავტორიზაცია", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+        router.push("/sign-in");
+      }
     }
   };
 
@@ -136,14 +138,13 @@ const SidebarVideoArea: React.FC<{ course: I_Course_Details }> = ({ course }: { 
             </ul>
           </div>
           <div className="course__payment mb-35">
-            <h3>გადახდა:</h3>
             {/* <Link href="#">
               <Image src={PaymentImg} style={{ width: "auto", height: "auto" }} alt="image not found" />
             </Link> */}
           </div>
           <div className="course__enroll-btn">
             <button onClick={purchase} className="e-btn e-btn-7 w-100">
-              ყიდვა
+              {isBought ? "ნაყიდია" : "ყიდვა"}
             </button>
           </div>
         </div>
