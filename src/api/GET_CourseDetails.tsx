@@ -16,6 +16,22 @@ export interface I_Course_Details {
   updated_at: string;
   deleted_at: string | null;
   lectures_count: number;
+  syllabus: {
+    id: number;
+    course_id: number;
+    title: string;
+    created_at: string;
+    updated_at: string;
+    deleted_at: null | string;
+    descriptions: {
+      id: number;
+      course_syllabus_id: number;
+      description: string;
+      created_at: string;
+      updated_at: string;
+      deleted_at: null | string;
+    }[];
+  }[];
   lecturer: {
     id: number;
     first_name: string;
@@ -36,6 +52,8 @@ export interface I_Course_Details {
 export async function GET_CourseDetails(id: number) {
   try {
     const response = await axios.get<{ course: I_Course_Details }>(API_PATH + "courses/detail/" + id);
+    console.log(response.data.course);
+
     return response.data.course;
   } catch (error: any) {}
 }

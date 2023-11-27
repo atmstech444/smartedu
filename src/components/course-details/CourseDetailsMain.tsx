@@ -77,7 +77,7 @@ const CourseDetailsMain = ({ id }: idType) => {
                         <CourseDescription desc={course.description} />
                       </div>
                       <div className="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
-                        <CourseTabAccordion />
+                        <CourseTabAccordion course={course} />
                       </div>
                       <div className="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                         <CourseReview />

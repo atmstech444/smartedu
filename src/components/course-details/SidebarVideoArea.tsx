@@ -85,7 +85,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                   </h5>
                 </div>
               </li>
-              {/* <li className="d-flex align-items-center">
+              <li className="d-flex align-items-center">
                 <div className="course__video-icon">
                   <svg
                     version="1.1"
@@ -103,10 +103,10 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>ხანგრძილობა :</span>6 weeks
+                    <span>ხანგრძილობა :</span>{course.duration} სთ
                   </h5>
                 </div>
-              </li> */}
+              </li>
               {/* <li className="d-flex align-items-center">
                 <div className="course__video-icon">
                   <svg>
