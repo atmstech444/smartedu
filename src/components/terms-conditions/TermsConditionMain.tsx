@@ -17,13 +17,13 @@ const TermsConditionMain = () => {
                 <li role="presentation">
                   <button data-bs-toggle="tab" data-bs-target="#tab_privacy_policy" type="button" role="tab" aria-selected="false">
                     <i className="fas fa-circle"></i>
-                    <span>Policy & Privacy</span>
+                    <span>კონფიდენციალურობა</span>
                   </button>
                 </li>
                 <li role="presentation">
                   <button className="active" data-bs-toggle="tab" data-bs-target="#tab_terms_conditions" type="button" role="tab" aria-selected="true">
                     <i className="fas fa-circle"></i>
-                    <span>Terms & Conditions</span>
+                    <span>წესები და პირობები</span>
                   </button>
                 </li>
               </ul>
@@ -32,166 +32,153 @@ const TermsConditionMain = () => {
               <div className="tab-content mb-60">
                 <div className="tab-pane fade" id="tab_privacy_policy" role="tabpanel">
                   <div className="terms_conditions_content grey-bg">
-                    <h3 className="warpper_title">Privacy Policy Agreement</h3>
+                    <h3 className="warpper_title">კონფიდენციალურობის პოლიტიკა</h3>
                     <p>
-                      Companies or websites that handle customer information are required by law and third parties to publish their Privacy Policies on their business websites. If you own a website, web app, mobile app or that collects or processes
-                      user data, you most certainly will have to post a Privacy Policy on your website (or give in-app access to the full Privacy Policy agreement).
-                    </p>
-                    <h4 className="info_title">Here are some of the main reasons:</h4>
-                    <ul className="icon_list unordered_list_block">
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">
-                          <strong>1. Responsive Design</strong>: Ensures a seamless experience across various devices.
-                        </span>
-                      </li>
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">
-                          <strong>2. User-Friendly Interface</strong>: Easy navigation for educators and students.
-                        </span>
-                      </li>
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">
-                          <strong>3. Course Management</strong>: Efficient creation and organization of course content.
-                        </span>
-                      </li>
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">
-                          <strong>4. Interactive Learning</strong>: Engaging features like forums, quizzes, and assignments.
-                        </span>
-                      </li>
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">
-                          <strong>5. Modern Technologies</strong>: Benefits of React, Next.js, and TypeScript..
-                        </span>
-                      </li>
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">{`Let's`} take a look at each of these reasons in more depth.</span>
-                      </li>
-                    </ul>
-
-                    <h4 className="info_title">What we collect</h4>
-                    <p>
-                      As a provider of the
-                      {` "Educal - Education And Online
-                      Courses Template,"`}{" "}
-                      you may collect and{" "}
-                      <Link className="link" href="/faq">
-                        Google require website
-                      </Link>{" "}
-                      certain information from users who interact with your platform. The specific types of information you collect can vary based on the features and functionalities of your template. However, here are some common types of
-                      information that might be collected:
-                    </p>
-                    <p>Some of the most popular third party services require website and app owners to post Privacy Policy agreements on their websites. Some of these services include:</p>
-
-                    <h4 className="info_title">Questions, comments, or report of incidents</h4>
-                    <p className="mb-1">You may direct questions, comments or reports to:</p>
-                    <p>
-                      <Link className="author_mail" href="mailto:howdy@paradox.com">
-                        howdy@educal.com
-                      </Link>
-                    </p>
-                    <h4 className="info_title">Revisions to this privacy policy without notice</h4>
-                    <p className="mb-0">
-                      This Privacy Policy is dynamic. It will continually change. You may not assume that it remains the same and you agree to check the policy each time you visit the site for changes. Unless, in the sole opinion of the website, this
-                      policy changes so drastically as to suggest a posted notification on the site or via email, you will receive no notification of changes to this Privacy Policy nor, under any circumstances, does this site promise notification.
-                      Your continued use of this site always evidences your acceptance of the terms this Privacy Policy or any modifications.
+                      <b>ინფორმაცია, რომელსაც&nbsp; ჩვენ ვაგროვებთ</b>
+                      <br />
+                      ჩვენ ვაგროვებთ ინფორმაციას, რომელსაც თქვენ ნებაყოფლობით გვაწვდით, როგორიცაა თქვენი სახელი, ელ.ფოსტის მისამართი, ტელეფონის ნომერი, დაბადების თარიღი და ეროვნება. ჩვენ ასევე შეიძლება შევაგროვოთ ინფორმაცია თქვენს მიერ ჩვენი
+                      ვებსაიტის გამოყენების შესახებ, როგორიცაა თქვენი IP მისამართი, ბრაუზერის ტიპი და თქვენ მიერ მონახულებული გვერდები. როგორ ვიყენებთ თქვენს ინფორმაციას ჩვენ ვიყენებთ თქვენს ინფორმაციას, რომ მოგაწოდოთ ის სერვისები, რომლებსაც ითხოვთ,
+                      მაგალითად, გამოგიგზავნოთ ჩვენი საინფორმაციო წერილები. ჩვენ ასევე შეიძლება გამოვიყენოთ თქვენი ინფორმაცია ჩვენი ვებსაიტისა და სერვისების გასაუმჯობესებლად, ვებგვერდის გამოყენებისა და ტენდენციების გასაანალიზებლად და თქვენი
+                      გამოცდილების პერსონალიზებისთვის.
+                      <br />
+                      <br />
+                      <b>თქვენი ინფორმაციის გაზიარება</b>
+                      <br />
+                      ჩვენ არ ვყიდით ან ვაქირავებ თქვენს პირად ინფორმაციას მესამე პირებზე. თუმცა, ჩვენ შეიძლება გავუზიაროთ თქვენი ინფორმაცია ჩვენი სერვისის პროვაიდერებს, რომლებიც გვეხმარებიან ჩვენი სერვისების თქვენთან მოწოდებაში. ჩვენ ასევე შეიძლება
+                      გავამჟღავნოთ თქვენი ინფორმაცია, თუ ამას მოითხოვს კანონი, ან თუ გვჯერა, რომ ასეთი გამჟღავნება აუცილებელია ჩვენი უფლებების, ან სხვათა უსაფრთხოების დასაცავად.
+                      <br />
+                      <br />
+                      <b>“ქუქები” და მონაცემთა შეგროვების სხვა ტექნოლოგიები</b>
+                      <br />
+                      ჩვენ შეიძლება გამოვიყენოთ “ქუქები” და მონაცემთა შეგროვების სხვა ტექნოლოგიები თქვენი ვებსაიტის გამოყენების შესახებ ინფორმაციის თავმოსაყრელად. ეს ინფორმაცია შეიძლება შეიცავდეს თქვენს IP მისამართს, ბრაუზერის ტიპს და თქვენ მიერ
+                      მონახულებულ გვერდებს. ჩვენ ვიყენებთ ამ ინფორმაციას ჩვენი ვებსაიტის გასაუმჯობესებლად და თქვენი გამოცდილების პერსონალიზებისთვის.
+                      <br />
+                      <br />
+                      <b>უსაფრთხოება</b>
+                      <br />
+                      ჩვენ ვიღებთ გონივრულ ზომებს, რათა დავიცვათ თქვენი პერსონალური ინფორმაცია არაავტორიზებული წვდომისა და გამჟღავნებისგან. თუმცა, უსაფრთხოების ზომები არ არის სრულყოფილი და ჩვენ არ შეგვიძლია ვიყოთ თქვენი ინფორმაციის დაცვის გარანტი
+                      არაავოტირიზებული წვდომისას.
+                      <br />
+                      <br />
+                      <b>ცვლილებები კონფიდენციალურობის პოლიტიკაში</b>
+                      <br />
+                      ჩვენ შეიძლება დროდადრო განვაახლოთ ეს კონფიდენციალურობის პოლიტიკა. ჩვენ შეგატყობინებთ ნებისმიერი ცვლილების შესახებ ახალი კონფიდენციალურობის პოლიტიკის ჩვენს ვებგვერდზე გამოქვეყნებით.
+                      <br />
+                      <br />
+                      <b>დაგვიკავშირდით</b>
+                      თუ თქვენ გაქვთ შეკითხვა ამ კონფიდენციალურობის პოლიტიკასთან დაკავშირებით, გთხოვთ დაგვიკავშირდეთ შემდეგ ელ. ფოსტაზე: weare@thesmart.education
                     </p>
                   </div>
                 </div>
                 <div className="tab-pane fade show active" id="tab_terms_conditions" role="tabpanel">
                   <div className="terms_conditions_content">
-                    <h3 className="warpper_title">Terms and Conditions Agreement</h3>
+                    <h3 className="warpper_title">წესები და პირობები</h3>
                     <p>
-                      A terms and conditions agreement outlines the website administrator’s rules regarding user behaviour and provides information about the actions the website administrator can and will perform. Essentially, your terms and
-                      conditions text is a{" "}
-                      <Link className="link" href="/contact">
-                        contract between your website and its users
-                      </Link>
-                      . In the event of a legal dispute, arbitrators will look at it to determine whether each party acted within their rights.
-                    </p>
-                    <p>Condition is not a new concept. Humans have always desired privacy in their social as well as private lives. But the idea of privacy as a human right is a relatively modern phenomenon.</p>
-                    <h4 className="info_title">Here are some of the main reasons:</h4>
-                    <ul className="icon_list unordered_list_block">
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">
-                          <strong>Abusive users</strong>: Terms and Conditions agreements allow you to establish what constitutes appropriate activity on your site or app, empowering you to remove abusive users and content
-                        </span>
-                      </li>
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">
-                          <strong>Intellectual property theft</strong>: Asserting your claim to the creative assets of your site in your terms and conditions will prevent ownership disputes and copyright infringement.
-                        </span>
-                      </li>
-                      <li>
-                        <span className="list_item_icon">
-                          <i className="fas fa-circle"></i>
-                        </span>
-                        <span className="list_item_text">
-                          <strong>Potential litigation:</strong> If a user lodges a legal complaint against your business, showing that they were presented with clear terms and conditions before they used your site will help you immensely in court.
-                        </span>
-                      </li>
-                    </ul>
-                    <h4 className="info_title">To Set Liabilities Limits</h4>
-                    <p>
-                      Almost every terms and conditions agreement has a warranty or limitations of liability disclaimer. We’ll cover it in more detail in our section about{" "}
-                      <Link className="link" href="/policy-privacy">
-                        what clauses to include in your terms and conditions
-                      </Link>
-                      , but this clause essentially limits what customers can hold you liable for.
-                    </p>
-
-                    <h4 className="info_title">Most companies restrict liability for:</h4>
-                    <ul className="icon_list unordered_list_block">
-                      <li>
-                        <span className="list_item_text">1. Inaccuracies and errors</span>
-                      </li>
-                      <li>
-                        <span className="list_item_text">2. Lack of enjoyment</span>
-                      </li>
-                      <li>
-                        <span className="list_item_text">3. Product or website downtime</span>
-                      </li>
-                      <li>
-                        <span className="list_item_text">4. Viruses, spyware, and product damage</span>
-                      </li>
-                    </ul>
-
-                    <h4 className="info_title">To Outline Policies and Avoid Abusive Behavior</h4>
-                    <p className="mb-1">You may direct questions, comments or reports to:</p>
-                    <p>
-                      <Link className="author_mail" href="mailto:howdy@paradox.com">
-                        howdy@educal.com
-                      </Link>
-                    </p>
-                    <h4 className="info_title">Revisions to this Teams & Condition without Notice</h4>
-                    <p className="mb-0">
-                      This Privacy Policy is dynamic. It will continually change. You may not assume that it remains the same and you agree to check the policy each time you visit the site for changes. Unless, in the sole opinion of the website, this
-                      policy changes so drastically as to suggest a posted notification on the site or via email, you will receive no notification of changes to this Privacy Policy nor, under any circumstances, does this site promise notification.
-                      Your continued use of this site always evidences your acceptance of the terms this Privacy Policy or any modifications.
+                      მოგესალმებით ჩვენი კომპანიის ვებ-გვერდზე, თუ თქვენ აპირებთ ამ ვებ-გვერდის გამოყენებას, წინამდებარე წესები და პირობები გახლავთ სავალდებულო ძალის მქონე შეთანხმება თქვენსა და შპს „სმარტ ედუქეიშენს” (შემდგომში კომპანია) შორის,
+                      რომელიც არეგულირებს თქვენს მიერ ვებ-გვერდის http://www.smarteducation.ge გამოყენების პირობებს. გთხოვთ, ყურადღებით გაეცნოთ წინამდებარე წესებსა და პირობებს.
+                      <br />
+                      <br />
+                      ტერმინთა განმარტება
+                      <br />
+                      <br />
+                      1.1. „კომპანია“ - შპს „სმარტ ედუქეიშენ”.
+                      <br />
+                      <br />
+                      1.2. „ვებ-გვერდი“ - http://www.smarteducation.ge , რომლის მეშვეობით ხდება სხვადასხვა სერვისით სარგებლობა მომხმარებლების მიერ.
+                      <br />
+                      <br />
+                      1.3. „კომპანიის პროდუქტი“ - ყველა ის პროდუქტი, რომელსაც კომპანია სთავაზობს მომხმარებელს.
+                      <br />
+                      <br />
+                      1.4. „მომხმარებელი“ - გულისხმობს, დაინტერესებულ პირს (პირთა ჯგუფს).
+                      <br />
+                      <br />
+                      1.5. „დაინტერესებული პირი“ - პირი, (პირთა ჯგუფი) რომელსაც სურს, საკუთარი ინიციატივით გახდეს კომპანიის მომხმარებელი და ისარგებლოს კომპანიის სხვა პროდუქტებით, მაგალითად, სწავლება, ანალიტიკური რეპორტის შეძენა, სიახლეების გამოწერა
+                      და ა.შ.
+                      <br />
+                      <br />
+                      1.6. „რეგისტრირებული მომხმარებელი“ - დაინტერესებული პირი, რომელიც სარგებლობს კომპანიის ვებ-გვერდით და ვებ-გვერდზე განთავსებული კონკრეტული პროდუქტებით.
+                      <br />
+                      <br />
+                      1.7. „გამომწერი“ - მომხმარებელი, რომელიც დარეგისტრირდა ვებ-გვერდზე ან/და გამოიწერა კომპანიის სერვისი.
+                      <br />
+                      <br />
+                      1.8. „სტუმარი“ - მომხმარებელი, რომელიც სარგებლობს ვებ-გვერდით გამოწერისა და რეგისტრაციის გრეშე.
+                      <br />
+                      <br />
+                      1.9. „ავტორიზებული მომხმარბელი“ - ნიშნავს მომხმარებელს, რომელმაც გაიარა ავტორიზაცია ვებ-გვერდზე.
+                      <br />
+                      <br />
+                      1.10. მხარეები - ნიშნავს ერთი მხრივ კომპანიას, ხოლო მეორე მხრივ მომხმარებელს.
+                      <br />
+                      <br />
+                      1.11. „ანგარიში“ - ნიშნავს პირად ინფორმაციას, რომელიც &nbsp; მომხმარებლის მიერ განთავსდა ვებ-გვერდზე და სადაც მას შეუძლია შესვლა მომხმარებლის სახელით და პაროლის გამოყენებით.
+                      <br />
+                      <br />
+                      1.12. „საბანკო ანგარიში“ - ნიშნავს ანგარიშსწორების ანგარიშს, საიდანაც ხდება სხვადასხვა ოპერაციის განხორციელება.
+                      <br />
+                      <br />
+                      1.13. „ოპერაცია“ - ნიშნავს მომხმარებლის მიერ განხორციელბულ ნებისმიერ ოპერაციას, როგორც პირადი ანგარიშიდან, ასევე კომპანიის პროდუქტებთან დაკავშირებით.
+                      <br />
+                      <br />
+                      1.14. „ელექტრონული საგადამხდელო სისტემა“ - ნიშნავს გადახდის საშუალებას, რომელიც საშუალებას აძლევს მხარეებს, განახორციელონ ორმხრივი ანგარიშსწორებები ელექტრონული საშუალებების გამოყენებით. ინფორმაციის სიზუსტე
+                      <br />
+                      <br />
+                      2.1. შპს „სმარტ ედუქეიშენ” არ არის პასუხისმგებელი ვებ-გვერდზე განთავსებულ ინფორმაციის სიზუსტეზე, მიუხედავად იმისა, რომ კომპანია ცდილობს მომხმარებლებს მიაწოდოს ზუსტი და უტყუარი ინფორმაცია, ეს უკანასკნელი არ გახლავთ გარანტია
+                      ვებ-გვერდზე განთავსებული ინფორმაციის სიზუსტისა. კომპანიის ვებ-გვერდზე განთავსებული ინფორმაცია ეყრდნობა სხვადასხვა საჯარო სივრცეში განთავსებულ ინფორმაციას, ან ინდივიდუალური ანალიტიკოსის ნამუშევრებს, შესაბამისად, თუ მომხმარებელი
+                      დააპირებს აღნიშნული ინფორმაციის გამოყენებას, მას უნდა ესმოდეს, რომ ეს უკანასკნელი არის მომხმარებლის რისკი და კომპანია არ არის პასუხისმგებელი ვებ-გვერდზე გამოქვეყნებული ინფორმაციის გამოყენებით დამდგარ ზიანზე. პირობები და
+                      ინტელექტუალური საკუთრება
+                      <br />
+                      <br />
+                      3.1. წინამდებარე წესებსა და პირობებზე თანხმობით მომხმარებელი ადასტურებს, რომ:
+                      <br />
+                      <br />
+                      3.2. მომხმარებელი აცნობიერებს, რომ კომპანიის ვებ-გვერდი და მასზე განთავსებული ინფორმაცია, როგორიც არის სამარკო ნიშანი, სტატიები, ნაშრომები, ანალიზი და ყველა ინტელექტუალური საგანი&nbsp; წარმოადგენს კომპანიის საკუთრებას და მას არ
+                      აქვს უფლება მისი მითვისების, კოპირების, მესამე პირისთვის კომერციული მიზნებით გადაცემის, რეალიზაციის, დაპატენტების ან ყველა იმ ქმედების, რომელიც ლახავს კომპანიის საავტორო უფლებას. განცხადებები და გარანტიები
+                      <br />
+                      <br />
+                      4.1. მომხმარებელი ადასტურებს, რომ სრულად გაეცნო წინამდებარე განცხადებებსა და პირობებს, ეთანხმება მათ და პრეტენზია არ გააჩნია.
+                      <br />
+                      <br />
+                      4.2. მომხმარებელი ადასტურებს, რომ მის მიერ რეგისტრაციის დროს შეყვანილი ინფორმაცია არის ავთენტიკური და შეესაბამება ნამდვილობას.
+                      <br />
+                      <br />
+                      4.3. მომხმარებელი იძლევა გარანტიას, რომ მას აქვს უფლება ან გააჩნია შესაბამისი უფლებამოსილება, იმისათვის, რომ ხელი მოაწეროს წინამდებარე წესებსა და პირობებს, ასევე კომპანიის ვებ-გვერდზე განთავსებულ ნებისმიერ სხვა დოკუმენტაციას.
+                      <br />
+                      <br />
+                      4.4. მომხმარებელი აცნობიერებს, რომ თუ მის მიერ მესამე პირზე გადაცემული ნებისმიერი ინფორმაცია, რომელმაც შეიძლება დააზიანოს/დააზიანა, როგორც მესამე პირის, ასევე კომპანიისა და თავად მომხმარებლის ინტერესები, პასუხისმგებლობა ეკისრება
+                      თავად მომხმარებელს.
+                      <br />
+                      <br />
+                      მონაცემთა გამოყენება და დაცვა
+                      <br />
+                      <br />
+                      5.1. კომპანია მაქსიმალურად ცდილობს დაიცვას მისი მომხმარებლების პირადი მონაცემები, თუმცა იმის გათვალისწინებით, რომ არსებული მონაცემების გადაცემა/მიწოდება კომპანიისთვის ხდება ვებ-გვერდის მეშვეობით (დისტანციურად), კომპნია არ იღებს
+                      ვალდებულებასა და პასუხისმგებლობას იმ შემთხვევაში, თუ აღნიშნული მონაცემები ჩაუვარდა მესამე პირს ვებ-გვერდით არასანქცირებული წვდომისას.
+                      <br />
+                      <br />
+                      5.2. კომპანიის ვებ-გვერდის სტუმრობისას მომხმარებლის ე.წ „ნაკვალევი“ შეიძლება გამოყონებული იყოს კომპანიის მხრიდან, არსებული ურთიერთობების გაუმჯობესებისთვის.
+                      <br />
+                      <br />
+                      5.3. კომპანიასა და მომხმარებელს შორის არსებული შეთანხმების საფუძველზე, მომხმარებელს შეიძლება მოუწიოს კომპანიის ადმინისტრაციისთვის, კომპანიის ოფიციალურ ელექტრონულ ფოსტაზე პირადი ინფორმაციის გაგზავნა, იმ შემთხვევაში, თუ აღნიშნული
+                      პროცესის დროს მომხმარებლის პირადი მონაცემები ხელში ჩაუვარდა მესამე პირს, რომელიც არის მესამე პირის არასანქცირებული ჩართვით გამოწვეული, კომპანია ამ ფაქტზე და მის შედეგებზე არ არის პასუხისმგებელი. ვებ-გვერდზე არსებული ბმულები
+                      <br />
+                      <br />
+                      6.1. კომპანია უფლებამოსილია, საკუთარ ვებ-გვერდზე განათავსოს სხვადასხვა ბმული, მათ შორის მესამე პირის დაქვემდებარებაში მყოფი ვებ-გვერდის ბმულები.
+                      <br />
+                      <br />
+                      6.2. იმ შემთხვევაში თუ მომხმარებელი ისარგებლებს 6.1. პუნქტში გათვალისწინებული ბმულებით, იგი აცნობიერებს, რომ მესამე პირის დაქვემდებარებაში/საკუთრებაში არსებული ბმულები არ ექვემდებარება კომპანიის კონტროლს, ასევე მათზე არსებული
+                      ინფორმაციისა თუ შინაარსის სიზუსტესა და უტყუარობაზე პასუხისმგებელი არ არის კომპანია, შესაბამისად, მომხმარებელი ვალდებული თავად გაეცნოს მესამე პირის ვებ-გვერდზე არსებულ წესებსა და პირობებს. ცვლილებების განხორციელება
+                      <br />
+                      <br />
+                      7.1. კომპანია უფლებამოსილია წინამდებარე წესებსა და პირობებში შეიტანოს ცვლილება ისე, რომ წინასარ არ შეატყობინოს მომხმარებელს.
+                      <br />
+                      <br />
+                      7.2. მომხმარებელი ვალდებულია რეგულარულად გაეცნოს წინამდებარე წესებსა და პირობებს, ვინაიდან მომხმარებლის მიერ საიტის გამოყენება ავტომატურად ნიშნავს თქვენს მიერ აღნიშნული წესებისა და პირობების დათანხმებას. საკონტაქო ინფორმაცია
+                      <br />
+                      <br />
+                      8.1.ნებისმიერი შეკითხვის არსებობის შემთხვევაში, რაც უკაშირდება წინამდებარე წესებსა და პირობებს, ასევე ვებ-გვერდზე მითითებულ სხვა ნებისმიერ ინფორმაციას გთხოვთ, გამოგვიგზავნოთ ელექტრონული ფოსტის მისამართზე:
+                      weare@thesmart.education
                     </p>
                   </div>
                 </div>
