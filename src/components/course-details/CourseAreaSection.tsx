@@ -4,6 +4,27 @@ import Link from "next/link";
 import React from "react";
 
 const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
+  const stars = [];
+  for (let i = 1; i <= course.average_rating; i++) {
+    stars.push(
+      <li>
+        <Link href="#">
+          {" "}
+          <i className="fas fa-star"></i>{" "}
+        </Link>
+      </li>
+    );
+  }
+  if (course.average_rating % 1 !== 0) {
+    stars.push(
+      <li>
+        <Link href="#">
+          {" "}
+          <i className="fa-solid fa-star-half-stroke"></i>{" "}
+        </Link>
+      </li>
+    );
+  }
   return (
     <>
       <div className="course__meta-2 d-sm-flex mb-30">
@@ -25,42 +46,17 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
           <p>July 24, 2023</p>
         </div> */}
         <div className="course__rating-2 mb-30">
-          <h5>შეფასება:</h5>
-          <div className="course__rating-inner d-flex align-items-center">
-            <ul>
-              <li>
-                <Link href="#">
-                  {" "}
-                  <i className="fas fa-star"></i>{" "}
-                </Link>
-              </li>
-              <li>
-                <Link href="#">
-                  {" "}
-                  <i className="fas fa-star"></i>{" "}
-                </Link>
-              </li>
-              <li>
-                <Link href="#">
-                  {" "}
-                  <i className="fas fa-star"></i>{" "}
-                </Link>
-              </li>
-              <li>
-                <Link href="#">
-                  {" "}
-                  <i className="fas fa-star"></i>{" "}
-                </Link>
-              </li>
-              <li>
-                <Link href="#">
-                  {" "}
-                  <i className="fa-solid fa-star-half-stroke"></i>{" "}
-                </Link>
-              </li>
-            </ul>
-            <p>4.5</p>
-          </div>
+          {course.average_rating !== 0 ? (
+            <>
+              <h5>შეფასება:</h5>
+              <div className="course__rating-inner d-flex align-items-center">
+                <ul>{stars}</ul>
+                <p>{course.average_rating}</p>
+              </div>
+            </>
+          ) : (
+            <p>შეფასება არ არის</p>
+          )}
         </div>
       </div>
       <div className="course__img w-img mb-30">

@@ -17,7 +17,12 @@ import { useAppSelector } from "@/redux/store";
 const CourseDetailsMain = ({ id }: idType) => {
   const [course, setCourse] = useState<null | I_Course_Details>(null);
   const myCourses = useAppSelector((state) => state.myCourses.courses);
-  const isBought = myCourses.find((course) => course.id === Number(id));
+  const isBought = myCourses.find((course) => {
+    if (course) {
+      return course.id === Number(id);
+    }
+  });
+
   useEffect(() => {
     if (id) {
       GET_CourseDetails(id).then((res) => {

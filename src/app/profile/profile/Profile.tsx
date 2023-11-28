@@ -1,12 +1,16 @@
 import styled from "styled-components";
 import Course from "./Course";
 import InfoBox from "./InfoBox";
+import { useAppSelector } from "@/redux/store";
 
 export default function Profile() {
+  const myCourses = useAppSelector((state) => state.myCourses.courses);
+  const nonNullCoursesCount = myCourses.filter((course) => course !== null).length;
+
   return (
     <Wrapper>
       <Flexbox>
-        <InfoBox infoTitle="ჩემი კურსები" infoValue="20" />
+        <InfoBox infoTitle="ჩემი კურსები" infoValue={nonNullCoursesCount.toString()} />
         <InfoBox infoTitle="ნანახი საათები" infoValue="340" />
         <InfoBox infoTitle="გავლილი კურსები" infoValue="5" />
       </Flexbox>

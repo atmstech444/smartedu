@@ -21,6 +21,7 @@ export interface I_MyCourse {
   updated_at: string;
   deleted_at: string | null;
   lectures_count: number;
+  average_rating: number;
   lecturer: {
     id: number;
     first_name: string;

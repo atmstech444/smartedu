@@ -1,45 +1,71 @@
 "use client";
-import Link from "next/link";
 import React from "react";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import * as Yup from "yup";
+import { POST_Contact, POST_Contact_Params } from "@/api/POST_Contact";
 
 const ContactForm = () => {
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const initialValues = {
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("სახელი აუცილებელია"),
+    email: Yup.string().email("არასწორი ფორმატი").required("ელ. ფოსტა აუცილებელია"),
+    subject: Yup.string().required("სათაური აუცილებელია"),
+    message: Yup.string().required("შეტყობინება აუცილებელია"),
+  });
+
+  const handleSubmit = async (values: POST_Contact_Params, { resetForm }: FormikHelpers<POST_Contact_Params>) => {
+    try {
+      await POST_Contact(values);
+      resetForm();
+    } catch (error) {}
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="row">
-        <div className="col-xxl-6 col-xl-6 col-md-6">
-          <div className="contact__form-input">
-            <input type="text" placeholder="სახელი" name="name" />
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+      {({ errors, touched }) => (
+        <Form>
+          <div className="row">
+            <div className="col-xxl-6 col-xl-6 col-md-6">
+              <div className="contact__form-input">
+                <Field type="text" placeholder="სახელი" name="name" />
+                <ErrorMessage name="name" component="div" className="error" />
+              </div>
+            </div>
+            <div className="col-xxl-6 col-xl-6 col-md-6">
+              <div className="contact__form-input">
+                <Field type="email" placeholder="ელ. ფოსტა" name="email" />
+                <ErrorMessage name="email" component="div" className="error" />
+              </div>
+            </div>
+            <div className="col-xxl-12">
+              <div className="contact__form-input">
+                <Field type="text" placeholder="სათაური" name="subject" />
+                <ErrorMessage name="subject" component="div" className="error" />
+              </div>
+            </div>
+            <div className="col-xxl-12">
+              <div className="contact__form-input">
+                <Field as="textarea" placeholder="შეტყობინება" name="message" />
+                <ErrorMessage name="message" component="div" className="error" />
+              </div>
+            </div>
+            <div className="col-xxl-12">
+              <div className="contact__btn">
+                <button type="submit" className="e-btn">
+                  გაგზავნა
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="col-xxl-6 col-xl-6 col-md-6">
-          <div className="contact__form-input">
-            <input type="email" placeholder="ელ. ფოსტა" name="email" />
-          </div>
-        </div>
-        <div className="col-xxl-12">
-          <div className="contact__form-input">
-            <input type="text" placeholder="სათაური" name="subject" />
-          </div>
-        </div>
-        <div className="col-xxl-12">
-          <div className="contact__form-input">
-            <textarea placeholder="შეტყობინება" name="message"></textarea>
-          </div>
-        </div>
-
-        <div className="col-xxl-12">
-          <div className="contact__btn">
-            <button type="submit" className="e-btn">
-              გაგზავნა
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

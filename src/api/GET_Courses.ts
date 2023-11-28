@@ -13,6 +13,7 @@ export interface I_Course {
   lecturer_id: number;
   course_category_id: number;
   lectures_count: number;
+  average_rating: number;
   category: {
     id: number;
     title: string;

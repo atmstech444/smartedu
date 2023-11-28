@@ -78,10 +78,14 @@ const CourseGridTab = () => {
                                 </span>
                               </div>
                               <div className="course__rating">
-                                <span>
-                                  <i className="fas fa-star"></i>
-                                  RATING RATING
-                                </span>
+                                {item.average_rating !== 0 ? (
+                                  <span>
+                                    <i className="fas fa-star"></i>
+                                    {item.average_rating}
+                                  </span>
+                                ) : (
+                                  <span>შეფასება არ არის</span>
+                                )}
                               </div>
                             </div>
                             <h3 className="course__title" style={{ height: "48px" }}>
@@ -100,7 +104,7 @@ const CourseGridTab = () => {
                           </div>
                           <div className="course__more d-flex justify-content-between align-items-center">
                             <div className="course__status d-flex align-items-center">
-                              <span className={item.price ? `${item.price}` : ""}>{item.price}</span>
+                              <span className={item.price ? `${item.price}` : ""}>₾ {item.price}</span>
                               {/* <span className="old-price">{item.oldPrice === 0 ? " " : `$${item.oldPrice}.00`}</span> */}
                             </div>
                             <div className="course__btn">

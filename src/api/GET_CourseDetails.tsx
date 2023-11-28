@@ -16,6 +16,7 @@ export interface I_Course_Details {
   updated_at: string;
   deleted_at: string | null;
   lectures_count: number;
+  average_rating: number;
   syllabus: {
     id: number;
     course_id: number;
@@ -52,8 +53,6 @@ export interface I_Course_Details {
 export async function GET_CourseDetails(id: number) {
   try {
     const response = await axios.get<{ course: I_Course_Details }>(API_PATH + "courses/detail/" + id);
-    console.log(response.data.course);
-
     return response.data.course;
   } catch (error: any) {}
 }

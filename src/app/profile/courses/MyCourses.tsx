@@ -7,13 +7,7 @@ import { useAppSelector } from "@/redux/store";
 export default function MyCourses() {
   const courses = useAppSelector((state) => state.myCourses.courses);
   if (courses.length > 0) {
-    return (
-      <CourseWrapper>
-        {courses.map((item, index) => (
-          <CourseItem course={item} key={"sf" + index} />
-        ))}
-      </CourseWrapper>
-    );
+    return <CourseWrapper>{courses.map((item, index) => item && <CourseItem course={item} key={"sf" + index} />)}</CourseWrapper>;
   } else {
     return (
       <EmptyWrapper>

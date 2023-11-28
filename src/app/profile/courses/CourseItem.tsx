@@ -22,17 +22,17 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
             <div className="course__lesson">
               <span>
                 <i className="far fa-book-alt"></i>
-                {course.lectures_count} Lesson
+                {course.lectures_count} გაკვეთილი
               </span>
             </div>
             <div className="course__rating">
               <span>
                 <i className="fas fa-star"></i>
-                4.5 (45)
+                {course.average_rating}
               </span>
             </div>
           </div>
-          <h3 className="course__title">
+          <h3 className="course__title" style={{ height: "50px" }}>
             <Link href={`/course-details/${course.id}`}>{course.title}</Link>
           </h3>
           <div className="course__teacher d-flex align-items-center">
