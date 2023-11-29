@@ -15,7 +15,6 @@ const myCoursesSlice = createSlice({
   initialState,
   reducers: {
     setMyCourses(state, action: PayloadAction<I_MyCourse[]>) {
-      console.log(action.payload);
       state.courses = action.payload;
     },
   },
