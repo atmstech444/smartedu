@@ -1,6 +1,4 @@
 import React from "react";
-import Link from "next/link";
-import BreadcrumbTwo from "../common/BreadcrumbTwo/BreadcrumbTwo";
 
 const TermsConditionMain = () => {
   return (
