@@ -1,10 +1,21 @@
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
 import FooterLogo from "../../../public/assets/img/logo/logo.png";
 import Image from "next/image";
 import CopyrightArea from "./copyright-area";
+import { POST_Subscribe } from "@/api/POST_Subscribe";
 
 const Footer = () => {
+  const email = useRef<HTMLInputElement | null>(null);
+  const submit = async (event: any) => {
+    event.preventDefault();
+    if (email.current?.value) {
+      try {
+        await POST_Subscribe({ email: email.current.value });
+        email.current.value = "";
+      } catch {}
+    }
+  };
   return (
     <>
       <footer>
@@ -88,9 +99,9 @@ const Footer = () => {
                     </div>
                     <div className="footer__widget-body">
                       <div className="footer__subscribe">
-                        <form action="#">
+                        <form onSubmit={submit}>
                           <div className="footer__subscribe-input mb-15">
-                            <input type="email" placeholder="ელ-ფოსტა" />
+                            <input ref={email} type="email" placeholder="ელ-ფოსტა" />
                             <button type="submit">
                               <i className="fas fa-arrow-right"></i>
                               <i className="fas fa-arrow-right"></i>
