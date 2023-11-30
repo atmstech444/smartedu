@@ -11,6 +11,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
   const [lectures, setLectures] = useState<I_WatchCourse[]>([]);
   const id = params.id;
   const user = useAppSelector((state) => state.user.user);
+  const [activeIndex, setActiveIndex] = useState(0);
   const myCourses = useAppSelector((state) => state.myCourses.courses);
   const hasBought = myCourses.find((course) => {
     if (course) {
@@ -42,13 +43,13 @@ const Watching = ({ params }: { params: { id: number } }) => {
         <Main>
           <Content>
             <Left>
-              <Video src={API_STORAGE + lectures[0].video_url} controls></Video>
+              <Video src={API_STORAGE + lectures[activeIndex].video_url} controls></Video>
               <Title>აღწერა</Title>
-              <Description>{lectures[0].description}</Description>
+              <Description>{lectures[activeIndex].description}</Description>
             </Left>
             <Right>
-              {lectures.map((lecture) => {
-                return <div key={`lect${lecture.id}`}>{lecture.title}</div>;
+              {lectures.map((lecture, index) => {
+                return <LectureSwitch setActiveIndex={setActiveIndex} activeIndex={activeIndex} index={index} key={`lect${lecture.id}`} lecture={lecture} />;
               })}
             </Right>
           </Content>
@@ -57,6 +58,48 @@ const Watching = ({ params }: { params: { id: number } }) => {
     </Wrapper>
   );
 };
+
+interface LectureSwitchProps {
+  lecture: I_WatchCourse;
+  index: number;
+  activeIndex: number;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex }: LectureSwitchProps) => {
+  return (
+    <Parent>
+      <i
+        onClick={() => {
+          setActiveIndex(index + 1);
+        }}
+        style={{ cursor: "pointer" }}
+        className={`far  ${activeIndex > index ? "fa-check-square" : "fa-square"}`}
+      ></i>
+      <LectureTitle
+        onClick={() => {
+          setActiveIndex(index);
+        }}
+        isActive={index === activeIndex}
+      >
+        {lecture.title}
+      </LectureTitle>
+    </Parent>
+  );
+};
+
+const Parent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
+const LectureTitle = styled.p<{ isActive: boolean }>`
+  color: ${(props) => (props.isActive ? "black" : "gray")};
+  font-size: 16px;
+  margin: 0px;
+  cursor: pointer;
+`;
 
 const Left = styled.div`
   width: 100vw;
