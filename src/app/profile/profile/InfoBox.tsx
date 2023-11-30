@@ -1,15 +1,18 @@
+import { StaticImageData } from "next/image";
 import styled from "styled-components";
-
+import Image from "next/image";
 interface Props {
   infoTitle: string;
   infoValue: string;
+  img: StaticImageData;
 }
 
-export default function InfoBox({ infoTitle, infoValue }: Props) {
+export default function InfoBox({ infoTitle, infoValue, img }: Props) {
   return (
     <Box>
       <InfoTitle>{infoTitle}</InfoTitle>
       <InfoValue>{infoValue}</InfoValue>
+      <Image style={{ position: "absolute", top: "40%", right: "16px", transform: "translateX(-50%)" }} width={50} src={img} alt="" />
     </Box>
   );
 }
@@ -34,7 +37,7 @@ const Box = styled.div`
   border-radius: 8px;
   color: white;
   padding: 16px;
-
+  position: relative;
   &:nth-child(2) {
     background-color: #ffb703;
   }

@@ -7,9 +7,10 @@ interface DropdownProps {
     value: string;
     text: string;
   }[];
+  exportValue: any;
 }
 
-export default function Dropdown({ label, options }: DropdownProps) {
+export default function Dropdown({ label, options, exportValue }: DropdownProps) {
   const [expand, setExpand] = useState(false);
   const [value, setValue] = useState(options[0]);
   return (
@@ -32,6 +33,7 @@ export default function Dropdown({ label, options }: DropdownProps) {
               onClick={() => {
                 setExpand(false);
                 setValue(option);
+                exportValue(option.value);
               }}
             >
               {option.text}
@@ -86,7 +88,7 @@ const Select = styled.div`
   font-size: 14px;
   border: 2px solid transparent;
   background: #f6f6f7;
-  color: #0e1133;
+  color: gray;
   border-radius: 6px;
   cursor: pointer;
   overflow: visible;
@@ -98,6 +100,6 @@ const Select = styled.div`
 const Label = styled.label`
   font-size: 16px;
   font-weight: 500;
-  color: #0e1133;
+  color:#0e1133;
   margin-bottom: 11px;
 `;

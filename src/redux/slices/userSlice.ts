@@ -6,10 +6,20 @@ interface User {
   name: string;
   surname: string;
   email: string;
-  email_verified_at: null | string;
+  age: string | null;
+  gender: string | null;
+  phone_number: string | null;
+  city: string | null;
+  education: string | null;
+  faculty: string | null;
+  employment_status: string | null;
+  employment_industry: string | null;
+  employment_position: string | null;
+  email_verified_at: string;
   is_admin: number;
   created_at: string;
   updated_at: string;
+  deleted_at: string | null;
   token: string;
 }
 

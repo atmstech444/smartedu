@@ -3,13 +3,19 @@ import styled from "styled-components";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  exportValue: any;
 }
 
-export default function Input({ label, ...rest }: InputProps) {
+export default function Input({ label, exportValue, ...rest }: InputProps) {
   return (
     <Wrapper>
       <Label>{label}</Label>
-      <Inp {...rest} />
+      <Inp
+        {...rest}
+        onChange={(event: any) => {
+          exportValue(event.target.value);
+        }}
+      />
     </Wrapper>
   );
 }
@@ -31,8 +37,9 @@ const Inp = styled.input`
   border-radius: 6px;
   border: 1px solid gray;
   font-size: 16px;
-  &::placeholder{
+  &::placeholder {
     font-size: 16px;
+    color: gray;
   }
   &:focus {
     outline: none;

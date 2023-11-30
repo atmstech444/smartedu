@@ -5,12 +5,49 @@ import { useAppSelector } from "@/redux/store";
 import Dropdown from "@/components/form/Dropdown";
 import Input from "@/components/form/Input";
 import Progress from "@/components/form/Progress";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import courses from "../../../../public/assets/img/luka/courses.svg";
+import done from "../../../../public/assets/img/luka/done.svg";
+import time from "../../../../public/assets/img/luka/time.svg";
+import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
 
 export default function Profile() {
   const myCourses = useAppSelector((state) => state.myCourses.courses);
+  const user = useAppSelector((state) => state.user.user);
+  const [percent, setPercent] = useState<number>(20);
+  const [request, setRequest] = useState(0);
+
+  const [data, setData] = useState({
+    age: null,
+    gender: null,
+    phone_number: null,
+    city: null,
+    education: null,
+    faculty: null,
+    employment_status: null,
+    employment_industry: null,
+    employment_position: null,
+  });
   const nonNullCoursesCount = myCourses.filter((course) => course !== null).length;
-  const [percent, setPercent] = useState(20);
+  useEffect(() => {
+    if (user && request) {
+      try {
+        PUT_UpdateUser({ ...data, token: user.token });
+        if (percent === 20) setPercent(50);
+        if (percent === 50) setPercent(80);
+        if (percent === 80) setPercent(100);
+      } catch {}
+    }
+  }, [request]);
+
+  useEffect(() => {
+    if (user) {
+      if (user.age) setPercent(50);
+      if (user.city) setPercent(80);
+      if (user.employment_status) setPercent(100);
+    }
+  }, [user]);
+
   return (
     <Wrapper>
       {percent !== 100 && (
@@ -21,6 +58,9 @@ export default function Profile() {
             <Flexbox>
               <Dropdown
                 label="ასაკი"
+                exportValue={(value: any) => {
+                  setData({ ...data, age: value });
+                }}
                 options={[
                   { value: "12-18", text: "12-18" },
                   { value: "18-23", text: "18-23" },
@@ -37,13 +77,28 @@ export default function Profile() {
                   { value: "მდედრობითი", text: "მდედრობითი" },
                   { value: "მამრობითი", text: "მამრობითი" },
                 ]}
+                exportValue={(value: any) => {
+                  setData({ ...data, gender: value });
+                }}
               />
-              <Input label="მობილურის ნომერი" placeholder="მობილურის ნომერი" />
+              <Input
+                exportValue={(value: any) => {
+                  setData({ ...data, phone_number: value });
+                }}
+                label="მობილურის ნომერი"
+                placeholder="მობილურის ნომერი"
+              />
             </Flexbox>
           )}
           {percent === 50 && (
             <Flexbox>
-              <Input label="ქალაქი" placeholder="ქალაქი" />
+              <Input
+                exportValue={(value: any) => {
+                  setData({ ...data, city: value });
+                }}
+                label="ქალაქი"
+                placeholder="ქალაქი"
+              />
 
               <Dropdown
                 label="განათლება"
@@ -56,8 +111,17 @@ export default function Profile() {
                   { value: "დოქტორანტი", text: "დოქტორანტი" },
                   { value: "დოქტორი", text: "დოქტორი" },
                 ]}
+                exportValue={(value: any) => {
+                  setData({ ...data, education: value });
+                }}
               />
-              <Input label="ფაკულტეტი" placeholder="ფაკულტეტი" />
+              <Input
+                exportValue={(value: any) => {
+                  setData({ ...data, faculty: value });
+                }}
+                label="ფაკულტეტი"
+                placeholder="ფაკულტეტი"
+              />
             </Flexbox>
           )}
           {percent === 80 && (
@@ -68,9 +132,24 @@ export default function Profile() {
                   { value: "დასაქმებული", text: "დასაქმებული" },
                   { value: "უმუშავარი", text: "უმუშავარი" },
                 ]}
+                exportValue={(value: any) => {
+                  setData({ ...data, employment_status: value });
+                }}
               />
-              <Input label="დასაქმების ინდუსტრია" placeholder="დასაქმების ინდუსტრია" />
-              <Input label="პოზიცია" placeholder="პოზიცია" />
+              <Input
+                exportValue={(value: any) => {
+                  setData({ ...data, employment_industry: value });
+                }}
+                label="დასაქმების ინდუსტრია"
+                placeholder="დასაქმების ინდუსტრია"
+              />
+              <Input
+                exportValue={(value: any) => {
+                  setData({ ...data, employment_position: value });
+                }}
+                label="პოზიცია"
+                placeholder="პოზიცია"
+              />
             </Flexbox>
           )}
           <Parent>
@@ -78,22 +157,23 @@ export default function Profile() {
             <Percentage>{percent} %</Percentage>
             <Button
               onClick={() => {
-                if (percent === 20) setPercent(50);
-                if (percent === 50) setPercent(80);
-                if (percent === 80) setPercent(100);
+                setRequest(request + 1);
               }}
             >
               {percent !== 80 ? "შემდეგი" : "დასრულება"}
             </Button>
           </Parent>
+          <Devider />
         </>
       )}
 
       <Flexbox style={{ marginTop: "36px" }}>
-        <InfoBox infoTitle="ჩემი კურსები" infoValue={nonNullCoursesCount.toString()} />
-        <InfoBox infoTitle="ნანახი საათები" infoValue="340" />
-        <InfoBox infoTitle="გავლილი კურსები" infoValue="5" />
+        <InfoBox img={courses} infoTitle="ჩემი კურსები" infoValue={nonNullCoursesCount.toString()} />
+        <InfoBox img={time} infoTitle="ნანახი საათები" infoValue="340" />
+        <InfoBox img={done} infoTitle="გავლილი კურსები" infoValue="5" />
       </Flexbox>
+      <Devider />
+
       <Title>განაგრძე ყურება</Title>
       <Flexbox>
         <Course />
@@ -103,6 +183,15 @@ export default function Profile() {
     </Wrapper>
   );
 }
+
+const Devider = styled.div`
+  width: 100%;
+  height: 1px;
+  border-radius: 8px;
+  background-color: #e4e3e3;
+  margin-top: 32px;
+  margin-bottom: 32px;
+`;
 
 const Parent = styled.div`
   display: flex;
@@ -145,7 +234,6 @@ const Title = styled.p`
 const Subtitle = styled.p`
   font-size: 16px;
   margin-bottom: 20px;
-  color: black;
 `;
 
 const Flexbox = styled.div`

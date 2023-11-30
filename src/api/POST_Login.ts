@@ -10,10 +10,20 @@ export interface POST_Login_Success {
     name: string;
     surname: string;
     email: string;
-    email_verified_at: null | string;
+    age: string | null;
+    gender: string | null;
+    phone_number: string | null;
+    city: string | null;
+    education: string | null;
+    faculty: string | null;
+    employment_status: string | null;
+    employment_industry: string | null;
+    employment_position: string | null;
+    email_verified_at: string;
     is_admin: number;
     created_at: string;
     updated_at: string;
+    deleted_at: string | null;
   };
 }
 
@@ -54,6 +64,7 @@ export async function POST_Login(data: POST_Login_Params, setErrors: any, router
     );
 
     router.push("/profile");
+    console.log(response.data);
     return response.data;
   } catch (error: any) {
     if (error.response.data.message) {
