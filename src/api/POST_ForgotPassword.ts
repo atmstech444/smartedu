@@ -8,7 +8,7 @@ export interface POST_ForgotPassword_Params {
 
 export async function POST_ForgotPassword(data: POST_ForgotPassword_Params) {
   try {
-    const response = await axios.post(API_PATH + "email/resend", data);
+    const response = await axios.post(API_PATH + "forgot-password", data);
     toast.success("ელ.ფოსტა წარმატებით გაიგზავნა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
