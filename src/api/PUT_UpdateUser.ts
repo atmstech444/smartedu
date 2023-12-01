@@ -44,6 +44,10 @@ export async function PUT_UpdateUser(data: PUT_UpdateUser_Params) {
     console.log(response.data);
     return response.data;
   } catch (error: any) {
+    toast.error("დაფიქსირდა შეცდომა", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
     throw error;
   }
 }

@@ -48,3 +48,7 @@ span.yellow-bg-big img {
     display: none !important;
   }
 }
+
+nextjs-portal {
+  display: none;
+}

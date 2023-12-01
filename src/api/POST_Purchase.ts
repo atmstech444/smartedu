@@ -15,11 +15,16 @@ export async function POST_Purchase(data: POST_Login_Params) {
   };
   try {
     const response = await axios.post(API_PATH + "courses/" + data.course_id + "/purchase", null, config);
-    
+
     toast.success("კურსი ნაყიდია", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
     return response.data;
-  } catch (error: any) {}
+  } catch (error: any) {
+    toast.error("დაფიქსირდა შეცდომა", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
 }

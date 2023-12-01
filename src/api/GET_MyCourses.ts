@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { setMyCourses } from "@/redux/slices/myCoursesSlice";
+import { toast } from "react-toastify";
 
 export interface POST_Login_Params {
   token: string;
@@ -52,5 +53,10 @@ export async function GET_MyCourses(data: POST_Login_Params, dispatch: any) {
     const response = await axios.get<{ courses: I_MyCourse[] }>(API_PATH + "courses/auth/user", config);
     dispatch(setMyCourses(response.data.courses));
     return response.data.courses;
-  } catch (error: any) {}
+  } catch (error: any) {
+    toast.error("დაფიქსირდა შეცდომა", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
 }

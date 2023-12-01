@@ -1,5 +1,6 @@
 // userSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 interface User {
   id: number;
@@ -28,7 +29,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  user: null,
+  user: Cookies.get("user") ? JSON.parse(Cookies.get("user")!) : null,
 };
 
 const userSlice = createSlice({
@@ -37,9 +38,11 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
+      Cookies.set("user", JSON.stringify(action.payload), { expires: 365 });
     },
     removeUser: (state) => {
       state.user = null;
+      Cookies.remove("user");
     },
   },
 });

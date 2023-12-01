@@ -14,5 +14,10 @@ export async function POST_Subscribe(data: POST_Subscribe_Params) {
       autoClose: 2000,
     });
     return response.data;
-  } catch (error: any) {}
+  } catch (error: any) {
+    toast.error("დაფიქსირდა შეცდომა", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
 }

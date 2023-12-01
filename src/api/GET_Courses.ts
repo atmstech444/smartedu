@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
+import { toast } from "react-toastify";
 
 export interface POST_Login_Success {
   courses: I_Course[];
@@ -32,5 +33,10 @@ export async function GET_Courses() {
   try {
     const response = await axios.get<POST_Login_Success>(API_PATH + "courses");
     return response.data.courses;
-  } catch (error: any) {}
+  } catch (error: any) {
+    toast.error("დაფიქსირდა შეცდომა", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
 }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { setMyCourses } from "@/redux/slices/myCoursesSlice";
+import { toast } from "react-toastify";
 
 export interface GET_WatchCourse_Params {
   token: string;
@@ -28,5 +29,10 @@ export async function GET_WatchCourse(data: GET_WatchCourse_Params) {
   try {
     const response = await axios.get<{ lectures: I_WatchCourse[] }>(API_PATH + `courses/${data.id}/lectures`, config);
     return response.data.lectures;
-  } catch (error: any) {}
+  } catch (error: any) {
+    toast.error("დაფიქსირდა შეცდომა", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
 }

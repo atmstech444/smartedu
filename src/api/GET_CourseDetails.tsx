@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
+import { toast } from "react-toastify";
 
 export interface I_Course_Details {
   id: 1;
@@ -54,5 +55,10 @@ export async function GET_CourseDetails(id: number) {
   try {
     const response = await axios.get<{ course: I_Course_Details }>(API_PATH + "courses/detail/" + id);
     return response.data.course;
-  } catch (error: any) {}
+  } catch (error: any) {
+    toast.error("დაფიქსირდა შეცდომა", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+    });
+  }
 }
