@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Course from "./Course";
 import InfoBox from "./InfoBox";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Dropdown from "@/components/form/Dropdown";
 import Input from "@/components/form/Input";
 import Progress from "@/components/form/Progress";
@@ -16,7 +16,7 @@ export default function Profile() {
   const user = useAppSelector((state) => state.user.user);
   const [percent, setPercent] = useState<number>(20);
   const [request, setRequest] = useState(0);
-
+  const dispatch = useAppDispatch();
   const [data, setData] = useState({
     age: null,
     gender: null,
@@ -32,7 +32,7 @@ export default function Profile() {
   useEffect(() => {
     if (user && request) {
       try {
-        PUT_UpdateUser({ ...data, token: user.token });
+        PUT_UpdateUser({ ...data, token: user.token }, user, dispatch);
         if (percent === 20) setPercent(50);
         if (percent === 50) setPercent(80);
         if (percent === 80) setPercent(100);

@@ -2,6 +2,7 @@ import { userType } from "@/interFace/interFace";
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
+import { User, setUser } from "@/redux/slices/userSlice";
 
 export interface POST_Register_Success {
   message: string;
@@ -29,7 +30,7 @@ export interface POST_Register_Error {
   passwordConfirmation?: string[];
 }
 
-export async function PUT_UpdateUser(data: PUT_UpdateUser_Params) {
+export async function PUT_UpdateUser(data: PUT_UpdateUser_Params, user: User, dispatch: any) {
   const config = {
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -41,6 +42,7 @@ export async function PUT_UpdateUser(data: PUT_UpdateUser_Params) {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
+    dispatch(setUser({ ...user, ...response.data.user }));
     return response.data;
   } catch (error: any) {
     toast.error("დაფიქსირდა შეცდომა", {
