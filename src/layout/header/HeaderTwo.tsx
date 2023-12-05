@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { POST_Logout } from "@/api/POST_Logout";
 import { useRouter } from "next/navigation";
 import { GET_MyCourses } from "@/api/GET_MyCourses";
+import { GET_Progress } from "@/api/GET_Progress";
 const HeaderTwo = () => {
   const scrollDirection = useScrollDirection(null);
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
@@ -27,6 +28,7 @@ const HeaderTwo = () => {
   useEffect(() => {
     if (user) {
       GET_MyCourses({ token: user.token }, dispatch);
+      GET_Progress({ token: user.token }, dispatch);
     }
   }, [user]);
 

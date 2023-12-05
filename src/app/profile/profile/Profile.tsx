@@ -17,6 +17,7 @@ export default function Profile() {
   const [percent, setPercent] = useState<number>(20);
   const [request, setRequest] = useState(0);
   const dispatch = useAppDispatch();
+  const progress = useAppSelector((state) => state.progress.progressInfo);
   const [data, setData] = useState({
     age: null,
     gender: null,
@@ -168,9 +169,9 @@ export default function Profile() {
       )}
 
       <Flexbox style={{ marginTop: "36px" }}>
-        <InfoBox img={courses} infoTitle="ჩემი კურსები" infoValue={nonNullCoursesCount.toString()} />
-        <InfoBox img={time} infoTitle="ნანახი საათები" infoValue="340" />
-        <InfoBox img={done} infoTitle="გავლილი კურსები" infoValue="5" />
+        <InfoBox img={courses} infoTitle="ჩემი კურსები" infoValue={progress.active_courses_count} />
+        <InfoBox img={time} infoTitle="ნანახი საათები" infoValue={progress.total_watched_time} />
+        <InfoBox img={done} infoTitle="გავლილი კურსები" infoValue={progress.completed_courses_count} />
       </Flexbox>
       <Devider />
 

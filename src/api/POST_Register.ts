@@ -32,9 +32,9 @@ export async function POST_Register(data: POST_Register_Params, setErrors: any, 
   });
   try {
     const response = await axios.post<POST_Register_Success>(API_PATH + "auth/register", data);
-    toast.success("რეგისტრაცია წარმატებით დასრულდა", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
+    toast.success("გადადი მეილზე და გაიარე ვერიფიკაცია რეგისტრაციის დასასრულებლად", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: false,
     });
     router.push("/sign-in");
     return response.data;

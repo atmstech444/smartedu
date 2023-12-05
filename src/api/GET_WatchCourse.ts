@@ -51,8 +51,6 @@ export async function GET_WatchCourse(data: GET_WatchCourse_Params) {
   };
   try {
     const response = await axios.get<{ lectures: I_WatchCourse[] }>(API_PATH + `courses/${data.id}/lectures`, config);
-    console.log(response.data.lectures);
-
     return response.data.lectures;
   } catch (error: any) {
     toast.error("დაფიქსირდა შეცდომა", {

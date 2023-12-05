@@ -8,7 +8,6 @@ import { POST_Login } from "@/api/POST_Login";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import ServerError from "./ServerError";
-import { GET_MyCourses } from "@/api/GET_MyCourses";
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
