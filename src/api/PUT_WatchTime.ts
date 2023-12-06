@@ -30,7 +30,7 @@ export async function PUT_WatchTime(data: PUT_WatchTime_Params) {
   };
   try {
     const response = await axios.put<PUT_WatchTime_Success>(API_PATH + `videos/${data.id}/update-progress`, data, config);
-
+    console.log(response.data);
     return response.data;
   } catch (error: any) {
     toast.error("დაფიქსირდა შეცდომა", {

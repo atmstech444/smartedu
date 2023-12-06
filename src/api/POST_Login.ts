@@ -53,18 +53,14 @@ export async function POST_Login(data: POST_Login_Params, setErrors: any, router
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
-
     const { user, token } = response.data;
-
     dispatch(
       setUser({
         ...user,
         token,
       })
     );
-
     router.push("/profile");
-    console.log(response.data);
     return response.data;
   } catch (error: any) {
     if (error.response.data.message) {

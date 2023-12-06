@@ -4,15 +4,17 @@ import { I_Course_Details } from "@/api/GET_CourseDetails";
 import { API_STORAGE } from "@/api/API_PATH";
 import styled from "styled-components";
 import { POST_Purchase } from "@/api/POST_Purchase";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { GET_MyCourses } from "@/api/GET_MyCourses";
 
 const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBought: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [closeVisible, setCloseVisible] = useState(false);
   const user = useAppSelector((state) => state.user.user);
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const openVideoModal = (id: any) => {
     setIsOpen(!isOpen);
   };
@@ -20,7 +22,9 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
   const purchase = () => {
     if (!isBought) {
       if (user) {
-        POST_Purchase({ token: user?.token, course_id: course.id });
+        POST_Purchase({ token: user?.token, course_id: course.id }).then(() => {
+          GET_MyCourses({ token: user?.token }, dispatch);
+        });
       } else {
         toast.error("გაიარე ავტორიზაცია", {
           position: toast.POSITION.TOP_RIGHT,
@@ -103,7 +107,8 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>ხანგრძილობა :</span>{course.duration} სთ
+                    <span>ხანგრძილობა :</span>
+                    {course.duration} სთ
                   </h5>
                 </div>
               </li>

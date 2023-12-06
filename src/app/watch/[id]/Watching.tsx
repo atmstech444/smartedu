@@ -20,6 +20,9 @@ const Watching = ({ params }: { params: { id: number } }) => {
   const video_ref = useRef<HTMLVideoElement>(null);
   const router = useRouter();
 
+
+  
+
   useEffect(() => {
     if (user) {
       GET_WatchCourse({ token: user?.token, id }).then((lectures) => {
@@ -32,7 +35,11 @@ const Watching = ({ params }: { params: { id: number } }) => {
               return false;
             }
           });
-          setActiveIndex(lecturesFiltered.length);
+          if (lecturesFiltered.length !== lectures.length) {
+            setActiveIndex(lecturesFiltered.length);
+          } else {
+            setActiveIndex(0);
+          }
         }
       });
     }
@@ -62,26 +69,87 @@ const Watching = ({ params }: { params: { id: number } }) => {
   }, [user]);
 
   useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      if (user && lectures[activeIndex]) {
+        PUT_WatchTime({
+          token: user.token,
+          id: lectures[activeIndex].id,
+          watched_time: video_ref.current?.currentTime || 0,
+        });
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      if (user && lectures[activeIndex] && video_ref.current) {
+        PUT_WatchTime({
+          token: user.token,
+          id: lectures[activeIndex].id,
+          watched_time: video_ref.current.currentTime || 0,
+        });
+      }
+    };
+  }, [lectures, activeIndex, user, video_ref.current]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = ""; // For Chrome
+      return ""; // For other browsers
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [lectures]);
+
+  useEffect(() => {
     const videoElement = video_ref.current;
     if (videoElement) {
-      if (lectures[activeIndex].video_progress?.watched_time) {
-        videoElement.currentTime = lectures[activeIndex].video_progress?.watched_time;
-      }
-
-      const handleTimeUpdate = () => {
+      
+      const handlePause = () => {
         const currentTime = Math.floor(videoElement.currentTime);
-        if (currentTime % 10 === 0) {
-          if (user) {
-            PUT_WatchTime({ token: user?.token, id: lectures[activeIndex].id, watched_time: currentTime });
-          }
+        if (user) {
+          PUT_WatchTime({ token: user?.token, id: lectures[activeIndex].id, watched_time: currentTime });
         }
       };
-      videoElement.addEventListener("timeupdate", handleTimeUpdate);
+
+      videoElement.addEventListener("pause", handlePause);
+
       return () => {
-        videoElement.removeEventListener("timeupdate", handleTimeUpdate);
+        videoElement.removeEventListener("pause", handlePause);
       };
     }
-  }, [video_ref.current]);
+  }, [video_ref.current, lectures]);
+
+  useEffect(() => {
+    const videoElement = video_ref.current;
+    const activeLecture = lectures[activeIndex];
+    if (activeLecture && activeLecture.video_progress?.watched_time !== undefined) {
+      if (videoElement) {
+        if (lectures[activeIndex].video_progress?.watched_time) {
+          console.log(activeLecture.video_progress.watched_time);
+          videoElement.currentTime = activeLecture.video_progress.watched_time;
+        }
+      }
+    }
+  }, [video_ref.current, lectures]);
+
+  useEffect(() => {
+    const videoElement = video_ref.current;
+
+    return () => {
+      if (videoElement && user && lectures[activeIndex]) {
+        const currentTime = Math.floor(videoElement.currentTime);
+        PUT_WatchTime({ token: user.token, id: lectures[activeIndex].id, watched_time: currentTime });
+      }
+    };
+  }, [lectures]);
 
   return (
     <Wrapper>
@@ -115,18 +183,21 @@ interface LectureSwitchProps {
 
 const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex, id }: LectureSwitchProps) => {
   const user = useAppSelector((state) => state.user.user);
-
+  const [isCompleted, setIsCompleted] = useState<boolean>(Boolean(lecture.video_progress?.is_completed));
   return (
     <Parent>
       <Flex>
         <i
-          onClick={() => {
+          onClick={async () => {
             if (user) {
-              POST_MarkAsCompleted({ token: user?.token, id });
+              try {
+                POST_MarkAsCompleted({ token: user?.token, id });
+                setIsCompleted(true);
+              } catch {}
             }
           }}
           style={{ cursor: "pointer" }}
-          className={`far  ${lecture.video_progress?.is_completed ? "fa-check-square" : "fa-square"}`}
+          className={`far  ${isCompleted ? "fa-check-square" : "fa-square"}`}
         ></i>
         <LectureTitle
           onClick={() => {
@@ -139,7 +210,7 @@ const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex, id }: Lect
       </Flex>
       <Flex>
         <i className="far fa-clock"></i>
-        <p style={{ margin: "0px", width: "65px" }}>{secondsToMinutes(lecture.duration.original.videoDuration)} წუთი</p>
+        <p style={{ margin: "0px", width: "65px" }}>{secondsToMinutes(lecture.video_duration)} წუთი</p>
       </Flex>
     </Parent>
   );

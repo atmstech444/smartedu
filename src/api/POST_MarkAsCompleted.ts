@@ -29,7 +29,6 @@ export async function POST_MarkAsCompleted(data: POST_MarkAsCompleted_Params) {
   };
   try {
     const response = await axios.post<POST_MarkAsCompleted_Success>(API_PATH + `videos/${data.id}/mark-as-completed`, data, config);
-
     return response.data;
   } catch (error: any) {
     toast.error("დაფიქსირდა შეცდომა", {

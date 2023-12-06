@@ -13,7 +13,6 @@ export async function POST_ForgotPassword(data: POST_ForgotPassword_Params) {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
-    console.log(response.data);
     return response.data;
   } catch (error: any) {
     toast.error("გაგზავნისას დაფიქსირდა შეცდომა", {

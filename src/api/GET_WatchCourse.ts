@@ -7,14 +7,6 @@ export interface GET_WatchCourse_Params {
   token: string;
   id: number;
 }
-interface Duration {
-  headers: Record<string, unknown>;
-  original: {
-    message: string;
-    videoDuration: number;
-  };
-  exception: unknown | null;
-}
 
 interface VideoProgress {
   id: number;
@@ -39,8 +31,8 @@ export interface I_WatchCourse {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
-  duration: Duration;
-  video_progress: VideoProgress;
+  video_duration: number;
+  video_progress: VideoProgress | null;
 }
 
 export async function GET_WatchCourse(data: GET_WatchCourse_Params) {
