@@ -1,56 +1,72 @@
-"use client";
 import React, { useState } from "react";
-import { useFormik } from "formik";
-// internal
-import ErrorMsg from "./error-msg";
-import { register_schema } from "@/utils/validation-schema";
 import styled from "styled-components";
+import { useAppSelector } from "@/redux/store";
+import { toast } from "react-toastify";
+import PUT_ChangePassword from "@/api/PUT_ChangePassword";
 
 const UpdatePasswordForm = () => {
-  const [showOldPass, setShowOldPass] = useState(false);
-  const [showPass, setShowPass] = useState(false);
-  const [showConPass, setShowConPass] = useState(false);
-  // use formik
-  const { handleChange, handleSubmit, handleBlur, errors, values, touched } = useFormik({
-    initialValues: {
-      oldPassword: "",
-      password: "",
-      passwordConfirmation: "",
-    },
-    validationSchema: register_schema,
-    onSubmit: (values, { resetForm }) => {},
-  });
+  const [oldPassword, setOldPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const user = useAppSelector((state) => state.user.user);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (user) {
+      if (password === passwordConfirmation) {
+        try {
+          await PUT_ChangePassword({
+            current_password: oldPassword,
+            new_password: password,
+            confirm_password: passwordConfirmation,
+            token: user.token,
+          });
+
+          resetForm();
+        } catch {}
+      } else {
+        toast.error("პაროლები არ ემთხვევა", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    }
+  };
+
+  const resetForm = () => {
+    setOldPassword("");
+    setPassword("");
+    setPasswordConfirmation("");
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="sign__input-wrapper">
-        <H5>ძველი პაროლი</H5>
+        <H5>მიმდინარე პაროლი</H5>
         <div className="sign__input mb-25">
-          <input name="old_password" value={values.oldPassword} onChange={handleChange} onBlur={handleBlur} type={showOldPass ? "text" : "password"} placeholder="ძველი პაროლი" id="name" required />
-          <i className="fal fa-user"></i>
-          {touched.oldPassword && <ErrorMsg error={errors.oldPassword} />}
+          <input name="oldPassword" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} type="password" placeholder="მიმდინარე პაროლი" required />
+          <i className="fal fa-lock"></i>
         </div>
 
         <div className="sign__input-wrapper mb-25">
           <H5>ახალი პაროლი</H5>
           <div className="sign__input">
-            <input name="password" value={values.password} onChange={handleChange} onBlur={handleBlur} type={showPass ? "text" : "password"} placeholder="ახალი პაროლი" id="password" required />
+            <input name="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="ახალი პაროლი" required />
             <i className="fal fa-lock"></i>
           </div>
-          {touched.password && <ErrorMsg error={errors.password} />}
         </div>
 
         <div className="sign__input-wrapper mb-10">
-          <H5>გაიმეორე პაროლი</H5>
+          <H5>გაიმეორე ახალი პაროლი</H5>
           <div className="sign__input">
-            <input name="passwordConfirmation" value={values.passwordConfirmation} onChange={handleChange} onBlur={handleBlur} type={showConPass ? "text" : "password"} placeholder="გაიმეორე პაროლი" id="passwordConfirmation" required />
+            <input name="passwordConfirmation" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} type="password" placeholder="გაიმეორე ახალი პაროლი" required />
             <i className="fal fa-lock"></i>
           </div>
-          {touched.passwordConfirmation && <ErrorMsg error={errors.passwordConfirmation} />}
         </div>
       </div>
 
-      <button style={{ marginTop: "31px" }} className="e-btn w-100">
-        {" "}
+      <button type="submit" style={{ marginTop: "31px" }} className="e-btn w-100">
         <span></span> შენახვა
       </button>
     </form>

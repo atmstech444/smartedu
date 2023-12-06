@@ -3,7 +3,6 @@ import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
 import { User, setUser } from "@/redux/slices/userSlice";
-
 export interface POST_Register_Success {
   message: string;
   user: userType;
@@ -37,7 +36,7 @@ export async function PUT_UpdateUser(data: PUT_UpdateUser_Params, user: User, di
     },
   };
   try {
-    const response = await axios.put<POST_Register_Success>(API_PATH + "user/profile/update", data, config);
+    const response = await axios.put<POST_Register_Success>(API_PATH + "user-profile/update", data, config);
     toast.success("ინფორმაცია განახლდა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
