@@ -176,7 +176,7 @@ export default function Profile() {
 
       <Flexbox style={{ marginTop: "36px" }}>
         <InfoBox img={courses} infoTitle="ჩემი კურსები" infoValue={progress.active_courses_count} />
-        <InfoBox img={time} infoTitle="ნანახი საათები" infoValue={progress.total_watched_time} />
+        <InfoBox img={time} infoTitle="ნანახი საათები" infoValue={secondsToHours(progress.total_watched_time, 1)} />
         <InfoBox img={done} infoTitle="გავლილი კურსები" infoValue={progress.completed_courses_count} />
       </Flexbox>
       <Devider />
@@ -189,6 +189,12 @@ export default function Profile() {
       </Flexbox>
     </Wrapper>
   );
+}
+
+function secondsToHours(seconds: number, decimalPlaces: number) {
+  const hours = seconds / 3600; // Convert seconds to hours
+  const roundedHours = +hours.toFixed(decimalPlaces); // Round to the specified decimal places
+  return roundedHours;
 }
 
 const Devider = styled.div`
