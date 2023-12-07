@@ -23,6 +23,7 @@ export interface I_MyCourse {
   deleted_at: string | null;
   lectures_count: number;
   average_rating: number;
+  completion_percentage: number;
   lecturer: {
     id: number;
     first_name: string;

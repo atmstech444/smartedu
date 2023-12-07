@@ -28,15 +28,16 @@ export async function PUT_WatchTime(data: PUT_WatchTime_Params) {
       Authorization: `Bearer ${data.token}`,
     },
   };
-  try {
-    const response = await axios.put<PUT_WatchTime_Success>(API_PATH + `videos/${data.id}/update-progress`, data, config);
-    console.log(response.data);
-    return response.data;
-  } catch (error: any) {
-    toast.error("დაფიქსირდა შეცდომა", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
-    });
-    throw error;
+  if (data.watched_time !== 0) {
+    try {
+      const response = await axios.put<PUT_WatchTime_Success>(API_PATH + `videos/${data.id}/update-progress`, data, config);
+      return response.data;
+    } catch (error: any) {
+      toast.error("დაფიქსირდა შეცდომა", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+      throw error;
+    }
   }
 }

@@ -10,6 +10,8 @@ import courses from "../../../../public/assets/img/luka/courses.svg";
 import done from "../../../../public/assets/img/luka/done.svg";
 import time from "../../../../public/assets/img/luka/time.svg";
 import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
+import { stat } from "fs";
+import { I_MyCourse } from "@/api/GET_MyCourses";
 
 export default function Profile() {
   const myCourses = useAppSelector((state) => state.myCourses.courses);
@@ -29,7 +31,11 @@ export default function Profile() {
     employment_industry: null,
     employment_position: null,
   });
-  const nonNullCoursesCount = myCourses.filter((course) => course !== null).length;
+  myCourses.sort((a: I_MyCourse, b: I_MyCourse) => {
+    return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+  });
+
+  const firstThreeCourses = myCourses.slice(0, 3);
   useEffect(() => {
     if (user && request) {
       try {
@@ -177,9 +183,9 @@ export default function Profile() {
 
       <Title>განაგრძე ყურება</Title>
       <Flexbox>
-        <Course />
-        <Course />
-        <Course />
+        {firstThreeCourses.map((course) => {
+          return <Course course={course} key={course.id + "sokf"} />;
+        })}
       </Flexbox>
     </Wrapper>
   );

@@ -1,16 +1,22 @@
+import { API_STORAGE } from "@/api/API_PATH";
+import { I_MyCourse } from "@/api/GET_MyCourses";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
-export default function Course() {
+export default function Course({ course }: { course: I_MyCourse }) {
   return (
     <Wrapper>
       <Header>
-        <Icon />
-        <Title>კურსის სახელი</Title>
+        <Icon src={API_STORAGE + course.cover_image} />
+        <Title>{course.title}</Title>
       </Header>
-      <ProgressText>57%</ProgressText>
-      <Progress max={100} value={57} />
-      <Button>განაგრძე</Button>
+      <ProgressText>{Math.round(course.completion_percentage)}%</ProgressText>
+      <Progress max={100} value={Math.round(course.completion_percentage)} />
+
+      <Link href={`/watch/${course.id}`}>
+        <Button>განაგრძე</Button>
+      </Link>
     </Wrapper>
   );
 }
@@ -62,7 +68,7 @@ const Title = styled.p`
   margin: 0;
 `;
 
-const Icon = styled.div`
+const Icon = styled.img`
   width: 30px;
   aspect-ratio: 1;
   border-radius: 50%;

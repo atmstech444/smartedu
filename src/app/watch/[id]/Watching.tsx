@@ -1,6 +1,6 @@
 "use client";
 import { API_STORAGE } from "@/api/API_PATH";
-import { GET_MyCourses } from "@/api/GET_MyCourses";
+import { GET_MyCourses, I_MyCourse } from "@/api/GET_MyCourses";
 import { GET_WatchCourse, I_WatchCourse } from "@/api/GET_WatchCourse";
 import { POST_MarkAsCompleted } from "@/api/POST_MarkAsCompleted";
 import { PUT_WatchTime } from "@/api/PUT_WatchTime";
@@ -16,12 +16,9 @@ const Watching = ({ params }: { params: { id: number } }) => {
   const user = useAppSelector((state) => state.user.user);
   const [activeIndex, setActiveIndex] = useState(0);
   const dispatch = useAppDispatch();
-  const [hasBought, setHasBought] = useState(false);
+  const [hasBought, setHasBought] = useState<any>(false);
   const video_ref = useRef<HTMLVideoElement>(null);
   const router = useRouter();
-
-
-  
 
   useEffect(() => {
     if (user) {
@@ -59,7 +56,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
           if (!course) {
             router.push("/sign-in");
           } else {
-            setHasBought(true);
+            setHasBought(course);
           }
         }
       });
@@ -106,12 +103,11 @@ const Watching = ({ params }: { params: { id: number } }) => {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [lectures]);
+  }, [lectures,activeIndex]);
 
   useEffect(() => {
     const videoElement = video_ref.current;
     if (videoElement) {
-      
       const handlePause = () => {
         const currentTime = Math.floor(videoElement.currentTime);
         if (user) {
@@ -125,7 +121,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
         videoElement.removeEventListener("pause", handlePause);
       };
     }
-  }, [video_ref.current, lectures]);
+  }, [video_ref.current, lectures, activeIndex]);
 
   useEffect(() => {
     const videoElement = video_ref.current;
@@ -133,12 +129,11 @@ const Watching = ({ params }: { params: { id: number } }) => {
     if (activeLecture && activeLecture.video_progress?.watched_time !== undefined) {
       if (videoElement) {
         if (lectures[activeIndex].video_progress?.watched_time) {
-          console.log(activeLecture.video_progress.watched_time);
           videoElement.currentTime = activeLecture.video_progress.watched_time;
         }
       }
     }
-  }, [video_ref.current, lectures]);
+  }, [video_ref.current, lectures, activeIndex]);
 
   useEffect(() => {
     const videoElement = video_ref.current;
@@ -156,6 +151,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
       {Number(hasBought && lectures.length > 0) && (
         <Main>
           <Content>
+            <TitleCourse style={{ fontWeight: 500 }}>{hasBought.title}</TitleCourse>
             <Left>
               <Video ref={video_ref} src={API_STORAGE + lectures[activeIndex].video_url} controls></Video>
               <Title>აღწერა</Title>
@@ -185,7 +181,7 @@ const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex, id }: Lect
   const user = useAppSelector((state) => state.user.user);
   const [isCompleted, setIsCompleted] = useState<boolean>(Boolean(lecture.video_progress?.is_completed));
   return (
-    <Parent>
+    <Parent isActive={index === activeIndex}>
       <Flex>
         <i
           onClick={async () => {
@@ -203,14 +199,14 @@ const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex, id }: Lect
           onClick={() => {
             setActiveIndex(index);
           }}
-          isActive={index === activeIndex}
+          isActive={index >= activeIndex}
         >
           {lecture.title}
         </LectureTitle>
       </Flex>
-      <Flex>
+      <Flex style={{ width: "115px", justifyContent: "center", backgroundColor: "#e9edff", padding: "4px 12px", borderRadius: "24px", color: "#2b4eff" }}>
         <i className="far fa-clock"></i>
-        <p style={{ margin: "0px", width: "65px" }}>{secondsToMinutes(lecture.video_duration)} წუთი</p>
+        <p style={{ margin: "0px", color: "#2b4eff" }}>{secondsToMinutes(lecture.video_duration)} წუთი</p>
       </Flex>
     </Parent>
   );
@@ -219,16 +215,25 @@ function secondsToMinutes(seconds: number): number {
   return Math.round(seconds / 60);
 }
 
-const Parent = styled.div`
+const Parent = styled.div<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  flex-wrap: wrap;
-  background-color: white;
-  padding: 4px;
+  padding: 12px;
   padding-inline: 12px;
   width: 100%;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid white;
+  border-color: ${(props) => (props.isActive ? "black" : "white")};
+`;
+
+const TitleCourse = styled.p`
+  color: black;
+  font-weight: 500;
+  font-size: 22px;
+  grid-column: 1 / span 2;
 `;
 
 const LectureTitle = styled.p<{ isActive: boolean }>`
@@ -241,11 +246,13 @@ const LectureTitle = styled.p<{ isActive: boolean }>`
 const Left = styled.div`
   width: 100vw;
   max-width: 800px;
+  position: relative;
 `;
 const Right = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+  flex-grow: 1;
 `;
 
 const Title = styled.p`
@@ -278,8 +285,11 @@ const Content = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding-block: 64px;
-  display: flex;
-  gap: 36px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
+  row-gap: 0px;
   @media (max-width: 1400px) {
     max-width: 1140px;
   }

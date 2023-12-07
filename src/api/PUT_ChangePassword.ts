@@ -37,7 +37,6 @@ export default async function PUT_ChangePassword(data: PUT_ChangePasword_Params)
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
-    console.log(error);
     throw error;
   }
 }

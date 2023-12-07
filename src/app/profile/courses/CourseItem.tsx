@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { I_MyCourse } from "@/api/GET_MyCourses";
 import { API_STORAGE } from "@/api/API_PATH";
+import styled from "styled-components";
 
 export default function CourseItem({ course }: { course: I_MyCourse }) {
   return (
@@ -9,7 +10,7 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
         <div className="course__item white-bg mb-30 fix">
           <div className="course__thumb w-img p-relative fix">
             <img src={API_STORAGE + course.cover_image} width={250} height={150} alt="image not found" />
-            <div className="course__tag">{course.category.title}</div>
+            <Title className="course__tag">{course.category.title}</Title>
           </div>
           <div className="course__content">
             <div className="course__meta d-flex align-items-center justify-content-between">
@@ -43,3 +44,11 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
     </Link>
   );
 }
+
+const Title = styled.div`
+  background-color: #588157;
+  color: white;
+  padding: 4px;
+  border-radius: 24px;
+  padding-inline: 16px;
+`;
