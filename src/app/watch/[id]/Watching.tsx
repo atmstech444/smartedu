@@ -188,12 +188,13 @@ const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex, id }: Lect
             if (user) {
               try {
                 POST_MarkAsCompleted({ token: user?.token, id });
-                setIsCompleted(true);
+                setIsCompleted(!isCompleted);
               } catch {}
             }
           }}
           style={{ cursor: "pointer" }}
           className={`far  ${isCompleted ? "fa-check-square" : "fa-square"}`}
+
         ></i>
         <LectureTitle
           onClick={() => {

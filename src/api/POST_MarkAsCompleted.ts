@@ -35,6 +35,7 @@ export async function POST_MarkAsCompleted(data: POST_MarkAsCompleted_Params) {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
+    
     throw error;
   }
 }
