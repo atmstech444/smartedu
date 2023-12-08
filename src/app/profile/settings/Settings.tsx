@@ -16,7 +16,7 @@ export default function Settings() {
         <Title isActive={page==='პაროლის ცვლილება'} onClick={()=>{setPage("პაროლის ცვლილება")}}>პაროლის განახლება</Title>
       </Header>
       {page === "პროფილის რედაქტირება" && (
-        <Wrapper>
+        <Wrapper style={{ maxWidth: "none" }}>
           <UpdateAccountForm />
         </Wrapper>
       )}

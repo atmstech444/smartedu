@@ -8,15 +8,18 @@ interface DropdownProps {
     text: string;
   }[];
   exportValue: any;
+  defaultValue?: any;
 }
 
-export default function Dropdown({ label, options, exportValue }: DropdownProps) {
+export default function Dropdown({ label, options, exportValue, defaultValue }: DropdownProps) {
   const [expand, setExpand] = useState(false);
-  const [value, setValue] = useState(options[0]);
+  const defaultOption = options.find((opt) => opt.value === defaultValue);
+  const [value, setValue] = useState(defaultOption || options[0]);
   return (
     <Wrapper expand={expand}>
       <Label>{label}</Label>
       <Select
+        expand={expand}
         onClick={() => {
           setExpand(!expand);
         }}
@@ -79,7 +82,7 @@ const Options = styled.div`
   border-bottom-right-radius: 6px;
 `;
 
-const Select = styled.div`
+const Select = styled.div<{ expand: boolean }>`
   width: 100%;
   height: 60px;
   line-height: 52px;
@@ -93,13 +96,14 @@ const Select = styled.div`
   cursor: pointer;
   overflow: visible;
   position: relative;
-  border: 1px solid gray;
+  border: 1px solid transparent;
+  border-color: ${({ expand }) => (expand ? "gray" : "transparent")};
   font-size: 16px;
 `;
 
 const Label = styled.label`
   font-size: 16px;
   font-weight: 500;
-  color:#0e1133;
+  color: #0e1133;
   margin-bottom: 11px;
 `;

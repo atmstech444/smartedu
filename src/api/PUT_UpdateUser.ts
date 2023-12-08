@@ -9,17 +9,21 @@ export interface POST_Register_Success {
 }
 
 export interface PUT_UpdateUser_Params {
-  age: string | null;
-  gender: string | null;
-  phone_number: string | null;
-  city: string | null;
-  education: string | null;
-  faculty: string | null;
-  employment_status: null | string;
-  employment_industry: null | string;
-  employment_position: null | string;
+  age?: string | null;
+  gender?: string | null;
+  phone_number?: string | null;
+  city?: string | null;
+  education?: string | null;
+  faculty?: string | null;
+  employment_status?: string | null;
+  employment_industry?: string | null;
+  employment_position?: string | null;
+  name?: string | null;
+  surname?: string | null;
+  email?: string | null;
   token: string;
 }
+
 
 export interface POST_Register_Error {
   name?: string[];

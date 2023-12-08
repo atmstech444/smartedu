@@ -1,67 +1,187 @@
 "use client";
-import React from "react";
-import { useFormik } from "formik";
-// internal
-import ErrorMsg from "./error-msg";
-import { register_schema } from "@/utils/validation-schema";
-import Link from "next/link";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
+import Input from "@/components/form/Input";
+import Dropdown from "@/components/form/Dropdown";
 
 const UpdateAccountForm = () => {
-  // use formik
-  const { handleChange, handleSubmit, handleBlur, errors, values, touched } = useFormik({
-    initialValues: {
-      name: "ნანუკა",
-      surname: "როინიშვილი",
-      email: "nanuka.roinishvili@gamil.com",
-    },
-    validationSchema: register_schema,
-    onSubmit: (values, { resetForm }) => {
-      // resetForm();
-    },
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.user);
+  const [data, setData] = useState({
+    age: user?.age,
+    gender: user?.gender,
+    phone_number: user?.phone_number,
+    city: user?.city,
+    education: user?.education,
+    faculty: user?.faculty,
+    employment_status: user?.employment_status,
+    employment_industry: user?.employment_industry,
+    employment_position: user?.employment_position,
+    name: user?.name,
+    surname: user?.surname,
+    email: user?.email,
   });
+
+  const editProfile = () => {
+    if (user) {
+      PUT_UpdateUser({ ...data, token: user.token }, user, dispatch);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="sign__input-wrapper">
-        <H5>სახელი</H5>
-        <div className="sign__input mb-25">
-          <input name="name" value={values.name} onChange={handleChange} onBlur={handleBlur} type="text" placeholder="სახელი" id="name" required />
-          <i className="fal fa-user"></i>
-          {touched.name && <ErrorMsg error={errors.name} />}
-        </div>
+    <>
+      <Flexbox>
+        <Input
+          exportValue={(value: any) => {
+            setData({ ...data, name: value });
+          }}
+          label="სახელი"
+          placeholder="სახელი"
+          defaultValue={user?.name}
+        />
+        <Input
+          exportValue={(value: any) => {
+            setData({ ...data, surname: value });
+          }}
+          label="გვარი"
+          placeholder="გვარი"
+          defaultValue={user?.surname}
+        />
+        <Input
+          exportValue={(value: any) => {
+            setData({ ...data, email: value });
+          }}
+          label="ელ. ფოსტა"
+          placeholder="ელ. ფოსტა"
+          defaultValue={user?.email}
+        />
+      </Flexbox>
 
-        <div className="sign__input-wrapper mb-25">
-          <H5>გვარი</H5>
-          <div className="sign__input">
-            <input name="surname" value={values.surname} onChange={handleChange} onBlur={handleBlur} type="surname" placeholder="გვარი" id="surname" required />
-            <i className="fal fa-user"></i>
-          </div>
-          {touched.email && <ErrorMsg error={errors.surname} />}
-        </div>
+      <Flexbox>
+        <Dropdown
+          label="ასაკი"
+          exportValue={(value: any) => {
+            setData({ ...data, age: value });
+          }}
+          options={[
+            { value: "12-18", text: "12-18" },
+            { value: "18-23", text: "18-23" },
+            { value: "24-29", text: "24-29" },
+            { value: "30-40", text: "30-40" },
+            { value: "41-50", text: "41-50" },
+            { value: "50-60", text: "50-60" },
+            { value: "61+", text: "61+" },
+          ]}
+          defaultValue={user?.age}
+        />
+        <Dropdown
+          label="სქესი"
+          options={[
+            { value: "მდედრობითი", text: "მდედრობითი" },
+            { value: "მამრობითი", text: "მამრობითი" },
+          ]}
+          exportValue={(value: any) => {
+            setData({ ...data, gender: value });
+          }}
+          defaultValue={user?.gender}
+        />
+        <Input
+          exportValue={(value: any) => {
+            setData({ ...data, phone_number: value });
+          }}
+          label="მობილურის ნომერი"
+          placeholder="მობილურის ნომერი"
+          defaultValue={user?.phone_number}
+        />
+      </Flexbox>
 
-        <div className="sign__input-wrapper mb-25">
-          <H5>ელ. ფოსტა</H5>
-          <div className="sign__input">
-            <input name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} type="email" placeholder="ელ. ფოსტა" id="email" required />
-            <i className="fal fa-envelope"></i>
-          </div>
-          {touched.email && <ErrorMsg error={errors.email} />}
-        </div>
-      </div>
+      <Flexbox>
+        <Input
+          exportValue={(value: any) => {
+            setData({ ...data, city: value });
+          }}
+          label="ქალაქი"
+          placeholder="ქალაქი"
+          defaultValue={user?.city}
+        />
 
-      <button style={{ marginTop: "16px" }} className="e-btn w-100">
-        {" "}
-        <span></span> შენახვა
-      </button>
-    </form>
+        <Dropdown
+          label="განათლება"
+          options={[
+            { value: "სკოლის მოსწავლე", text: "სკოლის მოსწავლე" },
+            { value: "ბაკალავრის სტუდენტი", text: "ბაკალავრის სტუდენტი" },
+            { value: "ბაკალავრი", text: "ბაკალავრი" },
+            { value: "მაგისტრანტი", text: "მაგისტრანტი" },
+            { value: "მაგისტრი", text: "მაგისტრი" },
+            { value: "დოქტორანტი", text: "დოქტორანტი" },
+            { value: "დოქტორი", text: "დოქტორი" },
+          ]}
+          exportValue={(value: any) => {
+            setData({ ...data, education: value });
+          }}
+          defaultValue={user?.education}
+        />
+        <Input
+          exportValue={(value: any) => {
+            setData({ ...data, faculty: value });
+          }}
+          label="ფაკულტეტი"
+          defaultValue={user?.faculty}
+          placeholder="ფაკულტეტი"
+        />
+      </Flexbox>
+
+      <Flexbox>
+        <Dropdown
+          label="დასაქმების სტატუსი"
+          options={[
+            { value: "დასაქმებული", text: "დასაქმებული" },
+            { value: "უმუშავარი", text: "უმუშავარი" },
+          ]}
+          exportValue={(value: any) => {
+            setData({ ...data, employment_status: value });
+          }}
+          defaultValue={user?.employment_status}
+        />
+        <Input
+          exportValue={(value: any) => {
+            setData({ ...data, employment_industry: value });
+          }}
+          label="დასაქმების ინდუსტრია"
+          placeholder="დასაქმების ინდუსტრია"
+          defaultValue={user?.employment_industry}
+        />
+        <Input
+          exportValue={(value: any) => {
+            setData({ ...data, employment_position: value });
+          }}
+          label="პოზიცია"
+          defaultValue={user?.employment_position}
+          placeholder="პოზიცია"
+        />
+      </Flexbox>
+
+      <Flexbox>
+        <button onClick={editProfile} style={{ marginTop: "16px", gridColumn: 3 }} className="e-btn w-100">
+          {" "}
+          <span></span> შენახვა
+        </button>
+      </Flexbox>
+    </>
   );
 };
 
-const H5 = styled.h5`
-  font-size: 16px;
-  font-weight: 500;
-  color: #0e1133;
-  margin-bottom: 11px;
+const Flexbox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 24px;
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 export default UpdateAccountForm;

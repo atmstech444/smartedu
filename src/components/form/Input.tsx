@@ -4,9 +4,10 @@ import styled from "styled-components";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   exportValue: any;
+  defaultValue?: any;
 }
 
-export default function Input({ label, exportValue, ...rest }: InputProps) {
+export default function Input({ label, exportValue, defaultValue, ...rest }: InputProps) {
   return (
     <Wrapper>
       <Label>{label}</Label>
@@ -15,6 +16,7 @@ export default function Input({ label, exportValue, ...rest }: InputProps) {
         onChange={(event: any) => {
           exportValue(event.target.value);
         }}
+        value={defaultValue}
       />
     </Wrapper>
   );
@@ -31,11 +33,11 @@ const Inp = styled.input`
   padding: 0 16px;
   padding-top: 5px;
   font-size: 14px;
-  border: 2px solid transparent;
+  /* border: 2px solid transparent; */
   background: #f6f6f7;
   color: #0e1133;
   border-radius: 6px;
-  border: 1px solid gray;
+  border: none;
   font-size: 16px;
   &::placeholder {
     font-size: 16px;
