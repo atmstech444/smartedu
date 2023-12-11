@@ -10,7 +10,9 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
         <div className="course__item white-bg mb-30 fix">
           <div className="course__thumb w-img p-relative fix">
             <img src={API_STORAGE + course.cover_image} width={250} height={150} alt="image not found" />
-            <Title className="course__tag">{course.category.title}</Title>
+            <Title className="course__tag">
+              <a href={`/watch/${course.id}`}>{course.category.title}</a>
+            </Title>
           </div>
           <div className="course__content">
             <div className="course__meta d-flex align-items-center justify-content-between">

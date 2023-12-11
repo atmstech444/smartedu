@@ -10,7 +10,6 @@ import courses from "../../../../public/assets/img/luka/courses.svg";
 import done from "../../../../public/assets/img/luka/done.svg";
 import time from "../../../../public/assets/img/luka/time.svg";
 import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
-import { stat } from "fs";
 import { I_MyCourse } from "@/api/GET_MyCourses";
 
 export default function Profile() {
@@ -20,6 +19,7 @@ export default function Profile() {
   const [request, setRequest] = useState(0);
   const dispatch = useAppDispatch();
   const progress = useAppSelector((state) => state.progress.progressInfo);
+
   const [data, setData] = useState({
     age: null,
     gender: null,
@@ -31,11 +31,17 @@ export default function Profile() {
     employment_industry: null,
     employment_position: null,
   });
+
   myCourses.sort((a: I_MyCourse, b: I_MyCourse) => {
-    return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+    if (a && b) {
+      return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+    } else {
+      return 0;
+    }
   });
 
   const firstThreeCourses = myCourses.slice(0, 3);
+
   useEffect(() => {
     if (user && request) {
       try {
@@ -179,14 +185,19 @@ export default function Profile() {
         <InfoBox img={time} infoTitle="ნანახი საათები" infoValue={secondsToHours(progress.total_watched_time, 1)} />
         <InfoBox img={done} infoTitle="გავლილი კურსები" infoValue={progress.completed_courses_count} />
       </Flexbox>
-      <Devider />
 
-      <Title>განაგრძე ყურება</Title>
-      <Flexbox>
-        {firstThreeCourses.map((course) => {
-          return <Course course={course} key={course.id + "sokf"} />;
-        })}
-      </Flexbox>
+      {firstThreeCourses.length > 0 && (
+        <>
+          <Devider />
+
+          <Title>განაგრძე ყურება</Title>
+          <Flexbox>
+            {firstThreeCourses.map((course) => {
+              return <Course course={course} key={course.id + "sokf"} />;
+            })}
+          </Flexbox>
+        </>
+      )}
     </Wrapper>
   );
 }

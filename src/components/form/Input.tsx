@@ -5,9 +5,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   exportValue: any;
   defaultValue?: any;
+  placeholder?: string;
 }
 
-export default function Input({ label, exportValue, defaultValue, ...rest }: InputProps) {
+export default function Input({ label, exportValue, defaultValue, placeholder, ...rest }: InputProps) {
   return (
     <Wrapper>
       <Label>{label}</Label>
@@ -16,7 +17,7 @@ export default function Input({ label, exportValue, defaultValue, ...rest }: Inp
         onChange={(event: any) => {
           exportValue(event.target.value);
         }}
-        value={defaultValue}
+        placeholder={defaultValue || placeholder}
       />
     </Wrapper>
   );
@@ -52,5 +53,5 @@ const Label = styled.label`
   font-size: 16px;
   font-weight: 500;
   color: #0e1133;
-  margin-bottom: 11px;
+  margin-bottom: 4px;
 `;

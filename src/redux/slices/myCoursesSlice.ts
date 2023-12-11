@@ -1,6 +1,5 @@
-import { I_Course } from "@/api/GET_Courses";
-import { I_MyCourse } from "@/api/GET_MyCourses";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { I_MyCourse } from "@/api/GET_MyCourses";
 
 interface MyCoursesState {
   courses: I_MyCourse[];
@@ -15,7 +14,10 @@ const myCoursesSlice = createSlice({
   initialState,
   reducers: {
     setMyCourses(state, action: PayloadAction<I_MyCourse[]>) {
-      state.courses = action.payload;
+      return {
+        ...state,
+        courses: action.payload,
+      };
     },
   },
 });

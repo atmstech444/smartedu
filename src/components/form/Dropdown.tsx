@@ -105,5 +105,5 @@ const Label = styled.label`
   font-size: 16px;
   font-weight: 500;
   color: #0e1133;
-  margin-bottom: 11px;
+  margin-bottom: 4px;
 `;

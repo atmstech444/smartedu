@@ -24,7 +24,6 @@ export interface PUT_UpdateUser_Params {
   token: string;
 }
 
-
 export interface POST_Register_Error {
   name?: string[];
   surname?: string[];
@@ -40,11 +39,13 @@ export async function PUT_UpdateUser(data: PUT_UpdateUser_Params, user: User, di
     },
   };
   try {
+    console.log(data);
     const response = await axios.put<POST_Register_Success>(API_PATH + "user-profile/update", data, config);
     toast.success("ინფორმაცია განახლდა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
+    console.log(response.data.user);
     dispatch(setUser({ ...user, ...response.data.user }));
     return response.data;
   } catch (error: any) {
