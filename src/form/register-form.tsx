@@ -12,7 +12,6 @@ const RegisterForm = () => {
   const [showConPass, setShowConPass] = useState(false);
   const router = useRouter();
 
-  // use formik
   const { handleChange, handleSubmit, handleBlur, errors, values, touched, setErrors } = useFormik({
     initialValues: {
       name: "",
@@ -77,7 +76,7 @@ const RegisterForm = () => {
         <div className="sign__agree d-flex align-items-center">
           <input className="m-check-input" type="checkbox" id="m-agree" />
           <label className="m-check-label" htmlFor="m-agree">
-            ვეთანხმები <Link href="#">წესებს და პრიობებს</Link>
+            ვეთანხმები <Link href="/terms-conditions">წესებს და პრიობებს</Link>
           </label>
         </div>
       </div>
