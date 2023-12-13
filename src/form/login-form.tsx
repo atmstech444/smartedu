@@ -8,23 +8,26 @@ import { POST_Login } from "@/api/POST_Login";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import ServerError from "./ServerError";
+import Button from "./Button";
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // use formik
   const { handleChange, handleSubmit, handleBlur, errors, values, touched } = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema: login_schema,
-    onSubmit: async (values, {  setErrors }) => {
-      POST_Login(values, setErrors, router, dispatch, setServerError);
-      
+    onSubmit: async (values, { setErrors }) => {
+      setIsLoading(true);
+      POST_Login(values, setErrors, router, dispatch, setServerError).then(() => {
+        setIsLoading(false);
+      });
     },
   });
 
@@ -61,10 +64,7 @@ const LoginForm = () => {
         </div>
       </div>
       <ServerError error={serverError} />
-      <button className="e-btn  w-100">
-        {" "}
-        <span></span> შესვლა
-      </button>
+      <Button text="შესვლა" isLoading={isLoading} />
       <div className="sign__new text-center mt-20">
         <p>
           არ ხარ რეგისტრირებული? <Link href="/sign-up">დარეგისტრირდი</Link>
