@@ -3,8 +3,6 @@ import "../style/index.scss";
 import AppProvider from "@/contextApi/AppProvider";
 import ReduxProvider from "@/redux/provider";
 import { ToastContainer } from "react-toastify";
-import { Provider } from "react-redux";
-import store from "@/redux/store";
 
 export const metadata = {
   title: "The Smart – education",

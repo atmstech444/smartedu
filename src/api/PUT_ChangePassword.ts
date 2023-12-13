@@ -31,7 +31,6 @@ export default async function PUT_ChangePassword(data: PUT_ChangePasword_Params)
     });
     return response.data;
   } catch (error: any) {
-    console.log(error);
     toast.error("შეცდომა პაროლის ცვლილებისას", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,

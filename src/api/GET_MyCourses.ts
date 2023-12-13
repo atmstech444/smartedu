@@ -53,6 +53,7 @@ export async function GET_MyCourses(data: POST_Login_Params, dispatch: any) {
   try {
     const response = await axios.get<{ courses: I_MyCourse[] }>(API_PATH + "courses/auth/user", config);
     dispatch(setMyCourses(response.data.courses));
+
     return response.data.courses;
   } catch (error: any) {
     toast.error("დაფიქსირდა შეცდომა", {
