@@ -11,6 +11,7 @@ import done from "../../../../public/assets/img/luka/done.svg";
 import time from "../../../../public/assets/img/luka/time.svg";
 import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
 import { I_MyCourse } from "@/api/GET_MyCourses";
+import PlainInput from "@/components/form/PlainInput";
 
 export default function Profile() {
   const myCourses = useAppSelector((state) => state.myCourses.courses);
@@ -94,7 +95,7 @@ export default function Profile() {
                   setData({ ...data, gender: value });
                 }}
               />
-              <Input
+              <PlainInput
                 exportValue={(value: any) => {
                   setData({ ...data, phone_number: value });
                 }}
@@ -105,7 +106,7 @@ export default function Profile() {
           )}
           {percent === 50 && (
             <Flexbox>
-              <Input
+              <PlainInput
                 exportValue={(value: any) => {
                   setData({ ...data, city: value });
                 }}
@@ -128,7 +129,7 @@ export default function Profile() {
                   setData({ ...data, education: value });
                 }}
               />
-              <Input
+              <PlainInput
                 exportValue={(value: any) => {
                   setData({ ...data, faculty: value });
                 }}
@@ -149,14 +150,14 @@ export default function Profile() {
                   setData({ ...data, employment_status: value });
                 }}
               />
-              <Input
+              <PlainInput
                 exportValue={(value: any) => {
                   setData({ ...data, employment_industry: value });
                 }}
                 label="დასაქმების ინდუსტრია"
                 placeholder="დასაქმების ინდუსტრია"
               />
-              <Input
+              <PlainInput
                 exportValue={(value: any) => {
                   setData({ ...data, employment_position: value });
                 }}

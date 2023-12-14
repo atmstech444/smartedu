@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
-import Input from "@/components/form/Input";
+import PlainInput from "@/components/form/PlainInput";
 import Dropdown from "@/components/form/Dropdown";
 
 const UpdateAccountForm = () => {
@@ -33,7 +33,7 @@ const UpdateAccountForm = () => {
   return (
     <>
       <Flexbox>
-        <Input
+        <PlainInput
           exportValue={(value: any) => {
             setData({ ...data, name: value });
           }}
@@ -41,7 +41,7 @@ const UpdateAccountForm = () => {
           placeholder="სახელი"
           defaultValue={user?.name}
         />
-        <Input
+        <PlainInput
           exportValue={(value: any) => {
             setData({ ...data, surname: value });
           }}
@@ -49,7 +49,7 @@ const UpdateAccountForm = () => {
           placeholder="გვარი"
           defaultValue={user?.surname}
         />
-        <Input
+        <PlainInput
           exportValue={(value: any) => {
             setData({ ...data, email: value });
           }}
@@ -87,7 +87,7 @@ const UpdateAccountForm = () => {
           }}
           defaultValue={user?.gender}
         />
-        <Input
+        <PlainInput
           exportValue={(value: any) => {
             setData({ ...data, phone_number: value });
           }}
@@ -98,7 +98,7 @@ const UpdateAccountForm = () => {
       </Flexbox>
 
       <Flexbox>
-        <Input
+        <PlainInput
           exportValue={(value: any) => {
             setData({ ...data, city: value });
           }}
@@ -123,7 +123,7 @@ const UpdateAccountForm = () => {
           }}
           defaultValue={user?.education}
         />
-        <Input
+        <PlainInput
           exportValue={(value: any) => {
             setData({ ...data, faculty: value });
           }}
@@ -145,7 +145,7 @@ const UpdateAccountForm = () => {
           }}
           defaultValue={user?.employment_status}
         />
-        <Input
+        <PlainInput
           exportValue={(value: any) => {
             setData({ ...data, employment_industry: value });
           }}
@@ -153,7 +153,7 @@ const UpdateAccountForm = () => {
           placeholder="დასაქმების ინდუსტრია"
           defaultValue={user?.employment_industry}
         />
-        <Input
+        <PlainInput
           exportValue={(value: any) => {
             setData({ ...data, employment_position: value });
           }}
