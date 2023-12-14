@@ -9,7 +9,7 @@ export default function MyCourses() {
     let unwatched = courses.filter((course) => course.completion_percentage !== 100);
     let watched = courses.filter((course) => course.completion_percentage === 100);
     return (
-      <>
+      <div style={{ padding: "24px" }}>
         {unwatched.length > 0 && <CourseWrapper>{unwatched.map((item, index) => item && <CourseItem course={item} key={"sf" + index} />)}</CourseWrapper>}
         {watched.length > 0 && (
           <>
@@ -18,7 +18,7 @@ export default function MyCourses() {
             <CourseWrapper>{watched.map((item, index) => item && <CourseItem course={item} key={"sf" + index} />)}</CourseWrapper>
           </>
         )}
-      </>
+      </div>
     );
   } else {
     return (
@@ -39,6 +39,7 @@ const Devider = styled.div`
   border-radius: 8px;
   background-color: #e4e3e3;
   margin-bottom: 32px;
+  margin-top: 32px;
 `;
 
 const EmptyWrapper = styled.div`
@@ -52,7 +53,6 @@ const Title = styled.p`
   font-weight: 600;
   color: black;
   font-weight: 600;
-  margin-top: 30px;
   padding-left: 32px;
 `;
 const P = styled.p`
@@ -70,6 +70,5 @@ const CourseWrapper = styled.div`
   @media (max-width: 480px) {
     grid-template-columns: repeat(1, 1fr);
   }
-  padding-block: 24px;
   row-gap: 20px;
 `;

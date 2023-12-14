@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { I_MyCourse } from "@/api/GET_MyCourses";
 import { API_STORAGE } from "@/api/API_PATH";
-import styled from "styled-components";
 
 export default function CourseItem({ course }: { course: I_MyCourse }) {
   return (
-    <Link href={`/watch/${course.id}`}>
+    <Link style={{ height: "340px" }} href={`/watch/${course.id}`}>
       <div style={{ width: "250px", marginInline: "auto" }}>
         <div className="course__item white-bg mb-30 fix">
           <div className="course__thumb w-img p-relative fix">
@@ -46,5 +45,3 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
     </Link>
   );
 }
-
-
