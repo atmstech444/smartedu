@@ -24,6 +24,7 @@ export interface I_MyCourse {
   lectures_count: number;
   average_rating: number;
   completion_percentage: number;
+  user_rating:number | null;
   lecturer: {
     id: number;
     first_name: string;
@@ -52,6 +53,7 @@ export async function GET_MyCourses(data: POST_Login_Params, dispatch: any) {
   };
   try {
     const response = await axios.get<{ courses: I_MyCourse[] }>(API_PATH + "courses/auth/user", config);
+    console.log(response.data.courses);
     dispatch(setMyCourses(response.data.courses));
 
     return response.data.courses;
