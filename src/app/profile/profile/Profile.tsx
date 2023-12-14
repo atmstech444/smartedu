@@ -12,6 +12,7 @@ import time from "../../../../public/assets/img/luka/time.svg";
 import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
 import { I_MyCourse } from "@/api/GET_MyCourses";
 import PlainInput from "@/components/form/PlainInput";
+import RateCourse from "./RateCourse";
 
 export default function Profile() {
   const myCourses = useAppSelector((state) => state.myCourses.courses);
@@ -32,16 +33,10 @@ export default function Profile() {
     employment_industry: null,
     employment_position: null,
   });
+  
 
-  myCourses.sort((a: I_MyCourse, b: I_MyCourse) => {
-    if (a && b) {
-      return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
-    } else {
-      return 0;
-    }
-  });
-
-  const firstThreeCourses = myCourses.slice(0, 3);
+  const rateCourses = myCourses.filter((course) => course.completion_percentage === 100);
+  const firstThreeCourses = myCourses.filter((course) => course.completion_percentage !== 100).slice(0, 3);
 
   useEffect(() => {
     if (user && request) {
@@ -195,6 +190,17 @@ export default function Profile() {
           <Flexbox>
             {firstThreeCourses.map((course) => {
               return <Course course={course} key={course.id + "sokf"} />;
+            })}
+          </Flexbox>
+        </>
+      )}
+      {rateCourses.length > 0 && (
+        <>
+          <Devider />
+          <Title>შეაფასე გავლილი კურსები</Title>
+          <Flexbox>
+            {rateCourses.map((course) => {
+              return <RateCourse course={course} key={course.id + "sokf"} />;
             })}
           </Flexbox>
         </>

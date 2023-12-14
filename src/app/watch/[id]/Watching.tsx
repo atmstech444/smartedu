@@ -227,7 +227,7 @@ const Parent = styled.div<{ isActive: boolean }>`
   border-radius: 4px;
   background-color: white;
   border: 1px solid white;
-  border-color: ${(props) => (props.isActive ? "black" : "white")};
+  border-color: ${(props) => (props.isActive ? "rgb(43, 78, 255)" : "white")};
 `;
 
 const TitleCourse = styled.p`
