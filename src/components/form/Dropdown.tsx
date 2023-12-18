@@ -19,6 +19,7 @@ export default function Dropdown({ label, options, exportValue, defaultValue }: 
     <Wrapper expand={expand}>
       <Label>{label}</Label>
       <Select
+        isBlack={value.value !== null}
         expand={expand}
         onClick={() => {
           setExpand(!expand);
@@ -82,7 +83,7 @@ const Options = styled.div`
   border-bottom-right-radius: 6px;
 `;
 
-const Select = styled.div<{ expand: boolean }>`
+const Select = styled.div<{ expand: boolean; isBlack: boolean }>`
   width: 100%;
   height: 60px;
   line-height: 52px;
@@ -91,7 +92,7 @@ const Select = styled.div<{ expand: boolean }>`
   font-size: 14px;
   border: 2px solid transparent;
   background: #f6f6f7;
-  color: gray;
+  color: ${({ isBlack }) => (isBlack ? "black" : "gray")};
   border-radius: 6px;
   cursor: pointer;
   overflow: visible;
