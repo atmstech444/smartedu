@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useEffect } from "react";
+import React, { InputHTMLAttributes, useEffect, useState } from "react";
 import styled from "styled-components";
 import { validate_confirm_password, validate_email, validate_login_password, validate_name, validate_password, validate_surname } from "./FormValidations";
 
@@ -21,6 +21,7 @@ export default function Input({ id, password, startVal, valStarted, label, addEr
   const [currentValue, setCurrentValue] = React.useState<string>("");
   const [error, setError] = React.useState<string | null>(null);
   const [icon, setIcon] = React.useState<string>("");
+  const [isHidden, setIsHidden] = useState<null | boolean>(null);
 
   useEffect(() => {
     if (custType) {
@@ -36,12 +37,15 @@ export default function Input({ id, password, startVal, valStarted, label, addEr
           break;
         case "login_password":
           setIcon("lock");
+          setIsHidden(true);
           break;
         case "password":
           setIcon("lock");
+          setIsHidden(true);
           break;
         case "confirm_password":
           setIcon("lock");
+          setIsHidden(true);
           break;
         default:
           break;
@@ -98,12 +102,30 @@ export default function Input({ id, password, startVal, valStarted, label, addEr
           setCurrentValue(event.target.value);
         }}
         placeholder={defaultValue || placeholder || label}
+        type={isHidden !== null ? (isHidden ? "password" : "text") : rest.type}
       />
+      {isHidden !== null && (
+        <Eye
+          onClick={() => {
+            setIsHidden(!isHidden);
+          }}
+          className={`fa-regular fa-${isHidden ? "eye-slash" : "eye"}`}
+        ></Eye>
+      )}
       <I className={`fal fa-${icon}`}></I>
       {error && <ErrorText>{error}</ErrorText>}
     </Wrapper>
   );
 }
+
+const Eye = styled.i`
+  position: absolute;
+  top: 52px;
+  right: 24px;
+  transform: translateX(50%);
+  color: gray;
+  cursor: pointer;
+`;
 
 const I = styled.i`
   position: absolute;
