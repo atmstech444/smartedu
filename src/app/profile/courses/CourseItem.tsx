@@ -24,7 +24,7 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
               <div className="course__rating">
                 <span>
                   <i className="fas fa-star"></i>
-                  {course.average_rating}
+                  {course.average_rating.toFixed(1)}
                 </span>
               </div>
             </div>

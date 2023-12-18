@@ -51,7 +51,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
               <h5>შეფასება:</h5>
               <div className="course__rating-inner d-flex align-items-center">
                 <ul>{stars}</ul>
-                <p>{course.average_rating}</p>
+                <p>{course.average_rating.toFixed(1)}</p>
               </div>
             </>
           ) : (
