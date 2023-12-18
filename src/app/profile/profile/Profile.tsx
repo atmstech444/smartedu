@@ -3,14 +3,12 @@ import Course from "./Course";
 import InfoBox from "./InfoBox";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Dropdown from "@/components/form/Dropdown";
-import Input from "@/components/form/Input";
 import Progress from "@/components/form/Progress";
 import { useEffect, useState } from "react";
 import courses from "../../../../public/assets/img/luka/courses.svg";
 import done from "../../../../public/assets/img/luka/done.svg";
 import time from "../../../../public/assets/img/luka/time.svg";
 import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
-import { I_MyCourse } from "@/api/GET_MyCourses";
 import PlainInput from "@/components/form/PlainInput";
 import RateCourse from "./RateCourse";
 

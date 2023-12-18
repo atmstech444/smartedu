@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 interface DropdownProps {
@@ -15,8 +15,24 @@ export default function Dropdown({ label, options, exportValue, defaultValue }: 
   const [expand, setExpand] = useState(false);
   const defaultOption = options.find((opt) => opt.value === defaultValue);
   const [value, setValue] = useState(defaultOption || options[0]);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setExpand(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <Wrapper expand={expand}>
+    <Wrapper expand={expand} ref={dropdownRef}>
       <Label>{label}</Label>
       <Select
         isBlack={value.value !== null}
