@@ -34,7 +34,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
           </div>
           <div className="course__teacher-info-3">
             <h5>ტუტორი</h5>
-            <p>
+            <p style={{ fontWeight: 500 }}>
               <Link href="#">
                 {course.lecturer.first_name} {course.lecturer.last_name}
               </Link>
