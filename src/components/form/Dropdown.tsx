@@ -8,15 +8,20 @@ interface DropdownProps {
     text: string;
   }[];
   exportValue: any;
+  valStarted?: boolean;
+  startVal?: any;
+  addError?: any;
+  removeError?: any;
   defaultValue?: any;
+  id?: string;
 }
 
-export default function Dropdown({ label, options, exportValue, defaultValue }: DropdownProps) {
+export default function Dropdown({ label, id, options, exportValue, defaultValue, addError, removeError, valStarted, startVal }: DropdownProps) {
   const [expand, setExpand] = useState(false);
   const defaultOption = options.find((opt) => opt.value === defaultValue);
   const [value, setValue] = useState(defaultOption || options[0]);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const [error, setError] = React.useState<string | null>(null);
   useEffect(() => {
     const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -31,6 +36,27 @@ export default function Dropdown({ label, options, exportValue, defaultValue }: 
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (valStarted) {
+      if (value.value === null) {
+        setError("აირჩიეთ ველი");
+      } else {
+        setError(null);
+      }
+    }
+  }, [valStarted, value]);
+
+  useEffect(() => {
+    if (error) {
+      addError(id);
+    } else {
+      removeError(id);
+    }
+  }, [error]);
+
+  useEffect(() => {});
+
   return (
     <Wrapper expand={expand} ref={dropdownRef}>
       <Label>{label}</Label>
@@ -38,6 +64,7 @@ export default function Dropdown({ label, options, exportValue, defaultValue }: 
         isBlack={value.value !== null}
         expand={expand}
         onClick={() => {
+          startVal(true);
           setExpand(!expand);
         }}
       >
@@ -61,10 +88,17 @@ export default function Dropdown({ label, options, exportValue, defaultValue }: 
           ))}
         </Options>
       )}
+      {error && <ErrorText>{error}</ErrorText>}
     </Wrapper>
   );
 }
 
+const ErrorText = styled.p`
+  color: red;
+  position: absolute;
+  font-size: 14px !important;
+  z-index: 20;
+`;
 const I = styled.i<{ expand: boolean }>`
   transform: ${({ expand }) => (expand ? "rotate(180deg)" : "rotate(0deg)")};
   transition: all 0.1s;
@@ -91,12 +125,13 @@ const Option = styled.p`
 
 const Options = styled.div`
   position: absolute;
-  top: 92px;
+  top: 89px;
   background-color: #f6f6f7;
   width: 100%;
   border: 1px solid gray;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
+  z-index: 25;
 `;
 
 const Select = styled.div<{ expand: boolean; isBlack: boolean }>`
@@ -115,6 +150,8 @@ const Select = styled.div<{ expand: boolean; isBlack: boolean }>`
   position: relative;
   border: 1px solid transparent;
   border-color: ${({ expand }) => (expand ? "gray" : "transparent")};
+  border-bottom-left-radius: ${({ expand }) => (expand ? "0px" : "6px")};
+  border-bottom-right-radius: ${({ expand }) => (expand ? "0px" : "6px")};
   font-size: 16px;
 `;
 

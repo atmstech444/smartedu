@@ -66,3 +66,24 @@ export const validate_confirm_password = (password: string, confirmPassword: str
 
   return null;
 };
+
+export const validate_phone_number = (phoneNumber: string) => {
+  const phonePattern = /^5\d{8}$/;
+  if (phoneNumber.trim() === "") {
+    return "ტელეფონის ნომერი აუცილებელია";
+  } else if (!phonePattern.test(phoneNumber)) {
+    return "არასწორი ტელეფონის ნომერი";
+  }
+
+  return null;
+};
+
+export const validate_required_string = (string: string) => {
+  const containsNumbersOrSymbols = /[0-9!@#$%^&*()_+={}[\]:;'"<>?/\\|.,-]/;
+  if (string.trim() === "") {
+    return "ველი აუცილებელია";
+  } else if (containsNumbersOrSymbols.test(string)) {
+    return "მხოლოდ ასოები";
+  }
+  return null;
+};
