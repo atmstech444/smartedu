@@ -176,11 +176,13 @@ const ErrorText = styled.p`
   color: red;
   position: absolute;
   font-size: 14px !important;
+  line-height: 18px !important;
+  margin: 0;
 `;
 
 const Wrapper = styled.div`
   position: relative;
-  height: 120px;
+  height: 138px;
 `;
 
 const Inp = styled.input`

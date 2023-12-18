@@ -40,21 +40,36 @@ export const validate_surname = (surname: string) => {
 };
 
 export const validate_password = (password: string) => {
+  let errorMessage = "მინიმუმ ";
   if (password.trim() === "") {
     return "პაროლი აუცილებელია";
-  } else if (password.length < 6) {
-    return "მინიმუმ 6 სიმბოლო";
-  } else if (!/(?=.*[a-z])/.test(password)) {
-    return "მინიმუმ 1 ასო";
-  } else if (!/(?=.*[A-Z])/.test(password)) {
-    return "მინიმუმ 1 დიდი ასო";
-  } else if (!/(?=.*\d)/.test(password)) {
-    return "მინიმუმ 1 ციფრი";
-  } else if (!/(?=.*[@$!%*?&])/.test(password)) {
-    return "მინიმუმ 1 სპეციალური სიმბოლო";
   }
-
+  if (password.length < 6) {
+    errorMessage += "6 სიმბოლო, ";
+  }
+  if (!/(?=.*[a-z])/.test(password)) {
+    errorMessage += "1 ასო, ";
+  }
+  if (!/(?=.*[A-Z])/.test(password)) {
+    errorMessage += "1 დიდი ასო, ";
+  }
+  if (!/(?=.*\d)/.test(password)) {
+    errorMessage += "1 ციფრი, ";
+  }
+  if (!/(?=.*[@$!%*?&])/.test(password)) {
+    errorMessage += "1 სპეციალური სიმბოლო, ";
+  }
+  if (errorMessage !== "მინიმუმ") return replaceLastCommaWithPeriod(errorMessage.trim());
   return null;
+};
+
+export const replaceLastCommaWithPeriod = (inputString: string) => {
+  const lastCommaIndex = inputString.lastIndexOf(",");
+  if (lastCommaIndex !== -1) {
+    const stringWithPeriod = inputString.slice(0, lastCommaIndex) + "." + inputString.slice(lastCommaIndex + 1);
+    return stringWithPeriod;
+  }
+  return inputString;
 };
 
 export const validate_confirm_password = (password: string, confirmPassword: string) => {

@@ -39,7 +39,6 @@ export async function POST_Register(data: POST_Register_Params, router: any, set
     router.push("/sign-in");
     return response.data;
   } catch (error: any) {
-    console.log(error);
     let errors = error.response.data.errors as POST_Register_Error;
     setErrors(errors);
   }
