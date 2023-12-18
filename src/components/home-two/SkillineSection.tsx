@@ -32,7 +32,7 @@ const SkillineSection = () => {
                 <h3 className="what__title white-color">
                   გახდი <br /> ჩვენი გუნდის
                 </h3>
-                <Link href="/instructor" className="e-btn e-btn-border-2">
+                <Link href="/contact" className="e-btn e-btn-border-2">
                   პარტნიორი
                 </Link>
               </div>

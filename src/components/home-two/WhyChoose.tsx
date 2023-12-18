@@ -24,10 +24,10 @@ const WhyChoose = () => {
                   </span>{" "}
                   ერთად
                 </h2>
-                <p>Smart Education-ში ჩვენ გვჯერა, რომ სწავლა უნდა იყოს ხელმისაწვდომი, საინტერესო და სახალისო. სწორედ ამიტომ, ჩვენ გვაქვს მისია, გავხადოთ არაფორმალური განათლება ხელმისაწვდო.</p>
+                <p>Smart Education-ში ჩვენ გვჯერა, რომ სწავლა უნდა იყოს ხელმისაწვდომი, საინტერესო და სახალისო. სწორედ ამიტომ, ჩვენ გვაქვს მისია, გავხადოთ არაფორმალური განათლება ხელმისაწვდომი.</p>
               </div>
               <div className="why__btn">
-                <Link href="/course-grid" className="e-btn e-btn-3 mr-30">
+                <Link href="/course-grid" className="e-btn e-btn-3 mr-30" style={{ textTransform: "lowercase" }}>
                   დაიწყე სწავლა
                 </Link>
               </div>
