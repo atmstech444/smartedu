@@ -59,7 +59,7 @@ export const validate_password = (password: string) => {
   if (!/(?=.*[@$!%*?&])/.test(password)) {
     errorMessage += "1 სპეციალური სიმბოლო, ";
   }
-  if (errorMessage !== "მინიმუმ") return replaceLastCommaWithPeriod(errorMessage.trim());
+  if (errorMessage !== "მინიმუმ ") return replaceLastCommaWithPeriod(errorMessage.trim());
   return null;
 };
 

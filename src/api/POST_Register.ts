@@ -35,6 +35,20 @@ export async function POST_Register(data: POST_Register_Params, router: any, set
     toast.success("გადადი მეილზე და გაიარე ვერიფიკაცია რეგისტრაციის დასასრულებლად", {
       position: toast.POSITION.TOP_CENTER,
       autoClose: false,
+      style: {
+        position: "absolute",
+        top: "50dvh",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        fontSize: "26px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "160px",
+        width: "600px",
+        padding: "32px",
+        transition: "none",
+      },
     });
     router.push("/sign-in");
     return response.data;
