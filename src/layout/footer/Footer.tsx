@@ -85,7 +85,7 @@ const Footer = () => {
                             <Link href="/terms-conditions">წესები და პირობები</Link>
                           </li>
                           <li>
-                            <Link href="/policy-privacy">კონფიდენციარულობა</Link>
+                            <Link href="/policy-privacy">კონფიდენციალურობა</Link>
                           </li>
                         </ul>
                       </div>
