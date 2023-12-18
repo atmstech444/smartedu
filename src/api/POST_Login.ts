@@ -49,10 +49,7 @@ export async function POST_Login(data: POST_Login_Params, setErrors: any, router
   });
   try {
     const response = await axios.post<POST_Login_Success>(API_PATH + "auth/login", data);
-    toast.success("შესვლა წარმატებით განხორციელდა", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
-    });
+    
     const { user, token } = response.data;
     dispatch(
       setUser({

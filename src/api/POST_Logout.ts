@@ -28,12 +28,7 @@ export async function POST_Logout(data: POST_Login_Params, router: any, dispatch
   try {
     dispatch(removeUser());
     router.push("/");
-
     const response = await axios.post<POST_Login_Success>(API_PATH + "auth/logout", null, config);
-    toast.success("გასვლა წარმატებით განხორციელდა", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
-    });
     return response.data;
   } catch (error: any) {
     let errors = error.response.data.errors as POST_Login_Error;
