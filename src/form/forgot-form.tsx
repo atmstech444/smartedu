@@ -1,16 +1,18 @@
 "use client";
 import { POST_ForgotPassword } from "@/api/POST_ForgotPassword";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const ForgotForm = () => {
   const email = React.useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (email.current?.value !== "") {
       try {
-        await POST_ForgotPassword({ email: email.current?.value! });
-        if(email.current){
+        await POST_ForgotPassword({ email: email.current?.value! }, router);
+        if (email.current) {
           email.current.value = "";
         }
       } catch {}
@@ -26,7 +28,9 @@ const ForgotForm = () => {
               <form onSubmit={handleSubmit}>
                 <div className="sign__input-wrapper mb-25">
                   <h5 className="forgot-heading">პაროლის აღდგენა</h5>
-                  <p>ჩაწერე რეგისტრირებული <br /> ელ. ფოსტა</p>
+                  <p>
+                    ჩაწერე რეგისტრირებული <br /> ელ. ფოსტა
+                  </p>
                   <div className="sign__input">
                     <div className="login__input">
                       <input ref={email} className="forgot-input" type="email" placeholder="ელ. ფოსტა" />
