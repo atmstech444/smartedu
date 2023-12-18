@@ -166,6 +166,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
             autoPlay
             muted
             controls
+            controlsList="nodownload"
           />
           {closeVisible && (
             <CloseVideo

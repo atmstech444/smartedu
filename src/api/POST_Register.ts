@@ -24,7 +24,7 @@ export interface POST_Register_Error {
   passwordConfirmation?: string[];
 }
 
-export async function POST_Register(data: POST_Register_Params,  router: any) {
+export async function POST_Register(data: POST_Register_Params, router: any) {
   const axiosInstance = axios.create();
   axiosInstance.interceptors.request.use((config) => {
     config.headers["Accept-Language"] = "ka";
