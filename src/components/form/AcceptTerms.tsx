@@ -15,7 +15,6 @@ export default function AcceptTerms({ id, addError, removeError, valStarted, sta
 
   useEffect(() => {
     if (valStarted) {
-      console.log(checked);
       if (!checked) {
         addError(id);
         setError("წესებზე და პირობებზე დათანხმება აუცილებელია");

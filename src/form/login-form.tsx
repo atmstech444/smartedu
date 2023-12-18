@@ -12,7 +12,6 @@ import Button from "./Button";
 import Input from "@/components/form/Input";
 
 const LoginForm = () => {
-  const [showPass, setShowPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState("");
   const [email, setEmail] = useState("");

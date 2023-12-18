@@ -9,8 +9,8 @@ import courses from "../../../../public/assets/img/luka/courses.svg";
 import done from "../../../../public/assets/img/luka/done.svg";
 import time from "../../../../public/assets/img/luka/time.svg";
 import { PUT_UpdateUser } from "@/api/PUT_UpdateUser";
-import PlainInput from "@/components/form/PlainInput";
 import RateCourse from "./RateCourse";
+import Input from "@/components/form/Input";
 
 export default function Profile() {
   const myCourses = useAppSelector((state) => state.myCourses.courses);
@@ -18,8 +18,20 @@ export default function Profile() {
   const [percent, setPercent] = useState<number>(20);
   const [request, setRequest] = useState(0);
   const dispatch = useAppDispatch();
-  const [error, setError] = useState<null | string>(null);
   const progress = useAppSelector((state) => state.progress.progressInfo);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [validationsStarted, setValidationsStarted] = useState(false);
+  const addError = (error: string) => {
+    if (!errors.includes(error)) setErrors([...errors, error]);
+  };
+  const removeError = (error: string) => {
+    const errorArray = errors;
+    const index = errorArray.indexOf(error);
+    if (index > -1) {
+      errorArray.splice(index, 1);
+    }
+    setErrors([...errorArray]);
+  };
 
   const [data, setData] = useState({
     age: null,
@@ -38,38 +50,34 @@ export default function Profile() {
 
   useEffect(() => {
     if (user && request) {
-      try {
-        if (percent === 20) {
-          let { age, phone_number, gender } = data;
-          if (age && phone_number && gender) {
-            setPercent(50);
-            PUT_UpdateUser({ ...data, token: user.token }, user, dispatch);
-            setError(null);
-          } else {
-            setError("გთხოვთ შეავსოთ ყველა ველი");
+      if (errors.length === 0) {
+        try {
+          if (percent === 20) {
+            let { age, phone_number, gender } = data;
+            if (age && phone_number && gender) {
+              setPercent(50);
+              setValidationsStarted(false);
+              PUT_UpdateUser({ ...data, token: user.token }, user, dispatch);
+            }
           }
-        }
-        if (percent === 50) {
-          let { city, education, faculty } = data;
-          if (city && education && faculty) {
-            setPercent(80);
-            setError(null);
-            PUT_UpdateUser({ ...data, token: user.token }, user, dispatch);
-          } else {
-            setError("გთხოვთ შეავსოთ ყველა ველი");
+          if (percent === 50) {
+            let { city, education, faculty } = data;
+            if (city && education && faculty) {
+              setPercent(80);
+              setValidationsStarted(false);
+              PUT_UpdateUser({ ...data, token: user.token }, user, dispatch);
+            }
           }
-        }
-        if (percent === 80) {
-          let { employment_industry, employment_position, employment_status } = data;
-          if (employment_industry && employment_position && employment_status) {
-            setPercent(100);
-            setError(null);
-            PUT_UpdateUser({ ...data, token: user.token }, user, dispatch);
-          } else {
-            setError("გთხოვთ შეავსოთ ყველა ველი");
+          if (percent === 80) {
+            let { employment_industry, employment_position, employment_status } = data;
+            if (employment_industry && employment_position && employment_status) {
+              setPercent(100);
+              setValidationsStarted(false);
+              PUT_UpdateUser({ ...data, token: user.token }, user, dispatch);
+            }
           }
-        }
-      } catch {}
+        } catch {}
+      }
     }
   }, [request]);
 
@@ -87,7 +95,6 @@ export default function Profile() {
         <>
           <Title>დაასრულე პროფილის შევსება</Title>
           <Subtitle>აღნიშნული დამატებითი ინფორმაციები შემდგომში დაგვეხმარება, შემოგთავაზოთ თქვენზე მორგებული კურსები და გავაუმჯობესოთ ჩვენი პროდუქტები</Subtitle>
-          {error && <Error>{error}</Error>}
           {percent === 20 && (
             <Flexbox>
               <Dropdown
@@ -105,9 +112,19 @@ export default function Profile() {
                   { value: "50-60", text: "50-60" },
                   { value: "61+", text: "61+" },
                 ]}
+                id="age"
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
               />
               <Dropdown
                 label="სქესი"
+                id="gender"
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
                 options={[
                   { value: null, text: "აირჩიე სქესი" },
                   { value: "მდედრობითი", text: "მდედრობითი" },
@@ -117,23 +134,35 @@ export default function Profile() {
                   setData({ ...data, gender: value });
                 }}
               />
-              <PlainInput
-                exportValue={(value: any) => {
+
+              <Input
+                id="phone"
+                label="მობილურის ნომერი"
+                setValue={(value: any) => {
                   setData({ ...data, phone_number: value });
                 }}
-                label="მობილურის ნომერი"
-                placeholder="მობილურის ნომერი"
+                custType="phone"
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
               />
             </Flexbox>
           )}
           {percent === 50 && (
             <Flexbox>
-              <PlainInput
-                exportValue={(value: any) => {
+              <Input
+                id="city"
+                setValue={(value: any) => {
                   setData({ ...data, city: value });
                 }}
                 label="ქალაქი"
                 placeholder="ქალაქი"
+                custType="city"
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
               />
 
               <Dropdown
@@ -151,13 +180,23 @@ export default function Profile() {
                 exportValue={(value: any) => {
                   setData({ ...data, education: value });
                 }}
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
               />
-              <PlainInput
-                exportValue={(value: any) => {
+              <Input
+                id="faculty"
+                setValue={(value: any) => {
                   setData({ ...data, faculty: value });
                 }}
+                custType="faculty"
                 label="ფაკულტეტი"
                 placeholder="ფაკულტეტი"
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
               />
             </Flexbox>
           )}
@@ -173,20 +212,36 @@ export default function Profile() {
                 exportValue={(value: any) => {
                   setData({ ...data, employment_status: value });
                 }}
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
               />
-              <PlainInput
-                exportValue={(value: any) => {
+              <Input
+                setValue={(value: any) => {
                   setData({ ...data, employment_industry: value });
                 }}
                 label="დასაქმების ინდუსტრია"
                 placeholder="დასაქმების ინდუსტრია"
+                id="industry"
+                custType="industry"
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
               />
-              <PlainInput
-                exportValue={(value: any) => {
+              <Input
+                setValue={(value: any) => {
                   setData({ ...data, employment_position: value });
                 }}
+                custType="position"
                 label="პოზიცია"
+                id="position"
                 placeholder="პოზიცია"
+                valStarted={validationsStarted}
+                startVal={setValidationsStarted}
+                addError={addError}
+                removeError={removeError}
               />
             </Flexbox>
           )}
@@ -195,6 +250,7 @@ export default function Profile() {
             <Percentage>{percent} %</Percentage>
             <Button
               onClick={() => {
+                setValidationsStarted(true);
                 setRequest(request + 1);
               }}
             >
