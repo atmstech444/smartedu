@@ -66,6 +66,7 @@ const UpdateAccountForm = () => {
             setData({ ...data, age: value });
           }}
           options={[
+            { value: null, text: "აირჩიე ასაკი" },
             { value: "12-18", text: "12-18" },
             { value: "18-23", text: "18-23" },
             { value: "24-29", text: "24-29" },
@@ -79,6 +80,7 @@ const UpdateAccountForm = () => {
         <Dropdown
           label="სქესი"
           options={[
+            { value: null, text: "აირჩიე სქესი" },
             { value: "მდედრობითი", text: "მდედრობითი" },
             { value: "მამრობითი", text: "მამრობითი" },
           ]}
@@ -110,6 +112,7 @@ const UpdateAccountForm = () => {
         <Dropdown
           label="განათლება"
           options={[
+            { value: null, text: "აირჩიე განათლება" },
             { value: "სკოლის მოსწავლე", text: "სკოლის მოსწავლე" },
             { value: "ბაკალავრის სტუდენტი", text: "ბაკალავრის სტუდენტი" },
             { value: "ბაკალავრი", text: "ბაკალავრი" },
@@ -137,6 +140,7 @@ const UpdateAccountForm = () => {
         <Dropdown
           label="დასაქმების სტატუსი"
           options={[
+            { value: null, text: "აირჩიე სტატუსი" },
             { value: "დასაქმებული", text: "დასაქმებული" },
             { value: "უმუშავარი", text: "უმუშავარი" },
           ]}

@@ -4,7 +4,7 @@ import styled from "styled-components";
 interface DropdownProps {
   label: string;
   options: {
-    value: string;
+    value: string | null;
     text: string;
   }[];
   exportValue: any;
@@ -27,7 +27,7 @@ export default function Dropdown({ label, options, exportValue, defaultValue }: 
         <I expand={expand} className="fa-solid fa-chevron-down"></I>
         {value.text}
       </Select>
-      <input type="text" value={value.value} hidden />
+      <input type="text" value={value.value || value.text} hidden />
       {expand && (
         <Options>
           {options.map((option) => (
