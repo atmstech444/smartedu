@@ -33003,6 +33003,26 @@ p.checkout-coupon input[type=text]:focus {
   }
 }
 
+.why_choose_us_container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.why_choose_us_image {
+  width: 370px;
+  height: auto;
+  display: block;
+}
+
+@media screen and (max-width: 1000px) {
+  .why_choose_us_container {
+    flex-direction: column;
+  }
+  .why_choose_us_image {
+    margin-top: 30px;
+  }
+}
 /*----------------------------------------*/
 /*  15. COUNTER CSS START
 /*----------------------------------------*/
