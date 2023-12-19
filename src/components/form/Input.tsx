@@ -178,6 +178,10 @@ const ErrorText = styled.p`
   font-size: 14px !important;
   line-height: 18px !important;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 12px !important;
+  }
 `;
 
 const Wrapper = styled.div`

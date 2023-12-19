@@ -35911,7 +35911,7 @@ p.checkout-coupon input[type=text]:focus {
 }
 
 .sign__wrapper {
-  padding: 50px 30px;
+  padding: 16px;
 }
 
 .sign__input .forgot-input {
@@ -37674,4 +37674,4 @@ div.tagcloud a:hover {
     left: 100px;
     top: 0;
   }
-}/*# sourceMappingURL=main.css.map */
+}

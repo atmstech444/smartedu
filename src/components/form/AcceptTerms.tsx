@@ -59,4 +59,7 @@ const ErrorText = styled.p`
   position: absolute;
   top: 24px;
   font-size: 14px !important;
+  @media (max-width: 768px) {
+    font-size: 12px !important;
+  }
 `;
