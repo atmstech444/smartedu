@@ -46,7 +46,7 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      <div className="sign__input-wrapper mb-25">
+      <div className="sign__input-wrapper">
         <Input valStarted={validationsStarted} startVal={setValidationsStarted} id="email" label="ელ.ფოსტა" custType="email" type="email" setValue={setEmail} addError={addError} removeError={removeError} />
         <Input valStarted={validationsStarted} startVal={setValidationsStarted} id="password" label="პაროლი" custType="login_password" type="password" setValue={setPassword} addError={addError} removeError={removeError} />
       </div>

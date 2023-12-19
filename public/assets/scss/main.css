@@ -35015,6 +35015,11 @@ p.checkout-coupon input[type=text]:focus {
     padding-bottom: 25px;
   }
 }
+@media (max-width: 768px) {
+  .sign__wrapper {
+    padding: 16px;
+  }
+}
 .sign__shape img {
   position: absolute;
   z-index: -1;
@@ -35467,6 +35472,16 @@ p.checkout-coupon input[type=text]:focus {
 .sign__forgot a:hover {
   color: #2b4eff;
 }
+@media (max-width: 768px) {
+  .sign__forgot {
+    font-size: 14px;
+  }
+}
+@media (max-width: 768px) {
+  .sign__action {
+    display: flex;
+  }
+}
 .sign__new p {
   color: #7a797f;
   margin-bottom: 0;
@@ -35908,10 +35923,6 @@ p.checkout-coupon input[type=text]:focus {
   font-weight: 400;
   margin-bottom: 15px;
   line-height: 26px;
-}
-
-.sign__wrapper {
-  padding: 16px;
 }
 
 .sign__input .forgot-input {
