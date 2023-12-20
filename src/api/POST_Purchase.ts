@@ -19,10 +19,10 @@ export async function POST_Purchase(data: POST_Purchase_Params) {
     console.log(response.data)
     const paymentHref = response.data.links.redirect.href;
     window.location.href = paymentHref;
-    toast.success("კურსი ნაყიდია", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
-    });
+    // toast.success("კურსი ნაყიდია", {
+    //   position: toast.POSITION.TOP_RIGHT,
+    //   autoClose: 2000,
+    // });
 
     return response.data;
   } catch (error) {
