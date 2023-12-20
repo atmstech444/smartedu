@@ -60,7 +60,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
         </div>
       </div>
       <div className="course__img w-img mb-30">
-        <img src={API_STORAGE + course.cover_image} style={{ width: "100%", height: "400px" }} alt="image not found" />
+        <img src={API_STORAGE + course.cover_image} style={{ width: "100%", objectFit: "cover" }} alt="image not found" />
       </div>
     </>
   );
