@@ -3,6 +3,7 @@ import "../style/index.scss";
 import AppProvider from "@/contextApi/AppProvider";
 import ReduxProvider from "@/redux/provider";
 import { ToastContainer } from "react-toastify";
+import StyledComponentsRegistry from "./registry";
 
 export const metadata = {
   title: "The Smart – education",
@@ -23,10 +24,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </head>
 
         <body>
-          <ReduxProvider>
-            <AppProvider>{children}</AppProvider>
-            <ToastContainer />
-          </ReduxProvider>
+          <StyledComponentsRegistry>
+            <ReduxProvider>
+              <AppProvider>{children}</AppProvider>
+              <ToastContainer />
+            </ReduxProvider>
+          </StyledComponentsRegistry>
         </body>
       </html>
     </>

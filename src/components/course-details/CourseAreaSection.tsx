@@ -33,8 +33,8 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
             <img src={API_STORAGE + course.lecturer.image} style={{ width: "auto", height: "auto" }} alt="image not found" />
           </div>
           <div className="course__teacher-info-3">
-            <h5>ტუტორი</h5>
-            <p>
+            <h5 style={{ fontWeight: 500 }}>ტუტორი</h5>
+            <p style={{ fontWeight: 500 }}>
               <Link href="#">
                 {course.lecturer.first_name} {course.lecturer.last_name}
               </Link>
@@ -51,7 +51,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
               <h5>შეფასება:</h5>
               <div className="course__rating-inner d-flex align-items-center">
                 <ul>{stars}</ul>
-                <p>{course.average_rating}</p>
+                <p>{course.average_rating.toFixed(1)}</p>
               </div>
             </>
           ) : (

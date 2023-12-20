@@ -15,10 +15,9 @@ export default function AcceptTerms({ id, addError, removeError, valStarted, sta
 
   useEffect(() => {
     if (valStarted) {
-      console.log(checked);
       if (!checked) {
         addError(id);
-        setError("წესებზე და პრიობებზე დათანხმება აუცილებელია");
+        setError("წესებზე და პირობებზე დათანხმება აუცილებელია");
       } else {
         removeError(id);
         setError(null);
@@ -40,7 +39,7 @@ export default function AcceptTerms({ id, addError, removeError, valStarted, sta
         />
 
         <Label className="m-check-label" htmlFor="m-agree">
-          ვეთანხმები <Link href="/terms-conditions">წესებს და პრიობებს</Link>
+          ვეთანხმები <Link href="/terms-conditions">წესებს და პირობებს</Link>
         </Label>
 
         {error && <ErrorText>{error}</ErrorText>}
@@ -60,4 +59,7 @@ const ErrorText = styled.p`
   position: absolute;
   top: 24px;
   font-size: 14px !important;
+  @media (max-width: 768px) {
+    font-size: 12px !important;
+  }
 `;

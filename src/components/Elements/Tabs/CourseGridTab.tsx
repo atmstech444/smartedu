@@ -81,7 +81,7 @@ const CourseGridTab = () => {
                                 {item.average_rating !== 0 ? (
                                   <span>
                                     <i className="fas fa-star"></i>
-                                    {item.average_rating}
+                                    {item.average_rating.toFixed(1)}
                                   </span>
                                 ) : (
                                   <span>შეფასება არ არის</span>
