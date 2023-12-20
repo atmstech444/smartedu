@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React, { useContext, useEffect } from "react";
 import Logo from "../../../public/assets/img/logo/logo.png";
