@@ -262,7 +262,7 @@ export default function Profile() {
       )}
 
       <Flexbox style={{ marginTop: "36px" }}>
-        <InfoBox img={courses} infoTitle="ჩემი კურსები" infoValue={progress.active_courses_count} />
+        <InfoBox img={courses} infoTitle="ჩემი კურსები" infoValue={myCourses.length} />
         <InfoBox img={time} infoTitle="ნანახი საათები" infoValue={secondsToHours(progress.total_watched_time, 1)} />
         <InfoBox img={done} infoTitle="გავლილი კურსები" infoValue={progress.completed_courses_count} />
       </Flexbox>
