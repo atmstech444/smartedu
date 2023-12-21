@@ -1,3 +1,5 @@
+import React from "react";
+import Head from "next/head";
 import "./globals.css";
 import "../style/index.scss";
 import AppProvider from "@/contextApi/AppProvider";
@@ -10,28 +12,28 @@ export const metadata = {
   description: "The Smart – education",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <html lang="en">
-        <head>
-          <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-          <meta name="description" content="The Smart – education" />
-          <meta name="robots" content="noindex, follow" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <link rel="icon" href="./favicon.png" />
-          <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet"></link>
-        </head>
+      <Head>
+        <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+        <meta name="description" content={metadata.description} />
+        <meta name="robots" content="noindex, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="icon" href="./favicon.png" />
+        <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      </Head>
 
-        <body>
-          <StyledComponentsRegistry>
-            <ReduxProvider>
-              <AppProvider>{children}</AppProvider>
+      <body>
+        <StyledComponentsRegistry>
+          <ReduxProvider>
+            <AppProvider>
+              {children}
               <ToastContainer />
-            </ReduxProvider>
-          </StyledComponentsRegistry>
-        </body>
-      </html>
+            </AppProvider>
+          </ReduxProvider>
+        </StyledComponentsRegistry>
+      </body>
     </>
   );
 }
