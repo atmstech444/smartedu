@@ -12,10 +12,10 @@ export default function StyledComponentsRegistry({ children }: { children: React
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement();
     styledComponentsStyleSheet.instance.clearTag();
-    return <React.Fragment>{styles}</React.Fragment>;
+    return <>{styles}</>;
   });
 
-  if (typeof window !== "undefined") return <React.Fragment>{children as React.ReactNode}</React.Fragment>;
+  if (typeof window !== "undefined") return <>{children}</>;
 
   return <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{children}</StyleSheetManager>;
 }
