@@ -9,8 +9,6 @@ export default function StyledComponentsRegistry({
 }: {
   children: React.ReactNode
 }) {
-  // Only create stylesheet once with lazy initial state
-  // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
   const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet())
 
   useServerInsertedHTML(() => {
@@ -27,3 +25,13 @@ export default function StyledComponentsRegistry({
     </StyleSheetManager>
   )
 }
+
+module.exports = {
+  output: "export const dynamicParams = false",
+  reactStrictMode: true,
+  swcMinify: true,
+  images: { unoptimized: true },
+  compiler: {
+    styledComponents: true,
+  },
+};
