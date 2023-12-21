@@ -252,6 +252,10 @@ export default function Profile() {
               onClick={() => {
                 setValidationsStarted(true);
                 setRequest(request + 1);
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
               }}
             >
               {percent !== 80 ? "შემდეგი" : "დასრულება"}
