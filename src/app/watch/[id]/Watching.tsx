@@ -103,7 +103,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [lectures,activeIndex]);
+  }, [lectures, activeIndex]);
 
   useEffect(() => {
     const videoElement = video_ref.current;
@@ -194,7 +194,6 @@ const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex, id }: Lect
           }}
           style={{ cursor: "pointer" }}
           className={`far  ${isCompleted ? "fa-check-square" : "fa-square"}`}
-
         ></i>
         <LectureTitle
           onClick={() => {
@@ -298,6 +297,8 @@ const Content = styled.div`
     max-width: 960px;
   }
   @media (max-width: 996px) {
+    display: flex;
+    flex-direction: column;
     max-width: 720px;
   }
 `;
