@@ -48,10 +48,12 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@swc/plugin-styled-components": "^1.5.105",
     "@types/node": "^20.4.3",
     "@types/react-modal-image": "^2.6.0",
     "@types/react-modal-video": "^1.2.0",
     "@types/styled-components": "^5.1.34",
+    "babel-plugin-styled-components": "^2.1.4",
     "file-loader": "^6.2.0"
   }
 }
