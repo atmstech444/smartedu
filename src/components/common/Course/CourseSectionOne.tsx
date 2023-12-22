@@ -24,7 +24,7 @@ const CourseSectionOne = () => {
               </h2>
             </div>
           </div>
-          <div className="col-xxl-5 col-xl-6 col-lg-6">
+          {/* <div className="col-xxl-5 col-xl-6 col-lg-6">
             <Div className="category__more float-md-end fix">
               <Link href="/course-grid" className="link-btn">
                 ყველა კურსი
@@ -32,7 +32,7 @@ const CourseSectionOne = () => {
                 <i className="fas fa-arrow-right"></i>
               </Link>
             </Div>
-          </div>
+          </div> */}
         </Div2>
         <div className="row">
           {courses.slice(0, 6).map((item) => (
@@ -66,14 +66,14 @@ const CourseSectionOne = () => {
                   <h3 className="course__title" style={{ height: "48px" }}>
                     <Link href={`/course-details/${item.id}`}>{item.title}</Link>
                   </h3>
-                  <div className="course__teacher d-flex align-items-center">
+                  <div className="course__teacher d-flex align-items-baseline">
                     <div className="course__teacher-thumb mr-15">
                       <img src={API_STORAGE + item.lecturer.image} style={{ width: "50px", height: "50px" }} alt="image not found" />
                     </div>
                     <h6>
-                      <Link href="/instructor-details">
+                      <p>
                         {item.lecturer.first_name} {item.lecturer.last_name}
-                      </Link>
+                      </p>
                     </h6>
                   </div>
                 </div>
