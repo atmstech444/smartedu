@@ -21,7 +21,7 @@ const Footer = () => {
     <>
       <FooterContainer>
         <div className="footer__area footer-bg ">
-          <div className="footer__top pt-190 pb-40">
+          <div className="footer__top pt-60 ">
             <div className="container">
               <div className="row">
                 <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-6">
