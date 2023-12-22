@@ -9,8 +9,8 @@ const AboutSection = ({ children, aboutImage }: { children?: React.ReactNode; ab
           <div className="side">
             <Image src={aboutImage} style={{ width: "100%", height: "auto" }} alt="img not found" />
           </div>
-          <div className="text">
-            <div className="about__content pl-70 pr-60 pt-25">
+          <div className="text" style={{ paddingLeft: 0 }}>
+            <div className="about__content  pt-25">
               <div className="section__title-wrapper mb-25">{children && children}</div>
             </div>
           </div>
