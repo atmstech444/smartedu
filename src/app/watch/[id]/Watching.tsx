@@ -295,11 +295,9 @@ const Content = styled.div`
   }
   @media (max-width: 1200px) {
     max-width: 960px;
+    display: flex;
     flex-direction: column;
     max-width: 720px;
-  }
-  @media (max-width: 996px) {
-    display: flex;
   }
 `;
 
