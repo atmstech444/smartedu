@@ -50,14 +50,34 @@ const CourseDetailsMain = ({ id }: idType) => {
                   {course && <CourseAreaSection course={course} />}
                   <div className="course__tab-2 mb-45">
                     <ul className="nav nav-tabs" id="courseTab" role="tablist">
-                      <li className="nav-item" role="presentation">
-                        <button className="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">
+                      <li className="nav-item" role="presentation" style={{ width: "120px" }}>
+                        <button
+                          className="nav-link active"
+                          id="description-tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#description"
+                          type="button"
+                          role="tab"
+                          aria-controls="description"
+                          aria-selected="true"
+                          style={{ display: "flex", gap: "8px", alignItems: "center", width: "120px", padding: "5px" }}
+                        >
                           {" "}
                           <i className="fas fa-ribbon"></i> <span>აღწერა</span>{" "}
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
-                        <button className="nav-link " id="curriculum-tab" data-bs-toggle="tab" data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum" aria-selected="false">
+                        <button
+                          className="nav-link "
+                          id="curriculum-tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#curriculum"
+                          type="button"
+                          role="tab"
+                          aria-controls="curriculum"
+                          aria-selected="false"
+                          style={{ display: "flex", gap: "8px", alignItems: "center", width: "120px", padding: "5px" }}
+                        >
                           {" "}
                           <i className="fas fa-book"></i> <span>სილაბუსი</span>{" "}
                         </button>
