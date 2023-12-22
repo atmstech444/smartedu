@@ -30107,7 +30107,7 @@ label {
 }
 .course__curriculum-info svg .st0 {
   fill: none;
-  stroke: #6D6E75;
+  stroke: #6d6e75;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -30603,7 +30603,7 @@ label {
 }
 
 .portfolio-button button.active {
-  color: #2467EC;
+  color: #2467ec;
   font-size: 16px;
 }
 
@@ -30630,14 +30630,14 @@ label {
   }
 }
 .portfolio-button button:hover {
-  color: #2467EC;
+  color: #2467ec;
 }
 .portfolio-button button span::before {
   position: absolute;
   width: 31px;
   height: 1px;
   content: "";
-  background: #2467EC;
+  background: #2467ec;
   top: 50%;
   left: 25px;
   right: 0;
@@ -30649,7 +30649,7 @@ label {
   position: absolute;
   top: -30px;
   left: 0;
-  color: #2467EC;
+  color: #2467ec;
   opacity: 0;
   visibility: visible;
 }
@@ -30895,6 +30895,21 @@ label {
 .course-reviews-img img {
   min-width: 50px;
   border-radius: 50%;
+}
+
+.syllabus-item-container:hover {
+  cursor: pointer;
+}
+
+.syllabus-title {
+  outline: none;
+  border: 1px solid #edeef2;
+  border-radius: 4px 4px 0 0;
+  background: #f3f4f8;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0e1133;
+  padding: 19px 30px 17px 30px;
 }
 
 /*----------------------------------------*/
