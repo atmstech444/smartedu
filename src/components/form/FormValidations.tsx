@@ -16,24 +16,24 @@ export const validate_login_password = (password: string) => {
 };
 
 export const validate_name = (name: string) => {
-  const namePattern = /^[a-zA-Z\u10A0-\u10FF\s]{2,}$/u;
+  const namePattern = /^[ა-ჰ\u10A0-\u10FF\s]{2,}$/u;
 
   if (name.trim() === "") {
     return "სახელი აუცილებელია";
   } else if (!namePattern.test(name)) {
-    return "სახელი არასწორია";
+    return "სახელი არასწორია (მხოლოდ ქართულად)";
   }
 
   return null;
 };
 
 export const validate_surname = (surname: string) => {
-  const namePattern = /^[a-zA-Z\u10A0-\u10FF\s]{2,}$/u;
+  const namePattern = /^[ა-ჰ\u10A0-\u10FF\s]{2,}$/u;
 
   if (surname.trim() === "") {
     return "გვარი აუცილებელია";
   } else if (!namePattern.test(surname)) {
-    return "გვარი არასწორია";
+    return "გვარი არასწორია (მხოლოდ ქართულად)";
   }
 
   return null;
