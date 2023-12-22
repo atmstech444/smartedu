@@ -53,8 +53,6 @@ nextjs-portal {
   display: none;
 }
 
-@media screen and (max-width: 1024px) {
-  .progress-wrap {
-    display: none;
-  }
+.progress-wrap {
+  display: none;
 }
