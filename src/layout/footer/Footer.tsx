@@ -126,12 +126,12 @@ const Footer = () => {
 
 const FooterContainer = styled.footer`
   @media (min-width: 365px) and (max-width: 1024px) {
-    margin-top: 250px;
+    margin-top: -250px;
   }
 `;
 const FooterLoogo = styled.div`
   @media (min-width: 365px) and (max-width: 1024px) {
-    padding-top: 250px;
+    padding-top: 150px;
   }
 `;
 
