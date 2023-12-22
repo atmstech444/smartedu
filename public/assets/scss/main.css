@@ -32776,7 +32776,7 @@ p.checkout-coupon input[type=text]:focus {
 .about__area .container .row {
   display: flex;
   flex-wrap: no-wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 .about__area .container .side {
@@ -37705,4 +37705,4 @@ div.tagcloud a:hover {
     left: 100px;
     top: 0;
   }
-}
+}/*# sourceMappingURL=main.css.map */
