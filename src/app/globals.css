@@ -53,6 +53,7 @@ nextjs-portal {
   display: none;
 }
 
-.progress-wrap {
+.progress-wrap,
+.active-progress {
   display: none;
 }
