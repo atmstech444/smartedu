@@ -37,7 +37,7 @@ export async function POST_Register(data: POST_Register_Params, router: any, set
       autoClose: false,
       style: {
         position: "absolute",
-        top: "50dvh",
+        top: "40vh",
         left: "50%",
         transform: "translate(-50%, -50%)",
         fontSize: window.innerWidth < 769 ? "16px" : "26px",
