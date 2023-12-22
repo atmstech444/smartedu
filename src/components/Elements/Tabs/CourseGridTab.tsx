@@ -96,9 +96,9 @@ const CourseGridTab = () => {
                                 <img src={API_STORAGE + item.lecturer.image} style={{ width: "50px", height: "50px" }} alt="image not found" />
                               </div>
                               <h6>
-                                <Link href="/instructor-details">
+                                <p>
                                   {item.lecturer.first_name} {item.lecturer.last_name}
-                                </Link>
+                                </p>
                               </h6>
                             </div>
                           </div>
