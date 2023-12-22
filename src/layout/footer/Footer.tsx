@@ -82,7 +82,7 @@ const Footer = () => {
                           <li>
                             <Link href="/contact">კონტაქტი</Link>
                           </li>
-                          <li>
+                          <li style={{ width: "200px" }}>
                             <Link href="/terms-conditions">წესები და პირობები</Link>
                           </li>
                           <li>
