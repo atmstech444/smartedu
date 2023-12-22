@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <html>
       <Head>
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta name="description" content={metadata.description} />
@@ -34,6 +34,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </ReduxProvider>
         </StyledComponentsRegistry>
       </body>
-    </>
+    </html>
   );
 }
