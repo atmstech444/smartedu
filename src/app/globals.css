@@ -57,3 +57,7 @@ nextjs-portal {
 .active-progress {
   display: none;
 }
+
+.rotate {
+  transform: rotate(180deg);
+}
