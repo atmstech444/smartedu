@@ -4,6 +4,7 @@ import FooterLogo from "../../../public/assets/img/logo/logo.png";
 import Image from "next/image";
 import CopyrightArea from "./copyright-area";
 import { POST_Subscribe } from "@/api/POST_Subscribe";
+import styled from "styled-components";
 
 const Footer = () => {
   const email = useRef<HTMLInputElement | null>(null);
@@ -40,22 +41,22 @@ const Footer = () => {
                       <div className="footer__social">
                         <ul>
                           <li>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/smarteducation.ge/">
+                            <Link target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/smarteducation.ge/" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                               <i className="fab fa-facebook-f"></i>
                             </Link>
                           </li>
                           <li>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/thesmart-education/" className="tw">
+                            <Link target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/thesmart-education/" className="tw" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                               <i className="fa-brands fa-linkedin-in"></i>
                             </Link>
                           </li>
                           <li>
-                            <Link target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/thesmart.education/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" className="pin">
+                            <Link target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/thesmart.education/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" className="pin" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                               <i className="fa-brands fa-instagram"></i>
                             </Link>
                           </li>
                           <li>
-                            <Link target="_blank" rel="noopener noreferrer" href="http://www.tiktok.com/@thesmart.education" className="tiktok">
+                            <Link target="_blank" rel="noopener noreferrer" href="http://www.tiktok.com/@thesmart.education" className="tiktok" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                               <i className="fa-brands fa-tiktok" style={{ color: "#000000" }}></i>
                             </Link>
                           </li>
