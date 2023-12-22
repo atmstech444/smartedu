@@ -19,14 +19,14 @@ const Footer = () => {
   };
   return (
     <>
-      <footer>
-        <div className="footer__area footer-bg">
+      <FooterContainer>
+        <div className="footer__area footer-bg ">
           <div className="footer__top pt-190 pb-40">
             <div className="container">
               <div className="row">
                 <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-6">
-                  <div className="footer__widget mb-50">
-                    <div className="footer__widget-head mb-22">
+                  <div className="footer__widget mb-50" style={{ padding: "24px"}}>
+                    <div className="footer__widget-head mb-22" >
                       <div className="footer__logo">
                         <Link href="/">
                           <Image src={FooterLogo} alt="logo" className="img-fluid d-none d-sm-block" />
@@ -65,7 +65,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xxl-2 offset-xxl-2 col-xl-2 offset-xl-2 col-lg-3 offset-lg-1 col-md-2 offset-md-2 col-sm-5 offset-sm-1">
+                <div className="col-xxl-2 offset-xxl-2 col-xl-2 offset-xl-2 col-lg-3 offset-lg-1 col-md-2 offset-md-2 col-sm-5 offset-sm-1" style={{ padding: "24px"}}>
                   <div className="footer__widget mb-50">
                     <div className="footer__widget-head mb-22">
                       <h3 className="footer__widget-title">ნავიგაცია</h3>
@@ -93,7 +93,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-5 offset-xl-1 col-sm-6">
+                <div className="col-xxl-4 col-xl-4 col-lg-4 col-md-5 offset-xl-1 col-sm-6" style={{ padding: "24px"}}>
                   <div className="footer__widget footer__pl-70 mb-50">
                     <div className="footer__widget-head mb-22">
                       <h3 className="footer__widget-title">გამოწერა</h3>
@@ -119,9 +119,17 @@ const Footer = () => {
           </div>
           <CopyrightArea />
         </div>
-      </footer>
+      </FooterContainer>
     </>
   );
 };
+
+const FooterContainer = styled.footer`
+   @media (min-width: 365px) and (max-width:1024px) {
+    margin-top: 250px;
+  }
+`
+ 
+
 
 export default Footer;
