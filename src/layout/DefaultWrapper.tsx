@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import { animationCreate } from "@/utils/utils";
 import Footer from "./footer/Footer";
-import BacktoTop from "@/components/common/backToTop/BacktoTop";
 
 if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap");
@@ -39,7 +38,6 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
 
   return (
     <>
-      <BacktoTop />
       {(() => {
         switch (pathName) {
           case "/":
