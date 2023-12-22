@@ -20,7 +20,7 @@ const Footer = () => {
   return (
     <>
       <FooterContainer>
-        <div className="footer__area footer-bg">
+        <div className="footer__area footer-bg ">
           <div className="footer__top pt-190 pb-40">
             <div className="container">
               <div className="row">
