@@ -3,7 +3,7 @@ import React from "react";
 
 const AboutSection = ({ children, aboutImage }: { children?: React.ReactNode; aboutImage: StaticImageData }) => {
   return (
-    <section className="about__area pt-120 pb-150">
+    <section className="about__area pt-120 pb-100">
       <div className="container">
         <div className="row">
           <div className="side">
