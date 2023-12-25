@@ -8,6 +8,8 @@ import styled from "styled-components";
 
 const Footer = () => {
   const email = useRef<HTMLInputElement | null>(null);
+  const isProfileRoute = typeof window !== "undefined" && window.location.pathname === "/profile";
+
   const submit = async (event: any) => {
     event.preventDefault();
     if (email.current?.value) {
@@ -17,9 +19,10 @@ const Footer = () => {
       } catch {}
     }
   };
+
   return (
     <>
-      <FooterContainer>
+      <FooterContainer isProfileRoute={isProfileRoute}>
         <div className="footer__area footer-bg ">
           <div className="footer__top pt-60 ">
             <div className="container">
@@ -27,7 +30,7 @@ const Footer = () => {
                 <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-6">
                   <div className="footer__widget mb-50" style={{ padding: "24px" }}>
                     <div className="footer__widget-head mb-22">
-                      <FooterLoogo>
+                      <FooterLoogo isProfileRoute={isProfileRoute}>
                         <Link href="/">
                           <Image src={FooterLogo} alt="logo" className="img-fluid d-none d-sm-block" />
                         </Link>
@@ -124,15 +127,18 @@ const Footer = () => {
   );
 };
 
-const FooterContainer = styled.footer`
+const FooterContainer = styled.footer<FooterLogoProps>`
   @media (min-width: 365px) and (max-width: 1024px) {
-    margin-top: -250px;
+    margin-top: ${({ isProfileRoute }) => (isProfileRoute ? "-250px" : "0")};
   }
 `;
-const FooterLoogo = styled.div`
-  @media (min-width: 365px) and (max-width: 1024px) {
-    padding-top: 150px;
-  }
-`;
+type FooterLogoProps = {
+  isProfileRoute: boolean;
+};
 
+const FooterLoogo = styled.div<FooterLogoProps>`
+  @media (min-width: 365px) and (max-width: 1024px) {
+    padding-top: ${({ isProfileRoute }) => (isProfileRoute ? "150px" : "0")};
+  }
+`;
 export default Footer;
