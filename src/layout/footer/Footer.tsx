@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FooterLogo from "../../../public/assets/img/logo/logo.png";
 import Image from "next/image";
 import CopyrightArea from "./copyright-area";
@@ -8,7 +9,25 @@ import styled from "styled-components";
 
 const Footer = () => {
   const email = useRef<HTMLInputElement | null>(null);
-  const isProfileRoute = typeof window !== "undefined" && window.location.pathname === "/profile";
+  const [isProfileRoute, setIsProfileRoute] = useState(false);
+
+  useEffect(() => {
+    const checkProfileRoute = () => {
+      setIsProfileRoute(location.pathname === "/profile");
+    };
+
+    checkProfileRoute();
+
+    const handleRouteChange = () => {
+      checkProfileRoute();
+    };
+
+    document.addEventListener("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      document.removeEventListener("routeChangeComplete", handleRouteChange);
+    };
+  }, []);
 
   const submit = async (event: any) => {
     event.preventDefault();
