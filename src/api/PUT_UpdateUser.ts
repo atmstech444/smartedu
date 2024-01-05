@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
 import { User, removeUser, setUser } from "@/redux/slices/userSlice";
+import { redirect } from "next/navigation";
 export interface POST_Register_Success {
   message: string;
   user: userType;
@@ -51,6 +52,7 @@ export async function PUT_UpdateUser(data: PUT_UpdateUser_Params, user: User, di
   } catch (error: any) {
     if (error.response && error.response.status === 401) {
       dispatch(removeUser());
+      redirect("/");
     }
     toast.error("დაფიქსირდა შეცდომა", {
       position: toast.POSITION.TOP_RIGHT,

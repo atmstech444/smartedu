@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
 import { removeUser } from "@/redux/slices/userSlice";
+import { redirect } from "next/navigation";
 
 export interface POST_Subscribe_Params {
   email: string;
@@ -18,6 +19,7 @@ export async function POST_Subscribe(data: POST_Subscribe_Params, dispatch: any)
   } catch (error: any) {
     if (error.response && error.response.status === 401) {
       dispatch(removeUser());
+      redirect("/");
     }
     toast.error("დაფიქსირდა შეცდომა", {
       position: toast.POSITION.TOP_RIGHT,

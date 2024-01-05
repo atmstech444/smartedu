@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
 import { removeUser } from "@/redux/slices/userSlice";
+import { redirect } from "next/navigation";
 
 export interface PUT_ChangePasword_Params {
   current_password: string;
@@ -34,6 +35,7 @@ export default async function PUT_ChangePassword(data: PUT_ChangePasword_Params,
   } catch (error: any) {
     if (error.response && error.response.status === 401) {
       dispatch(removeUser);
+      redirect("/");
     }
     toast.error("შეცდომა პაროლის ცვლილებისას", {
       position: toast.POSITION.TOP_RIGHT,

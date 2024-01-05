@@ -3,6 +3,7 @@ import { API_PATH } from "./API_PATH";
 import { setMyCourses } from "@/redux/slices/myCoursesSlice";
 import { toast } from "react-toastify";
 import { removeUser } from "@/redux/slices/userSlice";
+import { redirect } from "next/navigation";
 
 export interface GET_WatchCourse_Params {
   token: string;
@@ -48,6 +49,7 @@ export async function GET_WatchCourse(data: GET_WatchCourse_Params, dispatch: an
   } catch (error: any) {
     if (error.response && error.response.status === 401) {
       dispatch(removeUser());
+      redirect("/");
     }
     // toast.error("დაფიქსირდა შეცდომა", {
     //   position: toast.POSITION.TOP_RIGHT,
