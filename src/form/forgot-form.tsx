@@ -40,8 +40,8 @@ const ForgotForm = () => {
                   </div>
                 </div>
                 <div className="sing-buttom d-inline-block mx-auto px-5">
-                  <button className="e-btn w-100" type="submit">
-                    {`გაგზავნა`.toLowerCase()}
+                  <button className="e-btn w-100" type="submit" style={{ textTransform: "lowercase" }}>
+                    გაგზავნა
                   </button>
                 </div>
                 <div className="sign__new text-center mt-20">
