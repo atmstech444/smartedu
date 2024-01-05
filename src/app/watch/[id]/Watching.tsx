@@ -22,7 +22,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
 
   useEffect(() => {
     if (user) {
-      GET_WatchCourse({ token: user?.token, id }).then((lectures) => {
+      GET_WatchCourse({ token: user?.token, id }, dispatch).then((lectures) => {
         if (lectures) {
           setLectures(lectures);
           const lecturesFiltered = lectures.filter((lecture) => {
@@ -69,11 +69,14 @@ const Watching = ({ params }: { params: { id: number } }) => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
       if (user && lectures[activeIndex]) {
-        PUT_WatchTime({
-          token: user.token,
-          id: lectures[activeIndex].id,
-          watched_time: video_ref.current?.currentTime || 0,
-        });
+        PUT_WatchTime(
+          {
+            token: user.token,
+            id: lectures[activeIndex].id,
+            watched_time: video_ref.current?.currentTime || 0,
+          },
+          dispatch
+        );
       }
     };
 
@@ -82,11 +85,14 @@ const Watching = ({ params }: { params: { id: number } }) => {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       if (user && lectures[activeIndex] && video_ref.current) {
-        PUT_WatchTime({
-          token: user.token,
-          id: lectures[activeIndex].id,
-          watched_time: video_ref.current.currentTime || 0,
-        });
+        PUT_WatchTime(
+          {
+            token: user.token,
+            id: lectures[activeIndex].id,
+            watched_time: video_ref.current.currentTime || 0,
+          },
+          dispatch
+        );
       }
     };
   }, [lectures, activeIndex, user, video_ref.current]);
@@ -111,7 +117,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
       const handlePause = () => {
         const currentTime = Math.floor(videoElement.currentTime);
         if (user) {
-          PUT_WatchTime({ token: user?.token, id: lectures[activeIndex].id, watched_time: currentTime });
+          PUT_WatchTime({ token: user?.token, id: lectures[activeIndex].id, watched_time: currentTime }, dispatch);
         }
       };
 
@@ -141,7 +147,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
     return () => {
       if (videoElement && user && lectures[activeIndex]) {
         const currentTime = Math.floor(videoElement.currentTime);
-        PUT_WatchTime({ token: user.token, id: lectures[activeIndex].id, watched_time: currentTime });
+        PUT_WatchTime({ token: user.token, id: lectures[activeIndex].id, watched_time: currentTime }, dispatch);
       }
     };
   }, [lectures]);
@@ -180,6 +186,7 @@ interface LectureSwitchProps {
 const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex, id }: LectureSwitchProps) => {
   const user = useAppSelector((state) => state.user.user);
   const [isCompleted, setIsCompleted] = useState<boolean>(Boolean(lecture.video_progress?.is_completed));
+  const dispatch = useAppDispatch();
   return (
     <Parent isActive={index === activeIndex}>
       <Flex>
@@ -187,7 +194,7 @@ const LectureSwitch = ({ lecture, index, activeIndex, setActiveIndex, id }: Lect
           onClick={async () => {
             if (user) {
               try {
-                POST_MarkAsCompleted({ token: user?.token, id });
+                POST_MarkAsCompleted({ token: user?.token, id }, dispatch);
                 setIsCompleted(!isCompleted);
               } catch {}
             }

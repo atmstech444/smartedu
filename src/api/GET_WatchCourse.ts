@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { setMyCourses } from "@/redux/slices/myCoursesSlice";
 import { toast } from "react-toastify";
+import { removeUser } from "@/redux/slices/userSlice";
 
 export interface GET_WatchCourse_Params {
   token: string;
@@ -35,7 +36,7 @@ export interface I_WatchCourse {
   video_progress: VideoProgress | null;
 }
 
-export async function GET_WatchCourse(data: GET_WatchCourse_Params) {
+export async function GET_WatchCourse(data: GET_WatchCourse_Params, dispatch: any) {
   const config = {
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -45,6 +46,9 @@ export async function GET_WatchCourse(data: GET_WatchCourse_Params) {
     const response = await axios.get<{ lectures: I_WatchCourse[] }>(API_PATH + `courses/${data.id}/lectures`, config);
     return response.data.lectures;
   } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      dispatch(removeUser());
+    }
     toast.error("დაფიქსირდა შეცდომა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,

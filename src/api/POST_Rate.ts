@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
+import { removeUser } from "@/redux/slices/userSlice";
 
 export interface POST_Rate_Params {
   token: string;
@@ -8,7 +9,7 @@ export interface POST_Rate_Params {
   rating: number;
 }
 
-export async function POST_Rate(data: POST_Rate_Params) {
+export async function POST_Rate(data: POST_Rate_Params, dispatch: any) {
   const config = {
     headers: {
       Authorization: `Bearer ${data.token}`,
@@ -22,6 +23,9 @@ export async function POST_Rate(data: POST_Rate_Params) {
     });
     return response.data;
   } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      dispatch(removeUser());
+    }
     toast.error("დაფიქსირდა შეცდომა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,

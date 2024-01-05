@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
+import { removeUser } from "@/redux/slices/userSlice";
 
 export interface I_Course_Details {
   id: 1;
@@ -51,11 +52,14 @@ export interface I_Course_Details {
   };
 }
 
-export async function GET_CourseDetails(id: number) {
+export async function GET_CourseDetails(id: number, dispatch: any) {
   try {
     const response = await axios.get<{ course: I_Course_Details }>(API_PATH + "courses/detail/" + id);
     return response.data.course;
   } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      dispatch(removeUser());
+    }
     toast.error("დაფიქსირდა შეცდომა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,

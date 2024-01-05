@@ -12,11 +12,12 @@ import CtaSection from "../home/CtaSection";
 import { idType } from "@/interFace/interFace";
 import Breadcrumb from "../common/breadcrumb/Breadcrumb";
 import { GET_CourseDetails, I_Course_Details } from "@/api/GET_CourseDetails";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 
 const CourseDetailsMain = ({ id }: idType) => {
   const [course, setCourse] = useState<null | I_Course_Details>(null);
   const myCourses = useAppSelector((state) => state.myCourses.courses);
+  const dispatch = useAppDispatch();
   const isBought = myCourses.find((course) => {
     if (course) {
       return course.id === Number(id);
@@ -25,7 +26,7 @@ const CourseDetailsMain = ({ id }: idType) => {
 
   useEffect(() => {
     if (id) {
-      GET_CourseDetails(id).then((res) => {
+      GET_CourseDetails(id, dispatch).then((res) => {
         if (res) {
           setCourse(res);
         }

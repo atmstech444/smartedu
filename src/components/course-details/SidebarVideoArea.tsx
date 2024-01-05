@@ -22,7 +22,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
   const purchase = () => {
     if (!isBought) {
       if (user) {
-        POST_Purchase({ token: user?.token, course_id: course.id }).then(() => {
+        POST_Purchase({ token: user?.token, course_id: course.id }, dispatch).then(() => {
           GET_MyCourses({ token: user?.token }, dispatch);
         });
       } else {

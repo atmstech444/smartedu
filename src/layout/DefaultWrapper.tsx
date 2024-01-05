@@ -24,7 +24,7 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
   const pathName = usePathname();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    GET_Courses().then((res) => {
+    GET_Courses(dispatch).then((res) => {
       if (res) {
         dispatch(setCourses(res));
       }
