@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
 import { removeUser } from "@/redux/slices/userSlice";
+import { redirect } from "next/navigation";
 
 export interface POST_Contact_Params {
   name: string;
@@ -21,6 +22,7 @@ export async function POST_Contact(data: POST_Contact_Params, dispatch: any) {
   } catch (error: any) {
     if (error.response && error.response.status === 401) {
       dispatch(removeUser());
+      redirect("/");
     }
     toast.error("გაგზავნისას დაფიქსირდა შეცდომა", {
       position: toast.POSITION.TOP_RIGHT,
