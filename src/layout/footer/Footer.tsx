@@ -6,9 +6,11 @@ import Image from "next/image";
 import CopyrightArea from "./copyright-area";
 import { POST_Subscribe } from "@/api/POST_Subscribe";
 import styled from "styled-components";
+import { useAppDispatch } from "@/redux/store";
 
 const Footer = () => {
   const email = useRef<HTMLInputElement | null>(null);
+  const dispatch = useAppDispatch();
   const [isProfileRoute, setIsProfileRoute] = useState(false);
 
   useEffect(() => {
@@ -32,10 +34,8 @@ const Footer = () => {
   const submit = async (event: any) => {
     event.preventDefault();
     if (email.current?.value) {
-      try {
-        await POST_Subscribe({ email: email.current.value });
-        email.current.value = "";
-      } catch {}
+      await POST_Subscribe({ email: email.current.value}, dispatch);
+      email.current.value = "";
     }
   };
 

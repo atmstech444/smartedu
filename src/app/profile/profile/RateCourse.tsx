@@ -1,7 +1,7 @@
 import { API_STORAGE } from "@/api/API_PATH";
 import { I_MyCourse } from "@/api/GET_MyCourses";
 import { POST_Rate } from "@/api/POST_Rate";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
@@ -9,11 +9,12 @@ export default function RateCourse({ course }: { course: I_MyCourse }) {
   const [rate, setRate] = useState(course.user_rating || 0);
   const [isRated, setIsRated] = useState<number | null>(course.user_rating);
   const clicked = useRef(false);
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
   useEffect(() => {
     if (clicked.current) {
       if (isRated && user) {
-        POST_Rate({ course_id: course.id, token: user.token, rating: isRated });
+        POST_Rate({ course_id: course.id, token: user.token, rating: isRated }, dispatch);
       }
     }
   }, [isRated]);

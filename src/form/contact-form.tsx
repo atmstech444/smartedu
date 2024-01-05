@@ -3,8 +3,10 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { POST_Contact, POST_Contact_Params } from "@/api/POST_Contact";
+import { useAppDispatch } from "@/redux/store";
 
 const ContactForm = () => {
+  const dispatch = useAppDispatch();
   const initialValues = {
     name: "",
     email: "",
@@ -21,7 +23,7 @@ const ContactForm = () => {
 
   const handleSubmit = async (values: POST_Contact_Params, { resetForm }: FormikHelpers<POST_Contact_Params>) => {
     try {
-      await POST_Contact(values);
+      await POST_Contact(values, dispatch);
       resetForm();
     } catch (error) {}
   };

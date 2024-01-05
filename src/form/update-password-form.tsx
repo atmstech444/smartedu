@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAppSelector } from "@/redux/store";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { toast } from "react-toastify";
 import PUT_ChangePassword from "@/api/PUT_ChangePassword";
 import Input from "@/components/form/Input";
@@ -8,6 +8,7 @@ import Input from "@/components/form/Input";
 const UpdatePasswordForm = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useAppDispatch();
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -20,12 +21,15 @@ const UpdatePasswordForm = () => {
     if (user) {
       if (password === passwordConfirmation) {
         try {
-          await PUT_ChangePassword({
-            current_password: oldPassword,
-            new_password: password,
-            confirm_password: passwordConfirmation,
-            token: user.token,
-          });
+          await PUT_ChangePassword(
+            {
+              current_password: oldPassword,
+              new_password: password,
+              confirm_password: passwordConfirmation,
+              token: user.token,
+            },
+            dispatch
+          );
 
           resetForm();
         } catch {

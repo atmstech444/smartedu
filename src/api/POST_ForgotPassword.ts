@@ -1,12 +1,13 @@
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
+import { removeUser } from "@/redux/slices/userSlice";
 
 export interface POST_ForgotPassword_Params {
   email: string;
 }
 
-export async function POST_ForgotPassword(data: POST_ForgotPassword_Params, router: any) {
+export async function POST_ForgotPassword(data: POST_ForgotPassword_Params, router: any, dispatch: any) {
   try {
     const response = await axios.post(API_PATH + "forgot-password", data);
     toast.success("ელ.ფოსტა წარმატებით გაიგზავნა", {
@@ -16,6 +17,9 @@ export async function POST_ForgotPassword(data: POST_ForgotPassword_Params, rout
     router.push("/sign-in");
     return response.data;
   } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      dispatch(removeUser());
+    }
     toast.error("გაგზავნისას დაფიქსირდა შეცდომა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,

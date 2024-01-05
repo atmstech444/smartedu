@@ -1,5 +1,6 @@
 "use client";
 import { POST_ForgotPassword } from "@/api/POST_ForgotPassword";
+import { useAppDispatch } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -7,11 +8,12 @@ import React, { useEffect } from "react";
 const ForgotForm = () => {
   const email = React.useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (email.current?.value !== "") {
       try {
-        await POST_ForgotPassword({ email: email.current?.value! }, router);
+        await POST_ForgotPassword({ email: email.current?.value! }, router, dispatch);
         if (email.current) {
           email.current.value = "";
         }
