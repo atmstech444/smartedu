@@ -31,7 +31,7 @@ const ForgotForm = () => {
                 <div className="sign__input-wrapper mb-25">
                   <h5 className="forgot-heading">პაროლის აღდგენა</h5>
                   <p>
-                    ჩაწერე რეგისტრირებული <br /> ელ. ფოსტა
+                    ჩაწერე რეგისტრირებული <br/> ელ. ფოსტა
                   </p>
                   <div className="sign__input">
                     <div className="login__input">
@@ -40,8 +40,8 @@ const ForgotForm = () => {
                   </div>
                 </div>
                 <div className="sing-buttom d-inline-block mx-auto px-5">
-                  <button className="e-btn w-100" type="submit">
-                    {`გაგზავნა`.toLowerCase()}
+                  <button className="e-btn w-100" type="submit" style={{ textTransform: "lowercase" }}>
+                    გაგზავნა
                   </button>
                 </div>
                 <div className="sign__new text-center mt-20">
