@@ -8,8 +8,8 @@ import { ToastContainer } from "react-toastify";
 import StyledComponentsRegistry from "./registry";
 
 export const metadata = {
-  title: "The Smart – education",
-  description: "The Smart – education",
+  title: "The Smart education",
+  description: "The Smart education",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
