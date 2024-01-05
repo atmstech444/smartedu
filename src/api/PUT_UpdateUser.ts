@@ -2,7 +2,7 @@ import { userType } from "@/interFace/interFace";
 import axios from "axios";
 import { API_PATH } from "./API_PATH";
 import { toast } from "react-toastify";
-import { User, setUser } from "@/redux/slices/userSlice";
+import { User, removeUser, setUser } from "@/redux/slices/userSlice";
 export interface POST_Register_Success {
   message: string;
   user: userType;
@@ -43,13 +43,15 @@ export async function PUT_UpdateUser(data: PUT_UpdateUser_Params, user: User, di
     toast.success("ინფორმაცია განახლდა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
-      
     });
     console.log(response.data.user);
     console.log({ ...user, ...response.data.user });
     dispatch(setUser({ ...user, ...response.data.user }));
     return response.data;
   } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      dispatch(removeUser());
+    }
     toast.error("დაფიქსირდა შეცდომა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
