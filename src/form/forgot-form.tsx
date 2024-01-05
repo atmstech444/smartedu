@@ -31,7 +31,7 @@ const ForgotForm = () => {
                 <div className="sign__input-wrapper mb-25">
                   <h5 className="forgot-heading">პაროლის აღდგენა</h5>
                   <p>
-                    ჩაწერე რეგისტრირებული <br /> ელ. ფოსტა
+                    ჩაწერე რეგისტრირებული <br/> ელ. ფოსტა
                   </p>
                   <div className="sign__input">
                     <div className="login__input">
