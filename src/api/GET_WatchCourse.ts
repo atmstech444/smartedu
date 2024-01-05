@@ -49,9 +49,9 @@ export async function GET_WatchCourse(data: GET_WatchCourse_Params, dispatch: an
     if (error.response && error.response.status === 401) {
       dispatch(removeUser());
     }
-    toast.error("დაფიქსირდა შეცდომა", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
-    });
+    // toast.error("დაფიქსირდა შეცდომა", {
+    //   position: toast.POSITION.TOP_RIGHT,
+    //   autoClose: 2000,
+    // });
   }
 }

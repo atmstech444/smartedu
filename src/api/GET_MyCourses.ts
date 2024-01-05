@@ -61,9 +61,9 @@ export async function GET_MyCourses(data: POST_Login_Params, dispatch: any) {
     if (error.response && error.response.status === 401) {
       dispatch(removeUser());
     }
-    toast.error("დაფიქსირდა შეცდომა", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 2000,
-    });
+    // toast.error("დაფიქსირდა შეცდომა", {
+    //   position: toast.POSITION.TOP_RIGHT,
+    //   autoClose: 2000,
+    // });
   }
 }
