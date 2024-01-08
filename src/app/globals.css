@@ -1,7 +1,12 @@
 /* @import url("//cdn.web-fonts.ge/fonts/bpg-arial/css/bpg-arial.min.css"); */
 
+@font-face {
+  font-family: "ArialGeo";
+  src: url("../../public//assets/fonts/Arial\ GEO.ttf") format("truetype");
+}
+
 *:not(i) {
-  font-family: "BPG Arial", sans-serif !important;
+  font-family: "Gabarito", cursive !important;
 }
 .hello {
   color: black;
