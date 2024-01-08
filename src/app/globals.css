@@ -6,7 +6,7 @@
 }
 
 *:not(i) {
-  font-family: "BPG Arial" !important;
+  font-family: "BPG Arial", sans-serif !important;
 }
 .hello {
   color: black;
@@ -65,4 +65,8 @@ nextjs-portal {
 
 .rotate {
   transform: rotate(180deg);
+}
+
+.btnFont{
+  font-family: "BPG Arial", cursive !important;
 }

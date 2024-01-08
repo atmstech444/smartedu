@@ -59,7 +59,7 @@ const ContactForm = () => {
             </div>
             <div className="col-xxl-12">
               <div className="contact__btn">
-                <button type="submit" className="e-btn">
+                <button type="submit" className="e-btn btnFont">
                   გაგზავნა
                 </button>
               </div>

@@ -148,7 +148,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
             </Link> */}
           </div>
           <div className="course__enroll-btn">
-            <button onClick={purchase} className="e-btn e-btn-7 w-100" style={{ textTransform: "lowercase" }}>
+            <button onClick={purchase} className="e-btn e-btn-7 w-100 btnFont" style={{ textTransform: "lowercase" }}>
               {isBought ? "ნაყიდია" : "ყიდვა"}
             </button>
           </div>
