@@ -14,7 +14,7 @@ const CourseSectionOne = () => {
       <div className="container">
         <Div2 className="row">
           <div className="col-xxl-5 col-xl-6 col-lg-6">
-            <div className="section__title-wrapper mb-60">
+            <div className="section__title-wrapper">
               <h2 className="section__title">
                 ჩვენი <br />
                 <span className="yellow-bg yellow-bg-big">
