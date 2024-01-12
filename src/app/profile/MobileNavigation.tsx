@@ -3,6 +3,13 @@ import styled from "styled-components";
 import { HiOutlineUserCircle, HiUserCircle, HiOutlineBookOpen, HiBookOpen, HiOutlineCog, HiCog } from "react-icons/hi";
 import { pageType } from "./page";
 export default function MobileNavigation({ page, setPage }: { page: pageType; setPage: React.Dispatch<React.SetStateAction<pageType>> }) {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Optional: adds a smooth scrolling effect
+    });
+  };
+
   return (
     <Wrapper>
       <IconWrapper>
@@ -12,6 +19,7 @@ export default function MobileNavigation({ page, setPage }: { page: pageType; se
           <HiOutlineUserCircle
             onClick={() => {
               setPage("profile");
+              scrollToTop();
             }}
           />
         )}
@@ -23,6 +31,7 @@ export default function MobileNavigation({ page, setPage }: { page: pageType; se
           <HiOutlineBookOpen
             onClick={() => {
               setPage("my-courses");
+              scrollToTop();
             }}
           />
         )}
@@ -34,6 +43,7 @@ export default function MobileNavigation({ page, setPage }: { page: pageType; se
           <HiOutlineCog
             onClick={() => {
               setPage("settings");
+              scrollToTop();
             }}
           />
         )}
