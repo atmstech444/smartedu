@@ -4,17 +4,6 @@
  * License - https://fontawesome.com/license (Commercial License)
  * Copyright 2022 Fonticons, Inc.
  */
-
- input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-@font-face {
-  font-family: "ArialGeo";
-  src: url("../fonts//Arial\ GEO.ttf") format("truetype");
-}
 .fa {
   font-family: var(--fa-style-family, "Font Awesome 6 Pro");
   font-weight: var(--fa-style, 900);
@@ -25509,13 +25498,8 @@ input::-webkit-inner-spin-button {
   box-sizing: border-box;
 }
 
-@font-face {
-  font-family: "ArialGeo";
-  src: url("./fonts/arial_geo.ttf") format("truetype");
-}
-
 body {
-  font-family: "BPG Arial", sans-serif;
+  font-family: "Hind", sans-serif;
   font-size: 16px;
   font-weight: normal;
   color: #6d6e75;
@@ -35729,7 +35713,6 @@ p.checkout-coupon input[type=text]:focus {
   font-size: 14px;
   line-height: 20px;
   color: #83848a;
-  padding-right: 60px;
 }
 .footer__subscribe-2 p {
   color: #6d6e75;
