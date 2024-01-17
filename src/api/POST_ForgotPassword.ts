@@ -22,7 +22,7 @@ export async function POST_ForgotPassword(data: POST_ForgotPassword_Params, rout
       dispatch(removeUser());
       redirect("/");
     }
-    toast.error("გაგზავნისას დაფიქსირდა შეცდომა", {
+    toast.error("გთხოვთ მიუთითეთ სწორი ელ-ფოსტა", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
