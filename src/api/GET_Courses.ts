@@ -31,7 +31,7 @@ export interface I_Course {
   };
 }
 
-export async function GET_Courses(dispatch: any) {
+export async function GET_Courses(dispatch?: any) {
   try {
     const response = await axios.get<POST_Login_Success>(API_PATH + "courses");
     return response.data.courses;

@@ -1,4 +1,7 @@
 /* @import url("//cdn.web-fonts.ge/fonts/bpg-arial/css/bpg-arial.min.css"); */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @font-face {
   font-family: "ArialGeo";
@@ -67,6 +70,6 @@ nextjs-portal {
   transform: rotate(180deg);
 }
 
-.btnFont{
+.btnFont {
   font-family: "BPG Arial", monospace !important;
 }
