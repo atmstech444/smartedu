@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Empty_Courses from "../../../../public/assets/img/profile/empty-courses.jpg";
+import Empty_Courses from "../../../../../public/assets/img/profile/empty-courses.jpg";
 import styled from "styled-components";
 import CourseItem from "./CourseItem";
 import { useAppSelector } from "@/redux/store";

@@ -2,7 +2,7 @@
 import Wrapper from "@/layout/DefaultWrapper";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import ProfieIcon from "../../../public/assets/img/profile/profile.jpg";
+import ProfieIcon from "../../../../public/assets/img/profile/profile.jpg";
 import Image from "next/image";
 import MyCourses from "./courses/MyCourses";
 import Settings from "./settings/Settings";
@@ -94,7 +94,7 @@ const ProfilePage = () => {
           <OpenedPage>{pageToRender}</OpenedPage>
         </Content>
       </Main>
-      <MobileNavigation page={page} setPage={setPage}/>
+      <MobileNavigation page={page} setPage={setPage} />
     </Wrapper>
   );
 };
