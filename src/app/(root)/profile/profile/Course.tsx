@@ -15,14 +15,14 @@ export default function Course({ course }: { course: I_MyCourse }) {
       <Progress max={100} value={Math.round(course.completion_percentage)} />
 
       <Link href={`/watch/${course.id}`}>
-        <Button>განაგრძე</Button>
+        <Button>{`${Math.round(course.completion_percentage) === 0}` ? "დაიწყე კურსი" : "განაგრძე"}</Button>
       </Link>
     </Wrapper>
   );
 }
 
 const Button = styled.button`
-  width: 100px;
+  width: 130px;
   height: 40px;
   background-color: #2b4eff;
   border-radius: 8px;
