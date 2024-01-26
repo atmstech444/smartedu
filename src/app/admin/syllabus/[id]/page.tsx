@@ -15,11 +15,6 @@ export interface Syllabus {
   title: string;
 }
 
-export async function generateStaticParams() {
-  const courses = await GET_Courses();
-
-  return courses.map((course) => ({ id: course.id.toString() }));
-}
 
 interface PageProps {
   params: { id: string };
