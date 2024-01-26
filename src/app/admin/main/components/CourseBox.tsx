@@ -27,19 +27,11 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
   };
   return (
     <>
-      <div
-        className="mt-6 flex flex-col justify-start items-center gap-2 cursor-pointer  border border-[#94BBCF]  w-72 pb-4 bg-dark h-[270px]"
-        onClick={() => {
-          router.push(`/admin/main/${id}`);
-        }}
-      >
+      <div className="mt-6 flex flex-col justify-start items-center gap-2 cursor-pointer  border border-[#94BBCF]  w-72 pb-4 bg-dark h-[270px]">
         <div
           className="w-72 h-36 flex flex-col relative items-start p-4 justify-between bg-cover bg-no-repeat bg-center"
           style={{
             backgroundImage: `url(https://smarteducation.shop/smarteducation_backend/public/${cover_image})`,
-          }}
-          onClick={() => {
-            router.push(`/main/${id}`);
           }}
         >
           {isOpen && (
