@@ -8,12 +8,6 @@ interface pageProps {
   params: { id: number };
 }
 
-export async function generateStaticParams() {
-  const courses = await GET_Courses();
-
-  return courses.map((course) => ({ id: course.id.toString() }));
-}
-
 const page = ({ params }: pageProps) => {
   return <MainContent params={params} />;
 };
