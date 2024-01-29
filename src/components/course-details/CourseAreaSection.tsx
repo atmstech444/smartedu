@@ -55,7 +55,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
               </div>
             </>
           ) : (
-            <p>შეფასება არ არის</p>
+            <p></p>
           )}
         </div>
       </div>
