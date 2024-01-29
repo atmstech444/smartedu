@@ -50,7 +50,7 @@ const Users = () => {
   };
 
   const handleUserClick = (userId: number) => {
-    router.push(`/users/${userId}`);
+    router.push(`/admin/users/${userId}`);
   };
 
   useEffect(() => {
