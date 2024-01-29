@@ -34,7 +34,7 @@ const Footer = () => {
   const submit = async (event: any) => {
     event.preventDefault();
     if (email.current?.value) {
-      await POST_Subscribe({ email: email.current.value}, dispatch);
+      await POST_Subscribe({ email: email.current.value }, dispatch);
       email.current.value = "";
     }
   };
