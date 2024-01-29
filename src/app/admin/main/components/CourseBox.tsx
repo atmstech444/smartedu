@@ -25,9 +25,14 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleClick = (e: any) => {
+    e.stopPropagation();
+    router.push(`/admin/main/${id}`);
+  };
   return (
     <>
-      <div className="mt-6 flex flex-col justify-start items-center gap-2 cursor-pointer  border border-[#94BBCF]  w-72 pb-4 bg-dark h-[270px]">
+      <div className="mt-6 flex flex-col justify-start items-center gap-2 cursor-pointer  border border-[#94BBCF]  w-72 pb-4 bg-dark h-[270px]" onClick={handleClick}>
         <div
           className="w-72 h-36 flex flex-col relative items-start p-4 justify-between bg-cover bg-no-repeat bg-center"
           style={{
@@ -36,7 +41,13 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
         >
           {isOpen && (
             <>
-              <div className="px-2 pt-2 pb-1 gap-1 flex flex-col items-center justify-center  absolute right-[-4%] top-[175%] border border-lightGray rounded-faqBordeR w-28 h-22 bg-white" onClick={() => toggleVisibility(id)}>
+              <div
+                className="px-2 pt-2 pb-1 gap-1 flex flex-col items-center justify-center  absolute right-[-4%] top-[175%] border border-lightGray rounded-faqBordeR w-28 h-22 bg-white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVisibility(id);
+                }}
+              >
                 <Link href={`/admin/edit-course/${id}`}>
                   <p className="border-b border-lightGray  self-center text-sm text-grey cursor-pointer hover:text-mainGray">რედაქტირება</p>
                 </Link>
