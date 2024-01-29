@@ -123,16 +123,13 @@ const MainContent: FC<pageProps> = ({ params }) => {
         const percentage = Math.round((loaded * 100) / (total ?? 1));
         setUploadPercentage(percentage);
       });
-
-      if (response.data.success) {
+      if (response.success) {
         Swal.fire({
           icon: "success",
           title: "ლექცია წარმატებით დაემატა",
           showConfirmButton: true,
           timer: 1500,
         });
-        const updatedResponse = await getCourseById(token, params.id);
-        setData(updatedResponse.lectures);
       } else {
         console.error("Failed to add lecture");
         Swal.fire({
@@ -142,6 +139,8 @@ const MainContent: FC<pageProps> = ({ params }) => {
           timer: 1500,
         });
       }
+      const updatedResponse = await getCourseById(token, params.id);
+      setData(updatedResponse.lectures);
     } catch (error) {
       console.error("An unexpected error occurred", error);
     } finally {
