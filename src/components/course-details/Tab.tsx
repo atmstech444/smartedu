@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 const Tab = ({ index, item }: { index: number; item: { title: string; descriptions: { description: string }[] } }) => {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(item)
   return (
     <>
       <div className="accordion" id="course__accordion">
@@ -16,7 +17,7 @@ const Tab = ({ index, item }: { index: number; item: { title: string; descriptio
             </button>
           </h2>
           {isOpen && (
-            <div id={`week-${index}-content`} className="accordion-collapse collapse show" aria-labelledby={`week-${index}`} data-bs-parent="#course__accordion">
+            <div id={`week-${index}-content`} className="accordion-collapse " aria-labelledby={`week-${index}`} data-bs-parent="#course__accordion">
               <DescriptionDiv className="accordion-body">
                 {item.descriptions.map((description) => {
                   return (
