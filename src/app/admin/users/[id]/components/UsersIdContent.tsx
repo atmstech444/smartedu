@@ -74,7 +74,7 @@ const UsersIdContent = () => {
   }, []);
 
   const handleGoBack = () => {
-    router.push("/users");
+    router.push("/admin/users");
   };
 
   const [user, setUser] = useState<User | null>(null);
