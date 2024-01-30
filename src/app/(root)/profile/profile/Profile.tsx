@@ -274,7 +274,6 @@ export default function Profile() {
       {firstThreeCourses.length > 0 && (
         <>
           <Devider />
-
           <Title>განაგრძე ყურება</Title>
           <Flexbox>
             {firstThreeCourses.map((course) => {
