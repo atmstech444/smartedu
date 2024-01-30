@@ -5,6 +5,7 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Course({ course }: { course: I_MyCourse }) {
+  console.log(course);
   return (
     <Wrapper>
       <Header>
@@ -15,7 +16,7 @@ export default function Course({ course }: { course: I_MyCourse }) {
       <Progress max={100} value={Math.round(course.completion_percentage)} />
 
       <Link href={`/watch/${course.id}`}>
-        <Button>{`${Math.round(course.completion_percentage) === 0}` ? "დაიწყე კურსი" : "განაგრძე"}</Button>
+        <Button>{`${Math.round(course.completion_percentage) !== 0}` ? "განაგრძე კურსი" : "დაიწყე"}</Button>
       </Link>
     </Wrapper>
   );
