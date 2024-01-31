@@ -1,15 +1,24 @@
-import { parseCookies } from "nookies";
+"use client";
+import SecondNavbar from "../components/SecondNavbar";
+import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
-import { getAllCourses } from "../services/getCourses";
-import MainContent from "../components/MainContent";
-import { GET_Courses } from "@/services/AllCourses";
+const page = () => {
+  const { id } = useParams();
+  const [courseData, setCourseData] = useState(null);
 
-interface pageProps {
-  params: { id: number };
-}
-
-const page = ({ params }: pageProps) => {
-  return <MainContent params={params} />;
+  useEffect(() => {
+    const storedData = localStorage.getItem(`course_${id}`);
+    console.log(storedData);
+    if (storedData) {
+      setCourseData(JSON.parse(storedData));
+    }
+  }, [id]);
+  return (
+    <div>
+      <SecondNavbar courseData={courseData} />
+    </div>
+  );
 };
 
 export default page;
