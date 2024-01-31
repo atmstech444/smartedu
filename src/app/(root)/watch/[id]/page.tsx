@@ -30,7 +30,7 @@ export default function page({ params }: { params: { id: number } }) {
   return (
     <Wrapper>
       <div>{/* <Watching params={params} /> */}</div>
-      <div>
+      <div className=" bg-[#F3F4F8] pt-10 max-w-screen-xl mx-auto">
         <Navigation id={params.id} />
       </div>
     </Wrapper>

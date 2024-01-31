@@ -3,6 +3,8 @@ import { useAppSelector } from "@/redux/store";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { styled } from "styled-components";
+import Arrow from "../../../public/assets/icons/arrowLeft.svg";
+import Image from "next/image";
 
 export const Navigation = (id: any) => {
   const courses = useAppSelector((state) => state.courses.courses);
@@ -15,20 +17,19 @@ export const Navigation = (id: any) => {
 
   console.log(course);
   return (
-    <div className=" mt-[20%] p-[24px] md:mt-0 md:p-0  md:w-[30%] lg:w-[20%]">
-      <div className="">
-        <img className=" rounded-md" src={`https://smarteducation.shop/smarteducation_backend/public/${course?.cover_image}`} />
+    <div className="mt-[20%] p-[24px] md:mt-0 md:w-[30%] lg:w-[20%] bg-white rounded-md md:h-full">
+      <div>
+        <Image onClick={() => router.push(`/profile`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
+        <div className="w-full h-full">
+          <Image width={500} height={500} alt="image" className="rounded-md " src={`https://smarteducation.shop/smarteducation_backend/public/${course?.cover_image}`} />
+        </div>
         <CourseName>{course?.title}</CourseName>
         <AboutCourse onClick={navigateToAboutPage}>კურსის შესახებ</AboutCourse>
       </div>
-
-      {/* <div className="hidden md:flex">
-        <h1>{course?.title}</h1>
-        <button onClick={navigateToAboutPage}>კურსის შესახებ</button>
-      </div> */}
     </div>
   );
 };
+
 const AboutCourse = styled.button`
   color: #000;
   font-family: FiraGO;

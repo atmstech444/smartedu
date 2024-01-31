@@ -13,7 +13,7 @@ const page = () => {
   const params = useParams();
   return (
     <Wrapper>
-      <div className="p-[24px]">
+      <div className="pt-[24px] bg-[#F3F4F8] max-w-screen-xl mx-auto">
         <div className="md:hidden mt-[20%] flex flex-col gap-[24px]">
           <AboutCourse />
         </div>

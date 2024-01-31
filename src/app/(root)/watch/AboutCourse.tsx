@@ -3,13 +3,17 @@ import { I_Course_Details } from "@/api/GET_CourseDetails";
 import Wrapper from "@/layout/DefaultWrapper";
 import { useAppSelector } from "@/redux/store";
 import { Get_Course_Detail } from "@/services/AllCourses";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import Image from "next/image";
+import Arrow from "../../../public/assets/icons/arrowLeft.svg";
 
 const AboutCourse = () => {
   const params = useParams();
   const [course, setCourse] = useState<I_Course_Details | null>(null);
+  const router = useRouter();
+
   const fetchData = async () => {
     try {
       const courseDetail = await Get_Course_Detail(params?.id);
@@ -25,7 +29,8 @@ const AboutCourse = () => {
   console.log(course);
 
   return (
-    <div className="flex flex-col  md:w-[60%] ">
+    <div className="flex flex-col p-[24px] md:w-[60%]  bg-white rounded-md">
+      <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
       <Course>{course?.title}</Course>
       <Course>ლექციის აღწერა</Course>
       <AboutCours>{course?.description}</AboutCours>
