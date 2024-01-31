@@ -1,7 +1,7 @@
 "use client";
 import dots from "@/public/assets/icons/dots.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AllCourses } from "@/type";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -26,6 +26,16 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    // Save data to localStorage when the component mounts
+    localStorage.setItem(`course_${id}`, JSON.stringify(data));
+
+    return () => {
+      // Optionally, clear localStorage when the component unmounts
+      // localStorage.removeItem(`course_${id}`);
+    };
+  }, [id, data]);
+  
   const handleClick = (e: any) => {
     e.stopPropagation();
     router.push(`/admin/main/${id}`);

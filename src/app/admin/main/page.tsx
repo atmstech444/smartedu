@@ -1,5 +1,6 @@
 "use client";
 import Course from "@/components/Course";
+import Navbar from "@/components/Navbar";
 import { redirect } from "next/navigation";
 import { parseCookies } from "nookies";
 import { useLayoutEffect } from "react";
@@ -13,7 +14,8 @@ const Page = () => {
     }
   }, []);
   return (
-    <main className="w-[85%]">
+    <main className="w-[85%] flex gap-8">
+      <Navbar />
       <Course />
     </main>
   );

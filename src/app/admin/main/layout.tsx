@@ -12,7 +12,6 @@ export default function DashboardLayout({
         <Header />
       </div>
       <div className="flex gap-8">
-        <Navbar />
         {children}
       </div>
     </section>
