@@ -23,7 +23,6 @@ export default function page({ params }: { params: { id: number } }) {
       window.removeEventListener("resize", updateIsDesktop);
     };
   }, []);
-  console.log(isDesktop);
   if (isDesktop) {
     router.push(currentPath + "/about");
   }

@@ -26,10 +26,9 @@ const AboutCourse = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(course);
 
   return (
-    <div className="flex flex-col p-[24px] md:w-[60%]  bg-white rounded-md">
+    <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md">
       <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
       <Course>{course?.title}</Course>
       <Course>ლექციის აღწერა</Course>

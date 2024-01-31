@@ -15,7 +15,6 @@ export const Navigation = (id: any) => {
     router.push(`/watch/${id.id}/about`);
   };
 
-  console.log(course);
   return (
     <div className="mt-[20%] p-[24px] md:mt-0 md:w-[30%] lg:w-[20%] bg-white rounded-md md:h-full">
       <div>
@@ -25,6 +24,7 @@ export const Navigation = (id: any) => {
         </div>
         <CourseName>{course?.title}</CourseName>
         <AboutCourse onClick={navigateToAboutPage}>კურსის შესახებ</AboutCourse>
+        <p onClick={() => router.push(`/watch/${id.id}/course/1`)}>კურსი</p>
       </div>
     </div>
   );
