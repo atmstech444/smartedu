@@ -153,8 +153,10 @@ const Watching = ({ params }: { params: { id: number } }) => {
   }, [lectures]);
 
   return (
-    <Wrapper>
-      {Number(hasBought && lectures.length > 0) && (
+    // <Wrapper>
+    <>
+      <p>teona</p>
+      {/* {Number(hasBought && lectures.length > 0) && (
         <Main>
           <Content>
             <TitleCourse style={{ fontWeight: 500 }}>{hasBought.title}</TitleCourse>
@@ -170,8 +172,10 @@ const Watching = ({ params }: { params: { id: number } }) => {
             </Right>
           </Content>
         </Main>
-      )}
-    </Wrapper>
+      )} */}
+    </>
+
+    // </Wrapper>
   );
 };
 

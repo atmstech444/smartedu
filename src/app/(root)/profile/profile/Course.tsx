@@ -1,5 +1,6 @@
 import { API_STORAGE } from "@/api/API_PATH";
 import { I_MyCourse } from "@/api/GET_MyCourses";
+import { log } from "console";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";

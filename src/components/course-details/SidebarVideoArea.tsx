@@ -34,7 +34,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
       }
     }
   };
-
+  p;
   return (
     <>
       <div className="course__sidebar-widget-2 white-bg mb-20">
