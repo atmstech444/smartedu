@@ -33,3 +33,8 @@ export async function GET_Courses() {
   const response = await axios.get<POST_Login_Success>(url + "courses");
   return response.data.courses;
 }
+
+export async function Get_Course_Detail(id: any) {
+  const response = await axios.get(url + `courses/detail/${id}`);
+  return response.data;
+}
