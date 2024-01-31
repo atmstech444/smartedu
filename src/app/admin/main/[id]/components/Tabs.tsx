@@ -6,7 +6,7 @@ const Tabs = ({ setActiveTab, activeTab }: any) => {
   };
 
   return (
-    <div className="flex gap-9 items-center border border-1-[#D1D1D1] p-1">
+    <div className="flex gap-9 items-center border border-1-[#D1D1D1] p-1 w-[325px]">
       <h1 className={`cursor-pointer ${activeTab === "წასაკითხი" ? "active" : ""}`} onClick={() => handleTabClick("წასაკითხი")}>
         წასაკითხი
       </h1>
