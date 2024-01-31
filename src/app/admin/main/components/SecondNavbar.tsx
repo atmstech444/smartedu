@@ -15,7 +15,7 @@ const SecondNavbar = ({ courseData }: any) => {
 
     const newInput = (
       <div className="relative" key={newInputKey}>
-        <input id={`text-${newInputKey}`} ref={fileInputRef} type="text" placeholder="ლექცია" className="border border-1-black rounded-lg px-3 py-1 outline-none" onChange={() => {}} />
+        <input id={`text-${newInputKey}`} ref={fileInputRef} type="text" placeholder="ლექცია" className="border border-1-black rounded-lg px-3 py-1 outline-none max-w-[200px]" onChange={() => {}} />
         <Image src={"/assets/img/admin/closeIcon.png"} width={10} height={10} alt="delete icon" className="hover:cursor-pointer absolute right-3 top-3" onClick={handleDeleteInput} />
       </div>
     );
@@ -24,7 +24,7 @@ const SecondNavbar = ({ courseData }: any) => {
   };
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
-      <div className=" flex flex-col gap-4">
+      <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
         <img src={`https://smarteducation.shop/smarteducation_backend/public/${courseData?.cover_image}`} className="rounded-2xl" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
