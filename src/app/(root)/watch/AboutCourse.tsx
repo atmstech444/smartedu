@@ -23,8 +23,9 @@ const AboutCourse = () => {
     fetchData();
   }, []);
   console.log(course);
+
   return (
-    <>
+    <div className="flex flex-col  md:w-[60%] ">
       <Course>{course?.title}</Course>
       <Course>ლექციის აღწერა</Course>
       <AboutCours>{course?.description}</AboutCours>
@@ -45,7 +46,7 @@ const AboutCourse = () => {
           examples... for text, drawings, and animation. Detailed examples...
         </LectureDesc>
       </div>
-    </>
+    </div>
   );
 };
 

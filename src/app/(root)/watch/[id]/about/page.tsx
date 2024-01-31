@@ -7,48 +7,19 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import AboutCourse from "../../AboutCourse";
+import { Navigation } from "../../Navigation";
 
 const page = () => {
-  // const params = useParams();
-  // const [course, setCourse] = useState<I_Course_Details | null>(null);
-  // const fetchData = async () => {
-  //   try {
-  //     const courseDetail = await Get_Course_Detail(params?.id);
-  //     setCourse(courseDetail.course);
-  //   } catch (error) {
-  //     console.error("Error fetching course detail:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-  // console.log(course);
+  const params = useParams();
   return (
     <Wrapper>
       <div className="p-[24px]">
         <div className="md:hidden mt-[20%] flex flex-col gap-[24px]">
           <AboutCourse />
-          {/* <Course>{course?.title}</Course>
-          <Course>ლექციის აღწერა</Course>
-          <AboutCourse>{course?.description}</AboutCourse>
-          <Course>ლექტორი</Course>
-          <div className="flex gap-3">
-            <img className=" rounded-full" src={`https://smarteducation.shop/smarteducation_backend/public/${course?.lecturer.image}`} />
-            <div>
-              <Lecturer>{course?.lecturer.first_name + " " + course?.lecturer.last_name}</Lecturer>
-              <LecturerDesc>{course?.lecturer.description}</LecturerDesc>
-            </div>
-          </div>
-          <Course>სილაბუსი</Course>
-          <Lecture>ლექცია 1</Lecture>
-          <div className="px-[32px]">
-            <LectureName>შესავალი პროგრამირებაში</LectureName>
-            <LectureDesc>
-              To interact with our programs, we need mechanisms for taking information from the outside world and for presenting information to the outside world. This lecture describes several such mechanisms: for text, drawings, and animation.
-              Detailed examples... for text, drawings, and animation. Detailed examples...
-            </LectureDesc>
-          </div> */}
+        </div>
+        <div className="hidden md:flex mt-[10%]  md:gap-[24px] lg:gap-[50px] px-[72px]">
+          <Navigation id={params.id} />
+          <AboutCourse />
         </div>
       </div>
     </Wrapper>
