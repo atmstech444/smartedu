@@ -36,11 +36,11 @@ const Reading = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-3">
-      <div className="flex flex-col gap-3">
+    <div className="grid grid-cols-6   w-full">
+      <div className="flex flex-col gap-3 col-span-5">
         <h1 className="text-gray-600 font-FiraGO font-medium text-base md:text-lg lg:text-xl xl:text-2xl">წასაკითხი</h1>
 
-        <div className="relative w-[777px]">
+        <div className="relative w-full max-w-[780px]">
           <textarea
             className="w-full h-auto resize-none rounded-lg px-2 pl-7 py-1 border border-1-[#D1D1D1] outline-none bg-transparent placeholder-[#000000] placeholder-opacity-60"
             placeholder="აღწერა"
@@ -60,8 +60,10 @@ const Reading = () => {
         </div>
       </div>
 
-      <div className="w-full flex items-end justify-end mt-[650px]">
-        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg">შენახვა</button>
+      <div className="col-span-1">
+        <div className="w-full flex  mt-[650px] col-span-2">
+          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg">შენახვა</button>
+        </div>
       </div>
     </div>
   );
