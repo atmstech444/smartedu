@@ -53,6 +53,8 @@ const VideoUpload = () => {
             ></textarea>
             {!isTypingTextarea && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
           </div>
+
+          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-36">შენახვა</button>
         </div>
 
         <div className="flex flex-col gap-3 cursor-pointer">
