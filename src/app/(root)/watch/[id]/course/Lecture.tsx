@@ -11,7 +11,6 @@ const Lecture = () => {
   return (
     <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md">
       <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
-
       <h1>lecture</h1>
     </div>
   );

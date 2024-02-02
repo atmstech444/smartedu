@@ -34,7 +34,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
       }
     }
   };
-  p;
+
   return (
     <>
       <div className="course__sidebar-widget-2 white-bg mb-20">
@@ -48,8 +48,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                   openVideoModal(API_STORAGE + course.intro);
                 }}
               >
-                {" "}
-                <i className="fas fa-play"></i>{" "}
+                <i className="fas fa-play"></i>
               </button>
             </div>
           </div>
