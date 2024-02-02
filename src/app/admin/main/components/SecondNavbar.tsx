@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { addLecture } from "../[id]/services/addLecture";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
 import { useParams } from "next/navigation";
+import { getAllCourses } from "../services/getCourses";
 
 type Lecture = {
   course_id: number;
@@ -38,6 +39,12 @@ const SecondNavbar = ({ courseData }: any) => {
 
   const { id } = useParams();
 
+  useEffect(() => {
+    if (courseData) {
+      setLectures(courseData.lectures);
+    }
+  }, [courseData]);
+
   const handleCreateLecture = async () => {
     const formData = new FormData();
 
@@ -50,9 +57,10 @@ const SecondNavbar = ({ courseData }: any) => {
 
     try {
       const response = await addLecture(token, formData, id);
-      console.log(response);
-      setLectures(response.lectures);
+      console.log(response.lectures);
       if (response.success) {
+        setLectures(response.lectures);
+        updateLocalStorage(response.lectures);
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -72,7 +80,28 @@ const SecondNavbar = ({ courseData }: any) => {
       console.error("An unexpected error occurred", error);
     }
   };
-  console.log("lectures:", lectures);
+
+  const updateLocalStorage = (lectures: Lecture[]) => {
+    const lectureNames = lectures.map((lecture: Lecture) => lecture.lecture_name);
+    localStorage.setItem("lectureNames", JSON.stringify(lectureNames));
+  };
+
+  useEffect(() => {
+    const storedLectureNames = localStorage.getItem("lectureNames");
+    if (storedLectureNames) {
+      const lectureNames = JSON.parse(storedLectureNames);
+      setLectures(lectureNames.map((name: string, index: number) => ({ id: index, lecture_name: name })));
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedLectureNames = localStorage.getItem("lectureNames");
+    if (storedLectureNames) {
+      const lectureNames = JSON.parse(storedLectureNames);
+      setLectures(lectureNames.map((name: string, index: number) => ({ id: index, lecture_name: name })));
+    }
+  }, [courseData]);
+
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
@@ -80,13 +109,12 @@ const SecondNavbar = ({ courseData }: any) => {
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
 
-        {lectures &&
-          lectures.map((lecture) => (
-            <div key={lecture.id} className="flex justify-between items-center">
-              <h1>{lecture.lecture_name}</h1>
-              <button className="bg-mainBlue  rounded-faqBordeR  text-base mt-2 text-center text-white hover:opacity-75  transition-all ease-in-out  px-1 py-1">წაშლა</button>
-            </div>
-          ))}
+        {lectures.map((lecture) => (
+          <div key={lecture.id} className="flex justify-between items-center">
+            <h1>{lecture.lecture_name}</h1>
+            <button className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">წაშლა</button>
+          </div>
+        ))}
 
         {inputs.map((input) => input.element)}
         <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
