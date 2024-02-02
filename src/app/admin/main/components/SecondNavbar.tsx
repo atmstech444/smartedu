@@ -145,8 +145,8 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
         <img src={`http://192.168.96.66:8000/admin/${courseData?.cover_image}`} className="rounded-2xl" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
-
-        {lectures.map((lecture) => (
+        {lectureNames.length === 0 ? (
+        lectures.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
             <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
               {lecture.lecture_name}
@@ -155,9 +155,12 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
               წაშლა
             </button>
           </div>
-        ))}
+        ))
+      ) : null}
 
-        {lectureNames.map((lecture) => (
+      {/* Conditionally render lectureNames */}
+      {lectureNames.length > 0 ? (
+        lectureNames.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
             <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
               {lecture.lecture_name}
@@ -166,7 +169,8 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
               წაშლა
             </button>
           </div>
-        ))}
+        ))
+      ) : null}
 
         {lectureNames.length === 0 && (
           <>
