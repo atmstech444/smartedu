@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
 import { useParams } from "next/navigation";
 import { getAllCourses } from "../services/getCourses";
+import { deleteLecture } from "../[id]/services/deleteLecture";
 
 type Lecture = {
   course_id: number;
@@ -57,7 +58,6 @@ const SecondNavbar = ({ courseData }: any) => {
 
     try {
       const response = await addLecture(token, formData, id);
-      console.log(response.lectures);
       if (response.success) {
         setLectures(response.lectures);
         updateLocalStorage(response.lectures);
@@ -86,6 +86,33 @@ const SecondNavbar = ({ courseData }: any) => {
     localStorage.setItem("lectureNames", JSON.stringify(lectureNames));
   };
 
+  const handleDeleteLecture = async (id: number) => {
+    try {
+      const response = await deleteLecture(token, id);
+      if (response.message) {
+        const updatedLectures = lectures.filter((lecture) => lecture.id !== id);
+        setLectures(updatedLectures);
+        updateLocalStorage(updatedLectures);
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        console.error("Failed to delete lecture");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred", error);
+    }
+  };
+
   useEffect(() => {
     const storedLectureNames = localStorage.getItem("lectureNames");
     if (storedLectureNames) {
@@ -112,7 +139,9 @@ const SecondNavbar = ({ courseData }: any) => {
         {lectures.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
             <h1>{lecture.lecture_name}</h1>
-            <button className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">წაშლა</button>
+            <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
+              წაშლა
+            </button>
           </div>
         ))}
 
