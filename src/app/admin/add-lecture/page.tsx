@@ -7,6 +7,8 @@ import ReadingUpload from "../main/[id]/components/ReadingUpload";
 import VideoUpload from "../main/[id]/components/VideoUpload";
 import Tabs from "../main/[id]/components/Tabs";
 import Header from "@/components/Header";
+import { getAllCourses } from "../main/services/getCourses";
+import { parseCookies } from "nookies";
 
 const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
@@ -21,13 +23,14 @@ const useQueryParams = () => {
 };
 
 const AddLecturePage = () => {
+  const cookies = parseCookies();
+  const token = cookies.authToken;
   const lectureId = useQueryParams();
-
-  console.log("Lecture ID:", lectureId);
 
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
   const [activeTab, setActiveTab] = useState("წასაკითხი");
+  const [lectureNames, setLectureNames] = useState<[]>([]);
 
   useEffect(() => {
     const storedData = localStorage.getItem(`course_${id}`);
@@ -45,11 +48,23 @@ const AddLecturePage = () => {
     content = <QuizUpload />;
   }
 
+  useEffect(() => {
+    const fetchAllCourses = async () => {
+      try {
+        const data = await getAllCourses(token);
+        setLectureNames(data.courses[0].lectures);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchAllCourses();
+  }, []);
+
   return (
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <SecondNavbar courseData={courseData} />
+        <SecondNavbar lectureNames={lectureNames} courseData={""} />
 
         <div className="flex flex-col gap-10  mt-11 w-[97%]">
           <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />

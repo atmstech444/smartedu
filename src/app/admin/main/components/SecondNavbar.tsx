@@ -15,7 +15,12 @@ type Lecture = {
   lecture_name: string;
 };
 
-const SecondNavbar = ({ courseData }: any) => {
+interface LectureName {
+  id: number;
+  lecture_name: string;
+}
+
+const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNames: LectureName[] }) => {
   const router = useRouter();
   const cookies = parseCookies();
   const token = cookies.authToken;
@@ -63,6 +68,7 @@ const SecondNavbar = ({ courseData }: any) => {
       if (response.success) {
         setLectures(response.lectures);
         updateLocalStorage(response.lectures);
+        console.log(response);
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -84,8 +90,7 @@ const SecondNavbar = ({ courseData }: any) => {
   };
 
   const updateLocalStorage = (lectures: Lecture[]) => {
-    const lectureNames = lectures.map((lecture: Lecture) => lecture.lecture_name);
-    localStorage.setItem("lectureNames", JSON.stringify(lectureNames));
+    localStorage.setItem("lectures", JSON.stringify(lectures));
   };
 
   const handleDeleteLecture = async (id: number) => {
@@ -116,10 +121,9 @@ const SecondNavbar = ({ courseData }: any) => {
   };
 
   useEffect(() => {
-    const storedLectureNames = localStorage.getItem("lectureNames");
-    if (storedLectureNames) {
-      const lectureNames = JSON.parse(storedLectureNames);
-      setLectures(lectureNames.map((name: string, index: number) => ({ id: index, lecture_name: name })));
+    const storedLectures = localStorage.getItem("lectures");
+    if (storedLectures) {
+      setLectures(JSON.parse(storedLectures));
     }
   }, []);
 
@@ -131,10 +135,8 @@ const SecondNavbar = ({ courseData }: any) => {
     }
   }, [courseData]);
 
-  console.log(lectures);
   const handleOpenTabs = (lectureId: number) => {
     router.push(`/admin/add-lecture?lectureId=${lectureId}`);
-    console.log("lectureId:", lectureId);
   };
 
   return (
@@ -146,21 +148,36 @@ const SecondNavbar = ({ courseData }: any) => {
 
         {lectures.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
-            <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">{lecture.lecture_name}</h1>
+            <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
+              {lecture.lecture_name}
+            </h1>
             <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
               წაშლა
             </button>
           </div>
         ))}
 
-        {inputs.map((input) => input.element)}
-        <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
-        {inputs.length !== 0 && (
-          <div>
-            <button onClick={handleCreateLecture} className="bg-mainBlue  rounded-faqBordeR  text-base mt-2 text-center text-white hover:opacity-75  transition-all ease-in-out  px-4 py-2">
-              შენახვა
+        {lectureNames.map((lecture) => (
+          <div key={lecture.id} className="flex justify-between items-center">
+            <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
+              {lecture.lecture_name}
+            </h1>
+            <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
+              წაშლა
             </button>
           </div>
+        ))}
+
+        {lectureNames.length === 0 && (
+          <>
+            {inputs.map((input) => input.element)}
+            <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
+            <div>
+              <button onClick={handleCreateLecture} className="bg-mainBlue  rounded-faqBordeR  text-base mt-2 text-center text-white hover:opacity-75  transition-all ease-in-out  px-4 py-2">
+                შენახვა
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
