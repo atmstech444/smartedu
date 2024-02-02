@@ -158,7 +158,6 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
         ))
       ) : null}
 
-      {/* Conditionally render lectureNames */}
       {lectureNames.length > 0 ? (
         lectureNames.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
