@@ -6,6 +6,7 @@ import { parseCookies } from "nookies";
 import { useParams } from "next/navigation";
 import { getAllCourses } from "../services/getCourses";
 import { deleteLecture } from "../[id]/services/deleteLecture";
+import { useRouter } from "next/navigation";
 
 type Lecture = {
   course_id: number;
@@ -15,6 +16,7 @@ type Lecture = {
 };
 
 const SecondNavbar = ({ courseData }: any) => {
+  const router = useRouter();
   const cookies = parseCookies();
   const token = cookies.authToken;
   const inputRefs = useRef<HTMLInputElement[]>([]);
@@ -129,6 +131,12 @@ const SecondNavbar = ({ courseData }: any) => {
     }
   }, [courseData]);
 
+  console.log(lectures);
+  const handleOpenTabs = (lectureId: number) => {
+    router.push(`/admin/add-lecture?lectureId=${lectureId}`);
+    console.log("lectureId:", lectureId);
+  };
+
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
@@ -138,7 +146,7 @@ const SecondNavbar = ({ courseData }: any) => {
 
         {lectures.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
-            <h1>{lecture.lecture_name}</h1>
+            <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">{lecture.lecture_name}</h1>
             <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
               წაშლა
             </button>

@@ -14,7 +14,6 @@ const page = () => {
 
   useEffect(() => {
     const storedData = localStorage.getItem(`course_${id}`);
-    console.log(storedData);
     if (storedData) {
       setCourseData(JSON.parse(storedData));
     }
@@ -34,8 +33,8 @@ const page = () => {
       <SecondNavbar courseData={courseData} />
 
       <div className="flex flex-col gap-10  mt-11 w-[97%]">
-        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        {content}
+        {/* <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        {content} */}
       </div>
     </div>
   );
