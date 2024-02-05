@@ -4,6 +4,7 @@ import Image from "next/image";
 import { addlectureTitleAndDescription } from "../services/addlectureTitleAndDescription";
 import { parseCookies } from "nookies";
 import Swal from "sweetalert2";
+import { addLecture } from "../../services/addLecture";
 
 const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
@@ -20,11 +21,13 @@ const useQueryParams = () => {
 const VideoUpload = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
+  const lectureId = useQueryParams();
   const [isTypingInput, setIsTypingInput] = useState(false);
   const [isTypingTextarea, setIsTypingTextarea] = useState(false);
   const [lectureTitle, setLectureTitle] = useState("");
   const [lectureDescription, setLectureDescription] = useState("");
-  const lectureId = useQueryParams();
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+
   const handleTypingInput = () => {
     setIsTypingInput(true);
   };
@@ -46,7 +49,8 @@ const VideoUpload = () => {
   };
 
   const handleFileInputChange = (event: any) => {
-    console.log(event.target.files);
+    const file = event.target.files[0];
+    setVideoFile(file);
   };
 
   const handleSaveLecture = async () => {
@@ -58,6 +62,38 @@ const VideoUpload = () => {
       const response = await addlectureTitleAndDescription(token, formData, lectureId);
       console.log(response);
       if (response.message === "Lecture updated successfully") {
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        console.error("An unexpected error occurred");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleVideoupload = async () => {
+    if (!videoFile) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("video", videoFile);
+
+    try {
+      const response = await addLecture(token, formData, lectureId);
+      console.log(response);
+      if (response.message === "Course updated successfully") {
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -124,7 +160,9 @@ const VideoUpload = () => {
 
       <div className="col-span-1">
         <div className="w-full flex  mt-[650px] col-span-2">
-          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg">შენახვა</button>
+          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleVideoupload}>
+            შენახვა
+          </button>
         </div>
       </div>
     </div>
