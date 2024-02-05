@@ -27,6 +27,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([]);
   const [lectures, setLectures] = useState<Lecture[]>([]);
+  const [finalUpdatedLectures, setFinalUpdatedLectures] = useState<Lecture[]>([]);
 
   const handleImageClick = () => {
     const newInputKey = inputs.length + 1;
@@ -67,6 +68,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
       const response = await addLecture(token, formData, id);
       if (response.success) {
         setLectures(response.lectures);
+        setFinalUpdatedLectures(response.lectures);
         updateLocalStorage(response.lectures);
         console.log(response);
         Swal.fire({
@@ -99,6 +101,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
       if (response.message) {
         const updatedLectures = lectures.filter((lecture) => lecture.id !== id);
         setLectures(updatedLectures);
+        setFinalUpdatedLectures(updatedLectures);
         updateLocalStorage(updatedLectures);
         Swal.fire({
           icon: "success",
@@ -139,37 +142,73 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     router.push(`/admin/add-lecture?lectureId=${lectureId}`);
   };
 
+  const updateLectures = () => {
+    if (lectureNames.length === 0 && lectures.length === 0) {
+      const updatedLecturesJSON = localStorage.getItem("lectures");
+      if (updatedLecturesJSON) {
+        const updatedLectures = JSON.parse(updatedLecturesJSON);
+        const finalUpdatedLectures = updatedLectures.map((lecture: any, index: number) => ({
+          id: lecture.id,
+          lecture_name: lecture.lecture_name,
+        }));
+        console.log(finalUpdatedLectures);
+        setFinalUpdatedLectures(finalUpdatedLectures);
+      } else {
+        console.log("No lectures found in localStorage.");
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateLectures();
+  }, [handleCreateLecture, handleDeleteLecture]);
+
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
         <img src={`http://192.168.96.66:8000/admin/${courseData?.cover_image}`} className="rounded-2xl" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
-        {lectureNames.length === 0 ? (
-        lectures.map((lecture) => (
-          <div key={lecture.id} className="flex justify-between items-center">
-            <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
-              {lecture.lecture_name}
-            </h1>
-            <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
-              წაშლა
-            </button>
-          </div>
-        ))
-      ) : null}
+        {lectureNames.length === 0 && finalUpdatedLectures.length === 0
+          ? lectures.map((lecture) => (
+              <div key={lecture.id} className="flex justify-between items-center">
+                <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
+                  {lecture.lecture_name}
+                </h1>
+                <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
+                  წაშლა
+                </button>
+              </div>
+            ))
+          : null}
 
-      {lectureNames.length > 0 ? (
-        lectureNames.map((lecture) => (
-          <div key={lecture.id} className="flex justify-between items-center">
-            <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
-              {lecture.lecture_name}
-            </h1>
-            <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
-              წაშლა
-            </button>
-          </div>
-        ))
-      ) : null}
+        {lectureNames.length === 0 &&
+          lectures.length > 0 &&
+          finalUpdatedLectures.map((lecture) => (
+            <div key={lecture.id} className="flex justify-between items-center">
+              <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
+                {lecture.lecture_name}
+              </h1>
+              <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
+                წაშლა
+              </button>
+            </div>
+          ))}
+
+        {lectureNames.length > 0
+          ? lectureNames.map((lecture) => (
+              <div key={lecture.id} className="flex justify-between items-center">
+                <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
+                  {lecture.lecture_name}
+                </h1>
+                <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
+                  წაშლა
+                </button>
+              </div>
+            ))
+          : null}
+
+        {lectureNames.length === 0 && lectures.length === 0 ? <div></div> : null}
 
         {lectureNames.length === 0 && (
           <>
