@@ -135,7 +135,6 @@ const VideoUpload = () => {
   const handleDeleteVideo = () => {
     setVideoFile(null);
   };
-  console.log(lectureId);
 
   const fetchData = async () => {
     try {
@@ -153,7 +152,6 @@ const VideoUpload = () => {
     fetchData();
   }, [lectureId]);
 
-  console.log(videosData);
   return (
     <div className="grid grid-cols-6   w-full">
       <div className="flex flex-col gap-3  col-span-5">
