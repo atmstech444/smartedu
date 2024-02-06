@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { addLecture } from "../../services/addLecture";
 import { getAllVideos } from "../../services/getAllVideos";
 import LoadingSpinner from "./LoadingSpinner";
+import { deleteVideo } from "../services/deleteVideo";
 
 interface Video {
   id: number;
@@ -152,6 +153,34 @@ const VideoUpload = () => {
     fetchData();
   }, [lectureId]);
 
+  const handleDeleteVideoFromData = async (idToDelete: any) => {
+    try {
+      const response = await deleteVideo(token, idToDelete);
+
+      if (response.message === "Video deleted successfully") {
+        const updatedVideosData = videosData.filter((video) => video.id !== idToDelete);
+        setVideosData(updatedVideosData);
+
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        console.error("An unexpected error occurred");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting video:", error);
+    }
+  };
+
   return (
     <div className="grid grid-cols-6   w-full">
       <div className="flex flex-col gap-3  col-span-5">
@@ -214,7 +243,9 @@ const VideoUpload = () => {
               <video controls className="rounded-lg">
                 <source src={video.video_url} type="video/mp4" />
               </video>
-              <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg">წაშლა</button>
+              <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg" onClick={handleDeleteVideoFromData}>
+                წაშლა
+              </button>
             </div>
           ))}
         </div>
