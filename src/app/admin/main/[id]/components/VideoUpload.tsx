@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { addlectureTitleAndDescription } from "../services/addlectureTitleAndDescription";
@@ -13,6 +12,7 @@ interface Video {
   id: number;
   video_url: string;
 }
+
 const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
 
@@ -37,6 +37,8 @@ const VideoUpload = () => {
   const [videosData, setVideosData] = useState<Video[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
+  const [currentChunk, setCurrentChunk] = useState<number | null>(null);
+  const [totalSizeUploaded, setTotalSizeUploaded] = useState<number>(0);
 
   const handleTypingInput = () => {
     setIsTypingInput(true);
@@ -97,39 +99,65 @@ const VideoUpload = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("video", videoFile);
+    const chunkSize = 100 * 1024 * 1024;
+    const totalChunks = Math.ceil(videoFile.size / chunkSize);
 
     try {
-      setUploading(true);
-      const response = await addLecture(token, formData, lectureId, (progressEvent) => {
-        const { loaded, total } = progressEvent;
-        const percentage = Math.round((loaded * 100) / (total ?? 1));
-        setUploadPercentage(percentage);
-      });
-      console.log(response);
-      if (response.message === "Video uploaded successfully") {
-        Swal.fire({
-          icon: "success",
-          title: response.message,
-          showConfirmButton: true,
-          timer: 1500,
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * chunkSize;
+        const end = Math.min((i + 1) * chunkSize, videoFile.size);
+        const chunk = videoFile.slice(start, end);
+
+        const formData = new FormData();
+        formData.append("video", chunk);
+
+        setUploading(true);
+        const response = await addLecture(token, formData, lectureId, (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          const percentage = Math.round((loaded * 100) / (total ?? 1));
+          setUploadPercentage(percentage);
+
+          const currentChunkSize = total ? total / (1024 * 1024) : 0;
+          setTotalSizeUploaded((prevTotalSize) => prevTotalSize + currentChunkSize);
         });
-        fetchData();
-      } else {
-        console.error("An unexpected error occurred");
-        Swal.fire({
-          icon: "warning",
-          title: response.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+
+        console.log(`Uploaded chunk ${i + 1} of ${totalChunks}`);
+
+        if (response.message !== "Video uploaded successfully") {
+          console.error("An unexpected error occurred");
+          Swal.fire({
+            icon: "warning",
+            title: response.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          return;
+        }
+
+        setCurrentChunk(i + 1);
       }
+      console.log("All chunks uploaded successfully");
+
+      Swal.fire({
+        icon: "success",
+        title: "Video uploaded successfully",
+        showConfirmButton: true,
+        timer: 1500,
+      });
+      fetchData();
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error uploading video",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } finally {
       setUploading(false);
       setUploadPercentage(0);
+      setCurrentChunk(null); // Reset current chunk after uploading completes
+      setTotalSizeUploaded(0); // Reset total size uploaded
     }
   };
 
@@ -158,7 +186,7 @@ const VideoUpload = () => {
     try {
       const response = await deleteVideo(token, idToDelete);
       console.log(response);
-      if (response.message === "video remove successfully") {
+      if (response.message === "Video removed successfully") {
         const updatedVideosData = videosData.filter((video) => video.id !== idToDelete);
         setVideosData(updatedVideosData);
 
@@ -183,9 +211,9 @@ const VideoUpload = () => {
   };
 
   return (
-    <div className="grid grid-cols-6   w-full">
-      <div className="flex flex-col gap-3  col-span-5">
-        <div className="relative  flex flex-col gap-4">
+    <div className="grid grid-cols-6 w-full">
+      <div className="flex flex-col gap-3 col-span-5">
+        <div className="relative flex flex-col gap-4">
           <div className="w-48 relative">
             <input
               type="text"
@@ -250,11 +278,11 @@ const VideoUpload = () => {
             </div>
           ))}
         </div>
-        {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} />}
+        {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} currentChunk={currentChunk} totalSizeUploaded={totalSizeUploaded} />}
       </div>
 
       <div className="col-span-1">
-        <div className="w-full flex  mt-[650px] col-span-2">
+        <div className="w-full flex mt-[650px] col-span-2">
           <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleVideoupload}>
             შენახვა
           </button>
