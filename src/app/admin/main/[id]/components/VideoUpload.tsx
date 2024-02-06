@@ -100,7 +100,7 @@ const VideoUpload = () => {
     formData.append("video", videoFile);
 
     try {
-    setUploading(true);
+      setUploading(true);
       const response = await addLecture(token, formData, lectureId, (progressEvent) => {
         const { loaded, total } = progressEvent;
         const percentage = Math.round((loaded * 100) / (total ?? 1));
@@ -129,7 +129,7 @@ const VideoUpload = () => {
     } finally {
       setUploading(false);
       setUploadPercentage(0);
-      }
+    }
   };
 
   const handleDeleteVideo = () => {
@@ -188,7 +188,7 @@ const VideoUpload = () => {
         </div>
         {videoFile && (
           <div className="flex flex-col gap-2 w-[300px]">
-            <video controls>
+            <video controls className="rounded-lg">
               <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -200,7 +200,7 @@ const VideoUpload = () => {
         )}
 
         {!videoFile && (
-          <div className="flex flex-col gap-3 cursor-pointer">
+          <div className="flex flex-col gap-3 cursor-pointer w-[145px]">
             <h1>ვიდეო</h1>
             <label className="flex flex-col items-center gap-[6px] pt-3 pb-[6px] px-4 bg-[#EEE] rounded-lg w-36 cursor-pointer">
               <Image src="/assets/img/admin/AddVideo.png" alt={""} width={25} height={27} />
@@ -213,14 +213,14 @@ const VideoUpload = () => {
         <div className="flex gap-4 mt-4 flex-wrap mb-5">
           {videosData.map((video) => (
             <div key={video.id} className="w-[200px] flex flex-col gap-2 items-center">
-              <video controls>
+              <video controls className="rounded-lg">
                 <source src={video.video_url} type="video/mp4" />
               </video>
               <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg">წაშლა</button>
             </div>
           ))}
         </div>
-        {uploading && <LoadingSpinner uploadPercentage={uploadPercentage}/>}
+        {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} />}
       </div>
 
       <div className="col-span-1">
