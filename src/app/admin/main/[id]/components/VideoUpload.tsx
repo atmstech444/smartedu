@@ -6,6 +6,7 @@ import { parseCookies } from "nookies";
 import Swal from "sweetalert2";
 import { addLecture } from "../../services/addLecture";
 import { getAllVideos } from "../../services/getAllVideos";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface Video {
   id: number;
@@ -33,6 +34,8 @@ const VideoUpload = () => {
   const [lectureDescription, setLectureDescription] = useState("");
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [videosData, setVideosData] = useState<Video[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadPercentage, setUploadPercentage] = useState<number>(0);
 
   const handleTypingInput = () => {
     setIsTypingInput(true);
@@ -97,7 +100,12 @@ const VideoUpload = () => {
     formData.append("video", videoFile);
 
     try {
-      const response = await addLecture(token, formData, lectureId);
+    setUploading(true);
+      const response = await addLecture(token, formData, lectureId, (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        const percentage = Math.round((loaded * 100) / (total ?? 1));
+        setUploadPercentage(percentage);
+      });
       console.log(response);
       if (response.message === "Video uploaded successfully") {
         Swal.fire({
@@ -118,7 +126,10 @@ const VideoUpload = () => {
       }
     } catch (error) {
       console.log(error);
-    }
+    } finally {
+      setUploading(false);
+      setUploadPercentage(0);
+      }
   };
 
   const handleDeleteVideo = () => {
@@ -199,7 +210,7 @@ const VideoUpload = () => {
           </div>
         )}
 
-        <div className="flex gap-4 mt-4 flex-wrap">
+        <div className="flex gap-4 mt-4 flex-wrap mb-5">
           {videosData.map((video) => (
             <div key={video.id} className="w-[200px]">
               <video controls>
@@ -208,6 +219,7 @@ const VideoUpload = () => {
             </div>
           ))}
         </div>
+        {uploading && <LoadingSpinner uploadPercentage={uploadPercentage}/>}
       </div>
 
       <div className="col-span-1">
