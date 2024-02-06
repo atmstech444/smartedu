@@ -154,10 +154,11 @@ const VideoUpload = () => {
   }, [lectureId]);
 
   const handleDeleteVideoFromData = async (idToDelete: any) => {
+    console.log("idToDelete", idToDelete);
     try {
       const response = await deleteVideo(token, idToDelete);
-
-      if (response.message === "Video deleted successfully") {
+      console.log(response);
+      if (response.message === "video remove successfully") {
         const updatedVideosData = videosData.filter((video) => video.id !== idToDelete);
         setVideosData(updatedVideosData);
 
@@ -243,7 +244,7 @@ const VideoUpload = () => {
               <video controls className="rounded-lg">
                 <source src={video.video_url} type="video/mp4" />
               </video>
-              <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg" onClick={handleDeleteVideoFromData}>
+              <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
                 წაშლა
               </button>
             </div>
