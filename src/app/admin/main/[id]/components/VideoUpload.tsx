@@ -5,7 +5,12 @@ import { addlectureTitleAndDescription } from "../services/addlectureTitleAndDes
 import { parseCookies } from "nookies";
 import Swal from "sweetalert2";
 import { addLecture } from "../../services/addLecture";
+import { getAllVideos } from "../../services/getAllVideos";
 
+interface Video {
+  id: number;
+  video_url: string;
+}
 const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
 
@@ -27,6 +32,7 @@ const VideoUpload = () => {
   const [lectureTitle, setLectureTitle] = useState("");
   const [lectureDescription, setLectureDescription] = useState("");
   const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [videosData, setVideosData] = useState<Video[]>([]);
 
   const handleTypingInput = () => {
     setIsTypingInput(true);
@@ -93,13 +99,14 @@ const VideoUpload = () => {
     try {
       const response = await addLecture(token, formData, lectureId);
       console.log(response);
-      if (response.message === "Course updated successfully") {
+      if (response.message === "Video uploaded successfully") {
         Swal.fire({
           icon: "success",
           title: response.message,
           showConfirmButton: true,
           timer: 1500,
         });
+        fetchData();
       } else {
         console.error("An unexpected error occurred");
         Swal.fire({
@@ -114,6 +121,28 @@ const VideoUpload = () => {
     }
   };
 
+  const handleDeleteVideo = () => {
+    setVideoFile(null);
+  };
+  console.log(lectureId);
+
+  const fetchData = async () => {
+    try {
+      if (lectureId !== undefined) {
+        const response = await getAllVideos(token, lectureId);
+        console.log(response);
+        setVideosData(response.lecture_videos);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [lectureId]);
+
+  console.log(videosData);
   return (
     <div className="grid grid-cols-6   w-full">
       <div className="flex flex-col gap-3  col-span-5">
@@ -146,15 +175,38 @@ const VideoUpload = () => {
             შენახვა
           </button>
         </div>
+        {videoFile && (
+          <div className="flex flex-col gap-2 w-[300px]">
+            <video controls>
+              <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
 
-        <div className="flex flex-col gap-3 cursor-pointer">
-          <h1>ვიდეო</h1>
+            <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleDeleteVideo}>
+              წაშლა
+            </button>
+          </div>
+        )}
 
-          <label className="flex flex-col items-center gap-[6px] pt-3 pb-[6px] px-4 bg-[#EEE] rounded-lg w-36 cursor-pointer">
-            <Image src="/assets/img/admin/AddVideo.png" alt={""} width={25} height={27} />
-            <p className="text-xs text-[#CACACA] font-medium">ვიდეოს ატვირთვა</p>
-            <input type="file" className="hidden" onChange={handleFileInputChange} />
-          </label>
+        {!videoFile && (
+          <div className="flex flex-col gap-3 cursor-pointer">
+            <h1>ვიდეო</h1>
+            <label className="flex flex-col items-center gap-[6px] pt-3 pb-[6px] px-4 bg-[#EEE] rounded-lg w-36 cursor-pointer">
+              <Image src="/assets/img/admin/AddVideo.png" alt={""} width={25} height={27} />
+              <p className="text-xs text-[#CACACA] font-medium">ვიდეოს ატვირთვა</p>
+              <input type="file" className="hidden" onChange={handleFileInputChange} />
+            </label>
+          </div>
+        )}
+
+        <div className="flex gap-4 mt-4 flex-wrap">
+          {videosData.map((video) => (
+            <div key={video.id} className="w-[200px]">
+              <video controls>
+                <source src={video.video_url} type="video/mp4" />
+              </video>
+            </div>
+          ))}
         </div>
       </div>
 
