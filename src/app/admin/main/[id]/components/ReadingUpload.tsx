@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { addReading } from "../services/addReading";
 import { parseCookies } from "nookies";
 import { getReadings } from "../services/getReadings";
+import { deleteReading } from "../services/deleteReading";
 
 type ReadingData = {
   id: number;
@@ -103,9 +104,8 @@ const Reading = () => {
     try {
       if (id !== undefined) {
         const response = await getReadings(token, id);
-        const { reading } = response; // Extract the 'reading' array from the response
-        setReadingsData(reading); // Update state with the 'reading' array
-        console.log(response);
+        const { reading } = response;
+        setReadingsData(reading);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -116,7 +116,31 @@ const Reading = () => {
     fetchData();
   }, [id]);
 
-  console.log(readingsData);
+  const handleDeleteReading = async (readingId: number) => {
+    try {
+      const response = await deleteReading(token, readingId);
+      if (response.message === "Reading remove successfully") {
+        setReadingsData((prevReadings) => prevReadings.filter((reading) => reading.id !== readingId));
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        console.error("Failed to delete reading");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred", error);
+    }
+  };
+
   return (
     <div className="grid grid-cols-6   w-full">
       <div className="flex flex-col gap-3 col-span-5">
@@ -158,7 +182,9 @@ const Reading = () => {
                       <li key={index}>{url}</li>
                     ))}
                   </ul>
-                  <button className="text-white bg-[#2FA8FF] p-[3px] rounded-md text-sm mt-2">წაშლა</button>
+                  <button className="text-white bg-[#2FA8FF] p-[3px] rounded-md text-sm mt-2" onClick={() => handleDeleteReading(reading.id)}>
+                    წაშლა
+                  </button>
                 </div>
               ))
             ) : (
