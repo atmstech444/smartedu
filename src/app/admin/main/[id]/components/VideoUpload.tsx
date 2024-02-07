@@ -7,6 +7,7 @@ import { addLecture } from "../../services/addLecture";
 import { getAllVideos } from "../../services/getAllVideos";
 import LoadingSpinner from "./LoadingSpinner";
 import { deleteVideo } from "../services/deleteVideo";
+import ChunkedVideoUpload from "./ChunkedVideoUpload";
 
 interface Video {
   id: number;
@@ -99,65 +100,41 @@ const VideoUpload = () => {
       return;
     }
 
-    const chunkSize = 100 * 1024 * 1024;
-    const totalChunks = Math.ceil(videoFile.size / chunkSize);
+    const formData = new FormData();
+    formData.append("video", videoFile);
 
     try {
-      for (let i = 0; i < totalChunks; i++) {
-        const start = i * chunkSize;
-        const end = Math.min((i + 1) * chunkSize, videoFile.size);
-        const chunk = videoFile.slice(start, end);
-
-        const formData = new FormData();
-        formData.append("video", chunk);
-
-        setUploading(true);
-        const response = await addLecture(token, formData, lectureId, (progressEvent) => {
-          const { loaded, total } = progressEvent;
-          const percentage = Math.round((loaded * 100) / (total ?? 1));
-          setUploadPercentage(percentage);
-
-          const currentChunkSize = total ? total / (1024 * 1024) : 0;
-          setTotalSizeUploaded((prevTotalSize) => prevTotalSize + currentChunkSize);
+      setUploading(true);
+      const response = await addLecture(token, formData, lectureId, (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        const percentage = Math.round((loaded * 100) / (total ?? 1));
+        setUploadPercentage(percentage);
+        setTotalSizeUploaded(loaded);
+      });
+      console.log(response);
+      if (response.message === "Video uploaded successfully") {
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
         });
-
-        console.log(`Uploaded chunk ${i + 1} of ${totalChunks}`);
-
-        if (response.message !== "Video uploaded successfully") {
-          console.error("An unexpected error occurred");
-          Swal.fire({
-            icon: "warning",
-            title: response.message,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          return;
-        }
-
-        setCurrentChunk(i + 1);
+        fetchData();
+      } else {
+        console.error("An unexpected error occurred");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
-      console.log("All chunks uploaded successfully");
-
-      Swal.fire({
-        icon: "success",
-        title: "Video uploaded successfully",
-        showConfirmButton: true,
-        timer: 1500,
-      });
-      fetchData();
     } catch (error) {
-      console.error(error);
-      Swal.fire({
-        icon: "error",
-        title: "Error uploading video",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      console.log(error);
     } finally {
       setUploading(false);
       setUploadPercentage(0);
-      setCurrentChunk(null); // Reset current chunk after uploading completes
-      setTotalSizeUploaded(0); // Reset total size uploaded
+      setTotalSizeUploaded(0);
     }
   };
 
@@ -264,7 +241,7 @@ const VideoUpload = () => {
               <input type="file" className="hidden" onChange={handleFileInputChange} />
             </label>
           </div>
-        )}
+        )} 
 
         <div className="flex gap-4 mt-4 flex-wrap mb-5">
           {videosData.map((video) => (
