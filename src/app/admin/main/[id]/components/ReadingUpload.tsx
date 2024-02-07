@@ -160,7 +160,7 @@ const Reading = () => {
           {!isTyping && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
         </div>
 
-        <div className="flex gap-36">
+        <div className="flex gap-36 max-w-[800px]">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-1 w-[220px]">
               <p className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2 text-gray-500">ლინკის ატვირთვა</p>
