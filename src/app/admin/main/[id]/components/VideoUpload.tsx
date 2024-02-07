@@ -158,7 +158,7 @@ const VideoUpload = () => {
   const handleDeleteVideoFromData = async (idToDelete: any) => {
     try {
       const response = await deleteVideo(token, idToDelete);
-      if (response.message === "Video removed successfully") {
+      if (response.message === "video remove successfully") {
         const updatedVideosData = videosData.filter((video) => video.id !== idToDelete);
         setVideosData(updatedVideosData);
 
