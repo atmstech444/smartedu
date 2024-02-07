@@ -4,17 +4,25 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { addReading } from "../services/addReading";
 import { parseCookies } from "nookies";
+import { getReadings } from "../services/getReadings";
+
+type ReadingData = {
+  id: number;
+  description: string;
+  lecture_id: number;
+  url: string[];
+};
 
 const useQueryParams = () => {
-  const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
+  const [id, setID] = useState<string | undefined | null>(undefined);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("lectureId");
-    setLectureId(id);
+    setID(id);
   }, []);
 
-  return lectureId;
+  return id;
 };
 
 const Reading = () => {
@@ -25,6 +33,7 @@ const Reading = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([]);
   const [description, setDescription] = useState("");
+  const [readingsData, setReadingsData] = useState<ReadingData[]>([]);
 
   const handleImageClick = () => {
     const newInputKey = inputs.length + 1;
@@ -90,6 +99,24 @@ const Reading = () => {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      if (id !== undefined) {
+        const response = await getReadings(token, id);
+        const { reading } = response; // Extract the 'reading' array from the response
+        setReadingsData(reading); // Update state with the 'reading' array
+        console.log(response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  console.log(readingsData);
   return (
     <div className="grid grid-cols-6   w-full">
       <div className="flex flex-col gap-3 col-span-5">
@@ -109,13 +136,35 @@ const Reading = () => {
           {!isTyping && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
         </div>
 
-        <div className="flex items-center gap-1 ">
-          <p className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2 text-gray-500">ლინკის ატვირთვა</p>
-          <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
-        </div>
-        {inputs.map((input) => input.element)}
-        <div>
-          <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
+        <div className="flex gap-36">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1 w-[220px]">
+              <p className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2 text-gray-500">ლინკის ატვირთვა</p>
+              <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
+            </div>
+            {inputs.map((input) => input.element)}
+            <div>
+              <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
+            </div>
+          </div>
+
+          <div className="flex items-start flex-wrap gap-2">
+            {readingsData && readingsData.length > 0 ? (
+              readingsData.map((reading) => (
+                <div key={reading.id} className="border p-4 mb-4 flex flex-col items-start">
+                  <h2 className="text-sm font-semibold">აღწერა: {reading.description}</h2>
+                  <ul className="list-disc list-inside flex flex-col items-start  pt-1">
+                    {reading?.url?.map((url, index) => (
+                      <li key={index}>{url}</li>
+                    ))}
+                  </ul>
+                  <button className="text-white bg-[#2FA8FF] p-[3px] rounded-md text-sm mt-2">წაშლა</button>
+                </div>
+              ))
+            ) : (
+              <p>No readings available</p>
+            )}
+          </div>
         </div>
       </div>
 
