@@ -177,11 +177,7 @@ const Reading = () => {
               readingsData.map((reading) => (
                 <div key={reading.id} className="border p-4 mb-4 flex flex-col items-start">
                   <h2 className="text-sm font-semibold">აღწერა: {reading.description}</h2>
-                  <ul className="list-disc list-inside flex flex-col items-start  pt-1">
-                    {reading?.url?.map((url, index) => (
-                      <li key={index}>{url}</li>
-                    ))}
-                  </ul>
+                  <ul className="list-disc list-inside flex flex-col items-start  pt-1">{Array.isArray(reading.url) && reading.url.map((url, index) => <li key={index}>{url}</li>)}</ul>
                   <button className="text-white bg-[#2FA8FF] p-[3px] rounded-md text-sm mt-2" onClick={() => handleDeleteReading(reading.id)}>
                     წაშლა
                   </button>
