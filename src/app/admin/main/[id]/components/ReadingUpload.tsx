@@ -1,11 +1,30 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { addReading } from "../services/addReading";
+import { parseCookies } from "nookies";
+
+const useQueryParams = () => {
+  const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("lectureId");
+    setLectureId(id);
+  }, []);
+
+  return lectureId;
+};
 
 const Reading = () => {
+  const cookies = parseCookies();
+  const token = cookies.authToken;
+  const id = useQueryParams();
   const [isTyping, setIsTyping] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([]);
+  const [description, setDescription] = useState("");
 
   const handleImageClick = () => {
     const newInputKey = inputs.length + 1;
@@ -35,6 +54,42 @@ const Reading = () => {
     }
   };
 
+  const handleCreateReading = async () => {
+    const formData = new FormData();
+
+    formData.append("description", description);
+
+    const readingUrls: string[] = [];
+    inputs.forEach((input) => {
+      const inputValue = (input.element.props.children[0] as HTMLInputElement).value;
+      formData.append(`reading_urls[]`, inputValue);
+      readingUrls.push(inputValue);
+    });
+
+    try {
+      const response = await addReading(token, formData, id);
+      console.log(response);
+      if (response.message === "reading add successfully") {
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        console.error("Failed to create reading");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred", error);
+    }
+  };
+
   return (
     <div className="grid grid-cols-6   w-full">
       <div className="flex flex-col gap-3 col-span-5">
@@ -44,8 +99,12 @@ const Reading = () => {
           <textarea
             className="w-full h-auto resize-none rounded-lg px-2 pl-7 py-1 border border-1-[#D1D1D1] outline-none bg-transparent placeholder-[#000000] placeholder-opacity-60"
             placeholder="აღწერა"
+            name="description"
+            id="description"
+            value={description}
             onFocus={handleTyping}
             onBlur={handleBlur}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
           {!isTyping && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
         </div>
@@ -62,7 +121,9 @@ const Reading = () => {
 
       <div className="col-span-1">
         <div className="w-full flex  mt-[650px] col-span-2">
-          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg">შენახვა</button>
+          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleCreateReading}>
+            შენახვა
+          </button>
         </div>
       </div>
     </div>
