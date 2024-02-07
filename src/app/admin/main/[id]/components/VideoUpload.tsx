@@ -73,7 +73,6 @@ const VideoUpload = () => {
 
     try {
       const response = await addlectureTitleAndDescription(token, formData, lectureId);
-      console.log(response);
       if (response.message === "Lecture updated successfully") {
         Swal.fire({
           icon: "success",
@@ -111,7 +110,6 @@ const VideoUpload = () => {
         setUploadPercentage(percentage);
         setTotalSizeUploaded(loaded);
       });
-      console.log(response);
       if (response.message === "Video uploaded successfully") {
         Swal.fire({
           icon: "success",
@@ -146,7 +144,6 @@ const VideoUpload = () => {
     try {
       if (lectureId !== undefined) {
         const response = await getAllVideos(token, lectureId);
-        console.log(response);
         setVideosData(response.lecture_videos);
       }
     } catch (error) {
@@ -159,10 +156,8 @@ const VideoUpload = () => {
   }, [lectureId]);
 
   const handleDeleteVideoFromData = async (idToDelete: any) => {
-    console.log("idToDelete", idToDelete);
     try {
       const response = await deleteVideo(token, idToDelete);
-      console.log(response);
       if (response.message === "Video removed successfully") {
         const updatedVideosData = videosData.filter((video) => video.id !== idToDelete);
         setVideosData(updatedVideosData);
@@ -241,7 +236,7 @@ const VideoUpload = () => {
               <input type="file" className="hidden" onChange={handleFileInputChange} />
             </label>
           </div>
-        )} 
+        )}
 
         <div className="flex gap-4 mt-4 flex-wrap mb-5">
           {videosData.map((video) => (
