@@ -1,11 +1,40 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { addReading } from "../services/addReading";
+import { parseCookies } from "nookies";
+import { getReadings } from "../services/getReadings";
+import { deleteReading } from "../services/deleteReading";
+
+type ReadingData = {
+  id: number;
+  description: string;
+  lecture_id: number;
+  url: string[];
+};
+
+const useQueryParams = () => {
+  const [id, setID] = useState<string | undefined | null>(undefined);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("lectureId");
+    setID(id);
+  }, []);
+
+  return id;
+};
 
 const Reading = () => {
+  const cookies = parseCookies();
+  const token = cookies.authToken;
+  const id = useQueryParams();
   const [isTyping, setIsTyping] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([]);
+  const [description, setDescription] = useState("");
+  const [readingsData, setReadingsData] = useState<ReadingData[]>([]);
 
   const handleImageClick = () => {
     const newInputKey = inputs.length + 1;
@@ -35,6 +64,85 @@ const Reading = () => {
     }
   };
 
+  const handleCreateReading = async () => {
+    const formData = new FormData();
+
+    formData.append("description", description);
+
+    const readingUrls: string[] = [];
+    inputs.forEach((input) => {
+      const inputValue = fileInputRef.current?.value;
+      if (inputValue) {
+        formData.append(`url[]`, inputValue);
+        readingUrls.push(inputValue);
+      }
+    });
+
+    try {
+      const response = await addReading(token, formData, id);
+      if (response.message === "reading add successfully") {
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+        fetchData();
+      } else {
+        console.error("Failed to create reading");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred", error);
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      if (id !== undefined) {
+        const response = await getReadings(token, id);
+        const { reading } = response;
+        setReadingsData(reading);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  const handleDeleteReading = async (readingId: number) => {
+    try {
+      const response = await deleteReading(token, readingId);
+      if (response.message === "Reading remove successfully") {
+        setReadingsData((prevReadings) => prevReadings.filter((reading) => reading.id !== readingId));
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        console.error("Failed to delete reading");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred", error);
+    }
+  };
+
   return (
     <div className="grid grid-cols-6   w-full">
       <div className="flex flex-col gap-3 col-span-5">
@@ -44,25 +152,51 @@ const Reading = () => {
           <textarea
             className="w-full h-auto resize-none rounded-lg px-2 pl-7 py-1 border border-1-[#D1D1D1] outline-none bg-transparent placeholder-[#000000] placeholder-opacity-60"
             placeholder="აღწერა"
+            name="description"
+            id="description"
+            value={description}
             onFocus={handleTyping}
             onBlur={handleBlur}
+            onChange={(e) => setDescription(e.target.value)}
           ></textarea>
           {!isTyping && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
         </div>
 
-        <div className="flex items-center gap-1 ">
-          <p className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2 text-gray-500">ლინკის ატვირთვა</p>
-          <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
-        </div>
-        {inputs.map((input) => input.element)}
-        <div>
-          <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
+        <div className="flex gap-36 max-w-[800px]">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1 w-[220px]">
+              <p className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2 text-gray-500">ლინკის ატვირთვა</p>
+              <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
+            </div>
+            {inputs.map((input) => input.element)}
+            <div>
+              <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
+            </div>
+          </div>
+
+          <div className="flex items-start flex-wrap gap-2">
+            {readingsData && readingsData.length > 0 ? (
+              readingsData.map((reading) => (
+                <div key={reading.id} className="border p-4 mb-4 flex flex-col items-start rounded-lg">
+                  <h2 className="text-sm font-semibold">აღწერა: {reading.description}</h2>
+                  <ul className="list-disc list-inside flex flex-col items-start  pt-1">{Array.isArray(reading.url) && reading.url.map((url, index) => <li key={index}>{url}</li>)}</ul>
+                  <button className="text-white bg-[#2FA8FF] p-[3px] rounded-md text-sm mt-2" onClick={() => handleDeleteReading(reading.id)}>
+                    წაშლა
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No readings available</p>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="col-span-1">
         <div className="w-full flex  mt-[650px] col-span-2">
-          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg">შენახვა</button>
+          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleCreateReading}>
+            შენახვა
+          </button>
         </div>
       </div>
     </div>

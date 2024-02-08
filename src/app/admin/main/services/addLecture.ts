@@ -10,13 +10,14 @@ export const addLecture = async (
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
+      Accept: "application/json"
     },
     onUploadProgress: onUploadProgress, 
   };
 
   try {
     const { data } = await axios.post(
-      `https://smarteducation.shop/smarteducation_backend/public/admin/courses/lecture/store/${id}`,
+      `https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-video/${id}`,
       lecture,
       config
     );
