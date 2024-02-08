@@ -80,7 +80,6 @@ const Reading = () => {
 
     try {
       const response = await addReading(token, formData, id);
-      console.log(response);
       if (response.message === "reading add successfully") {
         Swal.fire({
           icon: "success",
