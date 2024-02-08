@@ -25,6 +25,7 @@ const useQueryParams = () => {
 };
 
 const QuizUpload = () => {
+  const [correctAnswers, setCorrectAnswers] = useState<Record<number, number>>({});
   const cookies = parseCookies();
   const token = cookies.authToken;
   const id = useQueryParams();
@@ -70,7 +71,16 @@ const QuizUpload = () => {
   };
 
   const handleAnswerChange = (sectionId: number, answerIndex: number, value: string) => {
-    setSections((prevSections) => prevSections.map((section) => (section.id === sectionId ? { ...section, answers: [...section.answers.slice(0, answerIndex), value, ...section.answers.slice(answerIndex + 1)] } : section)));
+    setSections((prevSections) =>
+      prevSections.map((section) =>
+        section.id === sectionId
+          ? {
+              ...section,
+              answers: [...section.answers.slice(0, answerIndex), value, ...section.answers.slice(answerIndex + 1)],
+            }
+          : section
+      )
+    );
   };
 
   const handleFileUpload = (id: number, file: File | undefined) => {
@@ -84,21 +94,33 @@ const QuizUpload = () => {
     setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, file: undefined, fileName: undefined } : section)));
   };
 
+  const handleRadioClick = (sectionId: number, answerIndex: number) => {
+    setCorrectAnswers((prevCorrectAnswers) => ({
+      ...prevCorrectAnswers,
+      [sectionId]: answerIndex,
+    }));
+  };
+
   const handleCreateQuiz = async () => {
     try {
       const formData = new FormData();
-      sections.forEach(({ question, answers }, index) => {
+      sections.forEach(({ id, question, answers }, index) => {
         formData.append(`quiz_content[${index}][question]`, question);
         answers.forEach((answer, answerIndex) => {
           formData.append(`quiz_content[${index}][answer][${answerIndex}]`, answer);
         });
+
+        const correctAnswerIndex = correctAnswers[id];
+        if (correctAnswerIndex !== undefined && correctAnswerIndex !== null) {
+          formData.append(`quiz_content[${index}][correct_answer]`, answers[correctAnswerIndex]);
+        }
       });
 
       console.log(formData);
       const response = await addQuiz(token, formData, id);
       console.log(response);
 
-      if (response.message === "quiz add successfully") {
+      if (response.message === "quiz create successfully") {
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -162,7 +184,7 @@ const QuizUpload = () => {
           {answers.map((answer, index) => (
             <div className="flex gap-2 items-center relative" key={`answer_${id}_${index}`}>
               <label className="flex gap-1 cursor-pointer">
-                <input type="radio" name={`answer_${id}`} id={`answer_${id}_${index}`} />
+                <input type="radio" name={`answer_${id}`} id={`answer_${id}_${index}`} onClick={() => handleRadioClick(id, index)} />
               </label>
               <input type="text" className="border border-1-[#D1D1D1] p-1 rounded-lg w-40 outline-none" placeholder="ჩაწერე პასუხი" value={answer} onChange={(e) => handleAnswerChange(id, index, e.target.value)} />
               <Image src="/assets/img/admin/pencil.png" className="absolute left-40" alt={""} width={12} height={12} />
