@@ -27,13 +27,6 @@ const QuizUpload = () => {
         <input type="text" className="border border-1-[#D1D1D1] p-1 rounded-lg w-40 outline-none" placeholder="ჩაწერე პასუხი" />
         <Image src="/assets/img/admin/pencil.png" className="absolute left-40" alt={""} width={12} height={12} />
 
-        <div className="relative w-[220px] flex items-center gap-1">
-          <label htmlFor={`file_${id}`} className="bg-[#2FA8FF] text-white py-1 px-2 rounded-lg cursor-pointer">
-            ატვირთე ფაილი
-            <input id={`file_${id}`} type="file" className="hidden" />
-          </label>
-        </div>
-
         <button onClick={() => handleDeleteContent(id, newContent)} className="text-white bg-[#FF3333] py-1 px-3 rounded-lg w-[100px] text-center">
           წაშლა
         </button>
@@ -52,7 +45,7 @@ const QuizUpload = () => {
       {sections.map(({ id, content }, sectionIndex) => (
         <div key={id} className="border border-1-[#D1D1D1] p-4 rounded-lg w-[970px] h-auto flex flex-col gap-4 mt-5">
           <div className="flex gap-2">
-            <section className="relative">
+            <section className="relative flex gap-4 items-center">
               <input
                 type="text"
                 name="question"
@@ -60,17 +53,17 @@ const QuizUpload = () => {
                 className="w-[200px] h-[42px] resize-none rounded-lg pl-3 py-1 border border-1-[#D1D1D1] outline-none bg-transparent placeholder-[#000000] placeholder-opacity-60"
                 placeholder="ჩაწერე კითხვა"
               />
-              <Image src="/assets/img/admin/pencil.png" className="absolute top-4 right-2" alt={""} width={12} height={12} />
-            </section>
+              <Image src="/assets/img/admin/pencil.png" className="absolute top-4 right-44" alt={""} width={12} height={12} />
 
-            <div className="relative w-[220px] flex items-center gap-1">
-              <div>
-                <label htmlFor={`file_${id}`} className="bg-[#2FA8FF] text-white py-[13px] px-2 rounded-lg cursor-pointer">
-                  ატვირთე ფაილი
-                  <input id={`file_${id}`} type="file" className="hidden" />
-                </label>
+              <div className=" flex items-center gap-1">
+                <div>
+                  <label htmlFor={`file_${id}`} className="bg-[#2FA8FF] text-white py-[13px] px-2 rounded-lg cursor-pointer">
+                    ატვირთე ფაილი
+                    <input id={`file_${id}`} type="file" className="hidden" />
+                  </label>
+                </div>
               </div>
-            </div>
+            </section>
           </div>
 
           {content && content.map((item, contentIndex) => <div key={contentIndex}>{item}</div>)}
