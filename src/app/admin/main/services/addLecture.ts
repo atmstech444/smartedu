@@ -17,7 +17,7 @@ export const addLecture = async (
 
   try {
     const { data } = await axios.post(
-      `http://192.168.96.66:8000/admin/course-lecture-video/${id}`,
+      `https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-video/${id}`,
       lecture,
       config
     );

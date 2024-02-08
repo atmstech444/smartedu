@@ -26,7 +26,7 @@ const ChunkedVideoUpload = ({ videoFile, handleDeleteVideo, handleFileInputChang
 
       try {
         await axios.post(
-          `http://192.168.96.66:8000/admin/course-lecture-video/138`,
+          `https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-video/138`,
           formData,
           {
             headers: {
