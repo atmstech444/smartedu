@@ -21,11 +21,18 @@ const QuizUpload = () => {
   const handleAddContent = (id: number) => {
     const newContent = (
       <div className="flex gap-2 items-center relative" key={sections[id - 1].content?.length ?? 0}>
-        <label className="flex gap-1">
+        <label className="flex gap-1 cursor-pointer">
           <input type="radio" name={`answer_${id}`} id={`answer_${id}`} />
         </label>
         <input type="text" className="border border-1-[#D1D1D1] p-1 rounded-lg w-40 outline-none" placeholder="ჩაწერე პასუხი" />
         <Image src="/assets/img/admin/pencil.png" className="absolute left-40" alt={""} width={12} height={12} />
+
+        <div className="relative w-[220px] flex items-center gap-1">
+          <label htmlFor={`file_${id}`} className="bg-[#2FA8FF] text-white py-1 px-2 rounded-lg cursor-pointer">
+            ატვირთე ფაილი
+            <input id={`file_${id}`} type="file" className="hidden" />
+          </label>
+        </div>
 
         <button onClick={() => handleDeleteContent(id, newContent)} className="text-white bg-[#FF3333] py-1 px-3 rounded-lg w-[100px] text-center">
           წაშლა
@@ -57,8 +64,12 @@ const QuizUpload = () => {
             </section>
 
             <div className="relative w-[220px] flex items-center gap-1">
-              <input id="type" placeholder="ლინკის ატვირთვა" className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2" onChange={() => {}} />
-              <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
+              <div>
+                <label htmlFor={`file_${id}`} className="bg-[#2FA8FF] text-white py-[13px] px-2 rounded-lg cursor-pointer">
+                  ატვირთე ფაილი
+                  <input id={`file_${id}`} type="file" className="hidden" />
+                </label>
+              </div>
             </div>
           </div>
 
