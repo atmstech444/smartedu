@@ -71,9 +71,11 @@ const Reading = () => {
 
     const readingUrls: string[] = [];
     inputs.forEach((input) => {
-      const inputValue = (input.element.props.children[0] as HTMLInputElement).value;
-      formData.append(`reading_urls[]`, inputValue);
-      readingUrls.push(inputValue);
+      const inputValue = fileInputRef.current?.value;
+      if (inputValue) {
+        formData.append(`url[]`, inputValue);
+        readingUrls.push(inputValue);
+      }
     });
 
     try {
@@ -86,6 +88,7 @@ const Reading = () => {
           showConfirmButton: true,
           timer: 1500,
         });
+        fetchData();
       } else {
         console.error("Failed to create reading");
         Swal.fire({
