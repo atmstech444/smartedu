@@ -3,17 +3,17 @@ import Image from "next/image";
 
 interface Section {
   id: number;
-  content?: JSX.Element[];
+  content: { id: string; element: JSX.Element }[];
   file?: File;
   fileName?: string;
 }
 
 const QuizUpload = () => {
-  const [sections, setSections] = useState<Section[]>([{ id: 1 }]);
+  const [sections, setSections] = useState<Section[]>([{ id: 1, content: [] }]);
 
   const handleAddItem = () => {
     const newId = sections.length + 1;
-    setSections((prevSections) => [...prevSections, { id: newId }]);
+    setSections((prevSections) => [...prevSections, { id: newId, content: [] }]);
   };
 
   const handleDeleteItem = (id: number) => {
@@ -21,27 +21,31 @@ const QuizUpload = () => {
   };
 
   const handleAddContent = (id: number) => {
+    const contentId = `content_${id}_${sections[id - 1].content.length + 1}`;
+
     const newContent = (
-      <div className="flex gap-2 items-center relative" key={sections[id - 1].content?.length ?? 0}>
+      <div className="flex gap-2 items-center relative" key={contentId}>
         <label className="flex gap-1 cursor-pointer">
           <input type="radio" name={`answer_${id}`} id={`answer_${id}`} />
         </label>
         <input type="text" className="border border-1-[#D1D1D1] p-1 rounded-lg w-40 outline-none" placeholder="ჩაწერე პასუხი" />
         <Image src="/assets/img/admin/pencil.png" className="absolute left-40" alt={""} width={12} height={12} />
 
-        <button onClick={() => handleDeleteContent(id)} className="text-white bg-[#FF3333] py-1 px-3 rounded-lg w-[100px] text-center">
+        <button onClick={() => handleDeleteContent(id, contentId)} className="text-white bg-[#FF3333] py-1 px-3 rounded-lg w-[100px] text-center">
           წაშლა
         </button>
       </div>
     );
 
     setSections((prevSections) =>
-      prevSections.map((section) => (section.id === id ? { ...section, content: section.content ? [...section.content, newContent] : [newContent] } : section))
+      prevSections.map((section) => (section.id === id ? { ...section, content: [...section.content, { id: contentId, element: newContent }] } : section))
     );
   };
 
-  const handleDeleteContent = (id: number) => {
-    setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, content: undefined } : section)));
+  const handleDeleteContent = (id: number, contentId: string) => {
+    setSections((prevSections) =>
+      prevSections.map((section) => (section.id === id ? { ...section, content: section.content.filter((item) => item.id !== contentId) } : section))
+    );
   };
 
   const handleFileUpload = (id: number, file: File | undefined) => {
@@ -95,7 +99,7 @@ const QuizUpload = () => {
             </section>
           </div>
 
-          {content && content.map((item, contentIndex) => <div key={contentIndex}>{item}</div>)}
+          {content && content.map((item) => <div key={item.id}>{item.element}</div>)}
 
           <div>
             <button onClick={() => handleAddContent(id)} className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg w-[200px] text-center">
