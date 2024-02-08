@@ -104,7 +104,7 @@ const QuizUpload = () => {
   const handleCreateQuiz = async () => {
     try {
       const formData = new FormData();
-      sections.forEach(({ id, question, answers }, index) => {
+      sections.forEach(({ id, question, answers, file }, index) => {
         formData.append(`quiz_content[${index}][question]`, question);
         answers.forEach((answer, answerIndex) => {
           formData.append(`quiz_content[${index}][answer][${answerIndex}]`, answer);
@@ -114,6 +114,11 @@ const QuizUpload = () => {
         if (correctAnswerIndex !== undefined && correctAnswerIndex !== null) {
           formData.append(`quiz_content[${index}][correct_answer]`, answers[correctAnswerIndex]);
         }
+
+        if (file) {
+          formData.append(`quiz_content[${index}][image]`, file);
+        }
+        console.log("file:", file);
       });
 
       console.log(formData);
