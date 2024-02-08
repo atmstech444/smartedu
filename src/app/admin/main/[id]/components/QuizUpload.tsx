@@ -118,10 +118,8 @@ const QuizUpload = () => {
         if (file) {
           formData.append(`quiz_content[${index}][image]`, file);
         }
-        console.log("file:", file);
       });
 
-      console.log(formData);
       const response = await addQuiz(token, formData, id);
       console.log(response);
 
