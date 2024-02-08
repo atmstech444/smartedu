@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
+interface Section {
+  id: number;
+  content?: JSX.Element[];
+}
+
 const QuizUpload = () => {
-  const [sections, setSections] = useState([{ id: 1 }]);
+  const [sections, setSections] = useState<Section[]>([{ id: 1 }]);
 
   const handleAddItem = () => {
     const newId = sections.length + 1;
@@ -13,9 +18,23 @@ const QuizUpload = () => {
     setSections((prevSections) => prevSections.filter((section) => section.id !== id));
   };
 
+  const handleAddContent = (id: number) => {
+    const newContent = (
+      <div className="flex gap-2 items-center relative" key={sections.length + 1}>
+        <label className="flex gap-1">
+          <input type="radio" name={`answer_${id}`} id={`answer_${id}`} />
+        </label>
+        <input type="text" className="border border-1-[#D1D1D1] p-1 rounded-lg w-40 outline-none" placeholder="ჩაწერე პასუხი" />
+        <Image src="/assets/img/admin/pencil.png" className="absolute left-40" alt={""} width={12} height={12} />
+      </div>
+    );
+
+    setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, content: section.content ? [...section.content, newContent] : [newContent] } : section)));
+  };
+
   return (
     <main>
-      {sections.map(({ id }, index) => (
+      {sections.map(({ id, content }, index) => (
         <div key={id} className="border border-1-[#D1D1D1] p-4 rounded-lg w-[970px] h-auto flex flex-col gap-4 mt-5">
           <div className="flex gap-2">
             <section className="relative">
@@ -35,13 +54,14 @@ const QuizUpload = () => {
             </div>
           </div>
 
-          <div className="flex gap-2 items-center relative">
-            <label className="flex gap-1">
-              <input type="radio" name="answer" id="answer" />
-            </label>
-            <input type="text" className="border border-1-[#D1D1D1] p-1 rounded-lg w-40 outline-none" placeholder="ჩაწერე პასუხი" />
-            <Image src="/assets/img/admin/pencil.png" className="absolute left-40" alt={""} width={12} height={12} />
+          {content && content.map((item) => item)}
+
+          <div>
+            <button onClick={() => handleAddContent(id)} className="text-white bg-[#2FA8FF] py-1 px-3 rounded-lg w-[100px] text-center">
+              დამატება
+            </button>
           </div>
+
           {index !== 0 && (
             <button onClick={() => handleDeleteItem(id)} className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px] self-end">
               წაშლა
