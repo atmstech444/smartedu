@@ -65,8 +65,8 @@ const QuizUpload = () => {
           {content && content.map((item, contentIndex) => <div key={contentIndex}>{item}</div>)}
 
           <div>
-            <button onClick={() => handleAddContent(id)} className="text-white bg-[#2FA8FF] py-1 px-3 rounded-lg w-[100px] text-center">
-              დამატება
+            <button onClick={() => handleAddContent(id)} className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg w-[200px] text-center">
+              პასუხის დამატება
             </button>
           </div>
 
