@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { addQuiz } from "../services/addQuiz";
+import Swal from "sweetalert2";
+import { parseCookies } from "nookies";
 
 interface Section {
   id: number;
@@ -8,7 +12,22 @@ interface Section {
   fileName?: string;
 }
 
+const useQueryParams = () => {
+  const [id, setID] = useState<string | undefined | null>(undefined);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("lectureId");
+    setID(id);
+  }, []);
+
+  return id;
+};
+
 const QuizUpload = () => {
+  const cookies = parseCookies();
+  const token = cookies.authToken;
+  const id = useQueryParams();
   const [sections, setSections] = useState<Section[]>([{ id: 1, content: [] }]);
 
   const handleAddItem = () => {
@@ -37,15 +56,11 @@ const QuizUpload = () => {
       </div>
     );
 
-    setSections((prevSections) =>
-      prevSections.map((section) => (section.id === id ? { ...section, content: [...section.content, { id: contentId, element: newContent }] } : section))
-    );
+    setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, content: [...section.content, { id: contentId, element: newContent }] } : section)));
   };
 
   const handleDeleteContent = (id: number, contentId: string) => {
-    setSections((prevSections) =>
-      prevSections.map((section) => (section.id === id ? { ...section, content: section.content.filter((item) => item.id !== contentId) } : section))
-    );
+    setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, content: section.content.filter((item) => item.id !== contentId) } : section)));
   };
 
   const handleFileUpload = (id: number, file: File | undefined) => {
@@ -56,13 +71,38 @@ const QuizUpload = () => {
   };
 
   const handleDeleteFile = (id: number) => {
-    setSections((prevSections) =>
-      prevSections.map((section) => (section.id === id ? { ...section, file: undefined, fileName: undefined } : section))
-    );
+    setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, file: undefined, fileName: undefined } : section)));
+  };
+
+  const handleCreateQuiz = async () => {
+    const formData = new FormData();
+
+    try {
+      const response = await addQuiz(token, formData, id);
+      console.log(response);
+      if (response.message === "quiz add successfully") {
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        console.error("Failed to create reading");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred", error);
+    }
   };
 
   return (
-    <main>
+    <main className="w-full flex flex-col">
       {sections.map(({ id, content, file, fileName }, sectionIndex) => (
         <div key={id} className="border border-1-[#D1D1D1] p-4 rounded-lg w-[970px] h-auto flex flex-col gap-4 mt-5">
           <div className="flex gap-2">
@@ -117,6 +157,15 @@ const QuizUpload = () => {
 
       <div className="w-5 h-5 ml-4 mt-4" onClick={handleAddItem}>
         <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer w-full" />
+      </div>
+
+
+      <div className="self-end mr-28 mb-6 ">
+        <div className="w-full flex col-span-2">
+          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleCreateQuiz}>
+            შენახვა
+          </button>
+        </div>
       </div>
     </main>
   );
