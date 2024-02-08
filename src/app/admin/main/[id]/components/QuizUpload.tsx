@@ -4,6 +4,7 @@ import Image from "next/image";
 interface Section {
   id: number;
   content?: JSX.Element[];
+  file?: File;
   fileName?: string;
 }
 
@@ -34,7 +35,9 @@ const QuizUpload = () => {
       </div>
     );
 
-    setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, content: section.content ? [...section.content, newContent] : [newContent] } : section)));
+    setSections((prevSections) =>
+      prevSections.map((section) => (section.id === id ? { ...section, content: section.content ? [...section.content, newContent] : [newContent] } : section))
+    );
   };
 
   const handleDeleteContent = (id: number) => {
@@ -44,17 +47,19 @@ const QuizUpload = () => {
   const handleFileUpload = (id: number, file: File | undefined) => {
     if (file) {
       const fileName = file.name;
-      setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, fileName } : section)));
+      setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, file, fileName } : section)));
     }
   };
 
   const handleDeleteFile = (id: number) => {
-    setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, fileName: undefined } : section)));
+    setSections((prevSections) =>
+      prevSections.map((section) => (section.id === id ? { ...section, file: undefined, fileName: undefined } : section))
+    );
   };
 
   return (
     <main>
-      {sections.map(({ id, content, fileName }, sectionIndex) => (
+      {sections.map(({ id, content, file, fileName }, sectionIndex) => (
         <div key={id} className="border border-1-[#D1D1D1] p-4 rounded-lg w-[970px] h-auto flex flex-col gap-4 mt-5">
           <div className="flex gap-2">
             <section className="flex gap-4 items-center">
@@ -71,8 +76,9 @@ const QuizUpload = () => {
 
               <div className=" flex items-center gap-1">
                 <div>
-                  {fileName ? (
+                  {file ? (
                     <div className="flex items-center gap-2">
+                      <img src={URL.createObjectURL(file)} alt={fileName} className="h-8 w-auto" />
                       <p>{fileName}</p>
                       <button onClick={() => handleDeleteFile(id)} className="text-white bg-[#FF3333] py-1 px-2 rounded-lg w-[100px] text-sm">
                         წაშალე ფაილი
