@@ -167,7 +167,7 @@ const AddCourse = () => {
           showConfirmButton: true,
           timer: 1500,
         });
-        router.push("/main");
+        router.push("/admin/main");
       } else {
         console.error("Failed to create about");
         Swal.fire({
