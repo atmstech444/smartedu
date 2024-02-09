@@ -143,7 +143,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   };
 
   const updateLectures = () => {
-    if (lectureNames.length === 0 && lectures.length === 0) {
+    if (lectureNames?.length === 0 && lectures?.length === 0) {
       const updatedLecturesJSON = localStorage.getItem("lectures");
       if (updatedLecturesJSON) {
         const updatedLectures = JSON.parse(updatedLecturesJSON);
@@ -169,8 +169,8 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
         <img src={`https://smarteducation.shop/smarteducation_backend/public/admin/${courseData?.cover_image}`} className="rounded-2xl" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
-        {lectureNames.length === 0 && finalUpdatedLectures.length === 0
-          ? lectures.map((lecture) => (
+        {lectureNames?.length === 0 && finalUpdatedLectures?.length === 0
+          ? lectures?.map((lecture) => (
               <div key={lecture.id} className="flex justify-between items-center">
                 <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
                   {lecture.lecture_name}
@@ -182,9 +182,9 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
             ))
           : null}
 
-        {lectureNames.length === 0 &&
-          lectures.length > 0 &&
-          finalUpdatedLectures.map((lecture) => (
+        {lectureNames?.length === 0 &&
+          lectures?.length > 0 &&
+          finalUpdatedLectures?.map((lecture) => (
             <div key={lecture.id} className="flex justify-between items-center">
               <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
                 {lecture.lecture_name}
@@ -195,8 +195,8 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
             </div>
           ))}
 
-        {lectureNames.length > 0
-          ? lectureNames.map((lecture) => (
+        {lectureNames?.length > 0
+          ? lectureNames?.map((lecture) => (
               <div key={lecture.id} className="flex justify-between items-center">
                 <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
                   {lecture.lecture_name}
@@ -208,9 +208,9 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
             ))
           : null}
 
-        {lectureNames.length === 0 && lectures.length === 0 ? <div></div> : null}
+        {lectureNames?.length === 0 && lectures?.length === 0 ? <div></div> : null}
 
-        {lectureNames.length === 0 && (
+        {lectureNames?.length === 0 && (
           <>
             {inputs.map((input) => input.element)}
             <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
