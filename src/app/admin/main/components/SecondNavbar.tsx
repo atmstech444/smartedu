@@ -9,15 +9,15 @@ import { deleteLecture } from "../[id]/services/deleteLecture";
 import { useRouter } from "next/navigation";
 
 type Lecture = {
-  course_id: number;
-  created_at: string;
-  id: number;
-  lecture_name: string;
+  course_id: any;
+  created_at: any;
+  id: any;
+  lecture_name: any;
 };
 
 interface LectureName {
-  id: number;
-  lecture_name: string;
+  id: any;
+  lecture_name: any;
 }
 
 const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNames: LectureName[] }) => {
@@ -28,7 +28,8 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([]);
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [finalUpdatedLectures, setFinalUpdatedLectures] = useState<Lecture[]>([]);
-
+  const { id } = useParams();
+  const courseId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
   const handleImageClick = () => {
     const newInputKey = inputs.length + 1;
 
@@ -45,8 +46,6 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
 
     setInputs((prevInputs) => [...prevInputs, { key: newInputKey, element: newInput }]);
   };
-
-  const { id } = useParams();
 
   useEffect(() => {
     if (courseData) {
@@ -69,8 +68,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
       if (response.success) {
         setLectures(response.lectures);
         setFinalUpdatedLectures(response.lectures);
-        updateLocalStorage(response.lectures);
-        console.log(response);
+        updateLocalStorage(response.lectures, courseId);
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -78,7 +76,6 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
           timer: 1500,
         });
       } else {
-        console.error("Failed to create tutor");
         Swal.fire({
           icon: "warning",
           title: response.message,
@@ -91,18 +88,18 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     }
   };
 
-  const updateLocalStorage = (lectures: Lecture[]) => {
-    localStorage.setItem("lectures", JSON.stringify(lectures));
+  const updateLocalStorage = (lectures: Lecture[], courseId: number) => {
+    localStorage.setItem(`lectures_${courseId}`, JSON.stringify(lectures));
   };
 
-  const handleDeleteLecture = async (id: number) => {
+  const handleDeleteLecture = async (lectureId: number) => {
     try {
-      const response = await deleteLecture(token, id);
+      const response = await deleteLecture(token, lectureId);
       if (response.message) {
-        const updatedLectures = lectures.filter((lecture) => lecture.id !== id);
+        const updatedLectures = lectures.filter((lecture) => lecture.id !== lectureId);
         setLectures(updatedLectures);
         setFinalUpdatedLectures(updatedLectures);
-        updateLocalStorage(updatedLectures);
+        updateLocalStorage(updatedLectures, courseId);
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -110,7 +107,6 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
           timer: 1500,
         });
       } else {
-        console.error("Failed to delete lecture");
         Swal.fire({
           icon: "warning",
           title: response.message,
@@ -124,11 +120,11 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   };
 
   useEffect(() => {
-    const storedLectures = localStorage.getItem("lectures");
+    const storedLectures = localStorage.getItem(`lectures_${id}`);
     if (storedLectures) {
       setLectures(JSON.parse(storedLectures));
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const storedLectureNames = localStorage.getItem("lectureNames");
@@ -144,14 +140,13 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
 
   const updateLectures = () => {
     if (lectureNames?.length === 0 && lectures?.length === 0) {
-      const updatedLecturesJSON = localStorage.getItem("lectures");
+      const updatedLecturesJSON = localStorage.getItem(`lectures_${id}`);
       if (updatedLecturesJSON) {
         const updatedLectures = JSON.parse(updatedLecturesJSON);
         const finalUpdatedLectures = updatedLectures.map((lecture: any, index: number) => ({
           id: lecture.id,
           lecture_name: lecture.lecture_name,
         }));
-        console.log(finalUpdatedLectures);
         setFinalUpdatedLectures(finalUpdatedLectures);
       } else {
         console.log("No lectures found in localStorage.");
