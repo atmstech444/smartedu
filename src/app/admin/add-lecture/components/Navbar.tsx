@@ -16,7 +16,6 @@ const Navbar = ({ lectures, courseData }: { lectures: Lecture[], courseData: any
     }));
     router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
   };
-console.log(courseData)
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">

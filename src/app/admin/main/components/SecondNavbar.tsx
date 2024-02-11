@@ -49,7 +49,6 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
 
     try {
       const response = await addLecture(token, formData, id);
-      console.log(response);
       if (response.success) {
         const lastAddedLecture = response.lectures[response.lectures.length - 1];
         setLectures((prevLectures) => [...prevLectures, lastAddedLecture]);
