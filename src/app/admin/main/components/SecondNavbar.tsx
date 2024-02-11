@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { addLecture } from "../[id]/services/addLecture";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
-import { useParams } from "next/navigation";
-import { getAllCourses } from "../services/getCourses";
-import { deleteLecture } from "../[id]/services/deleteLecture";
 import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { deleteLecture } from "../[id]/services/deleteLecture";
 
 type Lecture = {
   course_id: any;
@@ -25,27 +25,10 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   const cookies = parseCookies();
   const token = cookies.authToken;
   const inputRefs = useRef<HTMLInputElement[]>([]);
-  const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([]);
+  const [inputs, setInputs] = useState<string[]>([]);
   const [lectures, setLectures] = useState<Lecture[]>([]);
-  const [finalUpdatedLectures, setFinalUpdatedLectures] = useState<Lecture[]>([]);
   const { id } = useParams();
   const courseId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
-  const handleImageClick = () => {
-    const newInputKey = inputs.length + 1;
-
-    const handleDeleteInput = (key: number) => {
-      setInputs((prevInputs) => prevInputs.filter((input) => input.key !== key));
-    };
-
-    const newInput = (
-      <div className="relative" key={newInputKey}>
-        <input ref={(ref) => (inputRefs.current[newInputKey] = ref!)} type="text" placeholder="ლექცია" className="border border-1-black rounded-lg px-3 py-1 outline-none max-w-[200px]" onChange={() => {}} name={`name-${newInputKey}`} />
-        <Image src={"/assets/img/admin/closeIcon.png"} width={10} height={10} alt="delete icon" className="hover:cursor-pointer absolute right-3 top-3" onClick={() => handleDeleteInput(newInputKey)} />
-      </div>
-    );
-
-    setInputs((prevInputs) => [...prevInputs, { key: newInputKey, element: newInput }]);
-  };
 
   useEffect(() => {
     if (courseData) {
@@ -53,22 +36,24 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     }
   }, [courseData]);
 
+  const handleImageClick = () => {
+    setInputs((prevInputs) => [...prevInputs, ""]);
+  };
+
   const handleCreateLecture = async () => {
     const formData = new FormData();
 
-    const lectureNames: string[] = [];
-
-    inputRefs.current.forEach((ref, index) => {
+    inputRefs.current.forEach((ref) => {
       formData.append(`lecture_name[]`, ref.value);
-      lectureNames.push(ref.value);
     });
 
     try {
       const response = await addLecture(token, formData, id);
+      console.log(response);
       if (response.success) {
-        setLectures(response.lectures);
-        setFinalUpdatedLectures(response.lectures);
-        updateLocalStorage(response.lectures, courseId);
+        const lastAddedLecture = response.lectures[response.lectures.length - 1];
+        setLectures((prevLectures) => [...prevLectures, lastAddedLecture]);
+        setInputs([]);
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -86,20 +71,13 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     } catch (error) {
       console.error("An unexpected error occurred", error);
     }
-  };
-
-  const updateLocalStorage = (lectures: Lecture[], courseId: number) => {
-    localStorage.setItem(`lectures_${courseId}`, JSON.stringify(lectures));
   };
 
   const handleDeleteLecture = async (lectureId: number) => {
     try {
       const response = await deleteLecture(token, lectureId);
       if (response.message) {
-        const updatedLectures = lectures.filter((lecture) => lecture.id !== lectureId);
-        setLectures(updatedLectures);
-        setFinalUpdatedLectures(updatedLectures);
-        updateLocalStorage(updatedLectures, courseId);
+        setLectures((prevLectures) => prevLectures.filter((lecture) => lecture.id !== lectureId));
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -119,103 +97,46 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     }
   };
 
-  useEffect(() => {
-    const storedLectures = localStorage.getItem(`lectures_${id}`);
-    if (storedLectures) {
-      setLectures(JSON.parse(storedLectures));
-    }
-  }, [id]);
-
-  useEffect(() => {
-    const storedLectureNames = localStorage.getItem("lectureNames");
-    if (storedLectureNames) {
-      const lectureNames = JSON.parse(storedLectureNames);
-      setLectures(lectureNames.map((name: string, index: number) => ({ id: index, lecture_name: name })));
-    }
-  }, [courseData]);
-
   const handleOpenTabs = (lectureId: number) => {
-    router.push(`/admin/add-lecture?lectureId=${lectureId}`);
+    const lecturesData = lectures.map((lecture) => ({
+      id: lecture.id,
+      name: lecture.lecture_name,
+    }));
+    router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
   };
-
-  const updateLectures = () => {
-    if (lectureNames?.length === 0 && lectures?.length === 0) {
-      const updatedLecturesJSON = localStorage.getItem(`lectures_${id}`);
-      if (updatedLecturesJSON) {
-        const updatedLectures = JSON.parse(updatedLecturesJSON);
-        const finalUpdatedLectures = updatedLectures.map((lecture: any, index: number) => ({
-          id: lecture.id,
-          lecture_name: lecture.lecture_name,
-        }));
-        setFinalUpdatedLectures(finalUpdatedLectures);
-      } else {
-        console.log("No lectures found in localStorage.");
-      }
-    }
-  };
-
-  useEffect(() => {
-    updateLectures();
-  }, [handleCreateLecture, handleDeleteLecture]);
-
+console.log(lectures);
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
         <img src={`https://smarteducation.shop/smarteducation_backend/public/admin/${courseData?.cover_image}`} className="rounded-2xl" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
-        {lectureNames?.length === 0 && finalUpdatedLectures?.length === 0
-          ? lectures?.map((lecture) => (
-              <div key={lecture.id} className="flex justify-between items-center">
-                <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
-                  {lecture.lecture_name}
-                </h1>
-                <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
-                  წაშლა
-                </button>
-              </div>
-            ))
-          : null}
 
-        {lectureNames?.length === 0 &&
-          lectures?.length > 0 &&
-          finalUpdatedLectures?.map((lecture) => (
-            <div key={lecture.id} className="flex justify-between items-center">
-              <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
-                {lecture.lecture_name}
-              </h1>
-              <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
-                წაშლა
-              </button>
-            </div>
-          ))}
+        {lectures.map((lecture) => (
+          <div key={lecture.id} className="flex justify-between items-center">
+            <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
+              {lecture.lecture_name}
+            </h1>
 
-        {lectureNames?.length > 0
-          ? lectureNames?.map((lecture) => (
-              <div key={lecture.id} className="flex justify-between items-center">
-                <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
-                  {lecture.lecture_name}
-                </h1>
-                <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
-                  წაშლა
-                </button>
-              </div>
-            ))
-          : null}
+            <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
+              წაშლა
+            </button>
+          </div>
+        ))}
 
-        {lectureNames?.length === 0 && lectures?.length === 0 ? <div></div> : null}
+        {inputs.map((_, index) => (
+          <div className="relative" key={index}>
+            <input ref={(ref) => (inputRefs.current[index] = ref!)} type="text" placeholder="ლექცია" className="border border-1-black rounded-lg px-3 py-1 outline-none max-w-[200px]" name={`name-${index}`} />
+            <Image src="/assets/img/admin/closeIcon.png" width={10} height={10} alt="delete icon" className="hover:cursor-pointer absolute right-3 top-3" onClick={() => setInputs((prevInputs) => prevInputs.filter((_, i) => i !== index))} />
+          </div>
+        ))}
 
-        {lectureNames?.length === 0 && (
-          <>
-            {inputs.map((input) => input.element)}
-            <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
-            <div>
-              <button onClick={handleCreateLecture} className="bg-mainBlue  rounded-faqBordeR  text-base mt-2 text-center text-white hover:opacity-75  transition-all ease-in-out  px-4 py-2">
-                შენახვა
-              </button>
-            </div>
-          </>
-        )}
+        <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
+        <div>
+          <button onClick={handleCreateLecture} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-4 py-2">
+            შენახვა
+          </button>
+        </div>
       </div>
     </div>
   );
