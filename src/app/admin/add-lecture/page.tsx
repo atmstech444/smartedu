@@ -1,7 +1,7 @@
+// AddLecturePage.tsx
 "use client";
 import { useEffect, useState } from "react";
 import SecondNavbar from "../main/components/SecondNavbar";
-import { useParams } from "next/navigation";
 import QuizUpload from "../main/[id]/components/QuizUpload";
 import ReadingUpload from "../main/[id]/components/ReadingUpload";
 import VideoUpload from "../main/[id]/components/VideoUpload";
@@ -9,44 +9,38 @@ import Tabs from "../main/[id]/components/Tabs";
 import Header from "@/components/Header";
 import { getAllCourses } from "../main/services/getCourses";
 import { parseCookies } from "nookies";
+import Navbar from "./components/Navbar";
+
+interface Lecture {
+  id: any;
+  name: any;
+}
 
 const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
+  const [lectures, setLectures] = useState<Lecture[]>([]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("lectureId");
+    const lecturesParam = searchParams.get("lectures");
     setLectureId(id);
+    if (lecturesParam) {
+      const lecturesArray: Lecture[] = JSON.parse(decodeURIComponent(lecturesParam));
+      setLectures(lecturesArray);
+    }
   }, []);
 
-  return lectureId;
+  return { lectureId, lectures };
 };
 
 const AddLecturePage = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const lectureId = useQueryParams();
-
-  const { id } = useParams();
+  const { lectureId, lectures } = useQueryParams();
   const [courseData, setCourseData] = useState(null);
   const [activeTab, setActiveTab] = useState("წასაკითხი");
-  const [lectureNames, setLectureNames] = useState<[]>([]);
-
-  useEffect(() => {
-    const storedData = localStorage.getItem(`course_${id}`);
-    if (storedData) {
-      setCourseData(JSON.parse(storedData));
-    }
-  }, [id]);
-
-  let content = null;
-  if (activeTab === "წასაკითხი") {
-    content = <ReadingUpload />;
-  } else if (activeTab === "ვიდეო") {
-    content = <VideoUpload />;
-  } else if (activeTab === "ქვიზი") {
-    content = <QuizUpload />;
-  }
+  const [lectureNames, setLectureNames] = useState([]);
 
   useEffect(() => {
     const fetchAllCourses = async () => {
@@ -58,16 +52,24 @@ const AddLecturePage = () => {
       }
     };
     fetchAllCourses();
-  }, []);
+  }, [token]);
+
+  let content = null;
+  if (activeTab === "წასაკითხი") {
+    content = <ReadingUpload />;
+  } else if (activeTab === "ვიდეო") {
+    content = <VideoUpload />;
+  } else if (activeTab === "ქვიზი") {
+    content = <QuizUpload />;
+  }
 
   return (
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <SecondNavbar lectureNames={lectureNames} courseData={""} />
-
+        <Navbar lectures={lectures} />
         <div className="flex flex-col gap-10  mt-11 w-[97%]">
-          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} lectureNames={lectureNames} />
           {content}
         </div>
       </div>
