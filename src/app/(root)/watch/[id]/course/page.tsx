@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Navigation } from "../../Navigation";
 import { useParams, useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const params = useParams();
   const [isDesktop, setIsDesktop] = useState(false);
   const router = useRouter();
@@ -32,4 +32,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

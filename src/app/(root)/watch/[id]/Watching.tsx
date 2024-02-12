@@ -156,30 +156,7 @@ const Watching = ({ params }: { params: { id: number } }) => {
     // <Wrapper>
     <>
       <p>teona</p>
-      {/* {Number(hasBought && lectures.length > 0) && (
-        <Main>
-          <Content>
-            <TitleCourse style={{ fontWeight: 500 }}>{hasBought.title}</TitleCourse>
-            <Left>
-              <Video ref={video_ref} src={API_STORAGE + lectures[activeIndex].video_url} controls></Video>
-              <Title>აღწერა</Title>
-              <Description>{lectures[activeIndex].description}</Description>
-            </Left>
-            <Right>
-              {lectures.map((lecture, index) => (
-                <LectureSwitch
-                  id={lecture.id}
-                  setActiveIndex={setActiveIndex}
-                  activeIndex={activeIndex}
-                  index={index}
-                  key={lecture.id} // Assigning lecture.id as the key
-                  lecture={lecture}
-                />
-              ))}
-            </Right>
-          </Content>
-        </Main>
-      )} */}
+   
     </>
 
     // </Wrapper>
