@@ -7,7 +7,7 @@ import QuizUpload from "./components/QuizUpload";
 import ReadingUpload from "./components/ReadingUpload";
 import VideoUpload from "./components/VideoUpload";
 
-const page = () => {
+const Page = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
   const [activeTab, setActiveTab] = useState("წასაკითხი");
@@ -35,9 +35,10 @@ const page = () => {
       <div className="flex flex-col gap-10  mt-11 w-[97%]">
         {/* <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
         {content} */}
+        
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

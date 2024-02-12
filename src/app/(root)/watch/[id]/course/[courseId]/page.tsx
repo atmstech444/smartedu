@@ -1,12 +1,13 @@
 "use client";
 import Wrapper from "@/layout/DefaultWrapper";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Navigation } from "../../../Navigation";
 import { useParams, useRouter } from "next/navigation";
 import Lecture from "../Lecture";
 
-const page = () => {
+const Page = () => {
   const params = useParams();
+ 
 
   return (
     <Wrapper>
@@ -24,4 +25,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
