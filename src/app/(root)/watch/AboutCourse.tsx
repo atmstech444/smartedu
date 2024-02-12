@@ -44,15 +44,15 @@ const AboutCourse = () => {
       <Course>სილაბუსი</Course>
 
       {course &&
-        course.syllabus.map((item) => (
-          <>
+        course.syllabus.map((item, index) => (
+          <div key={index}>
             <Lecture> {`${item.title}`}</Lecture>
             <div className="px-[32px]">
               {item.descriptions.map((desc) => (
                 <LectureDesc>{desc.description}</LectureDesc>
               ))}
             </div>
-          </>
+          </div>
         ))}
     </div>
   );

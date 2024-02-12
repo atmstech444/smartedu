@@ -1,15 +1,11 @@
-"use client";
-import { I_Course_Details } from "@/api/GET_CourseDetails";
-import Wrapper from "@/layout/DefaultWrapper";
-import { useAppSelector } from "@/redux/store";
-import { Get_Course_Detail } from "@/services/AllCourses";
+"use client"
+import React from "react";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { styled } from "styled-components";
 import AboutCourse from "../../AboutCourse";
 import { Navigation } from "../../Navigation";
+import Wrapper from "@/layout/DefaultWrapper";
 
-const page = () => {
+const Page = () => {
   const params = useParams();
   return (
     <Wrapper>
@@ -26,72 +22,4 @@ const page = () => {
   );
 };
 
-export default page;
-
-// const LectureName = styled.p`
-//   color: #5a5454;
-//   font-family: FiraGO;
-//   font-size: 20px;
-//   font-style: normal;
-//   font-weight: 500;
-//   line-height: 150%;
-// `;
-
-// const LectureDesc = styled.p`
-//   color: #000;
-//   font-family: FiraGO;
-//   margin-top: 10px;
-//   font-size: 16px;
-//   font-style: normal;
-//   font-weight: 400;
-//   line-height: 150%;
-// `;
-
-// const Lecture = styled.p`
-//   padding: 5px;
-//   border-radius: 4px;
-//   background: #f3f4f8;
-//   color: #5a5454;
-//   font-family: FiraGO;
-//   font-size: 20px;
-//   font-style: normal;
-//   font-weight: 400;
-//   line-height: 150%;
-// `;
-
-// const LecturerDesc = styled.p`
-//   font-family: FiraGO;
-//   font-size: 12px;
-//   font-style: normal;
-//   font-weight: 400;
-//   line-height: 150%;
-//   margin: 0;
-// `;
-
-// const Lecturer = styled.p`
-//   color: #000;
-//   font-family: FiraGO;
-//   font-size: 14px;
-//   font-style: normal;
-//   font-weight: 500;
-//   line-height: 150%;
-//   margin: 0;
-// `;
-
-// const AboutCourse = styled.p`
-//   color: #000;
-//   font-family: FiraGO;
-//   font-size: 16px;
-//   font-style: normal;
-//   font-weight: 400;
-//   line-height: 150%;
-// `;
-
-// const Course = styled.h3`
-//   color: #000;
-//   font-family: FiraGO;
-//   font-size: 20px;
-//   font-style: normal;
-//   font-weight: 500;
-//   line-height: 150%;
-// `;
+export default Page;

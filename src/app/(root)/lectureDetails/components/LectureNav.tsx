@@ -39,7 +39,7 @@ const LectureNav = (id: any) => {
         <Image onClick={() => router.push(`/profile`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
         <LectureNumber>ლექცია 1</LectureNumber>
         {lectureData.map((item, index) => (
-          <LectureMaterial>
+          <LectureMaterial key={index}>
             <div className="flex gap-3 items-center">
               {item.icon}
               <p className="mb-0 text-dark">{item.title}</p>
