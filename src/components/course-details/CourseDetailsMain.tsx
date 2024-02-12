@@ -13,6 +13,8 @@ import { idType } from "@/interFace/interFace";
 import Breadcrumb from "../common/breadcrumb/Breadcrumb";
 import { GET_CourseDetails, I_Course_Details } from "@/api/GET_CourseDetails";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import info from "../../../public/assets/img/profile/info.png";
+import Image from "next/image";
 
 const CourseDetailsMain = ({ id }: idType) => {
   const [course, setCourse] = useState<null | I_Course_Details>(null);
@@ -64,7 +66,8 @@ const CourseDetailsMain = ({ id }: idType) => {
                           style={{ display: "flex", gap: "8px", alignItems: "center", width: "120px", padding: "5px" }}
                         >
                           {" "}
-                          <i className="fas fa-ribbon"></i> <span>აღწერა</span>{" "}
+                          <Image src={info} alt="info" width="20" height="20" />
+                          <span>აღწერა</span>{" "}
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
