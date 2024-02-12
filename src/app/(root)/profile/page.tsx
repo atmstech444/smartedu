@@ -18,7 +18,6 @@ const ProfilePage = () => {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
-
   const logout = () => {
     if (user) {
       POST_Logout({ token: user.token }, router, dispatch);
@@ -59,7 +58,7 @@ const ProfilePage = () => {
             </ProfileInfo>
             <Navigation>
               <NavItem
-                isActive={page === "profile"}
+                isactive={(page === "profile").toString()}
                 onClick={() => {
                   setPage("profile");
                 }}
@@ -68,7 +67,7 @@ const ProfilePage = () => {
                 <P>პროფილი</P>
               </NavItem>
               <NavItem
-                isActive={page === "my-courses"}
+                isactive={(page === "my-courses").toString()}
                 onClick={() => {
                   setPage("my-courses");
                 }}
@@ -77,7 +76,7 @@ const ProfilePage = () => {
                 <P>ჩემი კურსები</P>
               </NavItem>
               <NavItem
-                isActive={page === "settings"}
+                isactive={(page === "settings").toString()}
                 onClick={() => {
                   setPage("settings");
                 }}
@@ -105,7 +104,7 @@ const P = styled.div`
   color: black;
 `;
 
-const NavItem = styled.div<{ isActive: boolean }>`
+const NavItem = styled.div<{ isactive: string }>`
   display: flex;
   align-items: center;
   gap: 16px;
@@ -113,7 +112,7 @@ const NavItem = styled.div<{ isActive: boolean }>`
   border-radius: 4px;
   padding: 8px;
   padding-left: 16px;
-  background-color: ${(props) => (props.isActive ? "#f3f4f8" : "transparent")};
+  background-color: ${(props) => (props.isactive == "true" ? "#f3f4f8" : "transparent")};
   &:hover {
     background-color: #f3f4f8;
   }
