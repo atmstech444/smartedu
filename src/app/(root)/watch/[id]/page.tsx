@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Watching from "./Watching";
+// import Watching from "./Watching";
 import { GET_Courses, I_Course } from "@/api/GET_Courses";
 import Wrapper from "@/layout/DefaultWrapper";
 import { useState, useEffect } from "react";
