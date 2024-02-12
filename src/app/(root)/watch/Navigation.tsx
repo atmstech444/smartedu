@@ -2,7 +2,7 @@
 import { useAppSelector } from "@/redux/store";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Arrow from "../../../public/assets/icons/arrowLeft.svg";
 import Image from "next/image";
 
