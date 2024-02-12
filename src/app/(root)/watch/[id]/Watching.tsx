@@ -156,7 +156,19 @@ const Watching = ({ params }: { params: { id: number } }) => {
     // <Wrapper>
     <>
       <p>teona</p>
-   
+     
+      {lectures.map((lecture, index) => (
+  <LectureSwitch
+    key={lecture.id} 
+    lecture={lecture}
+    index={index}
+    activeIndex={activeIndex}
+    setActiveIndex={setActiveIndex}
+    id={id}
+  />
+))}
+
+           
     </>
 
     // </Wrapper>
