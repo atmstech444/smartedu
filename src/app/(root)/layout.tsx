@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <meta name="description" content={metadata.description} />
         <meta name="robots" content="noindex, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link rel="icon" href="./favicon.png" />
+        <link rel="icon" href="/icon.ico" sizes="any" />
         {/* <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet" /> */}
       </Head>
 
