@@ -33,8 +33,6 @@ const Page = () => {
       <SecondNavbar courseData={courseData} lectureNames={[]} />
 
       <div className="flex flex-col gap-10  mt-11 w-[97%]">
-        {/* <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        {content} */}
         
       </div>
     </div>
