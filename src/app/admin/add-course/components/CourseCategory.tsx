@@ -87,7 +87,7 @@ const CourseCategory = ({ onCheckChange }: { onCheckChange: (checkedIndexes: num
           <LoadingSpinner />
         ) : (
           categories.map((category, index) => (
-            <div className="flex justify-between" key={index}>
+            <div className="flex justify-between" key={category.id}>
               <Checkbox key={category.id} label={category.title} checked={checkedIndexes.includes(category.id)} onChange={() => handleExclusiveCheckboxChange(category.id)} />
               <Image onClick={() => handleDeleteCategory(category.id)} src={BlackTrashIcon} alt="delete category" className="hover:cursor-pointer" />
             </div>
