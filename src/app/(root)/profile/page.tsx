@@ -29,6 +29,7 @@ const ProfilePage = () => {
       router.push("/sign-in");
     }
   }, []);
+
   const [page, setPage] = useState<pageType>("profile");
   let pageToRender: React.ReactNode;
 

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CourseItem from "./CourseItem";
 import { useAppSelector } from "@/redux/store";
 export default function MyCourses() {
+  console.log("bla");
   const courses = useAppSelector((state) => state.myCourses.courses);
   if (courses.length > 0) {
     let unwatched = courses.filter((course) => course.completion_percentage !== 100);
@@ -22,13 +23,14 @@ export default function MyCourses() {
     );
   } else {
     return (
-      <EmptyWrapper>
-        <Image width={300} src={Empty_Courses} alt="Empty Courses" />
-        <P>შენ არ გაქვს კურსი ნაყიდი</P>
-        <A className="e-btn" href="/course-grid">
-          იყიდე კურსი
-        </A>
-      </EmptyWrapper>
+      <h1>hellos</h1>
+      // <EmptyWrapper>
+      //   <Image width={300} src={Empty_Courses} alt="Empty Courses" />
+      //   <P>შენ არ გაქვს კურსი ნაყიდი</P>
+      //   <A className="e-btn" href="/course-grid">
+      //     იყიდე კურსი
+      //   </A>
+      // </EmptyWrapper>
     );
   }
 }
