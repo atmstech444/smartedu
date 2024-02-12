@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { Navigation } from "../Navigation";
 import { useRouter } from "next/navigation";
 
-export default function page({ params }: { params: { id: number } }) {
+export default function Page({ params }: { params: { id: number } }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const router = useRouter();
   const currentPath = window.location.pathname;

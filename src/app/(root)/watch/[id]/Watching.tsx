@@ -166,9 +166,16 @@ const Watching = ({ params }: { params: { id: number } }) => {
               <Description>{lectures[activeIndex].description}</Description>
             </Left>
             <Right>
-              {lectures.map((lecture, index) => {
-                return <LectureSwitch id={lecture.id} setActiveIndex={setActiveIndex} activeIndex={activeIndex} index={index} key={`lect${lecture.id}`} lecture={lecture} />;
-              })}
+              {lectures.map((lecture, index) => (
+                <LectureSwitch
+                  id={lecture.id}
+                  setActiveIndex={setActiveIndex}
+                  activeIndex={activeIndex}
+                  index={index}
+                  key={lecture.id} // Assigning lecture.id as the key
+                  lecture={lecture}
+                />
+              ))}
             </Right>
           </Content>
         </Main>

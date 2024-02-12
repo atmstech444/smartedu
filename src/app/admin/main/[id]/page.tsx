@@ -7,7 +7,7 @@ import QuizUpload from "./components/QuizUpload";
 import ReadingUpload from "./components/ReadingUpload";
 import VideoUpload from "./components/VideoUpload";
 
-const page = () => {
+const Page = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
   const [activeTab, setActiveTab] = useState("წასაკითხი");
@@ -40,4 +40,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

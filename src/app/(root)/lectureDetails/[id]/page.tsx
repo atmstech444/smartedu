@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import LectureNav from "../components/LectureNav";
 
-const page = ({ params }: { params: { id: number } }) => {
+const Page = ({ params }: { params: { id: number } }) => {
   const [isDesktop, setIsDesktop] = useState(false);
   const router = useRouter();
   const currentPath = window.location.pathname;
@@ -34,4 +34,4 @@ const page = ({ params }: { params: { id: number } }) => {
   );
 };
 
-export default page;
+export default Page;
