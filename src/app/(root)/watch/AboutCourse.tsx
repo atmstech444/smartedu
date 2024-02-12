@@ -4,7 +4,7 @@ import { useAppSelector } from "@/redux/store";
 import { Get_Course_Detail } from "@/services/AllCourses";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import Image from "next/image";
 import Arrow from "../../../public/assets/icons/arrowLeft.svg";
 
@@ -45,7 +45,11 @@ const AboutCourse = () => {
         course.syllabus.map((item, index) => (
           <div key={index}>
             <Lecture>{item.title}</Lecture>
-            <LectureDesc>{item.descriptions.map((desc, i) => <div key={i}>{desc.description}</div>)}</LectureDesc>
+            <LectureDesc>
+              {item.descriptions.map((desc, i) => (
+                <div key={i}>{desc.description}</div>
+              ))}
+            </LectureDesc>
           </div>
         ))}
     </div>

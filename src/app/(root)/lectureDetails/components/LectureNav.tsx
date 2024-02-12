@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { styled } from "styled-components";
+import  styled  from "styled-components";
 import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
 import Image from "next/image";
 import Book from "@/public/assets/dynamic_icons/Book";
