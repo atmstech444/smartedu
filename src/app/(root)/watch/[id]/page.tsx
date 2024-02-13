@@ -23,11 +23,12 @@ export default function Page({ params }: { params: { id: number } }) {
       window.removeEventListener("resize", updateIsDesktop);
     };
   }, []);
-  if (isDesktop) {
-    router.push(currentPath + "/about");
-  }
-
   const [isClient, setIsClient] = useState(false);
+  console.log(isClient, isDesktop);
+  if (isClient && isDesktop) {
+    window.location.href = window.location.pathname + "/about";
+    return null; // Optional: You can return null or any other component if you want to render nothing
+  }
 
   useEffect(() => {
     setIsClient(true);

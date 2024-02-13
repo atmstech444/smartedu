@@ -31,10 +31,13 @@ export interface I_Course {
 
 export async function GET_Courses() {
   const response = await axios.get<POST_Login_Success>(url + "courses");
+  console.log(response, "response");
+
   return response.data.courses;
 }
 
 export async function Get_Course_Detail(id: any) {
   const response = await axios.get(url + `courses/detail/${id}`);
+  console.log(response);
   return response.data;
 }

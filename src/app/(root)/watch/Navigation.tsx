@@ -10,7 +10,7 @@ export const Navigation = (id: any) => {
   const courses = useAppSelector((state) => state.courses.courses);
   const course = courses.find((cours) => cours.id == id.id);
   const router = useRouter();
-
+  console.log(courses, "courses");
   const navigateToAboutPage = () => {
     router.push(`/watch/${id.id}/about`);
   };
