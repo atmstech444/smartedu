@@ -7,20 +7,15 @@ interface Lecture {
   name: any;
 }
 
-const Navbar = ({ lectures, courseData, onLectureClick }: { lectures: Lecture[]; courseData: any; onLectureClick: (lectureId: number) => void }) => {
+const Navbar = ({ lectures, courseData }: { lectures: Lecture[]; courseData: any }) => {
   const router = useRouter();
-  const [currentLectureId, setCurrentLectureId] = useState<number | null>(null);
 
   const handleOpenTabs = (lectureId: number) => {
-    if (lectureId !== currentLectureId) {
-      const lecturesData = lectures.map((lecture) => ({
-        id: lecture.id,
-        name: lecture.name,
-      }));
-      router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
-      onLectureClick(lectureId);
-      setCurrentLectureId(lectureId);
-    }
+    const lecturesData = lectures.map((lecture) => ({
+      id: lecture.id,
+      name: lecture.name,
+    }));
+    router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
   };
 
   return (

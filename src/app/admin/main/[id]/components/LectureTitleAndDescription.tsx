@@ -3,31 +3,22 @@ import Image from "next/image";
 import { addlectureTitleAndDescription } from "../services/addlectureTitleAndDescription";
 import { parseCookies } from "nookies";
 import Swal from "sweetalert2";
-import { getCourseById } from "../../services/getCoursesById";
 import { getLectureAndDescriptions } from "../services/getLectureAndDescriptions";
 import { deleteTitleAndDescription } from "../services/deleteTitleAndDescription";
-
-const useQueryParams = () => {
-  const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const id = searchParams.get("lectureId");
-    setLectureId(id);
-  }, []);
-
-  return lectureId;
-};
+import { useSearchParams } from "next/navigation";
 
 const LectureTitleAndDescription = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const lectureId = useQueryParams();
   const [isTypingInput, setIsTypingInput] = useState(false);
   const [isTypingTextarea, setIsTypingTextarea] = useState(false);
   const [lectureTitle, setLectureTitle] = useState("");
   const [lectureDescription, setLectureDescription] = useState("");
   const [titleDescriptionData, setTitleDescriptionData] = useState<{ id: number; title: string; description: string } | null>(null);
+
+  const searchParams = useSearchParams();
+
+  const lectureId = searchParams.get("lectureId");
 
   const handleTypingInput = () => {
     setIsTypingInput(true);
@@ -110,12 +101,13 @@ const LectureTitleAndDescription = () => {
     const fetchData = async () => {
       try {
         const data = await getLectureAndDescriptions(token, lectureId);
-        setTitleDescriptionData(data.lecture_content);
+        if (data.lecture_content) {
+          setTitleDescriptionData(data.lecture_content);
+        }
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
-
     if (lectureId !== undefined && lectureId !== null) {
       fetchData();
     }
@@ -128,7 +120,7 @@ const LectureTitleAndDescription = () => {
           <div className="w-48 relative">
             <input
               type="text"
-              value={titleDescriptionData?.title || ""}
+              value={titleDescriptionData.title || ""}
               placeholder="ლექციის სათაური"
               onChange={(e) => setLectureTitle(e.target.value)}
               className="h-auto resize-none rounded-lg pl-3 py-1 border border-1-[#D1D1D1] outline-none bg-transparent placeholder-[#000000] placeholder-opacity-60"
@@ -140,7 +132,7 @@ const LectureTitleAndDescription = () => {
           <div className="relative">
             <textarea
               onChange={(e) => setLectureDescription(e.target.value)}
-              value={titleDescriptionData?.description || ""}
+              value={titleDescriptionData.description || ""}
               className="w-full max-w-[780px] h-auto resize-none rounded-lg px-2 pl-6 py-1 border border-1-[#D1D1D1] outline-none bg-transparent placeholder-[#000000] placeholder-opacity-60"
               placeholder="ლექციის აღწერა"
               onFocus={handleTypingTextarea}
