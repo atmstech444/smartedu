@@ -3,7 +3,7 @@ import PolicyPrivacyMain from "@/components/policy-privacy/PolicyPrivacyMain";
 import Wrapper from "@/layout/DefaultWrapper";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -22,4 +22,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
