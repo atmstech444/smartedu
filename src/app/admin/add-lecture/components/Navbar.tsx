@@ -12,15 +12,12 @@ const Navbar = ({ lectures, courseData, onLectureClick }: { lectures: Lecture[];
   const [currentLectureId, setCurrentLectureId] = useState<number | null>(null);
 
   const handleOpenTabs = (lectureId: number) => {
-    if (lectureId !== currentLectureId) {
-      const lecturesData = lectures.map((lecture) => ({
-        id: lecture.id,
-        name: lecture.name,
-      }));
-      router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
-      onLectureClick(lectureId);
-      setCurrentLectureId(lectureId);
-    }
+    const lecturesData = lectures.map((lecture) => ({
+      id: lecture.id,
+      name: lecture.name,
+    }));
+    router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
+    onLectureClick(lectureId);
   };
 
   return (

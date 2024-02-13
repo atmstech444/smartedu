@@ -62,7 +62,7 @@ const AddLecturePage = () => {
   }, [token]);
 
   const handleRefreshTabs = () => {
-    setRefreshTabs((prev) => !prev);
+    setRefreshTabs(true);
   };
   const handleLectureClick = (lectureId: number) => {
     setActiveTab("");
