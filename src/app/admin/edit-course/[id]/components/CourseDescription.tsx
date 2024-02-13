@@ -2,7 +2,7 @@ import React from "react";
 
 const CourseDescription = ({ data, onFileChange }: any) => {
   return (
-    <div className="mt-6">
+    <div className="mt-6 w-[50%]">
       <div>
         <div className="flex flex-col gap-2">
           <label htmlFor="descriptionInput" className="text-dark text-xl font-normal">
