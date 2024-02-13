@@ -45,7 +45,7 @@ const AddLecturePage = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const { lectureId, lectures, courseData } = useQueryParams();
-  const [activeTab, setActiveTab] = useState("წასაკითხი");
+  const [activeTab, setActiveTab] = useState("");
   const [lectureNames, setLectureNames] = useState([]);
   const [refreshTabs, setRefreshTabs] = useState(false);
 
@@ -65,6 +65,7 @@ const AddLecturePage = () => {
     setRefreshTabs((prev) => !prev);
   };
   const handleLectureClick = (lectureId: number) => {
+    setActiveTab("");
     handleRefreshTabs();
   };
 
