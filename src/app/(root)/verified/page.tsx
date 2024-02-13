@@ -1,7 +1,7 @@
 "use client";
 import SignInMain from "@/components/signIn/SignInMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const SignInPage = () => {
@@ -15,12 +15,22 @@ const SignInPage = () => {
     showed.current = true;
   }, []);
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <Wrapper>
-      <main>
-        <SignInMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <SignInMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

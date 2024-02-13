@@ -22,14 +22,16 @@ const Page = () => {
     };
   }, []);
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   if (isDesktop) {
     router.push(currentPath + "/1");
   }
-  return (
-    <div>
-      <Navigation id={params.id} />
-    </div>
-  );
+  return <div>{isClient && <Navigation id={params.id} />}</div>;
 };
 
 export default Page;

@@ -1,14 +1,25 @@
+"use client";
 import AboutPageMain from "@/components/about/AboutPageMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const AboutPage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <Wrapper>
-      <main>
-        <AboutPageMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <AboutPageMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

@@ -1,14 +1,23 @@
 import BlogMain from "@/components/Blog/BlogMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const BlogPage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
-    <Wrapper>
-      <main>
-        <BlogMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <BlogMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

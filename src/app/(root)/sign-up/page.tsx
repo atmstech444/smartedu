@@ -1,14 +1,24 @@
+"use client";
 import SignUpMain from "@/components/sign-up/SignUpMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const SignUpPage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
-    <Wrapper>
-      <main>
-        <SignUpMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <SignUpMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 
