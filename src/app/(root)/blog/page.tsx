@@ -1,3 +1,4 @@
+"use client"
 import BlogMain from "@/components/Blog/BlogMain";
 import Wrapper from "@/layout/DefaultWrapper";
 import React, { useEffect, useState } from "react";
