@@ -18,7 +18,6 @@ const AboutCourse = () => {
   const fetchData = async () => {
     try {
       const courseDetail = await Get_Course_Detail(id.id);
-      console.log(courseDetail, "detail");
       setCourse(courseDetail.course);
     } catch (error) {
       console.error("Error fetching course detail:", error);
