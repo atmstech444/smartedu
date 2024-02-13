@@ -26,7 +26,6 @@ const ProfilePage = () => {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
   const logout = () => {
     if (user) {
       POST_Logout({ token: user.token }, router, dispatch);
