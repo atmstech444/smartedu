@@ -1,34 +1,36 @@
+"use client";
 import { I_Course_Details } from "@/api/GET_CourseDetails";
-import Wrapper from "@/layout/DefaultWrapper";
+// import Wrapper from "@/layout/DefaultWrapper";
 import { useAppSelector } from "@/redux/store";
 import { Get_Course_Detail } from "@/services/AllCourses";
-import { useRouter } from "next/router";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Arrow from "../../../public/assets/icons/arrowLeft.svg";
 
 const AboutCourse = () => {
-  const { id } = useRouter().query;
+  const id = useParams();
+
   const [course, setCourse] = useState<I_Course_Details | null>(null);
   const router = useRouter();
 
   const fetchData = async () => {
     try {
-      const courseDetail = await Get_Course_Detail(id);
+      const courseDetail = await Get_Course_Detail(id.id);
+      console.log(courseDetail, "detail");
       setCourse(courseDetail.course);
     } catch (error) {
       console.error("Error fetching course detail:", error);
     }
   };
-
   useEffect(() => {
     fetchData();
-  }, [fetchData]); // Include fetchData in the dependency array
+  }, []);
 
   return (
     <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md">
-      <Image onClick={() => router.push(`/watch/${id}`)} src={Arrow} width={24} height={24} alt="Back" className="md:hidden mb-4" />
+      <Image onClick={() => router.push(`/watch/${id.id}`)} src={Arrow} width={24} height={24} alt="Back" className="md:hidden mb-4" />
       <Course>{course?.title}</Course>
       <Course>ლექციის აღწერა</Course>
       <AboutCourseText>{course?.description}</AboutCourseText>
