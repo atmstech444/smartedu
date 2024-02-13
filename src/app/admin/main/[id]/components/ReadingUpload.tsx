@@ -162,7 +162,7 @@ const Reading = ({ lectureId }: any) => {
           {!isTyping && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
         </div>
 
-        <div className="flex gap-36 max-w-[800px]">
+        <div className="flex justify-between max-w-[780px]">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-1 w-[220px]">
               <p className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2 text-gray-500">ლინკის ატვირთვა</p>
@@ -174,12 +174,19 @@ const Reading = ({ lectureId }: any) => {
             </div>
           </div>
 
-          <div className="flex items-start flex-wrap gap-2">
+          <div className="flex items-start flex-wrap gap-2 ">
             {readingsData && readingsData.length > 0 ? (
               readingsData.map((reading) => (
-                <div key={reading.id} className="border p-4 mb-4 flex flex-col items-start rounded-lg">
+                <div key={reading.id} className="border p-4 mb-4 flex flex-col items-start rounded-lg max-w-[400px]">
                   <h2 className="text-sm font-semibold">აღწერა: {reading.description}</h2>
-                  <ul className="list-disc list-inside flex flex-col items-start  pt-1">{Array.isArray(reading.url) && reading.url.map((url, index) => <li key={index}>{url}</li>)}</ul>
+                  <div className="max-w-[300px] overflow-wrap break-word">
+                    {Array.isArray(reading.url) &&
+                      reading.url.map((url, index) => (
+                        <div key={index} className="max-w-[300px] overflow-hidden overflow-ellipsis">
+                          {url}
+                        </div>
+                      ))}
+                  </div>
                   <button className="text-white bg-[#2FA8FF] p-[3px] rounded-md text-sm mt-2" onClick={() => handleDeleteReading(reading.id)}>
                     წაშლა
                   </button>
