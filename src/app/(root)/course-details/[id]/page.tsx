@@ -4,7 +4,7 @@ import CourseDetailsMain from "@/components/course-details/CourseDetailsMain";
 import Wrapper from "@/layout/DefaultWrapper";
 import React, { useEffect, useState } from "react";
 
-const page = ({ params }: { params: { id: number } }) => {
+const Page = ({ params }: { params: { id: number } }) => {
   const id = params.id;
   const [isClient, setIsClient] = useState(false);
 
@@ -24,4 +24,4 @@ const page = ({ params }: { params: { id: number } }) => {
   );
 };
 
-export default page;
+export default Page;
