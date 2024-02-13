@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Lecture {
@@ -6,16 +7,22 @@ interface Lecture {
   name: any;
 }
 
-const Navbar = ({ lectures, courseData }: { lectures: Lecture[], courseData: any }) => {
+const Navbar = ({ lectures, courseData, onLectureClick }: { lectures: Lecture[]; courseData: any; onLectureClick: (lectureId: number) => void }) => {
   const router = useRouter();
+  const [currentLectureId, setCurrentLectureId] = useState<number | null>(null);
 
   const handleOpenTabs = (lectureId: number) => {
-    const lecturesData = lectures.map((lecture) => ({
-      id: lecture.id,
-      name: lecture.name,
-    }));
-    router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
+    if (lectureId !== currentLectureId) {
+      const lecturesData = lectures.map((lecture) => ({
+        id: lecture.id,
+        name: lecture.name,
+      }));
+      router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
+      onLectureClick(lectureId);
+      setCurrentLectureId(lectureId);
+    }
   };
+
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">

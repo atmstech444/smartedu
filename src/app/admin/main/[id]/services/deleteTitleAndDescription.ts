@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const addlectureTitleAndDescription = async (token: any, formdata: any, id: any) => {
+export const deleteTitleAndDescription = async (token: any, id: number) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -8,10 +8,9 @@ export const addlectureTitleAndDescription = async (token: any, formdata: any, i
     },
   };
   try {
-    const { data } = await axios.post(`http://192.168.96.66:8000/admin/lecture-content/${id}`, formdata, config);
+    const { data } = await axios.delete(`http://192.168.96.66:8000/admin/lecture-content/${id}`, config);
     return data;
   } catch (error) {
     console.error(error);
-    throw error;
   }
 };

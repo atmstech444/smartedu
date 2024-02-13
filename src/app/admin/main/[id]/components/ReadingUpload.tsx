@@ -26,7 +26,7 @@ const useQueryParams = () => {
   return id;
 };
 
-const Reading = () => {
+const Reading = ({ lectureId }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const id = useQueryParams();
