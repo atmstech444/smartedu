@@ -113,6 +113,7 @@ const I = styled.i<{ expand: string }>`
 const Wrapper = styled.div<{ expand: string }>`
   position: relative;
   z-index: ${({ expand }) => (expand == "true" ? "20" : "10")};
+  background-color: black;
 `;
 
 const Option = styled.p`
