@@ -3,8 +3,8 @@ import Empty_Courses from "../../../../../public/assets/img/profile/empty-course
 import styled from "styled-components";
 import CourseItem from "./CourseItem";
 import { useAppSelector } from "@/redux/store";
+
 export default function MyCourses() {
-  console.log("bla");
   const courses = useAppSelector((state) => state.myCourses.courses);
   if (courses.length > 0) {
     let unwatched = courses.filter((course) => course.completion_percentage !== 100);
@@ -49,14 +49,14 @@ const EmptyWrapper = styled.div`
   align-items: center;
   padding: 36px;
 `;
-const Title = styled.p`
+const Title = styled.h1`
   font-size: 20px;
   font-weight: 600;
   color: black;
   font-weight: 600;
   padding-left: 32px;
 `;
-const P = styled.p`
+const P = styled.h1`
   font-size: 20px;
   font-weight: 600;
 `;

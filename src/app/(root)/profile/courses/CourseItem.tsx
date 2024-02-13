@@ -2,7 +2,6 @@ import Link from "next/link";
 import { I_MyCourse } from "@/api/GET_MyCourses";
 import { API_STORAGE } from "@/api/API_PATH";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
 
 export default function CourseItem({ course }: { course: I_MyCourse }) {
   const navigate = useRouter();
@@ -13,7 +12,7 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
   return (
     <div style={{ width: "250px", marginInline: "auto" }}>
       <div onClick={handleClick}>
-        <p style={{ height: "340px" }}>
+        <div style={{ height: "340px" }}>
           <div className="course__item white-bg mb-30 fix">
             <div className="course__thumb w-img p-relative fix">
               <img src={API_STORAGE + course.cover_image} width={250} height={150} alt="image not found" />
@@ -49,7 +48,7 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
               </div>
             </div>
           </div>
-        </p>
+        </div>
       </div>
     </div>
   );
