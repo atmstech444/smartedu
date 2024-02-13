@@ -134,7 +134,6 @@ const VideoUpload = () => {
   return (
     <div className="grid grid-cols-6 w-full">
       <div className="flex flex-col gap-3 col-span-5">
-        <LectureTitleAndDescription />
         {videoFile && (
           <div className="flex flex-col gap-2 w-[300px]">
             <video controls className="rounded-lg">
