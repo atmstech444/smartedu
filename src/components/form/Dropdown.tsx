@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { StyleSheetManager } from "styled-components";
 
 interface DropdownProps {
   label: string;
@@ -58,38 +59,40 @@ export default function Dropdown({ label, id, options, exportValue, defaultValue
   useEffect(() => {});
 
   return (
-    <Wrapper expand={expand} ref={dropdownRef}>
-      <Label>{label}</Label>
-      <Select
-        isBlack={value.value !== null}
-        expand={expand}
-        onClick={() => {
-          startVal(true);
-          setExpand(!expand);
-        }}
-      >
-        <I expand={expand} className="fa-solid fa-chevron-down"></I>
-        {value.text}
-      </Select>
-      <input type="text" defaultValue={value.value || value.text} hidden />
-      {expand && (
-        <Options>
-          {options.map((option) => (
-            <Option
-              key={option.value}
-              onClick={() => {
-                setExpand(false);
-                setValue(option);
-                exportValue(option.value);
-              }}
-            >
-              {option.text}
-            </Option>
-          ))}
-        </Options>
-      )}
-      {error && <ErrorText>{error}</ErrorText>}
-    </Wrapper>
+    <StyleSheetManager shouldForwardProp={(prop) => prop !== "expand"}>
+      <Wrapper expand={expand.toString()} ref={dropdownRef}>
+        <Label>{label}</Label>
+        <Select
+          isblack={(value.value !== null).toString()}
+          expand={expand.toString()}
+          onClick={() => {
+            startVal(true);
+            setExpand(!expand);
+          }}
+        >
+          <I expand={expand.toString()} className="fa-solid fa-chevron-down"></I>
+          {value.text}
+        </Select>
+        <input type="text" defaultValue={value.value || value.text} hidden />
+        {expand && (
+          <Options>
+            {options.map((option) => (
+              <Option
+                key={option.value}
+                onClick={() => {
+                  setExpand(false);
+                  setValue(option);
+                  exportValue(option.value);
+                }}
+              >
+                {option.text}
+              </Option>
+            ))}
+          </Options>
+        )}
+        {error && <ErrorText>{error}</ErrorText>}
+      </Wrapper>
+    </StyleSheetManager>
   );
 }
 
@@ -99,17 +102,18 @@ const ErrorText = styled.p`
   font-size: 14px !important;
   z-index: 20;
 `;
-const I = styled.i<{ expand: boolean }>`
-  transform: ${({ expand }) => (expand ? "rotate(180deg)" : "rotate(0deg)")};
+const I = styled.i<{ expand: string }>`
+  transform: ${({ expand }) => (expand == "true" ? "rotate(180deg)" : "rotate(0deg)")};
   transition: all 0.1s;
   position: absolute;
   right: 16px;
   top: 20px;
 `;
 
-const Wrapper = styled.div<{ expand: boolean }>`
+const Wrapper = styled.div<{ expand: string }>`
   position: relative;
-  z-index: ${({ expand }) => (expand ? "20" : "10")};
+  z-index: ${({ expand }) => (expand == "true" ? "20" : "10")};
+  background-color: black;
 `;
 
 const Option = styled.p`
@@ -134,7 +138,7 @@ const Options = styled.div`
   z-index: 25;
 `;
 
-const Select = styled.div<{ expand: boolean; isBlack: boolean }>`
+const Select = styled.div<{ expand: string; isblack: string }>`
   width: 100%;
   height: 60px;
   line-height: 52px;
@@ -143,7 +147,7 @@ const Select = styled.div<{ expand: boolean; isBlack: boolean }>`
   font-size: 14px;
   border: 2px solid transparent;
   background: #f6f6f7;
-  color: ${({ isBlack }) => (isBlack ? "black" : "gray")};
+  color: ${({ isblack }) => (isblack == "true" ? "black" : "gray")};
   border-radius: 6px;
   cursor: pointer;
   overflow: visible;
