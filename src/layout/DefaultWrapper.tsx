@@ -14,7 +14,6 @@ import FooterTwo from "./footer/footerTwo";
 import store, { useAppDispatch } from "@/redux/store";
 import { GET_Courses } from "@/api/GET_Courses";
 import { setCourses } from "@/redux/slices/coursesSlice";
-import { Provider } from "react-redux";
 
 interface WrapperProps {
   children: React.ReactNode;
