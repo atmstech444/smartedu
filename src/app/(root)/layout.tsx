@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html lang="en">
       <Head>
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta name="description" content={metadata.description} />
