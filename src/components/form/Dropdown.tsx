@@ -29,10 +29,7 @@ export default function Dropdown({ label, id, options, exportValue, defaultValue
         setExpand(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup the event listener on unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

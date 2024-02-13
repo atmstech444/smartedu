@@ -8,7 +8,6 @@ import Image from "next/image";
 import MyCourses from "./courses/MyCourses";
 import Settings from "./settings/Settings";
 import Profile from "./profile/Profile";
-
 import { POST_Logout } from "@/api/POST_Logout";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
@@ -27,6 +26,7 @@ const ProfilePage = () => {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
   const logout = () => {
     if (user) {
       POST_Logout({ token: user.token }, router, dispatch);
@@ -58,56 +58,56 @@ const ProfilePage = () => {
   return (
     <>
       {isClient && (
-            <StyleSheetManager shouldForwardProp={(prop) => prop !== "isactive"}>
-              <Wrapper>
-                <Main>
-                  <Content>
-                    <ProfileMenu className="only-des">
-                      <ProfileInfo>
-                        <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
-                        <P>
-                          {user?.name} {user?.surname}
-                        </P>
-                      </ProfileInfo>
-                      <Navigation>
-                        <NavItem
-                          isactive={(page === "profile").toString()}
-                          onClick={() => {
-                            setPage("profile");
-                          }}
-                        >
-                          <I className="fal fa-user"></I>
-                          <P>პროფილი</P>
-                        </NavItem>
-                        <NavItem
-                          isactive={(page === "my-courses").toString()}
-                          onClick={() => {
-                            setPage("my-courses");
-                          }}
-                        >
-                          <I className="fal fa-book"></I>
-                          <P>ჩემი კურსები</P>
-                        </NavItem>
-                        <NavItem
-                          isactive={(page === "settings").toString()}
-                          onClick={() => {
-                            setPage("settings");
-                          }}
-                        >
-                          <I className="fal fa-gear"></I>
-                          <P>პარამეტრები</P>
-                        </NavItem>
-                        <NavItem2 onClick={logout}>
-                          <I className="fal fa-arrow-right-from-bracket"></I>
-                          <P>გასვლა</P>
-                        </NavItem2>
-                      </Navigation>
-                    </ProfileMenu>
-                    <OpenedPage>{pageToRender}</OpenedPage>
-                  </Content>
-                </Main>
-                <MobileNavigation page={page} setPage={setPage} />
-              </Wrapper>
+        <StyleSheetManager shouldForwardProp={(prop) => prop !== "isactive"}>
+          <Wrapper>
+            <Main>
+              <Content>
+                <ProfileMenu className="only-des">
+                  <ProfileInfo>
+                    <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
+                    <P>
+                      {user?.name} {user?.surname}
+                    </P>
+                  </ProfileInfo>
+                  <Navigation>
+                    <NavItem
+                      isactive={(page === "profile").toString()}
+                      onClick={() => {
+                        setPage("profile");
+                      }}
+                    >
+                      <I className="fal fa-user"></I>
+                      <P>პროფილი</P>
+                    </NavItem>
+                    <NavItem
+                      isactive={(page === "my-courses").toString()}
+                      onClick={() => {
+                        setPage("my-courses");
+                      }}
+                    >
+                      <I className="fal fa-book"></I>
+                      <P>ჩემი კურსები</P>
+                    </NavItem>
+                    <NavItem
+                      isactive={(page === "settings").toString()}
+                      onClick={() => {
+                        setPage("settings");
+                      }}
+                    >
+                      <I className="fal fa-gear"></I>
+                      <P>პარამეტრები</P>
+                    </NavItem>
+                    <NavItem2 onClick={logout}>
+                      <I className="fal fa-arrow-right-from-bracket"></I>
+                      <P>გასვლა</P>
+                    </NavItem2>
+                  </Navigation>
+                </ProfileMenu>
+                <OpenedPage>{pageToRender}</OpenedPage>
+              </Content>
+            </Main>
+            <MobileNavigation page={page} setPage={setPage} />
+          </Wrapper>
         </StyleSheetManager>
       )}
     </>
