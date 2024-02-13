@@ -14,6 +14,7 @@ import { POST_Logout } from "@/api/POST_Logout";
 import { useRouter } from "next/navigation";
 import { GET_MyCourses } from "@/api/GET_MyCourses";
 import { GET_Progress } from "@/api/GET_Progress";
+
 const HeaderTwo = () => {
   const scrollDirection = useScrollDirection(null);
   const { toggleSideMenu, sideMenuOpen } = useContext(AppContext) as AppContextType;
@@ -46,10 +47,8 @@ const HeaderTwo = () => {
               <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-2 col-sm-4 col-6">
                 <div className="header__left d-flex">
                   <div className="logo">
-                    <Link href="/" legacyBehavior>
-                      <a>
-                        <Image src={Logo} style={{ width: "100%", height: "auto" }} alt="logo" />
-                      </a>
+                    <Link href="/">
+                      <Image src={Logo} style={{ width: "100%", height: "auto" }} alt="logo" />
                     </Link>
                   </div>
                 </div>
@@ -65,13 +64,11 @@ const HeaderTwo = () => {
                   </div>
                   {user ? (
                     <>
-                      <Link href="/profile" legacyBehavior style={{ margin: "0px", color: "black", fontSize: "18px", display: "flex", gap: "16px", marginLeft: "50px", alignItems: "center" }}>
-                        <a>
-                          <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
-                          <p style={{ margin: 0 }} className="only-des">
-                            {user.name + " " + user.surname}
-                          </p>
-                        </a>
+                      <Link href="/profile" style={{ margin: "0px", color: "black", fontSize: "18px", display: "flex", gap: "16px", marginLeft: "50px", alignItems: "center" }}>
+                        <Image style={{ width: "30px", height: "auto" }} src={ProfieIcon} alt="Profile" />
+                        <p style={{ margin: 0 }} className="only-des">
+                          {user.name + " " + user.surname}
+                        </p>
                       </Link>
 
                       <i onClick={logout} style={{ cursor: "pointer" }} className="only-des fa-solid fa-arrow-right-from-bracket ml-20"></i>
@@ -79,13 +76,13 @@ const HeaderTwo = () => {
                   ) : (
                     <div style={{ display: "flex", gap: "24px", marginLeft: "50px", alignItems: "center" }}>
                       <div className="header__btn header__btn-2 d-none d-sm-block">
-                        <Link href="/sign-in" legacyBehavior className="e-btn" style={{ fontSize: "18px" }}>
-                          <a>შესვლა</a>
+                        <Link href="/sign-in" className="e-btn" style={{ fontSize: "18px" }}>
+                          შესვლა
                         </Link>
                       </div>
 
                       <Link href="/sign-up" className="d-none d-sm-block" style={{ color: "black", fontSize: "18px" }}>
-                        <a>რეგისტრაცია</a>
+                        რეგისტრაცია
                       </Link>
                     </div>
                   )}
