@@ -4,9 +4,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProfieIcon from "../../../../public/assets/img/profile/profile.jpg";
 import Image from "next/image";
-import MyCourses from "./courses/MyCourses";
-import Settings from "./settings/Settings";
-import Profile from "./profile/Profile";
+import dynamic from "next/dynamic";
+
+// import MyCourses from "./courses/MyCourses";
+const MyCourses = dynamic(() => import("./courses/MyCourses"), { ssr: false });
+// import Settings from "./settings/Settings";
+// import Profile from "./profile/Profile";
+const Profile = dynamic(() => import("./profile/Profile"), { ssr: false });
+const Settings = dynamic(() => import("./settings/Settings"), { ssr: false });
 import { POST_Logout } from "@/api/POST_Logout";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
