@@ -18,13 +18,13 @@ interface Lecture {
 const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
   const [lectures, setLectures] = useState<Lecture[]>([]);
-  const [courseData, setCourseData] = useState<any | null>(null); 
+  const [courseData, setCourseData] = useState<any | null>(null);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("lectureId");
     const lecturesParam = searchParams.get("lectures");
-    const courseDataParam = searchParams.get("courseData"); 
+    const courseDataParam = searchParams.get("courseData");
 
     setLectureId(id);
     if (lecturesParam) {
@@ -38,15 +38,16 @@ const useQueryParams = () => {
     }
   }, []);
 
-  return { lectureId, lectures, courseData }; 
+  return { lectureId, lectures, courseData };
 };
 
 const AddLecturePage = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const { lectureId, lectures, courseData } = useQueryParams(); 
+  const { lectureId, lectures, courseData } = useQueryParams();
   const [activeTab, setActiveTab] = useState("წასაკითხი");
   const [lectureNames, setLectureNames] = useState([]);
+  const [refreshTabs, setRefreshTabs] = useState(false);
 
   useEffect(() => {
     const fetchAllCourses = async () => {
@@ -59,6 +60,13 @@ const AddLecturePage = () => {
     };
     fetchAllCourses();
   }, [token]);
+
+  const handleRefreshTabs = () => {
+    setRefreshTabs((prev) => !prev);
+  };
+  const handleLectureClick = (lectureId: number) => {
+    handleRefreshTabs();
+  };
 
   let content = null;
   if (activeTab === "წასაკითხი") {
@@ -73,9 +81,9 @@ const AddLecturePage = () => {
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} courseData={courseData} />
+        <Navbar lectures={lectures} courseData={courseData} onLectureClick={handleLectureClick} />
         <div className="flex flex-col gap-10  mt-11 w-[97%]">
-          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} lectureNames={lectureNames} />
+          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} lectureNames={lectureNames} key={refreshTabs ? "refreshed" : "not-refreshed"} />
           {content}
         </div>
       </div>

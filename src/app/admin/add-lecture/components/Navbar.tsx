@@ -6,7 +6,7 @@ interface Lecture {
   name: any;
 }
 
-const Navbar = ({ lectures, courseData }: { lectures: Lecture[], courseData: any }) => {
+const Navbar = ({ lectures, courseData, onLectureClick }: { lectures: Lecture[]; courseData: any; onLectureClick: (lectureId: number) => void }) => {
   const router = useRouter();
 
   const handleOpenTabs = (lectureId: number) => {
@@ -15,6 +15,7 @@ const Navbar = ({ lectures, courseData }: { lectures: Lecture[], courseData: any
       name: lecture.name,
     }));
     router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
+    onLectureClick(lectureId);
   };
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
