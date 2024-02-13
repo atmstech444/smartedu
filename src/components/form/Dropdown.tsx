@@ -71,7 +71,7 @@ export default function Dropdown({ label, id, options, exportValue, defaultValue
         <I expand={expand} className="fa-solid fa-chevron-down"></I>
         {value.text}
       </Select>
-      <input type="text" value={value.value || value.text} hidden />
+      <input type="text" defaultValue={value.value || value.text} hidden />
       {expand && (
         <Options>
           {options.map((option) => (
