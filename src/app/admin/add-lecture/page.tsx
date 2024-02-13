@@ -47,6 +47,7 @@ const AddLecturePage = () => {
   const { lectureId, lectures, courseData } = useQueryParams();
   const [activeTab, setActiveTab] = useState("");
   const [lectureNames, setLectureNames] = useState([]);
+  const [refreshTabs, setRefreshTabs] = useState(false);
 
   useEffect(() => {
     const fetchAllCourses = async () => {
@@ -59,6 +60,14 @@ const AddLecturePage = () => {
     };
     fetchAllCourses();
   }, [token]);
+
+  const handleRefreshTabs = () => {
+    setRefreshTabs(true);
+  };
+  const handleLectureClick = (lectureId: number) => {
+    setActiveTab("");
+    handleRefreshTabs();
+  };
 
   let content = null;
   if (activeTab === "წასაკითხი") {
@@ -73,9 +82,9 @@ const AddLecturePage = () => {
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} courseData={courseData} />
+        <Navbar lectures={lectures} courseData={courseData} onLectureClick={handleLectureClick} />
         <div className="flex flex-col gap-10  mt-11 w-[97%]">
-          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} lectureNames={lectureNames} />
+          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} lectureNames={lectureNames} key={refreshTabs ? "refreshed" : "not-refreshed"} />
           {content}
         </div>
       </div>
