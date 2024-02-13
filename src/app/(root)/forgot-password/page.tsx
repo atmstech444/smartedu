@@ -1,14 +1,24 @@
+"use client";
 import ForgotPasswordMain from "@/components/forgot-password/ForgotPasswordMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
-    <Wrapper>
-      <main>
-        <ForgotPasswordMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <ForgotPasswordMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

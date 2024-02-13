@@ -1,14 +1,24 @@
+"use client";
 import CourseSidebarMain from "@/components/course-sidebar/CourseSidebarMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const CourseSideBarPage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
-    <Wrapper>
-      <main>
-        <CourseSidebarMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <CourseSidebarMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

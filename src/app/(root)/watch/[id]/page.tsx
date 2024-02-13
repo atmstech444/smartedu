@@ -26,12 +26,23 @@ export default function Page({ params }: { params: { id: number } }) {
   if (isDesktop) {
     router.push(currentPath + "/about");
   }
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <Wrapper>
-      <div>{/* <Watching params={params} /> */}</div>
-      <div className=" bg-[#F3F4F8] pt-10 max-w-screen-xl mx-auto">
-        <Navigation id={params.id} />
-      </div>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <div>{/* <Watching params={params} /> */}</div>
+          <div className=" bg-[#F3F4F8] pt-10 max-w-screen-xl mx-auto">
+            <Navigation id={params.id} />
+          </div>
+        </Wrapper>
+      )}
+    </>
   );
 }

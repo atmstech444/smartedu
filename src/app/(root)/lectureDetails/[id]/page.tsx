@@ -13,6 +13,12 @@ const Page = ({ params }: { params: { id: number } }) => {
     setIsDesktop(window.innerWidth > 768);
   };
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   useEffect(() => {
     updateIsDesktop();
     window.addEventListener("resize", updateIsDesktop);
@@ -25,11 +31,13 @@ const Page = ({ params }: { params: { id: number } }) => {
   }
   return (
     <>
-      <Wrapper>
-        <div className=" bg-[#F3F4F8] pt-10 max-w-screen-xl mx-auto">
-          <LectureNav />
-        </div>
-      </Wrapper>
+      {isClient && (
+        <Wrapper>
+          <div className=" bg-[#F3F4F8] pt-10 max-w-screen-xl mx-auto">
+            <LectureNav />
+          </div>
+        </Wrapper>
+      )}
     </>
   );
 };

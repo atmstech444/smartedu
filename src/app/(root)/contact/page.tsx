@@ -1,14 +1,24 @@
+"use client";
 import ContactMain from "@/components/contact/ContactMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const ContactPage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
-    <Wrapper>
-      <main>
-        <ContactMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <ContactMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

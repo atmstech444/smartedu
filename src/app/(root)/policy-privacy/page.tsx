@@ -1,14 +1,24 @@
+"use client";
 import PolicyPrivacyMain from "@/components/policy-privacy/PolicyPrivacyMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
-    <Wrapper>
-      <main>
-        <PolicyPrivacyMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <PolicyPrivacyMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

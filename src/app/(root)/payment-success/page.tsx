@@ -1,19 +1,26 @@
 "use client";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Success from "@/../public/assets/img/payment/success.png";
 import styled from "styled-components";
 
 const Payment = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <div>
-      <Wrapper>
-        <Container>
-          <Image src={Success} alt="Success" style={{ width: "70px", height: "70px" }} />
-          <Title>გადახდა წარმატებით დასრულდა!</Title>
-        </Container>
-      </Wrapper>
+      {isClient && (
+        <Wrapper>
+          <Container>
+            <Image src={Success} alt="Success" style={{ width: "70px", height: "70px" }} />
+            <Title>გადახდა წარმატებით დასრულდა!</Title>
+          </Container>
+        </Wrapper>
+      )}
     </div>
   );
 };

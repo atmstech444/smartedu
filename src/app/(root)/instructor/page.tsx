@@ -1,14 +1,24 @@
+"use client";
 import InstructorMain from "@/components/instructor/InstructorMain";
 import Wrapper from "@/layout/DefaultWrapper";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const InstructorPage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
-    <Wrapper>
-      <main>
-        <InstructorMain />
-      </main>
-    </Wrapper>
+    <>
+      {isClient && (
+        <Wrapper>
+          <main>
+            <InstructorMain />
+          </main>
+        </Wrapper>
+      )}
+    </>
   );
 };
 
