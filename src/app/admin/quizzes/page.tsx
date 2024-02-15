@@ -49,7 +49,7 @@ const useQueryParams = () => {
   return { lectureId, lectures, courseData };
 };
 
-const page = () => {
+const Page = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const { lectures } = useQueryParams();
@@ -124,4 +124,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
