@@ -12,7 +12,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMess
   const router = useRouter();
   return (
     <div className="flex flex-col gap-8">
-      {quizzes?.length === 0 || swalMessage === "Reading remove successfully" ? (
+      {quizzes?.length === 0 || swalMessage === "Quiz remove successfully" ? (
         <div className="flex flex-col gap-3 items-start text-base ">
           <h1 className="text-black font-extrabold">ქვიზი არ არის დამატებული</h1>
           <div className="flex justify-center">
