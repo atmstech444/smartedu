@@ -1,11 +1,8 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
-// import Header from "@/components/Header";
-
 import Navbar from "../add-lecture/components/Navbar";
 import { parseCookies } from "nookies";
 import { useSearchParams } from "next/navigation";
-import Swal from "sweetalert2";
 import EditQuiz from "./components/EditQuiz";
 import { getQuiz } from "../quizzes/services/getQuiz";
 import Header from "@/components/Header";
@@ -24,17 +21,14 @@ interface Lecture {
 }
 
 const useQueryParams = () => {
-  const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [courseData, setCourseData] = useState<Quiz[] | null>(null);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const id = searchParams.get("lectureId");
     const lecturesParam = searchParams.get("lectures");
     const courseDataParam = searchParams.get("courseData");
 
-    setLectureId(id);
     if (lecturesParam) {
       const lecturesArray: Lecture[] = JSON.parse(decodeURIComponent(lecturesParam));
       setLectures(lecturesArray);
@@ -46,7 +40,7 @@ const useQueryParams = () => {
     }
   }, []);
 
-  return { lectureId, lectures, courseData };
+  return { lectures, courseData };
 };
 
 const Page = () => {
@@ -84,18 +78,24 @@ const Page = () => {
   }, []);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <>
-        <Header />
-        <div className="flex gap-8 w-[100%]">
-          <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
-          <div className="flex justify-between w-[85%] mt-6">
-            <EditQuiz quizzes={quizData} />
-          </div>
+    <>
+      <Header />
+      <div className="flex gap-8 w-[100%]">
+        <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
+        <div className="flex justify-between w-[85%] mt-6">
+          <EditQuiz quizzes={quizData} />
         </div>
-      </>
-    </Suspense>
+      </div>
+    </>
   );
 };
 
-export default Page;
+const PageWrapper = () => {
+  return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Page />
+      </Suspense>
+  );
+};
+
+export default PageWrapper;

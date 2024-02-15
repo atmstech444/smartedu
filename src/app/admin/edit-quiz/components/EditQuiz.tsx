@@ -46,7 +46,7 @@ const EditQuiz = ({ quizzes }: QuizPageProps) => {
   };
 
   if (!quizzes) {
-    return <div>Loading...</div>;
+    return <div>იტვირთება...</div>;
   }
 
   return (
