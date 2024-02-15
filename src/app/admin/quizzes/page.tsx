@@ -72,7 +72,6 @@ const page = () => {
       try {
         const response = await getQuiz(token, lectureId);
         setQuizData(response.quizzes);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
