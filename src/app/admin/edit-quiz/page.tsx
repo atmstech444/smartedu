@@ -1,12 +1,14 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
+
 import Navbar from "../add-lecture/components/Navbar";
 import { parseCookies } from "nookies";
 import { useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
-import { getQuiz } from "../quizzes/services/getQuiz";
 import EditQuiz from "./components/EditQuiz";
+import { getQuiz } from "../quizzes/services/getQuiz";
+import Header from "@/components/Header";
 
 export interface Quiz {
   answer: string[];
@@ -82,17 +84,17 @@ const page = () => {
   }, []);
 
   return (
-    <>
-      <Header />
-      <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
-        <div className="flex justify-between w-[85%] mt-6">
-          <Suspense>
+    <Suspense>
+      <>
+        <Header />
+        <div className="flex gap-8 w-[100%]">
+          <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
+          <div className="flex justify-between w-[85%] mt-6">
             <EditQuiz quizzes={quizData} />
-          </Suspense>
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    </Suspense>
   );
 };
 
