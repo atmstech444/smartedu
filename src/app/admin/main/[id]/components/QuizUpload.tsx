@@ -3,6 +3,7 @@ import Image from "next/image";
 import { addQuiz } from "../services/addQuiz";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
+import { useRouter } from "next/navigation";
 
 interface Section {
   id: number;
@@ -24,7 +25,8 @@ const useQueryParams = () => {
   return id;
 };
 
-const QuizUpload = () => {
+const QuizUpload = ({ lectures }: any) => {
+  const router = useRouter();
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number[]>>({});
   const cookies = parseCookies();
   const token = cookies.authToken;
@@ -147,8 +149,23 @@ const QuizUpload = () => {
     }
   };
 
+  const handleSeeQuiz = () => {
+    router.push(`/admin/quizzes?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
+  };
+  const handleEditQuiz = () => {
+    router.push(`/admin/edit-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
+  };
   return (
     <main className="w-full flex flex-col">
+      <div className="flex gap-2">
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeQuiz()}>
+          ნახე ქვიზი
+        </button>
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleEditQuiz()}>
+          რედაქტირება
+        </button>
+      </div>
+
       {sections.map(({ id, question, answers, file, fileName }, sectionIndex) => (
         <div key={id} className="border border-1-[#D1D1D1] p-4 rounded-lg w-[970px] h-auto flex flex-col gap-4 mt-5">
           <div className="flex gap-2">
