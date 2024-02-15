@@ -9,7 +9,7 @@ export const getAllCourses = async (token: any) => {
   };
   try {
     const { data } = await axios.get(
-      "https://smarteducation.shop/smarteducation_backend/public/admin/courses",
+      "http://192.168.99.238:8000/admin/courses",
       config
     );
     return data;

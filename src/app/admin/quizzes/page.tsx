@@ -110,15 +110,15 @@ const page = () => {
 
   return (
     <>
-      <Suspense>
-        <Header />
-        <div className="flex gap-8 w-[100%]">
-          <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
-          <div className="flex justify-between w-[85%] mt-6">
+      <Header />
+      <div className="flex gap-8 w-[100%]">
+        <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
+        <div className="flex justify-between w-[85%] mt-6">
+          <Suspense>
             <QuizPage quizzes={quizData} handleDeleteQuiz={handleDeleteQuiz} swalMessage={swalMessage} />
-          </div>
+          </Suspense>
         </div>
-      </Suspense>
+      </div>
     </>
   );
 };

@@ -3,7 +3,7 @@ import axios from "axios";
 export const AdminLogin = async (params: any) => {
   try {
     const { data } = await axios.post(
-      "https://smarteducation.shop/smarteducation_backend/public/admin/auth/login",
+      "http://192.168.99.238:8000/admin/auth/login",
       params
     );
     console.log(data.token);

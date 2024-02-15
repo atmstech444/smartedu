@@ -9,9 +9,10 @@ export const getLecturers = async (token: any) => {
   };
   try {
     const { data } = await axios.get(
-      "https://smarteducation.shop/smarteducation_backend/public/admin/lecturer",
+      "http://192.168.99.238:8000/admin/lecturer",
       config
     );
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);
