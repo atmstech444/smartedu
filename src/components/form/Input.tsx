@@ -206,6 +206,7 @@ const Inp = styled.input`
     font-size: 16px;
     color: gray;
   }
+  border: 1px solid #e5e7eb;
   &:focus {
     outline: none;
   }
