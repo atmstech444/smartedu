@@ -152,11 +152,20 @@ const QuizUpload = ({ lectures }: any) => {
   const handleSeeQuiz = () => {
     router.push(`/admin/quizzes?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
   };
+  const handleEditQuiz = () => {
+    router.push(`/admin/edit-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
+  };
   return (
     <main className="w-full flex flex-col">
-      <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeQuiz()}>
-        ნახე ქვიზი
-      </button>
+      <div className="flex gap-2">
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeQuiz()}>
+          ნახე ქვიზი
+        </button>
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleEditQuiz()}>
+          რედაქტირება
+        </button>
+      </div>
+
       {sections.map(({ id, question, answers, file, fileName }, sectionIndex) => (
         <div key={id} className="border border-1-[#D1D1D1] p-4 rounded-lg w-[970px] h-auto flex flex-col gap-4 mt-5">
           <div className="flex gap-2">
