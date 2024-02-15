@@ -110,7 +110,7 @@ const Page = () => {
   };
 
   return (
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <>
         <Header />
         <div className="flex gap-8 w-[100%]">
