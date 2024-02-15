@@ -24,9 +24,7 @@ const AddCourse = () => {
 
   const [selectedLecture, setSelectedLecture] = useState<LectureOption[]>([]);
 
-  const [errorMessages, setErrorMessages] = useState<Record<string, string[]>>(
-    {}
-  );
+  const [errorMessages, setErrorMessages] = useState<Record<string, string[]>>({});
   const [isLoading, setIsLoading] = useState(false);
 
   const componentMounted = useRef(false);
@@ -55,11 +53,6 @@ const AddCourse = () => {
   const handleCheckChange = (newCheckedIndexes: number[]) => {
     if (!arraysEqual(checkedIndexes, newCheckedIndexes)) {
       setCheckedIndexes(newCheckedIndexes);
-
-      console.log(
-        "checkedIndexes:",
-        newCheckedIndexes.length > 0 ? newCheckedIndexes[0] : null
-      );
     }
   };
 
@@ -75,37 +68,23 @@ const AddCourse = () => {
     setSelectedLecture(selectedLecture);
   };
 
-  const handleIntroUpload = (
-    selectedFile: React.SetStateAction<File | null>
-  ) => {
+  const handleIntroUpload = (selectedFile: React.SetStateAction<File | null>) => {
     setSelectedIntro(selectedFile);
   };
 
   const handleCreate = async () => {
     const showLoadingSpinner = () => setIsLoading(true);
     const hideLoadingSpinner = () => setIsLoading(false);
-    const courseTitle = document.getElementById(
-      "courseTitle"
-    ) as HTMLInputElement;
-    const priceInput = document.getElementById(
-      "priceInput"
-    ) as HTMLInputElement;
-    // const lectureCountInput = document.getElementById(
-    //   "lectureCountInput"
-    // ) as HTMLInputElement;
-    const durationInput = document.getElementById(
-      "durationInput"
-    ) as HTMLInputElement;
-    const languageInput = document.getElementById(
-      "languageInput"
-    ) as HTMLInputElement;
+    const courseTitle = document.getElementById("courseTitle") as HTMLInputElement;
+    const priceInput = document.getElementById("priceInput") as HTMLInputElement;
+    const durationInput = document.getElementById("durationInput") as HTMLInputElement;
+    const languageInput = document.getElementById("languageInput") as HTMLInputElement;
 
     const requiredFields = {
       title: courseTitle.value,
       description: courseDescription,
       price: priceInput.value,
       lecturer: selectedLecture,
-      // lecture_count: lectureCountInput.value,
       duration: durationInput.value,
       language: languageInput.value,
       cover_image: selectedImage,
@@ -125,9 +104,7 @@ const AddCourse = () => {
     numericFields.forEach((field) => {
       const value = requiredFields[field as keyof typeof requiredFields];
       if (value && isNaN(Number(value))) {
-        errors[field] = [
-          `The ${field.replace("_", " ")} field must be a number.`,
-        ];
+        errors[field] = [`The ${field.replace("_", " ")} field must be a number.`];
       }
     });
 
@@ -144,7 +121,6 @@ const AddCourse = () => {
     formData.append("price", priceInput.value);
     //@ts-ignore
     formData.append("lecturer_id", selectedLecture);
-    // formData.append("lecture_count", lectureCountInput.value);
     formData.append("duration", durationInput.value);
     formData.append("language", languageInput.value);
 
@@ -195,56 +171,25 @@ const AddCourse = () => {
           <div className="flex justify-between w-[85%]">
             <div className="mt-6">
               <CourseTitleInput />
-              {errorMessages.title && (
-                <p className="text-red pt-2">{errorMessages.title[0]}</p>
-              )}
+              {errorMessages.title && <p className="text-red pt-2">{errorMessages.title[0]}</p>}
 
-              <CourseAndSyllabus
-                onCourseDescriptionChange={handleCourseDescriptionChange}
-              />
-              {errorMessages.description && (
-                <p className="text-red pt-2">{errorMessages.description[0]}</p>
-              )}
+              <CourseAndSyllabus onCourseDescriptionChange={handleCourseDescriptionChange} />
+              {errorMessages.description && <p className="text-red pt-2">{errorMessages.description[0]}</p>}
 
               <div className="pt-9">
-                <p className="text-dark text-xl font-normal">
-                  დაამატე კურსის ფოტო
-                </p>
+                <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო</p>
 
-                <ImageUpload
-                  onFileChange={(file: React.SetStateAction<File | null>) =>
-                    setSelectedImage(file)
-                  }
-                  onDeletePhoto={() => setSelectedImage(null)}
-                  selectedImage={selectedImage}
-                />
+                <ImageUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedImage(file)} onDeletePhoto={() => setSelectedImage(null)} selectedImage={selectedImage} />
               </div>
-              {errorMessages.cover_image && (
-                <p className="text-red pt-2">{errorMessages.cover_image[0]}</p>
-              )}
+              {errorMessages.cover_image && <p className="text-red pt-2">{errorMessages.cover_image[0]}</p>}
             </div>
 
             <div className="flex flex-col items-end">
               <CourseCategory onCheckChange={handleCheckChange} />
-              {errorMessages.course_category && (
-                <p className="text-red pt-2 pl-10 w-full">
-                  {errorMessages.course_category[0]}
-                </p>
-              )}
+              {errorMessages.course_category && <p className="text-red pt-2 pl-10 w-full">{errorMessages.course_category[0]}</p>}
 
-              <CourseDetails
-                selectedIntro={selectedIntro}
-                onIntroUpload={handleIntroUpload}
-                onDeleteIntro={handleDeleteIntro}
-                selectedLecture={selectedLecture}
-                onLectureChange={handleLectureChange}
-                errorMessages={errorMessages}
-              />
-              <button
-                className="mt-14 mb-28 py-3 px-12 bg-dark rounded-[32px] text-white self-center"
-                onClick={handleCreate}
-                disabled={isLoading}
-              >
+              <CourseDetails selectedIntro={selectedIntro} onIntroUpload={handleIntroUpload} onDeleteIntro={handleDeleteIntro} selectedLecture={selectedLecture} onLectureChange={handleLectureChange} errorMessages={errorMessages} />
+              <button className="mt-14 mb-28 py-3 px-12 bg-dark rounded-[32px] text-white self-center" onClick={handleCreate} disabled={isLoading}>
                 {isLoading ? <LoadingSpinner /> : "შენახვა"}
               </button>
             </div>
