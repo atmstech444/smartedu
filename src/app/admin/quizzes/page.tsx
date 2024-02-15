@@ -85,7 +85,6 @@ const page = () => {
   const handleDeleteQuiz = async () => {
     try {
       const response = await deleteQuiz(token, lectureId);
-      console.log(response);
       setQuizData(response.quizzes);
       if (response.message === "Quiz remove successfully") {
         setSwalMessage(response.message);
