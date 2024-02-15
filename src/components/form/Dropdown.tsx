@@ -110,7 +110,6 @@ const I = styled.i<{ expand: string }>`
 const Wrapper = styled.div<{ expand: string }>`
   position: relative;
   z-index: ${({ expand }) => (expand == "true" ? "20" : "10")};
-  background-color: black;
 `;
 
 const Option = styled.p`
@@ -129,11 +128,12 @@ const Options = styled.div`
   top: 89px;
   background-color: #f6f6f7;
   width: 100%;
-  border: 1px solid gray;
+  border: 1px solid #e5e7eb;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   z-index: 25;
 `;
+// border: 1px solid gray;
 
 const Select = styled.div<{ expand: string; isblack: string }>`
   width: 100%;
@@ -149,8 +149,7 @@ const Select = styled.div<{ expand: string; isblack: string }>`
   cursor: pointer;
   overflow: visible;
   position: relative;
-  border: 1px solid transparent;
-  border-color: ${({ expand }) => (expand ? "gray" : "transparent")};
+  border: 1px solid #e5e7eb;
   border-bottom-left-radius: ${({ expand }) => (expand ? "0px" : "6px")};
   border-bottom-right-radius: ${({ expand }) => (expand ? "0px" : "6px")};
   font-size: 16px;

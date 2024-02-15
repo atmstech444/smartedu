@@ -125,6 +125,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
   };
 
   const handleFileChange = (selectedFile: File) => {
+    console.log(selectedFile);
     setSelectedImage(selectedFile);
   };
 
