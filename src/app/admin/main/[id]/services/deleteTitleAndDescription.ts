@@ -8,7 +8,7 @@ export const deleteTitleAndDescription = async (token: any, id: number) => {
     },
   };
   try {
-    const { data } = await axios.delete(`http://192.168.96.66:8000/admin/lecture-content/${id}`, config);
+    const { data } = await axios.delete(`http://192.168.99.238:8000/admin/lecture-content/${id}`, config);
     return data;
   } catch (error) {
     console.error(error);
