@@ -2,12 +2,17 @@ import React from "react";
 import { Quiz } from "../page";
 import { useRouter } from "next/navigation";
 
-const QuizPage = ({ quizzes }: { quizzes: Quiz[] }) => {
-  const router = useRouter();
+interface QuizPageProps {
+  quizzes: Quiz[] | null;
+  handleDeleteQuiz: () => void;
+  swalMessage: string;
+}
 
+const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMessage }) => {
+  const router = useRouter();
   return (
     <div className="flex flex-col gap-8">
-      {quizzes?.length === 0 ? (
+      {quizzes?.length === 0 || swalMessage === "Reading remove successfully" ? (
         <div className="flex flex-col gap-3 items-start text-base ">
           <h1 className="text-black font-extrabold">ქვიზი არ არის დამატებული</h1>
           <div className="flex justify-center">
@@ -19,7 +24,7 @@ const QuizPage = ({ quizzes }: { quizzes: Quiz[] }) => {
       ) : (
         quizzes?.map((quiz, index) => (
           <div className="flex flex-col gap-9 justify-between" key={quiz.id}>
-            <div className="flex gap-1 items-center text-base text-black font-extrabold">
+            <div className="flex gap-1 items-start text-base text-black font-extrabold">
               <span>{index + 1}.</span>
               <p>{quiz.question}</p>
             </div>
@@ -35,6 +40,16 @@ const QuizPage = ({ quizzes }: { quizzes: Quiz[] }) => {
             </div>
           </div>
         ))
+      )}
+      {swalMessage.length === 0 && (
+        <div>
+          <p>{swalMessage}</p>
+          {swalMessage !== "Reading remove successfully" && (
+            <button className="text-white bg-red py-1 px-7 rounded-lg w-[200px]" onClick={handleDeleteQuiz}>
+              წაშალე ქვიზი
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

@@ -6,6 +6,8 @@ import QuizPage from "./components/QuizPage";
 import { getQuiz } from "./services/getQuiz";
 import { parseCookies } from "nookies";
 import { useSearchParams } from "next/navigation";
+import { deleteQuiz } from "./services/deleteQuiz";
+import Swal from "sweetalert2";
 
 export interface Quiz {
   answer: string[];
@@ -53,6 +55,7 @@ const page = () => {
   const [, setActiveTab] = useState("");
   const [, setRefreshTabs] = useState(false);
   const [quizData, setQuizData] = useState<any>();
+  const [swalMessage, setSwalMessage] = useState<string>("");
   const searchParams = useSearchParams();
 
   const lectureId = searchParams.get("lectureId");
@@ -65,7 +68,6 @@ const page = () => {
     setActiveTab("");
     handleRefreshTabs();
   };
-  console.log(lectureId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,13 +82,40 @@ const page = () => {
     fetchData();
   }, []);
 
+  const handleDeleteQuiz = async () => {
+    try {
+      const response = await deleteQuiz(token, lectureId);
+      console.log(response);
+      setQuizData(response.quizzes);
+      if (response.message === "Reading remove successfully") {
+        setSwalMessage(response.message);
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        console.error("Failed to delete quiz");
+        Swal.fire({
+          icon: "warning",
+          title: "Failed to delete quiz",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting quiz:", error);
+    }
+  };
+
   return (
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
         <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
         <div className="flex justify-between w-[85%] mt-6">
-          <QuizPage quizzes={quizData} />
+          <QuizPage quizzes={quizData} handleDeleteQuiz={handleDeleteQuiz} swalMessage={swalMessage} />
         </div>
       </div>
     </>
