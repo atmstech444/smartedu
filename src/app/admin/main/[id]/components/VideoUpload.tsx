@@ -174,7 +174,7 @@ const VideoUpload = () => {
       </div>
 
       <div className="col-span-1">
-        <div className="w-full flex mt-[650px] col-span-2">
+        <div className="w-full flex mt-[300px] col-span-2">
           <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleVideoupload}>
             შენახვა
           </button>
