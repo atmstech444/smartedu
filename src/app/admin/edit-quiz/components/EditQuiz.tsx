@@ -65,7 +65,7 @@ const EditQuiz = ({ quizzes }: QuizPageProps) => {
           <div className="flex flex-col gap-9 justify-between" key={quiz.id}>
             <div className="flex gap-1 items-start text-base text-black font-extrabold">
               <span>{index + 1}.</span>
-              <p>{quiz.question}</p>
+              <input value={quiz.question} className="border border-[#2FA8FF] rounded-md p-1" />
             </div>
             {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-32 h-auto" />}
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Navbar from "../add-lecture/components/Navbar";
 import QuizPage from "./components/QuizPage";
@@ -110,13 +110,15 @@ const page = () => {
 
   return (
     <>
-      <Header />
-      <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
-        <div className="flex justify-between w-[85%] mt-6">
-          <QuizPage quizzes={quizData} handleDeleteQuiz={handleDeleteQuiz} swalMessage={swalMessage} />
+      <Suspense>
+        <Header />
+        <div className="flex gap-8 w-[100%]">
+          <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
+          <div className="flex justify-between w-[85%] mt-6">
+            <QuizPage quizzes={quizData} handleDeleteQuiz={handleDeleteQuiz} swalMessage={swalMessage} />
+          </div>
         </div>
-      </div>
+      </Suspense>
     </>
   );
 };
