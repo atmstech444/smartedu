@@ -41,7 +41,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMess
           </div>
         ))
       )}
-      {swalMessage.length === 0 && (
+      {swalMessage.length === 0 && quizzes?.length !== 0 && (
         <div>
           <p>{swalMessage}</p>
           {swalMessage !== "Reading remove successfully" && (
