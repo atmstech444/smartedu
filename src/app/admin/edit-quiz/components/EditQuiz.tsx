@@ -45,8 +45,8 @@ const EditQuiz = ({ quizzes }: QuizPageProps) => {
     }));
   };
 
-  if (!quizzes) {
-    return <div>იტვირთება...</div>;
+  if (quizzes === null || quizzes === undefined) {
+    return <div>ქვიზი ვერ მოიძებნა...</div>;
   }
 
   return (
@@ -65,7 +65,7 @@ const EditQuiz = ({ quizzes }: QuizPageProps) => {
           <div className="flex flex-col gap-9 justify-between" key={quiz.id}>
             <div className="flex gap-1 items-start text-base text-black font-extrabold">
               <span>{index + 1}.</span>
-              <input value={quiz.question} className="border border-[#2FA8FF] rounded-md p-1" />
+              <input value={quiz.question} className="border border-[#2FA8FF] rounded-md p-1 w-[100%] outline-none" />
             </div>
             {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-32 h-auto" />}
 
@@ -73,7 +73,7 @@ const EditQuiz = ({ quizzes }: QuizPageProps) => {
               {quiz.answer.map((answer, answerIndex) => (
                 <div key={answerIndex} className="flex gap-[8px] items-baseline">
                   <input type="checkbox" checked={checkedAnswers[quiz.id]?.[answerIndex]} onChange={() => handleCheckboxChange(quiz.id, answerIndex)} />
-                  <input value={answer} className="border border-[#2FA8FF] rounded-md p-1 mt-2" />
+                  <input value={answer} className="border border-[#2FA8FF] rounded-md p-1 mt-2 outline-none" />
                 </div>
               ))}
             </div>
