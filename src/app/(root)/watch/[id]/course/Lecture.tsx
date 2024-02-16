@@ -74,8 +74,8 @@ const Lecture = () => {
       {lectureDetail &&
         lectureDetail.videos != null &&
         lectureDetail &&
-        lectureDetail.videos.map((video) => (
-          <div className="flex gap-3">
+        lectureDetail.videos.map((video, index) => (
+          <div className="flex gap-3" key={index}>
             <Image alt="video" src={Video} />
             <div>
               <p className=" m-0 font-medium	 text-black">პროგრამირების საწყისები</p>
