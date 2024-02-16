@@ -87,7 +87,7 @@ const Page = () => {
           }}
         />
         <div className="flex justify-between w-[85%] mt-6">
-          <ReadingPage readingsData={readingsData} />
+          <ReadingPage readingsData={readingsData} setReadingsData={setReadingsData} />
         </div>
       </div>
     </>
