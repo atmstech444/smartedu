@@ -162,15 +162,20 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
             <div className="flex gap-1 items-baseline text-base text-black font-extrabold w-full">
               <span>{index + 1}.</span>
               {editingQuizId === quiz.id ? (
-                <input type="text" value={editedQuestion} onChange={(e) => setEditedQuestion(e.target.value)} className="rounded-md p-1 w-full outline-none border border-[#2FA8FF]" />
+                <input type="text" defaultValue={quiz.question} onChange={(e) => setEditedQuestion(e.target.value)} className="rounded-md p-1 w-full outline-none border border-[#2FA8FF]" />
               ) : (
                 <p className="rounded-md p-1 w-full outline-none">{quiz.question}</p>
               )}
               <span onClick={() => toggleEditing(quiz.id)} className="cursor-pointer">
                 {editingQuizId === quiz.id ? (
-                  <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleSaveQuiz(quiz.id)}>
-                    შენახვა
-                  </button>
+                  <div className="flex flex-col gap-2">
+                    <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleSaveQuiz(quiz.id)}>
+                      შენახვა
+                    </button>
+                    <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleSaveQuiz(quiz.id)}>
+                      გაუქმება
+                    </button>
+                  </div>
                 ) : (
                   <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg ">რედაქტირება</button>
                 )}
