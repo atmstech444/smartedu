@@ -12,7 +12,7 @@ import LectureTitleAndDescription from "./LectureTitleAndDescription";
 
 interface Video {
   id: number;
-  video_url: string;
+  video: string;
 }
 
 const useQueryParams = () => {
@@ -130,7 +130,6 @@ const VideoUpload = () => {
       console.error("Error deleting video:", error);
     }
   };
-
   return (
     <div className="grid grid-cols-6 w-full">
       <div className="flex flex-col gap-3 col-span-5">
@@ -168,9 +167,12 @@ const VideoUpload = () => {
           <div className="flex gap-4 mt-4 flex-wrap mb-5">
             {videosData.map((video) => (
               <div key={video.id} className="w-[200px] flex flex-col gap-2 items-center">
-                <video controls className="rounded-lg">
-                  <source src={video.video_url} type="video/mp4" />
-                </video>
+                {videosData && (
+                  <video controls className="rounded-lg">
+                    <source src={`http://192.168.99.238:8000/${video?.video}`} type="video/mp4" />
+                  </video>
+                )}
+
                 <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
                   წაშლა
                 </button>
