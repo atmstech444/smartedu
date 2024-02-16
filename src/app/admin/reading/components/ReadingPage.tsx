@@ -2,6 +2,7 @@ import React from "react";
 import { deleteReading } from "../../main/[id]/services/deleteReading";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
+import { Link } from "react-router-dom";
 
 type ReadingData = {
   id: number;
@@ -17,7 +18,6 @@ const ReadingPage = ({ readingsData, setReadingsData }: any) => {
   if (!readingsData || readingsData.length === 0) {
     return (
       <div className="flex flex-col gap-6">
-        <h2 className="text-black font-bold text-xl">წასაკითხი მასალა</h2>
         <p className="text-black">წასაკითხი მასალა არ არის ატვირთული</p>
       </div>
     );
