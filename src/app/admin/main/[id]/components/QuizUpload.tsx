@@ -3,6 +3,7 @@ import Image from "next/image";
 import { addQuiz } from "../services/addQuiz";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
+import { useRouter } from "next/navigation";
 
 interface Section {
   id: number;
@@ -24,8 +25,9 @@ const useQueryParams = () => {
   return id;
 };
 
-const QuizUpload = () => {
-  const [correctAnswers, setCorrectAnswers] = useState<Record<number, number>>({});
+const QuizUpload = ({ lectures }: any) => {
+  const router = useRouter();
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number[]>>({});
   const cookies = parseCookies();
   const token = cookies.authToken;
   const id = useQueryParams();
@@ -94,11 +96,15 @@ const QuizUpload = () => {
     setSections((prevSections) => prevSections.map((section) => (section.id === id ? { ...section, file: undefined, fileName: undefined } : section)));
   };
 
-  const handleRadioClick = (sectionId: number, answerIndex: number) => {
-    setCorrectAnswers((prevCorrectAnswers) => ({
-      ...prevCorrectAnswers,
-      [sectionId]: answerIndex,
-    }));
+  const handleCheckboxClick = (sectionId: number, answerIndex: number) => {
+    setSelectedAnswers((prevSelectedAnswers) => {
+      const currentSelected = prevSelectedAnswers[sectionId] || [];
+      const updatedSelected = currentSelected.includes(answerIndex) ? currentSelected.filter((index) => index !== answerIndex) : [...currentSelected, answerIndex];
+      return {
+        ...prevSelectedAnswers,
+        [sectionId]: updatedSelected,
+      };
+    });
   };
 
   const handleCreateQuiz = async () => {
@@ -110,18 +116,17 @@ const QuizUpload = () => {
           formData.append(`quiz_content[${index}][answer][${answerIndex}]`, answer);
         });
 
-        const correctAnswerIndex = correctAnswers[id];
-        if (correctAnswerIndex !== undefined && correctAnswerIndex !== null) {
-          formData.append(`quiz_content[${index}][correct_answer]`, answers[correctAnswerIndex]);
-        }
+        const correctAnswers = selectedAnswers[id] || [];
+        const correctAnswerValues = correctAnswers.map((answerIndex) => answers[answerIndex]);
+        correctAnswerValues.forEach((correctAnswer, answerIndex) => {
+          formData.append(`quiz_content[${index}][correct_answer][${answerIndex}]`, correctAnswer);
+        });
 
         if (file) {
           formData.append(`quiz_content[${index}][image]`, file);
         }
       });
-
       const response = await addQuiz(token, formData, id);
-      console.log(response);
 
       if (response.message === "quiz create successfully") {
         Swal.fire({
@@ -144,8 +149,23 @@ const QuizUpload = () => {
     }
   };
 
+  const handleSeeQuiz = () => {
+    router.push(`/admin/quizzes?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
+  };
+  const handleEditQuiz = () => {
+    router.push(`/admin/edit-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
+  };
   return (
     <main className="w-full flex flex-col">
+      <div className="flex gap-2">
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeQuiz()}>
+          ნახე ქვიზი
+        </button>
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleEditQuiz()}>
+          რედაქტირება
+        </button>
+      </div>
+
       {sections.map(({ id, question, answers, file, fileName }, sectionIndex) => (
         <div key={id} className="border border-1-[#D1D1D1] p-4 rounded-lg w-[970px] h-auto flex flex-col gap-4 mt-5">
           <div className="flex gap-2">
@@ -187,11 +207,10 @@ const QuizUpload = () => {
           {answers.map((answer, index) => (
             <div className="flex gap-2 items-center relative" key={`answer_${id}_${index}`}>
               <label className="flex gap-1 cursor-pointer">
-                <input type="radio" name={`answer_${id}`} id={`answer_${id}_${index}`} onClick={() => handleRadioClick(id, index)} />
+                <input type="checkbox" name={`answer_${id}`} checked={selectedAnswers[id]?.includes(index)} onChange={() => handleCheckboxClick(id, index)} />
               </label>
               <input type="text" className="border border-1-[#D1D1D1] p-1 rounded-lg w-40 outline-none" placeholder="ჩაწერე პასუხი" value={answer} onChange={(e) => handleAnswerChange(id, index, e.target.value)} />
               <Image src="/assets/img/admin/pencil.png" className="absolute left-40" alt={""} width={12} height={12} />
-
               <button onClick={() => handleDeleteContent(id, index)} className="text-white bg-[#FF3333] py-1 px-3 rounded-lg w-[100px] text-center">
                 წაშლა
               </button>

@@ -17,7 +17,9 @@ const Navbar = ({ lectures, courseData, onLectureClick }: { lectures: Lecture[];
       name: lecture.name,
     }));
     router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}`);
-    onLectureClick(lectureId);
+    setTimeout(() => {
+      setCurrentLectureId(lectureId);
+    }, 200);
   };
 
   return (

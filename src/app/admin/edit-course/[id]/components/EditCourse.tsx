@@ -125,7 +125,12 @@ const Editcourse: FC<pageProps> = ({ params }) => {
   };
 
   const handleFileChange = (selectedFile: File) => {
+    console.log(selectedFile);
     setSelectedImage(selectedFile);
+  };
+
+  const handleIntroChange = (selectedFile: File) => {
+    setSelectedIntro(selectedFile);
   };
 
   return (
@@ -145,6 +150,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
               selectedLecturerId={selectedLecturerId}
               handleLecturerChange={handleLecturerChange}
               handleFileChange={handleFileChange}
+              handleIntroChange={handleIntroChange}
               handleEdit={handleEdit}
             />
           </div>

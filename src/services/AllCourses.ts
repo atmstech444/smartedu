@@ -5,7 +5,11 @@ export interface POST_Login_Success {
   courses: I_Course[];
 }
 
+
 const url = "http://192.168.99.238:8000/api/";
+
+// const url = "http://192.168.99.238:8000/admin/api/";
+
 
 export interface I_Course {
   id: number;

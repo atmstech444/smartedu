@@ -9,7 +9,7 @@ export const createCourse = async (token: any, newData: any) => {
   };
   try {
     const { data } = await axios.post(
-      "https://smarteducation.shop/smarteducation_backend/public/admin/courses",
+      "http://192.168.99.238:8000/admin/courses",
       newData,
       config
     );

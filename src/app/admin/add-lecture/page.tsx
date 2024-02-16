@@ -71,11 +71,11 @@ const AddLecturePage = () => {
 
   let content = null;
   if (activeTab === "წასაკითხი") {
-    content = <ReadingUpload />;
+    content = <ReadingUpload lectures={lectures}/>;
   } else if (activeTab === "ვიდეო") {
     content = <VideoUpload />;
   } else if (activeTab === "ქვიზი") {
-    content = <QuizUpload />;
+    content = <QuizUpload lectures={lectures} />;
   }
 
   return (

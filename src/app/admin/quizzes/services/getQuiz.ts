@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getLecturers = async (token: any) => {
+export const getQuiz = async (token: any, id: any) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -8,7 +8,7 @@ export const getLecturers = async (token: any) => {
     },
   };
   try {
-    const { data } = await axios.get("http://192.168.99.238:8000/admin/lecturer", config);
+    const { data } = await axios.get(`http://192.168.99.238:8000/admin/course-lecture-quizzes/${id}`, config);
     return data;
   } catch (error) {
     console.error(error);

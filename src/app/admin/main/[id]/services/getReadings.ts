@@ -8,7 +8,7 @@ export const getReadings = async (token: any, id: any) => {
     },
   };
   try {
-    const { data } = await axios.get(`https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-reading/${id}`, config);
+    const { data } = await axios.get(`http://192.168.99.238:8000/admin/course-lecture-reading/${id}`, config);
     return data;
   } catch (error) {
     console.error(error);
