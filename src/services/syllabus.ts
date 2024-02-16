@@ -2,7 +2,7 @@ import { syllabusData } from "@/app/admin/syllabus/[id]/types";
 import axios from "axios";
 import { parseCookies } from "nookies";
 
-const url = "https://smarteducation.shop/smarteducation_backend/public/admin";
+const url = "http://192.168.99.238:8000/admin";
 
 export const getSyllabus = async (course: string) => {
   try {
