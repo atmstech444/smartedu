@@ -41,6 +41,7 @@ const Lecture = (id: { id: any }) => {
   const [lectureDetail, setLectureDetail] = useState<LectureTypes>();
   const router = useRouter();
   const params = useParams();
+
   const token = useAppSelector((state) => state.user.user?.token);
 
   const fetchData = async () => {
