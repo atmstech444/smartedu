@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const deleteTitleAndDescription = async (token: any, id: number) => {
+export const deleteQuiz = async (token: any, quizId: any) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -8,7 +8,7 @@ export const deleteTitleAndDescription = async (token: any, id: number) => {
     },
   };
   try {
-    const { data } = await axios.delete(`http://192.168.99.238:8000/admin/lecture-content/${id}`, config);
+    const { data } = await axios.delete(`http://192.168.99.238:8000/admin/course-lecture-quizzes/${quizId}`, config);
     return data;
   } catch (error) {
     console.error(error);

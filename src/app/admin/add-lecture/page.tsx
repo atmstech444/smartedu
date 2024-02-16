@@ -75,7 +75,7 @@ const AddLecturePage = () => {
   } else if (activeTab === "ვიდეო") {
     content = <VideoUpload />;
   } else if (activeTab === "ქვიზი") {
-    content = <QuizUpload />;
+    content = <QuizUpload lectures={lectures} />;
   }
 
   return (
