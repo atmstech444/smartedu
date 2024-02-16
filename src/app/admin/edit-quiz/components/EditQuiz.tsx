@@ -2,9 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { Quiz } from "../page";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { parseCookies } from "nookies";
+import { editQuiz } from "../services/editQuiz";
 
 interface QuizPageProps {
   quizzes: Quiz[] | null;
+  onDeleteAnswer: (quizId: number, answerIndex: number) => void;
+  onAddAnswer: (quizId: number, newAnswer: string) => void;
+  setQuizData: any;
 }
 
 interface CheckedAnswers {
@@ -13,9 +19,21 @@ interface CheckedAnswers {
   };
 }
 
-const EditQuiz = ({ quizzes }: QuizPageProps) => {
+interface QuizData {
+  question: string;
+  answer: string[];
+  correct_answer: string[];
+}
+
+const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPageProps) => {
+  const cookies = parseCookies();
+  const token = cookies.authToken;
   const router = useRouter();
   const [checkedAnswers, setCheckedAnswers] = useState<CheckedAnswers>({});
+  const [editingQuizId, setEditingQuizId] = useState<number | null>(null);
+  const [newAnswer, setNewAnswer] = useState<string>("");
+  const [editedQuestion, setEditedQuestion] = useState<string>("");
+  const [editedAnswers, setEditedAnswers] = useState<string[]>([]);
 
   useEffect(() => {
     if (quizzes) {
@@ -45,14 +63,92 @@ const EditQuiz = ({ quizzes }: QuizPageProps) => {
     }));
   };
 
+  const toggleEditing = (quizId: number) => {
+    setEditingQuizId(quizId === editingQuizId ? null : quizId);
+  };
+
+  const handleSaveQuiz = async (quizId: number) => {
+    try {
+      const currentQuiz = quizzes?.find((quiz) => quiz.id === quizId);
+
+      const updatedQuizData: QuizData = {
+        question: currentQuiz?.question || "",
+        answer: currentQuiz?.answer || [],
+        correct_answer: currentQuiz?.correct_answer || [],
+      };
+
+      if (editedQuestion !== "") {
+        updatedQuizData.question = editedQuestion;
+      }
+
+      if (editedAnswers.length > 0) {
+        updatedQuizData.answer = editedAnswers;
+      }
+
+      const checkedIndices = Object.entries(checkedAnswers[quizId] || {})
+        .filter(([index, isChecked]) => isChecked)
+        .map(([index]) => parseInt(index, 10));
+
+      if (checkedIndices.length === 0) {
+        updatedQuizData.correct_answer = currentQuiz?.correct_answer || [];
+      } else {
+        updatedQuizData.correct_answer = checkedIndices.map((index) => updatedQuizData.answer[index]);
+      }
+
+      const response = await editQuiz(token, quizId, updatedQuizData);
+      if ((response.message = "successfully update quiz")) {
+        setQuizData((prevQuizData: any[]) => {
+          if (!prevQuizData) return null;
+          return prevQuizData.map((quiz) => {
+            if (quiz.id === quizId) {
+              return {
+                ...quiz,
+                question: updatedQuizData.question,
+                answer: updatedQuizData.answer,
+                correct_answer: updatedQuizData.correct_answer,
+              };
+            }
+            return quiz;
+          });
+        });
+      }
+
+      setEditedQuestion("");
+      setEditedAnswers([]);
+      setCheckedAnswers({});
+    } catch (error) {
+      console.error("Error saving quiz:", error);
+    }
+  };
+
+  const handleAddAnswer = (quizId: number) => {
+    if (!quizzes) return;
+    onAddAnswer(quizId, newAnswer);
+    setNewAnswer("");
+    const newAnswerIndex = quizzes.find((quiz) => quiz.id === quizId)?.answer.length || 0;
+    setCheckedAnswers((prevState) => ({
+      ...prevState,
+      [quizId]: {
+        ...prevState[quizId],
+        [newAnswerIndex]: false,
+      },
+    }));
+    setEditedAnswers((prevAnswers) => [...prevAnswers, newAnswer]);
+  };
+
+  const handleDeleteAnswer = (quizId: number, answerIndex: number) => {
+    onDeleteAnswer(quizId, answerIndex);
+    setEditedAnswers((prevAnswers) => prevAnswers.filter((_, index) => index !== answerIndex));
+  };
+
   if (quizzes === null || quizzes === undefined) {
     return <div>ქვიზი ვერ მოიძებნა...</div>;
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-16">
       {quizzes.length === 0 ? (
-        <div className="flex flex-col gap-3 items-start text-base ">
+        <div className="flex flex-col gap-3 items-start text-base w-full">
           <h1 className="text-black font-extrabold">ქვიზი არ არის დამატებული</h1>
           <div className="flex justify-center">
             <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => router.back()}>
@@ -62,28 +158,64 @@ const EditQuiz = ({ quizzes }: QuizPageProps) => {
         </div>
       ) : (
         quizzes.map((quiz, index) => (
-          <div className="flex flex-col gap-9 justify-between" key={quiz.id}>
-            <div className="flex gap-1 items-start text-base text-black font-extrabold">
+          <div className="flex flex-col gap-3 justify-between items-start" key={quiz.id}>
+            <div className="flex gap-1 items-baseline text-base text-black font-extrabold w-full">
               <span>{index + 1}.</span>
-              <input value={quiz.question} className="border border-[#2FA8FF] rounded-md p-1 w-[100%] outline-none" />
+              {editingQuizId === quiz.id ? (
+                <input type="text" value={editedQuestion} onChange={(e) => setEditedQuestion(e.target.value)} className="rounded-md p-1 w-full outline-none border border-[#2FA8FF]" />
+              ) : (
+                <p className="rounded-md p-1 w-full outline-none">{quiz.question}</p>
+              )}
+              <span onClick={() => toggleEditing(quiz.id)} className="cursor-pointer">
+                {editingQuizId === quiz.id ? (
+                  <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleSaveQuiz(quiz.id)}>
+                    შენახვა
+                  </button>
+                ) : (
+                  <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg ">რედაქტირება</button>
+                )}
+              </span>
             </div>
-            {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-32 h-auto" />}
+            {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
 
-            <div>
+            <div className=" w-full">
               {quiz.answer.map((answer, answerIndex) => (
                 <div key={answerIndex} className="flex gap-[8px] items-baseline">
                   <input type="checkbox" checked={checkedAnswers[quiz.id]?.[answerIndex]} onChange={() => handleCheckboxChange(quiz.id, answerIndex)} />
-                  <input value={answer} className="border border-[#2FA8FF] rounded-md p-1 mt-2 outline-none" />
+                  {editingQuizId === quiz.id ? (
+                    <input
+                      type="text"
+                      defaultValue={answer}
+                      className="rounded-md p-1 mt-2 outline-none border border-[#2FA8FF] "
+                      onChange={(e) => {
+                        const newAnswers = [...editedAnswers];
+                        newAnswers[answerIndex] = e.target.value;
+                        setEditedAnswers(newAnswers);
+                      }}
+                    />
+                  ) : (
+                    <p className=" rounded-md p-1 mt-2 outline-none">{answer}</p>
+                  )}
+                  {editingQuizId === quiz.id && (
+                    <>
+                      <button className="text-[#2FA8FF] bg-white rounded-md p-1" onClick={() => handleDeleteAnswer(quiz.id, answerIndex)}>
+                        Delete
+                      </button>
+                      <button className="text-[#2FA8FF] bg-white rounded-md p-1" onClick={() => handleAddAnswer(quiz.id)}>
+                        +
+                      </button>
+                    </>
+                  )}
                 </div>
               ))}
+              {editingQuizId === quiz.id && quiz.answer.length === 0 && (
+                <button className="text-[#2FA8FF] bg-white rounded-md p-1" onClick={() => handleAddAnswer(quiz.id)}>
+                  +
+                </button>
+              )}
             </div>
           </div>
         ))
-      )}
-      {quizzes?.length !== 0 && (
-        <div>
-          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]">რედაქტირება</button>
-        </div>
       )}
     </div>
   );
