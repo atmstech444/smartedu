@@ -42,6 +42,7 @@ const HeaderTwo = () => {
           style={{ backdropFilter: "blur(16px)", backgroundColor: scrollDirection === "down" ? "white" : "rgba(256,256,256)" }}
           className={`header__area header__transparent header__padding-2 ${scrollDirection === "down" ? "sticky" : ""}`}
         >
+          <p style={{ textAlign: "center", marginBottom: 0, background: "#2b4eff", color: "#fff" }}>საიტი სატესტო რეჟიმშია</p>
           <div className="container">
             <div className="row align-items-center">
               <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-2 col-sm-4 col-6">
