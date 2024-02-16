@@ -19,7 +19,7 @@ const CourseSectionOne = () => {
                 ჩვენი <br />
                 <span className="yellow-bg yellow-bg-big">
                   კურსები
-                  <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="image not found" />
+                  {/* <Image src={YellowBg} style={{ width: "auto", height: "auto" }} alt="image not found" /> */}
                 </span>
               </h2>
             </div>
@@ -39,9 +39,7 @@ const CourseSectionOne = () => {
             <div key={item.id} className="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
               <div className="course__item white-bg mb-30 fix">
                 <div className="course__thumb w-img p-relative fix">
-                  <Link href={`/course-details/${item.id}`}>
-                    <img src={API_STORAGE + item.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
-                  </Link>
+                  <Link href={`/course-details/${item.id}`}>{/* <img src={API_STORAGE + item.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" /> */}</Link>
                   <div className="course__tag">
                     <Link href={`/course-details/${item.id}`} className={item.category.title ? `${item.category.title}` : ""}>
                       {item.category.title}
@@ -67,13 +65,9 @@ const CourseSectionOne = () => {
                     <Link href={`/course-details/${item.id}`}>{item.title}</Link>
                   </h3>
                   <div className="course__teacher d-flex align-items-baseline">
-                    <div className="course__teacher-thumb mr-15">
-                      <img src={API_STORAGE + item.lecturer.image} style={{ width: "50px", height: "50px" }} alt="image not found" />
-                    </div>
+                    <div className="course__teacher-thumb mr-15">{/* <img src={API_STORAGE + item.lecturer.image} style={{ width: "50px", height: "50px" }} alt="image not found" /> */}</div>
                     <h6>
-                      <p>
-                        {item.lecturer.first_name} {item.lecturer.last_name}
-                      </p>
+                      <p>{/* {item.lecturer.first_name} {item.lecturer.last_name} */}</p>
                     </h6>
                   </div>
                 </div>
