@@ -8,11 +8,7 @@ export const getLecturers = async (token: any) => {
     },
   };
   try {
-    const { data } = await axios.get(
-      "http://192.168.99.238:8000/admin/lecturer",
-      config
-    );
-    console.log(data);
+    const { data } = await axios.get("http://192.168.99.238:8000/admin/lecturer", config);
     return data;
   } catch (error) {
     console.error(error);

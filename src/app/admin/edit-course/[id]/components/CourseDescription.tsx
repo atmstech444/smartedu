@@ -21,14 +21,13 @@ const CourseDescription = ({ data, onFileChange }: any) => {
         <div className="pt-9">
           <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო</p>
           <div className="flex flex-col mt-2 w-[300px] justify-center items-center">
-            <img src={`http://192.168.99.238:8000/public/${data.cover_image}`} alt="Uploaded" className="mt-10" />
+            <img src={`http://192.168.99.238:8000/${data.cover_image}`} alt="Uploaded" className="mt-10" />
             <input
               type="file"
               className="w-full mt-5"
               onChange={(e) => {
                 const selectedFile = e.target?.files?.[0];
                 if (selectedFile) {
-                  console.log(selectedFile);
                   onFileChange(selectedFile);
                 }
               }}
