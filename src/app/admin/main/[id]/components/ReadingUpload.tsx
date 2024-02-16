@@ -27,7 +27,7 @@ const useQueryParams = () => {
   return id;
 };
 
-const Reading = ({ lectureId, lectures }: any) => {
+const Reading = ({ lectures }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const id = useQueryParams();
@@ -36,7 +36,7 @@ const Reading = ({ lectureId, lectures }: any) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([]);
   const [description, setDescription] = useState("");
-  const [readingsData, setReadingsData] = useState<ReadingData[]>([]);
+  const [_, setReadingsData] = useState<ReadingData[]>([]);
 
   const handleImageClick = () => {
     
@@ -121,31 +121,6 @@ const Reading = ({ lectureId, lectures }: any) => {
     fetchData();
   }, [id]);
 
-  const handleDeleteReading = async (readingId: number) => {
-    try {
-      const response = await deleteReading(token, readingId);
-      if (response.message === "Reading remove successfully") {
-        setReadingsData((prevReadings) => prevReadings.filter((reading) => reading.id !== readingId));
-        Swal.fire({
-          icon: "success",
-          title: response.message,
-          showConfirmButton: true,
-          timer: 1500,
-        });
-      } else {
-        console.error("Failed to delete reading");
-        Swal.fire({
-          icon: "warning",
-          title: response.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (error) {
-      console.error("An unexpected error occurred", error);
-    }
-  };
-
   const handleSeeReading = () => {
     router.push(`/admin/reading?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
   };
@@ -181,29 +156,6 @@ const Reading = ({ lectureId, lectures }: any) => {
               <div>
                 <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
               </div>
-            </div>
-
-            <div className="flex items-start flex-wrap gap-2 ">
-              {readingsData && readingsData.length > 0 ? (
-                readingsData.map((reading) => (
-                  <div key={reading.id} className="border p-4 mb-4 flex flex-col items-start rounded-lg max-w-[400px]">
-                    <h2 className="text-sm font-semibold">აღწერა: {reading.description}</h2>
-                    <div className="max-w-[300px] overflow-wrap break-word">
-                      {Array.isArray(reading.url) &&
-                        reading.url.map((url, index) => (
-                          <div key={index} className="max-w-[300px] overflow-hidden overflow-ellipsis">
-                            {url}
-                          </div>
-                        ))}
-                    </div>
-                    <button className="text-white bg-[#2FA8FF] p-[3px] rounded-md text-sm mt-2" onClick={() => handleDeleteReading(reading.id)}>
-                      წაშლა
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <p>წასაკითხი მასალა არ არის ატვირთული</p>
-              )}
             </div>
           </div>
         </div>
