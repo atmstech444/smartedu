@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { Quiz } from "../page";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { parseCookies } from "nookies";
 import { editQuiz } from "../services/editQuiz";
 
@@ -34,7 +33,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
   const [newAnswer, setNewAnswer] = useState<string>("");
   const [editedQuestion, setEditedQuestion] = useState<string>("");
   const [editedAnswers, setEditedAnswers] = useState<string[]>([]);
-  const [isCancelled, setIsCancelled] = useState(false);
+  const [_, setIsCancelled] = useState(false);
 
   useEffect(() => {
     if (quizzes) {
