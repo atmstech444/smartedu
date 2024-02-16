@@ -87,7 +87,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xxl-2 offset-xxl-2 col-xl-2 offset-xl-2 col-lg-3 offset-lg-1 col-md-2 offset-md-2 col-sm-5 offset-sm-1" style={{ padding: "24px" }}>
+                <div className="col-xxl-2 mt-auto offset-xxl-2 col-xl-2 offset-xl-2 col-lg-3 offset-lg-1 col-md-2 offset-md-2 col-sm-5 offset-sm-1" style={{ padding: "24px" }}>
                   <div className="footer__widget mb-50">
                     <div className="footer__widget-head mb-22">
                       <h3 className="footer__widget-title">ნავიგაცია</h3>
@@ -148,7 +148,7 @@ const Footer = () => {
 
 const FooterContainer = styled.footer<FooterLogoProps>`
   @media (min-width: 365px) and (max-width: 1024px) {
-    margin-top: ${({ isprofileroute }) => (isprofileroute ? "-250px" : "0")};
+    margin-top: ${({ isprofileroute }) => (isprofileroute ? "-150px" : "0")};
   }
 `;
 type FooterLogoProps = {

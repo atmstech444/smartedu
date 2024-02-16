@@ -1,27 +1,47 @@
 "use client";
 import { useAppSelector } from "@/redux/store";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Arrow from "../../../public/assets/icons/arrowLeft.svg";
 import Image from "next/image";
 import arrow from "../../../public/assets/icons/courserow.svg";
+import { Get_Lecture } from "@/services/AllCourses";
 
-export const Navigation = (id: any) => {
+interface LectureTypes {
+  course_id: number;
+  id: number;
+  lecture_name: string;
+}
+export const Navigation = (id: { id: number }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const courses = useAppSelector((state) => state.courses.courses);
   const course = courses.find((cours) => cours.id == id.id);
+  const [lecture, setLecture] = useState<LectureTypes[]>([]);
   const router = useRouter();
+
   const navigateToAboutPage = () => {
     router.push(`/watch/${id.id}/about`);
   };
-
-  const navigateToLectureDetails = () => {
-    router.push(`/watch/${id.id}/course/1`);
+  const navigateToLectureDetails = (lectureId: number) => {
+    router.push(`/watch/${id.id}/course/${lectureId}`);
   };
   const toggleCourseLectures = () => {
     setIsOpened((prev) => !prev);
   };
+  const token = useAppSelector((state) => state.user.user?.token);
+
+  const fetchData = async () => {
+    try {
+      const lecture = await Get_Lecture(id.id, token);
+      setLecture(lecture.lectures);
+    } catch (error) {
+      console.error("Error fetching lecture:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="mt-[20%] p-[24px] md:mt-0 md:w-[30%] lg:w-[20%] bg-white rounded-md md:h-full">
@@ -39,7 +59,12 @@ export const Navigation = (id: any) => {
           </div>
           {isOpened && (
             <>
-              <div onClick={navigateToLectureDetails}>lecture</div>
+              {lecture &&
+                lecture.map((item) => (
+                  <p onClick={() => navigateToLectureDetails(item.id)} key={item.id}>
+                    {"ლექცია " + item.lecture_name}
+                  </p>
+                ))}
             </>
           )}
         </main>

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProfieIcon from "../../../../public/assets/img/profile/profile.jpg";
 import Image from "next/image";
-
 import MyCourses from "./courses/MyCourses";
 import Settings from "./settings/Settings";
 import Profile from "./profile/Profile";
