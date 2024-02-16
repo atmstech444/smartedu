@@ -49,7 +49,7 @@ const Page = () => {
   const { lectures } = useQueryParams();
   const [, setActiveTab] = useState("");
   const [, setRefreshTabs] = useState(false);
-  const [quizData, setQuizData] = useState<any>();
+  const [quizData, setQuizData] = useState<Quiz[] | null>(null);
   const [swalMessage, setSwalMessage] = useState<string>("");
   const searchParams = useSearchParams();
 
@@ -62,6 +62,39 @@ const Page = () => {
   const handleLectureClick = (lectureId: number) => {
     setActiveTab("");
     handleRefreshTabs();
+  };
+
+  const handleDeleteAnswer = (quizId: number, answerIndex: number) => {
+    if (quizData) {
+      const updatedQuizData = quizData.map((quiz) => {
+        if (quiz.id === quizId) {
+          return {
+            ...quiz,
+            answer: quiz.answer.filter((_, index) => index !== answerIndex),
+            correct_answer: quiz.correct_answer.filter((_, index) => index !== answerIndex),
+          };
+        }
+        return quiz;
+      });
+      setQuizData(updatedQuizData);
+    }
+  };
+
+  // New function to add a new answer to a quiz
+  const handleAddAnswer = (quizId: number) => {
+    if (quizData) {
+      const updatedQuizData = quizData.map((quiz) => {
+        if (quiz.id === quizId) {
+          return {
+            ...quiz,
+            answer: [...quiz.answer, ""],
+            correct_answer: [...quiz.correct_answer, ""],
+          };
+        }
+        return quiz;
+      });
+      setQuizData(updatedQuizData);
+    }
   };
 
   useEffect(() => {
@@ -82,8 +115,8 @@ const Page = () => {
       <Header />
       <div className="flex gap-8 w-[100%]">
         <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
-        <div className="flex justify-between w-[85%] mt-6">
-          <EditQuiz quizzes={quizData} />
+        <div className="w-[45%] mt-6">
+          <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} />
         </div>
       </div>
     </>
@@ -92,9 +125,9 @@ const Page = () => {
 
 const PageWrapper = () => {
   return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Page />
-      </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Page />
+    </Suspense>
   );
 };
 
