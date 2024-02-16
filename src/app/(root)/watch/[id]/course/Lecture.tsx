@@ -9,7 +9,7 @@ import Book from "@/public/assets/icons/book.svg";
 import Quizzes from "@/public/assets/icons/archive-book.svg";
 import Video from "@/public/assets/icons/video-circle.svg";
 
-interface LectureTypes {
+export interface LectureTypes {
   course_id: number;
   id: number;
   lecture_name: string;
@@ -37,7 +37,7 @@ interface Quizzes {
   url: string;
 }
 
-const Lecture = () => {
+const Lecture = (id: { id: any }) => {
   const [lectureDetail, setLectureDetail] = useState<LectureTypes>();
   const router = useRouter();
   const params = useParams();
@@ -55,14 +55,18 @@ const Lecture = () => {
     fetchData();
   }, []);
 
+  const navigateToReading = (lectureId: any) => {
+    router.push(`/watch/${id.id}/reading/${lectureId}`);
+  };
+
   return (
     <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md ">
       <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
       <h1 className="text-base font-bold text-black">ლექციის აღწერა</h1>
       <p className="text-base	font-normal text-black">{lectureDetail && lectureDetail.lecture_content.description}</p>
       <p className="text-base font-bold	text-black">ლექცია {lectureDetail && lectureDetail.course_id}</p>
-      {lectureDetail && lectureDetail.readings != null && (
-        <div className="flex gap-3">
+      {lectureDetail && lectureDetail.readings !== null && (
+        <div className="flex gap-3" onClick={() => navigateToReading(lectureDetail.id)}>
           <Image alt="book" src={Book} />
           <div>
             <p className=" m-0 font-medium text-black">მასალა</p>
@@ -72,7 +76,7 @@ const Lecture = () => {
       )}
 
       {lectureDetail &&
-        lectureDetail.videos != null &&
+        lectureDetail.videos !== null &&
         lectureDetail &&
         lectureDetail.videos.map((video, index) => (
           <div className="flex gap-3" key={index}>
@@ -84,7 +88,7 @@ const Lecture = () => {
           </div>
         ))}
 
-      {lectureDetail && lectureDetail.quizzes != null && (
+      {lectureDetail && lectureDetail.quizzes !== null && (
         <div className="flex gap-3">
           <Image alt="quizzes" src={Quizzes} />
           <div>

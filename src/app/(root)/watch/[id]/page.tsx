@@ -3,7 +3,7 @@ import React from "react";
 import { GET_Courses, I_Course } from "@/api/GET_Courses";
 import Wrapper from "@/layout/DefaultWrapper";
 import { useState, useEffect } from "react";
-import { Navigation } from "../Navigation";
+import { Navigation } from "../components/Navigation";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 

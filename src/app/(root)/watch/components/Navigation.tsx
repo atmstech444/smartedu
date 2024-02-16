@@ -3,9 +3,9 @@ import { useAppSelector } from "@/redux/store";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
-import Arrow from "../../../public/assets/icons/arrowLeft.svg";
+import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
 import Image from "next/image";
-import arrow from "../../../public/assets/icons/courserow.svg";
+import arrow from "../../../../public/assets/icons/courserow.svg";
 import { Get_Lecture } from "@/services/AllCourses";
 
 interface LectureTypes {
@@ -13,13 +13,14 @@ interface LectureTypes {
   id: number;
   lecture_name: string;
 }
-export const Navigation = (id: { id: number }) => {
+export const Navigation = (id: { id: any }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const courses = useAppSelector((state) => state.courses.courses);
   const course = courses.find((cours) => cours.id == id.id);
   const [lecture, setLecture] = useState<LectureTypes[]>([]);
   const router = useRouter();
 
+  console.log(lecture);
   const navigateToAboutPage = () => {
     router.push(`/watch/${id.id}/about`);
   };
