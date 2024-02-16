@@ -1,13 +1,12 @@
 "use client";
 import { I_Course_Details } from "@/api/GET_CourseDetails";
 // import Wrapper from "@/layout/DefaultWrapper";
-import { useAppSelector } from "@/redux/store";
 import { Get_Course_Detail } from "@/services/AllCourses";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import Arrow from "../../../public/assets/icons/arrowLeft.svg";
+import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
 
 const AboutCourse = () => {
   const id = useParams();

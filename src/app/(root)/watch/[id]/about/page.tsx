@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import AboutCourse from "../../AboutCourse";
-import { Navigation } from "../../Navigation";
+import AboutCourse from "../../components/AboutCourse";
+import { Navigation } from "../../components/Navigation";
 import Wrapper from "@/layout/DefaultWrapper";
 
 const Page = () => {
