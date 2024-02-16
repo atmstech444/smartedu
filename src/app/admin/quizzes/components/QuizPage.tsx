@@ -10,9 +10,10 @@ interface QuizPageProps {
 
 const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMessage }) => {
   const router = useRouter();
-  if (!quizzes) {
-    return <div>იტვირთება...</div>;
+  if (quizzes === null || quizzes === undefined) {
+    return <div>ქვიზი ვერ მოიძებნა...</div>;
   }
+  console.log(quizzes)
   return (
     <div className="flex flex-col gap-8">
       {quizzes?.length === 0 || swalMessage === "Quiz remove successfully" ? (

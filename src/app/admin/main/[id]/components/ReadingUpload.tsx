@@ -193,7 +193,7 @@ const Reading = ({ lectureId }: any) => {
                 </div>
               ))
             ) : (
-              <p>No readings available</p>
+              <p>წასაკითხი მასალა არ არის ატვირთული</p>
             )}
           </div>
         </div>

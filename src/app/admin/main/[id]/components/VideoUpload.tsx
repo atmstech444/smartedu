@@ -158,18 +158,27 @@ const VideoUpload = () => {
           </div>
         )}
 
-        <div className="flex gap-4 mt-4 flex-wrap mb-5">
-          {videosData.map((video) => (
-            <div key={video.id} className="w-[200px] flex flex-col gap-2 items-center">
-              <video controls className="rounded-lg">
-                <source src={video.video_url} type="video/mp4" />
-              </video>
-              <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
-                წაშლა
-              </button>
-            </div>
-          ))}
-        </div>
+        {videosData.length === 0 && (
+          <div className="">
+            <p>ვიდეოები არაა დამატებული</p>
+          </div>
+        )}
+
+        {videosData.length > 0 && (
+          <div className="flex gap-4 mt-4 flex-wrap mb-5">
+            {videosData.map((video) => (
+              <div key={video.id} className="w-[200px] flex flex-col gap-2 items-center">
+                <video controls className="rounded-lg">
+                  <source src={video.video_url} type="video/mp4" />
+                </video>
+                <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
+                  წაშლა
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
         {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} currentChunk={currentChunk} totalSizeUploaded={totalSizeUploaded} />}
       </div>
 

@@ -104,6 +104,8 @@ const LectureTitleAndDescription = () => {
         const data = await getLectureAndDescriptions(token, lectureId);
         if (data.lecture_content) {
           setTitleDescriptionData(data.lecture_content);
+        } else {
+          setTitleDescriptionData(null);
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -116,7 +118,7 @@ const LectureTitleAndDescription = () => {
 
   return (
     <>
-      {titleDescriptionData ? (
+      {titleDescriptionData !== null ? (
         <div className="relative flex flex-col gap-4">
           <div className="w-48 relative">
             <input
