@@ -34,6 +34,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
   const [newAnswer, setNewAnswer] = useState<string>("");
   const [editedQuestion, setEditedQuestion] = useState<string>("");
   const [editedAnswers, setEditedAnswers] = useState<string[]>([]);
+  const [isCancelled, setIsCancelled] = useState(false);
 
   useEffect(() => {
     if (quizzes) {
@@ -172,7 +173,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                     <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleSaveQuiz(quiz.id)}>
                       შენახვა
                     </button>
-                    <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleSaveQuiz(quiz.id)}>
+                    <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => setIsCancelled(true)}>
                       გაუქმება
                     </button>
                   </div>
