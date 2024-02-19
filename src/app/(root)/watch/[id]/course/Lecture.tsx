@@ -13,10 +13,7 @@ export interface LectureTypes {
   course_id: number;
   id: number;
   lecture_name: string;
-  lecture_content: {
-    description: string;
-    title: string;
-  };
+  lecture_content: string;
   quizzes: Quizzes[];
   readings: {
     description: string;
@@ -41,7 +38,6 @@ const Lecture = (id: { id: any }) => {
   const [lectureDetail, setLectureDetail] = useState<LectureTypes>();
   const router = useRouter();
   const params = useParams();
-
   const token = useAppSelector((state) => state.user.user?.token);
 
   const fetchData = async () => {
@@ -64,23 +60,25 @@ const Lecture = (id: { id: any }) => {
     <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md ">
       <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
       <h1 className="text-base font-bold text-black">ლექციის აღწერა</h1>
-      <p className="text-base	font-normal text-black">{lectureDetail && lectureDetail.lecture_content.description}</p>
-      <p className="text-base font-bold	text-black">ლექცია {lectureDetail && lectureDetail.course_id}</p>
-      {lectureDetail && lectureDetail.readings !== null && (
-        <div className="flex gap-3" onClick={() => navigateToReading(lectureDetail.id)}>
+      <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content}</p>
+      <p className="text-base font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
+      {lectureDetail && lectureDetail.readings !== null ? (
+        <div className="flex gap-3 cursor-pointer" onClick={() => navigateToReading(lectureDetail.id)}>
           <Image alt="book" src={Book} />
           <div>
             <p className=" m-0 font-medium text-black">მასალა</p>
             <p className=" m-0">წასაკითხი</p>
           </div>
         </div>
+      ) : (
+        ""
       )}
 
       {lectureDetail &&
         lectureDetail.videos !== null &&
         lectureDetail &&
-        lectureDetail.videos.map((video, index) => (
-          <div className="flex gap-3" key={index}>
+        lectureDetail.videos.map((_, index) => (
+          <div className="flex gap-3 cursor-pointer" key={index}>
             <Image alt="video" src={Video} />
             <div>
               <p className=" m-0 font-medium	 text-black">პროგრამირების საწყისები</p>
@@ -90,7 +88,7 @@ const Lecture = (id: { id: any }) => {
         ))}
 
       {lectureDetail && lectureDetail.quizzes !== null && (
-        <div className="flex gap-3">
+        <div className="flex gap-3 cursor-pointer">
           <Image alt="quizzes" src={Quizzes} />
           <div>
             <p className=" m-0 font-medium text-black">ლექციის ბოლოს</p>

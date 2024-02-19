@@ -62,7 +62,7 @@ export const Navigation = (id: { id: any }) => {
               {lecture &&
                 lecture.map((item) => (
                   <p onClick={() => navigateToLectureDetails(item.id)} key={item.id}>
-                    {"ლექცია " + item.lecture_name}
+                    {item.lecture_name}
                   </p>
                 ))}
             </>
