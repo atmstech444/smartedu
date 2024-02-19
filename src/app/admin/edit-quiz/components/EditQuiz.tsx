@@ -35,6 +35,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
   const [editedQuestion, setEditedQuestion] = useState<string>("");
   const [editedAnswers, setEditedAnswers] = useState<{ [quizId: number]: string[] }>({});
   const [_, setIsCancelled] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<{ [quizId: number]: File | null }>({});
 
   useEffect(() => {
     if (quizzes) {
@@ -153,6 +154,23 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
     }));
   };
 
+  const handleFileUpload = (id: number, file: File | undefined) => {
+    if (file) {
+      setUploadedFiles((prevFiles) => ({
+        ...prevFiles,
+        [id]: file,
+      }));
+      console.log("File uploaded for quiz ID:", id, "File:", file);
+    }
+  };
+
+  const handleFileDelete = (id: number) => {
+    setUploadedFiles((prevFiles) => {
+      const updatedFiles = { ...prevFiles };
+      delete updatedFiles[id];
+      return updatedFiles;
+    });
+  };
   if (quizzes === null || quizzes === undefined) {
     return <div>ქვიზი ვერ მოიძებნა...</div>;
   }
@@ -194,6 +212,25 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
               </span>
             </div>
             {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
+            {editingQuizId === quiz.id && (
+              <>
+                {uploadedFiles[quiz.id] ? (
+                  <div className="flex items-center gap-2">
+                    <img src={URL.createObjectURL(uploadedFiles[quiz.id] as Blob)} alt={uploadedFiles[quiz.id]?.name} className="h-8 w-auto" />
+                    <p>{uploadedFiles[quiz.id]?.name}</p>
+                    <button onClick={() => handleFileDelete(quiz.id)} className="text-white bg-[#FF3333] py-1 px-2 rounded-lg w-[100px] text-sm">
+                      წაშალე ფაილი
+                    </button>
+                  </div>
+                ) : (
+                  <label htmlFor={`file_${quiz.id}`} className="bg-[#2FA8FF] text-white py-[13px] px-2 rounded-lg cursor-pointer">
+                    ატვირთე ფაილი
+                    <input id={`file_${quiz.id}`} type="file" className="hidden" onChange={(e) => handleFileUpload(quiz.id, e.target.files?.[0])} />
+                  </label>
+                )}
+                <div className="flex flex-col gap-2"></div>
+              </>
+            )}
 
             <div className=" w-full">
               {quiz.answer.map((answer, answerIndex) => (
