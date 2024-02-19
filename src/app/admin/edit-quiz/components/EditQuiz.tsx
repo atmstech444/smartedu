@@ -23,6 +23,8 @@ interface QuizData {
   question: string;
   answer: string[];
   correct_answer: string[];
+  url?: File | null;
+  _method: any;
 }
 
 const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPageProps) => {
@@ -96,7 +98,12 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
         question: currentQuiz?.question || "",
         answer: editedAnswers[quizId].slice(0, currentQuiz?.answer.length || 0),
         correct_answer: checkedIndices.map((index) => currentQuiz?.answer[index] || ""),
+        url: uploadedFiles[quizId] || undefined,
+        _method: "put",
       };
+
+      if (uploadedFiles[quizId] !== null && uploadedFiles[quizId] !== undefined) {
+      }
 
       console.log("Updated Quiz Data:", updatedQuizData);
 
@@ -112,6 +119,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                 question: updatedQuizData.question,
                 answer: updatedQuizData.answer,
                 correct_answer: updatedQuizData.correct_answer,
+                url: response.quiz.url,
               };
             }
             return quiz;
