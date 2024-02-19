@@ -23,7 +23,7 @@ export interface LectureTypes {
   videos: {
     duration: string;
     id: number;
-    video_url: string;
+    video: string;
   }[];
 }
 interface Quizzes {
@@ -55,7 +55,9 @@ const Lecture = (id: { id: any }) => {
   const navigateToReading = (lectureId: any) => {
     router.push(`/watch/${id.id}/reading/${lectureId}`);
   };
-
+  const navigateToVideo = (id: any, videoId: any) => {
+    router.push(`/watch/${params.id}/video/${id}/${videoId}`);
+  };
   return (
     <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md ">
       <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
@@ -77,8 +79,8 @@ const Lecture = (id: { id: any }) => {
       {lectureDetail &&
         lectureDetail.videos !== null &&
         lectureDetail &&
-        lectureDetail.videos.map((_, index) => (
-          <div className="flex gap-3 cursor-pointer" key={index}>
+        lectureDetail.videos.map((video, index) => (
+          <div className="flex gap-3 cursor-pointer" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
             <Image alt="video" src={Video} />
             <div>
               <p className=" m-0 font-medium	 text-black">პროგრამირების საწყისები</p>

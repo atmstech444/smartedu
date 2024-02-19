@@ -5,11 +5,9 @@ export interface POST_Login_Success {
   courses: I_Course[];
 }
 
-
 //const url = "https://smarteducation.shop/smarteducation_backend/public/api/";
 
-const url = "http://192.168.99.238:8000/api/";
-
+const url = "http://192.168.1.106:8000/api/";
 
 export interface I_Course {
   id: number;
