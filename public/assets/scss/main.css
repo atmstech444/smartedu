@@ -35761,6 +35761,12 @@ p.checkout-coupon input[type=text]:focus {
   color: #2b4eff;
 }
 
+@media (max-width: 1400px) {
+  .footer__social ul li {
+    display: inline-block;
+    margin-top: 14px;
+  }
+}
 /*----------
 
 05. category style

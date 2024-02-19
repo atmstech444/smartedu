@@ -6,7 +6,7 @@ export interface POST_Login_Success {
 }
 
 
-const url = "http://192.168.99.238:8000/api/";
+const url = "https://smarteducation.shop/smarteducation_backend/public/api/";
 
 // const url = "http://192.168.99.238:8000/admin/api/";
 

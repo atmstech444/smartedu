@@ -20,7 +20,6 @@ export const Navigation = (id: { id: any }) => {
   const [lecture, setLecture] = useState<LectureTypes[]>([]);
   const router = useRouter();
 
-  console.log(lecture);
   const navigateToAboutPage = () => {
     router.push(`/watch/${id.id}/about`);
   };

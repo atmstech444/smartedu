@@ -15,7 +15,6 @@ export default function Page({ params }: { params: { id: number } }) {
   const updateIsDesktop = () => {
     setIsDesktop(window.innerWidth > 768);
   };
-
   useEffect(() => {
     updateIsDesktop();
     window.addEventListener("resize", updateIsDesktop);
