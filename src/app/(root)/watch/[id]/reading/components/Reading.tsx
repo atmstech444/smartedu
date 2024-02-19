@@ -6,7 +6,6 @@ import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
 const Reading = (id: { id: any }) => {
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
-  console.log(isMenuOpened);
   const toggleMenuVisibility = () => {
     setIsMenuOpened((prev) => !prev);
   };
