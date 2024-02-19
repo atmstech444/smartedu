@@ -82,21 +82,14 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
     try {
       const currentQuiz = quizzes?.find((quiz) => quiz.id === quizId);
 
-      console.log("Current Quiz:", currentQuiz);
-      console.log("Checked Answers:", checkedAnswers[quizId]);
-
       const checkedIndices = Object.entries(checkedAnswers[quizId] || {})
         .filter(([index, isChecked]) => isChecked)
         .map(([index]) => parseInt(index, 10));
-
-      console.log("Checked Indices:", checkedIndices);
 
       const newAnswerIndex = editedAnswers[quizId].length - 1;
       if (checkedAnswers[quizId]?.[newAnswerIndex]) {
         checkedIndices.push(newAnswerIndex);
       }
-
-      console.log("Updated Checked Indices:", checkedIndices);
 
       const updatedQuizData: QuizData = {
         question: currentQuiz?.question || "",
@@ -108,8 +101,6 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
 
       if (uploadedFiles[quizId] !== null && uploadedFiles[quizId] !== undefined) {
       }
-
-      console.log("Updated Quiz Data:", updatedQuizData);
 
       const response = await editQuiz(token, quizId, updatedQuizData);
 
@@ -172,7 +163,6 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
         ...prevFiles,
         [id]: file,
       }));
-      console.log("File uploaded for quiz ID:", id, "File:", file);
     }
   };
 
