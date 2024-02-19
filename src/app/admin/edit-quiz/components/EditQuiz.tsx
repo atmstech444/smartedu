@@ -39,7 +39,6 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
   const [isCancel, setIsCancelled] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<{ [quizId: number]: File | null }>({});
   const [showImage, setShowImage] = useState<{ [quizId: number]: boolean }>({});
-  const [isImageShown, setIsImageShown] = useState<boolean>(true);
 
   useEffect(() => {
     if (quizzes) {
