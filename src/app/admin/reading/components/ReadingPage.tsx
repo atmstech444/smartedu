@@ -2,7 +2,6 @@ import React from "react";
 import { deleteReading } from "../../main/[id]/services/deleteReading";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
-import { Link } from "react-router-dom";
 
 type ReadingData = {
   id: number;

@@ -115,7 +115,7 @@ const Page = () => {
       <Header />
       <div className="flex gap-8 w-[100%]">
         <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
-        <div className="w-[45%] mt-6">
+        <div className="w-[45%] mt-6 mb-20">
           <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} />
         </div>
       </div>

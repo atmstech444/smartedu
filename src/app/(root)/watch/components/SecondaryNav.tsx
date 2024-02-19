@@ -19,9 +19,10 @@ const SecondaryNav = ({ lectureDetail, id }: Props) => {
   const navigateToReading = (lectureId: any) => {
     router.push(`/watch/${params.id}/reading/${lectureId}`);
   };
-  const navigateToVideo = (id: any) => {
-    router.push(`/watch/${params.id}/video/${id}`);
+  const navigateToVideo = (id: any, videoId: any) => {
+    router.push(`/watch/${params.id}/video/${id}/${videoId}`);
   };
+
 
   return (
     <>
@@ -49,8 +50,8 @@ const SecondaryNav = ({ lectureDetail, id }: Props) => {
         {lectureDetail &&
           lectureDetail.videos !== null &&
           lectureDetail &&
-          lectureDetail.videos.map((_, index) => (
-            <div className="flex gap-3 cursor-pointer mb-4" key={index} onClick={() => navigateToVideo(lectureDetail.id)}>
+          lectureDetail.videos.map((video, index) => (
+            <div className="flex gap-3 cursor-pointer mb-4" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
               <Image alt="video" src={Video} />
               <div>
                 <p className=" m-0 font-medium	 text-black">პროგრამირების საწყისები</p>
