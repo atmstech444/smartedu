@@ -8,6 +8,7 @@ import { LectureTypes } from "../../course/Lecture";
 import { Get_Lecture_Detail } from "@/services/AllCourses";
 import { useParams } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
+
 const Video = (id: { id: any }) => {
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
   const [lectureDetail, setLectureDetail] = useState<LectureTypes>();
@@ -18,7 +19,8 @@ const Video = (id: { id: any }) => {
   };
   const fetchData = async () => {
     try {
-      const lectureDetail = await Get_Lecture_Detail(params.courseId, token);
+      const lectureDetail = await Get_Lecture_Detail(params.itemId, token);
+      console.log(params);
       setLectureDetail(lectureDetail.lecture[0]);
     } catch (error) {
       console.error("Error fetching lecture detail:", error);
@@ -27,7 +29,6 @@ const Video = (id: { id: any }) => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(lectureDetail);
   return (
     <>
       <main className="relative w-full">

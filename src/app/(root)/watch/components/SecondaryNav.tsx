@@ -22,7 +22,8 @@ const SecondaryNav = (id: { id: any }) => {
   const token = useAppSelector((state) => state.user.user?.token);
   const fetchData = async () => {
     try {
-      const lectureDetail = await Get_Lecture_Detail(params.readingId, token);
+      const lectureDetail = await Get_Lecture_Detail(params.itemId, token);
+      console.log(params);
       setLectureDetail(lectureDetail.lecture[0]);
     } catch (error) {
       console.error("Error fetching lecture detail:", error);
@@ -31,8 +32,6 @@ const SecondaryNav = (id: { id: any }) => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  console.log(lectureDetail);
 
   return (
     <>
