@@ -1,16 +1,19 @@
 import { useParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
-import { Get_Lecture_Detail } from "@/services/AllCourses";
-import { useAppSelector } from "@/redux/store";
+import React from "react";
 import { LectureTypes } from "../[id]/course/Lecture";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Book from "@/public/assets/icons/book.svg";
 import Quizzes from "@/public/assets/icons/archive-book.svg";
 import Video from "@/public/assets/icons/video-circle.svg";
+import arrow from "@/public/assets/icons/arrowLeft.svg";
+import nav from "@/public/assets/icons/nav.svg";
 
-const SecondaryNav = (id: { id: any }) => {
-  const [lectureDetail, setLectureDetail] = useState<LectureTypes>();
+interface Props {
+  lectureDetail?: LectureTypes;
+  id: any;
+}
+const SecondaryNav = ({ lectureDetail, id }: Props) => {
   const params = useParams();
   const router = useRouter();
   const navigateToReading = (lectureId: any) => {
@@ -19,24 +22,18 @@ const SecondaryNav = (id: { id: any }) => {
   const navigateToVideo = (id: any) => {
     router.push(`/watch/${params.id}/video/${id}`);
   };
-  const token = useAppSelector((state) => state.user.user?.token);
-  const fetchData = async () => {
-    try {
-      const lectureDetail = await Get_Lecture_Detail(params.itemId, token);
-      console.log(params);
-      setLectureDetail(lectureDetail.lecture[0]);
-    } catch (error) {
-      console.error("Error fetching lecture detail:", error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <>
       <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full">
-        <p className="text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
+        <p className="hidden md:block text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
+        <div className="flex items-center justify-between md:hidden">
+          <Image src={arrow} alt="arrow" />
+          <div className="flex items-center justify-center gap-3">
+            <p className="mb-0 text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
+            <Image src={nav} alt="navicon" />
+          </div>
+        </div>
         {lectureDetail && lectureDetail.readings !== null ? (
           <div className="flex gap-3 cursor-pointer my-4" onClick={() => navigateToReading(lectureDetail.id)}>
             <Image alt="book" src={Book} />

@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://192.168.99.238:8000/api/";
+const url = "http://192.168.1.106:8000/api/";
 import { parseCookies } from "nookies";
 
 export const storeCategory = async (data: any) => {

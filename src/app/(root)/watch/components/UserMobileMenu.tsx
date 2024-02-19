@@ -21,7 +21,7 @@ const UserMobileMenu = ({ isOpen, onClose, children }: MobileMenuProps) => {
   }, [isOpen]);
   return (
     <>
-      <div className={`fixed inset-0 z-50 top-[40%] ${isOpen ? "block" : "hidden"}`}>
+      <div className={`fixed inset-0 z-50 top-[15%]  ${isOpen ? "block" : "hidden"}`}>
         <div className="absolute inset-0 bg-black opacity-50" onClick={onClose}></div>
         <div className="absolute  right-0  flex flex-col w-full bg-white p-4">{children}</div>
       </div>

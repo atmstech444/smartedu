@@ -18,7 +18,7 @@ export interface LectureTypes {
   readings: {
     description: string;
     id: number;
-    url: string;
+    url: [];
   }[];
   videos: {
     duration: string;
