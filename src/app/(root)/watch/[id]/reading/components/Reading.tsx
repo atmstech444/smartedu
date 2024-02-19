@@ -17,7 +17,6 @@ const Reading = ({ id, lectureDetail }: Props) => {
     setIsMenuOpened((prev) => !prev);
   };
   const reading = lectureDetail?.readings;
-  console.log(reading);
   return (
     <>
       <main className="relative w-full">

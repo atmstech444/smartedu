@@ -22,7 +22,7 @@ const SecondaryNav = ({ lectureDetail, id }: Props) => {
   const navigateToVideo = (id: any, videoId: any) => {
     router.push(`/watch/${params.id}/video/${id}/${videoId}`);
   };
-
+  console.log(lectureDetail);
 
   return (
     <>
