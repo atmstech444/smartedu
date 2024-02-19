@@ -4,6 +4,7 @@ import { Quiz } from "../page";
 import { useRouter } from "next/navigation";
 import { parseCookies } from "nookies";
 import { editQuiz } from "../services/editQuiz";
+import { boolean } from "yup";
 
 interface QuizPageProps {
   quizzes: Quiz[] | null;
@@ -32,14 +33,16 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
   const [editingQuizId, setEditingQuizId] = useState<number | null>(null);
   const [newAnswer, setNewAnswer] = useState<string>("");
   const [editedQuestion, setEditedQuestion] = useState<string>("");
-  const [editedAnswers, setEditedAnswers] = useState<string[]>([]);
+  const [editedAnswers, setEditedAnswers] = useState<{ [quizId: number]: string[] }>({});
   const [_, setIsCancelled] = useState(false);
 
   useEffect(() => {
     if (quizzes) {
       const initialCheckedAnswers: CheckedAnswers = {};
+      const initialEditedAnswers: { [quizId: number]: string[] } = {};
       quizzes.forEach((quiz) => {
         initialCheckedAnswers[quiz.id] = {};
+        initialEditedAnswers[quiz.id] = quiz.answer;
         if (Array.isArray(quiz.correct_answer)) {
           quiz.correct_answer.forEach((correctAnswer) => {
             const correctIndex = quiz.answer.findIndex((answer) => answer === correctAnswer);
@@ -50,7 +53,6 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
         }
       });
       setCheckedAnswers(initialCheckedAnswers);
-      const initialEditedAnswers = quizzes.map((quiz) => quiz.answer).flat();
       setEditedAnswers(initialEditedAnswers);
     }
   }, [quizzes]);
@@ -73,32 +75,33 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
     try {
       const currentQuiz = quizzes?.find((quiz) => quiz.id === quizId);
 
-      const updatedQuizData: QuizData = {
-        question: currentQuiz?.question || "",
-        answer: currentQuiz?.answer || [],
-        correct_answer: currentQuiz?.correct_answer || [],
-      };
-
-      if (editedQuestion !== "") {
-        updatedQuizData.question = editedQuestion;
-      }
-
-      if (editedAnswers.length > 0) {
-        updatedQuizData.answer = editedAnswers;
-      }
+      console.log("Current Quiz:", currentQuiz);
+      console.log("Checked Answers:", checkedAnswers[quizId]);
 
       const checkedIndices = Object.entries(checkedAnswers[quizId] || {})
         .filter(([index, isChecked]) => isChecked)
         .map(([index]) => parseInt(index, 10));
 
-      if (checkedIndices.length === 0) {
-        updatedQuizData.correct_answer = currentQuiz?.correct_answer || [];
-      } else {
-        updatedQuizData.correct_answer = checkedIndices.map((index) => updatedQuizData.answer[index]);
+      console.log("Checked Indices:", checkedIndices);
+
+      const newAnswerIndex = editedAnswers[quizId].length - 1;
+      if (checkedAnswers[quizId]?.[newAnswerIndex]) {
+        checkedIndices.push(newAnswerIndex);
       }
-      console.log(updatedQuizData);
+
+      console.log("Updated Checked Indices:", checkedIndices);
+
+      const updatedQuizData: QuizData = {
+        question: currentQuiz?.question || "",
+        answer: editedAnswers[quizId].slice(0, currentQuiz?.answer.length || 0),
+        correct_answer: checkedIndices.map((index) => currentQuiz?.answer[index] || ""),
+      };
+
+      console.log("Updated Quiz Data:", updatedQuizData);
+
       const response = await editQuiz(token, quizId, updatedQuizData);
-      if ((response.message = "successfully update quiz")) {
+
+      if (response.message === "successfully update quiz") {
         setQuizData((prevQuizData: any[]) => {
           if (!prevQuizData) return null;
           return prevQuizData.map((quiz) => {
@@ -116,7 +119,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
       }
 
       setEditedQuestion("");
-      setEditedAnswers([]);
+      setEditedAnswers({});
       setCheckedAnswers({});
     } catch (error) {
       console.error("Error saving quiz:", error);
@@ -125,9 +128,14 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
 
   const handleAddAnswer = (quizId: number) => {
     if (!quizzes) return;
+    const newAnswers = [...editedAnswers[quizId], newAnswer];
+    setEditedAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [quizId]: newAnswers,
+    }));
     onAddAnswer(quizId, newAnswer);
     setNewAnswer("");
-    const newAnswerIndex = quizzes.find((quiz) => quiz.id === quizId)?.answer.length || 0;
+    const newAnswerIndex = newAnswers.length - 1;
     setCheckedAnswers((prevState) => ({
       ...prevState,
       [quizId]: {
@@ -135,12 +143,14 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
         [newAnswerIndex]: false,
       },
     }));
-    setEditedAnswers((prevAnswers) => [...prevAnswers, newAnswer]);
   };
 
   const handleDeleteAnswer = (quizId: number, answerIndex: number) => {
     onDeleteAnswer(quizId, answerIndex);
-    setEditedAnswers((prevAnswers) => prevAnswers.filter((_, index) => index !== answerIndex));
+    setEditedAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [quizId]: prevAnswers[quizId].filter((_, index) => index !== answerIndex),
+    }));
   };
 
   if (quizzes === null || quizzes === undefined) {
@@ -195,8 +205,8 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                       defaultValue={answer}
                       className="rounded-md p-1 mt-2 outline-none border border-[#2FA8FF] "
                       onChange={(e) => {
-                        const newAnswers = [...editedAnswers];
-                        newAnswers[answerIndex] = e.target.value;
+                        const newAnswers = { ...editedAnswers };
+                        newAnswers[quiz.id][answerIndex] = e.target.value;
                         setEditedAnswers(newAnswers);
                       }}
                     />
