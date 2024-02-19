@@ -34,7 +34,6 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
   const [editedQuestion, setEditedQuestion] = useState<string>("");
   const [editedAnswers, setEditedAnswers] = useState<string[]>([]);
   const [_, setIsCancelled] = useState(false);
-  const [files, setFiles] = useState<{ [quizId: number]: File | null }>({});
 
   useEffect(() => {
     if (quizzes) {
@@ -51,6 +50,8 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
         }
       });
       setCheckedAnswers(initialCheckedAnswers);
+      const initialEditedAnswers = quizzes.map((quiz) => quiz.answer).flat();
+      setEditedAnswers(initialEditedAnswers);
     }
   }, [quizzes]);
 
@@ -95,7 +96,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
       } else {
         updatedQuizData.correct_answer = checkedIndices.map((index) => updatedQuizData.answer[index]);
       }
-
+      console.log(updatedQuizData);
       const response = await editQuiz(token, quizId, updatedQuizData);
       if ((response.message = "successfully update quiz")) {
         setQuizData((prevQuizData: any[]) => {
@@ -142,22 +143,6 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
     setEditedAnswers((prevAnswers) => prevAnswers.filter((_, index) => index !== answerIndex));
   };
 
-  const handleFileUpload = (id: number, file: File | undefined) => {
-    if (file) {
-      setFiles((prevFiles) => ({
-        ...prevFiles,
-        [id]: file,
-      }));
-    }
-  };
-
-  const handleDeleteFile = (id: number) => {
-    setFiles((prevFiles) => ({
-      ...prevFiles,
-      [id]: null,
-    }));
-  };
-
   if (quizzes === null || quizzes === undefined) {
     return <div>ქვიზი ვერ მოიძებნა...</div>;
   }
@@ -201,31 +186,6 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
             {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
 
             <div className=" w-full">
-              {editingQuizId === quiz.id && (
-                <div>
-                  {files[quiz.id] ? (
-                    <div className="flex items-center gap-2">
-                      {files[quiz.id] && (
-                        <>
-                          <img src={URL.createObjectURL(files[quiz.id] as Blob)} alt="Uploaded File" className="h-8 w-auto" />
-                          <p>{files[quiz.id]?.name}</p>
-                        </>
-                      )}
-
-                      <button onClick={() => handleDeleteFile(quiz.id)} className="text-white bg-[#FF3333] py-3 px-2 rounded-lg w-[130px] text-sm">
-                        წაშალე ფაილი
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="mb-7 ml-2">
-                      <label htmlFor={`file_${quiz.id}`} className="bg-[#2FA8FF] text-white py-[13px] px-2 rounded-lg cursor-pointer">
-                        ატვირთე ფაილი
-                        <input id={`file_${quiz.id}`} type="file" className="hidden" onChange={(e) => handleFileUpload(quiz.id, e.target.files?.[0])} />
-                      </label>
-                    </div>
-                  )}
-                </div>
-              )}
               {quiz.answer.map((answer, answerIndex) => (
                 <div key={answerIndex} className="flex gap-[8px] items-baseline">
                   <input type="checkbox" checked={checkedAnswers[quiz.id]?.[answerIndex]} onChange={() => handleCheckboxChange(quiz.id, answerIndex)} />
