@@ -169,7 +169,7 @@ const VideoUpload = () => {
               <div key={video.id} className="w-[200px] flex flex-col gap-2 items-center">
                 {videosData && (
                   <video controls className="rounded-lg">
-                    <source src={`http://192.168.99.238:8000/${video?.video}`} type="video/mp4" />
+                    <source src={`http://192.168.1.106:8000/${video?.video}`} type="video/mp4" />
                   </video>
                 )}
 

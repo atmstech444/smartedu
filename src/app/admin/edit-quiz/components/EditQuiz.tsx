@@ -23,7 +23,7 @@ interface QuizData {
   question: string;
   answer: string[];
   correct_answer: string[];
-  url?: File | null;
+  url?: any;
   _method: any;
 }
 
@@ -36,16 +36,20 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
   const [newAnswer, setNewAnswer] = useState<string>("");
   const [editedQuestion, setEditedQuestion] = useState<string>("");
   const [editedAnswers, setEditedAnswers] = useState<{ [quizId: number]: string[] }>({});
-  const [_, setIsCancelled] = useState(false);
+  const [isCancel, setIsCancelled] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<{ [quizId: number]: File | null }>({});
+  const [showImage, setShowImage] = useState<{ [quizId: number]: boolean }>({});
+  const [isImageShown, setIsImageShown] = useState<boolean>(true);
 
   useEffect(() => {
     if (quizzes) {
       const initialCheckedAnswers: CheckedAnswers = {};
       const initialEditedAnswers: { [quizId: number]: string[] } = {};
+      const initialShowImage: { [quizId: number]: boolean } = {};
       quizzes.forEach((quiz) => {
         initialCheckedAnswers[quiz.id] = {};
         initialEditedAnswers[quiz.id] = quiz.answer;
+        initialShowImage[quiz.id] = true;
         if (Array.isArray(quiz.correct_answer)) {
           quiz.correct_answer.forEach((correctAnswer) => {
             const correctIndex = quiz.answer.findIndex((answer) => answer === correctAnswer);
@@ -57,6 +61,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
       });
       setCheckedAnswers(initialCheckedAnswers);
       setEditedAnswers(initialEditedAnswers);
+      setShowImage(initialShowImage);
     }
   }, [quizzes]);
 
@@ -98,7 +103,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
         question: currentQuiz?.question || "",
         answer: editedAnswers[quizId].slice(0, currentQuiz?.answer.length || 0),
         correct_answer: checkedIndices.map((index) => currentQuiz?.answer[index] || ""),
-        url: uploadedFiles[quizId] || undefined,
+        url: uploadedFiles[quizId] === null ? "" : uploadedFiles[quizId],
         _method: "put",
       };
 
@@ -179,6 +184,26 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
       return updatedFiles;
     });
   };
+
+  const handleHideImage = (quizId: number) => {
+    setShowImage((prevState) => ({
+      ...prevState,
+      [quizId]: false,
+    }));
+    setUploadedFiles((prevFiles) => ({
+      ...prevFiles,
+      [quizId]: null,
+    }));
+  };
+
+  const handleCancelClick = (quizId: number) => {
+    setIsCancelled(true);
+    setShowImage((prevState) => ({
+      ...prevState,
+      [quizId]: true,
+    }));
+  };
+
   if (quizzes === null || quizzes === undefined) {
     return <div>ქვიზი ვერ მოიძებნა...</div>;
   }
@@ -210,7 +235,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                     <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleSaveQuiz(quiz.id)}>
                       შენახვა
                     </button>
-                    <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => setIsCancelled(true)}>
+                    <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleCancelClick(quiz.id)}>
                       გაუქმება
                     </button>
                   </div>
@@ -219,7 +244,19 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                 )}
               </span>
             </div>
-            {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
+            {quiz.url === null || showImage[quiz.id] === false ? "" : <img src={`http://192.168.1.106:8000/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
+            {editingQuizId === quiz.id && (
+              <>
+                {showImage && quiz.url && (
+                  <div className="flex gap-10 items-center">
+                    <button className="text-white bg-[#FF3333] py-[13px] px-2 rounded-lg cursor-pointer w-[149px]" onClick={() => handleHideImage(quiz.id)}>
+                      წაშალე ფოტო
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+
             {editingQuizId === quiz.id && (
               <>
                 {uploadedFiles[quiz.id] ? (
