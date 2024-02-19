@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://smarteducation.shop/smarteducation_backend/public/api/";
+const url = "http://192.168.99.238:8000/api/";
 import { parseCookies } from "nookies";
 
 export const storeCategory = async (data: any) => {

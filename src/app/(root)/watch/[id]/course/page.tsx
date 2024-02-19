@@ -28,9 +28,10 @@ const Page = () => {
     setIsClient(true);
   }, []);
 
-  if (isDesktop) {
+  /* if (isDesktop) {
     router.push(currentPath + "/1");
   }
+  */
   return <div>{isClient && <Navigation id={params.id} />}</div>;
 };
 
