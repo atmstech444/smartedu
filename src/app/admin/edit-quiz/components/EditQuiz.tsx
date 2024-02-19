@@ -4,6 +4,7 @@ import { Quiz } from "../page";
 import { useRouter } from "next/navigation";
 import { parseCookies } from "nookies";
 import { editQuiz } from "../services/editQuiz";
+import { boolean } from "yup";
 
 interface QuizPageProps {
   quizzes: Quiz[] | null;
@@ -22,6 +23,8 @@ interface QuizData {
   question: string;
   answer: string[];
   correct_answer: string[];
+  url?: any;
+  _method: any;
 }
 
 const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPageProps) => {
@@ -32,14 +35,20 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
   const [editingQuizId, setEditingQuizId] = useState<number | null>(null);
   const [newAnswer, setNewAnswer] = useState<string>("");
   const [editedQuestion, setEditedQuestion] = useState<string>("");
-  const [editedAnswers, setEditedAnswers] = useState<string[]>([]);
-  const [_, setIsCancelled] = useState(false);
+  const [editedAnswers, setEditedAnswers] = useState<{ [quizId: number]: string[] }>({});
+  const [isCancel, setIsCancelled] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<{ [quizId: number]: File | null }>({});
+  const [showImage, setShowImage] = useState<{ [quizId: number]: boolean }>({});
 
   useEffect(() => {
     if (quizzes) {
       const initialCheckedAnswers: CheckedAnswers = {};
+      const initialEditedAnswers: { [quizId: number]: string[] } = {};
+      const initialShowImage: { [quizId: number]: boolean } = {};
       quizzes.forEach((quiz) => {
         initialCheckedAnswers[quiz.id] = {};
+        initialEditedAnswers[quiz.id] = quiz.answer;
+        initialShowImage[quiz.id] = true;
         if (Array.isArray(quiz.correct_answer)) {
           quiz.correct_answer.forEach((correctAnswer) => {
             const correctIndex = quiz.answer.findIndex((answer) => answer === correctAnswer);
@@ -50,6 +59,8 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
         }
       });
       setCheckedAnswers(initialCheckedAnswers);
+      setEditedAnswers(initialEditedAnswers);
+      setShowImage(initialShowImage);
     }
   }, [quizzes]);
 
@@ -71,32 +82,29 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
     try {
       const currentQuiz = quizzes?.find((quiz) => quiz.id === quizId);
 
-      const updatedQuizData: QuizData = {
-        question: currentQuiz?.question || "",
-        answer: currentQuiz?.answer || [],
-        correct_answer: currentQuiz?.correct_answer || [],
-      };
-
-      if (editedQuestion !== "") {
-        updatedQuizData.question = editedQuestion;
-      }
-
-      if (editedAnswers.length > 0) {
-        updatedQuizData.answer = editedAnswers;
-      }
-
       const checkedIndices = Object.entries(checkedAnswers[quizId] || {})
         .filter(([index, isChecked]) => isChecked)
         .map(([index]) => parseInt(index, 10));
 
-      if (checkedIndices.length === 0) {
-        updatedQuizData.correct_answer = currentQuiz?.correct_answer || [];
-      } else {
-        updatedQuizData.correct_answer = checkedIndices.map((index) => updatedQuizData.answer[index]);
+      const newAnswerIndex = editedAnswers[quizId].length - 1;
+      if (checkedAnswers[quizId]?.[newAnswerIndex]) {
+        checkedIndices.push(newAnswerIndex);
+      }
+
+      const updatedQuizData: QuizData = {
+        question: currentQuiz?.question || "",
+        answer: editedAnswers[quizId].slice(0, currentQuiz?.answer.length || 0),
+        correct_answer: checkedIndices.map((index) => currentQuiz?.answer[index] || ""),
+        url: uploadedFiles[quizId] === null ? "" : uploadedFiles[quizId],
+        _method: "put",
+      };
+
+      if (uploadedFiles[quizId] !== null && uploadedFiles[quizId] !== undefined) {
       }
 
       const response = await editQuiz(token, quizId, updatedQuizData);
-      if ((response.message = "successfully update quiz")) {
+
+      if (response.message === "successfully update quiz") {
         setQuizData((prevQuizData: any[]) => {
           if (!prevQuizData) return null;
           return prevQuizData.map((quiz) => {
@@ -106,6 +114,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                 question: updatedQuizData.question,
                 answer: updatedQuizData.answer,
                 correct_answer: updatedQuizData.correct_answer,
+                url: response.quiz.url,
               };
             }
             return quiz;
@@ -114,7 +123,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
       }
 
       setEditedQuestion("");
-      setEditedAnswers([]);
+      setEditedAnswers({});
       setCheckedAnswers({});
     } catch (error) {
       console.error("Error saving quiz:", error);
@@ -123,9 +132,14 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
 
   const handleAddAnswer = (quizId: number) => {
     if (!quizzes) return;
+    const newAnswers = [...editedAnswers[quizId], newAnswer];
+    setEditedAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [quizId]: newAnswers,
+    }));
     onAddAnswer(quizId, newAnswer);
     setNewAnswer("");
-    const newAnswerIndex = quizzes.find((quiz) => quiz.id === quizId)?.answer.length || 0;
+    const newAnswerIndex = newAnswers.length - 1;
     setCheckedAnswers((prevState) => ({
       ...prevState,
       [quizId]: {
@@ -133,12 +147,50 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
         [newAnswerIndex]: false,
       },
     }));
-    setEditedAnswers((prevAnswers) => [...prevAnswers, newAnswer]);
   };
 
   const handleDeleteAnswer = (quizId: number, answerIndex: number) => {
     onDeleteAnswer(quizId, answerIndex);
-    setEditedAnswers((prevAnswers) => prevAnswers.filter((_, index) => index !== answerIndex));
+    setEditedAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [quizId]: prevAnswers[quizId].filter((_, index) => index !== answerIndex),
+    }));
+  };
+
+  const handleFileUpload = (id: number, file: File | undefined) => {
+    if (file) {
+      setUploadedFiles((prevFiles) => ({
+        ...prevFiles,
+        [id]: file,
+      }));
+    }
+  };
+
+  const handleFileDelete = (id: number) => {
+    setUploadedFiles((prevFiles) => {
+      const updatedFiles = { ...prevFiles };
+      delete updatedFiles[id];
+      return updatedFiles;
+    });
+  };
+
+  const handleHideImage = (quizId: number) => {
+    setShowImage((prevState) => ({
+      ...prevState,
+      [quizId]: false,
+    }));
+    setUploadedFiles((prevFiles) => ({
+      ...prevFiles,
+      [quizId]: null,
+    }));
+  };
+
+  const handleCancelClick = (quizId: number) => {
+    setIsCancelled(true);
+    setShowImage((prevState) => ({
+      ...prevState,
+      [quizId]: true,
+    }));
   };
 
   if (quizzes === null || quizzes === undefined) {
@@ -172,7 +224,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                     <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleSaveQuiz(quiz.id)}>
                       შენახვა
                     </button>
-                    <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => setIsCancelled(true)}>
+                    <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={() => handleCancelClick(quiz.id)}>
                       გაუქმება
                     </button>
                   </div>
@@ -181,7 +233,38 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                 )}
               </span>
             </div>
-            {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
+            {quiz.url === null || showImage[quiz.id] === false ? "" : <img src={`http://192.168.1.106:8000/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
+            {editingQuizId === quiz.id && (
+              <>
+                {showImage && quiz.url && (
+                  <div className="flex gap-10 items-center">
+                    <button className="text-white bg-[#FF3333] py-[13px] px-2 rounded-lg cursor-pointer w-[149px]" onClick={() => handleHideImage(quiz.id)}>
+                      წაშალე ფოტო
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+
+            {editingQuizId === quiz.id && (
+              <>
+                {uploadedFiles[quiz.id] ? (
+                  <div className="flex items-center gap-2">
+                    <img src={URL.createObjectURL(uploadedFiles[quiz.id] as Blob)} alt={uploadedFiles[quiz.id]?.name} className="h-8 w-auto" />
+                    <p>{uploadedFiles[quiz.id]?.name}</p>
+                    <button onClick={() => handleFileDelete(quiz.id)} className="text-white bg-[#FF3333] py-1 px-2 rounded-lg w-[100px] text-sm">
+                      წაშალე ფაილი
+                    </button>
+                  </div>
+                ) : (
+                  <label htmlFor={`file_${quiz.id}`} className="bg-[#2FA8FF] text-white py-[13px] px-2 rounded-lg cursor-pointer">
+                    ატვირთე ფაილი
+                    <input id={`file_${quiz.id}`} type="file" className="hidden" onChange={(e) => handleFileUpload(quiz.id, e.target.files?.[0])} />
+                  </label>
+                )}
+                <div className="flex flex-col gap-2"></div>
+              </>
+            )}
 
             <div className=" w-full">
               {quiz.answer.map((answer, answerIndex) => (
@@ -193,8 +276,8 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                       defaultValue={answer}
                       className="rounded-md p-1 mt-2 outline-none border border-[#2FA8FF] "
                       onChange={(e) => {
-                        const newAnswers = [...editedAnswers];
-                        newAnswers[answerIndex] = e.target.value;
+                        const newAnswers = { ...editedAnswers };
+                        newAnswers[quiz.id][answerIndex] = e.target.value;
                         setEditedAnswers(newAnswers);
                       }}
                     />
