@@ -19,10 +19,17 @@ const SecondaryNav = (id: { id: any }) => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(lectureDetail);
+
   return (
     <>
-      <div className="mt-[20%] p-[24px] md:mt-0 md:w-[30%] lg:w-[20%] bg-white rounded-md md:h-full">secondary Nav</div>
+      <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[20%] bg-white rounded-md md:h-full">
+        secondary Nav
+        <h3>dcdc</h3>
+        <h3>dcdc</h3>
+        <h3>dcdc</h3>
+        <h3>dcdc</h3>
+        <h3>dcdc</h3>
+      </div>
     </>
   );
 };
