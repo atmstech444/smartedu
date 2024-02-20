@@ -8,7 +8,7 @@ import arrow from "@/public/assets/icons/arrowLeft.svg";
 import nav from "@/public/assets/icons/nav.svg";
 import Link from "next/link";
 import { useAppDispatch } from "@/redux/store";
-import { closeNavbar } from "@/redux/slices/MobileMenuSlice";
+import { closeNavbar } from "@/redux/slices/mobileMenuSlice";
 import { useAppSelector } from "@/redux/store";
 
 interface Props {
