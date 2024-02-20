@@ -1,4 +1,3 @@
-import { I_Course } from "@/api/GET_Courses";
 import { LectureTypes } from "@/app/(root)/watch/[id]/course/Lecture";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
