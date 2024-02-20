@@ -54,7 +54,7 @@ const ReadingPage = ({ readingsData, setReadingsData }: any) => {
         <div key={index} className="flex flex-col gap-6 items-start">
           <h3 className="font-normal text-base text-black">{reading.description}</h3>
           <ul>
-            {reading.url.map((url, urlIndex) => (
+            {reading?.url?.map((url, urlIndex) => (
               <li key={urlIndex}>
                 <a href={url} target="_blank" rel="noopener noreferrer" className="text-[#006CFA] font-normal text-base">
                   {url}
