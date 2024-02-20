@@ -1,16 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getAllCourses } from "../../main/services/getCourses";
+import { parseCookies } from "nookies";
 
 interface Lecture {
   id: any;
   name: any;
 }
 
-const Navbar = ({ lectures, courseData, onLectureClick }: { lectures: Lecture[]; courseData: any; onLectureClick: (lectureId: number) => void }) => {
+interface CourseDataProps {
+  title: string;
+  cover_image: string;
+}
+
+const Navbar = ({ lectures,  }: { lectures: Lecture[] }) => {
+  const cookies = parseCookies();
+  const token = cookies.authToken;
   const router = useRouter();
   const [currentLectureId, setCurrentLectureId] = useState<number | null>(null);
-
+  const [courseData, setCourseData] = useState<CourseDataProps | null>(null);
   const handleOpenTabs = (lectureId: number) => {
     const lecturesData = lectures.map((lecture) => ({
       id: lecture.id,
@@ -22,11 +31,28 @@ const Navbar = ({ lectures, courseData, onLectureClick }: { lectures: Lecture[];
     }, 200);
   };
 
+  useEffect(() => {
+    const fetchAllCourses = async () => {
+      try {
+        const data = await getAllCourses(token);
+        setCourseData(data.courses[0]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchAllCourses();
+  }, [token]);
+
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
-        <img src={`https://smarteducation.shop/smarteducation_backend/public/${courseData?.cover_image}`} className="rounded-2xl" />
-        <p className="text-base text-black font-semibold">{courseData?.title}</p>
+        {courseData && (
+          <>
+            <img src={`https://smarteducation.shop/smarteducation_backend/public/${courseData?.cover_image}`} className="rounded-2xl" />
+            <p className="text-base text-black font-semibold">{courseData?.title}</p>
+          </>
+        )}
+
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
 
         {lectures.map((lecture) => (

@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import EditQuiz from "./components/EditQuiz";
 import { getQuiz } from "../quizzes/services/getQuiz";
 import Header from "@/components/Header";
+import { getAllCourses } from "../main/services/getCourses";
 
 export interface Quiz {
   answer: string[];
@@ -21,14 +22,17 @@ interface Lecture {
 }
 
 const useQueryParams = () => {
+  const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
   const [lectures, setLectures] = useState<Lecture[]>([]);
-  const [courseData, setCourseData] = useState<Quiz[] | null>(null);
+  const [courseData, setCourseData] = useState<any | null>(null);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("lectureId");
     const lecturesParam = searchParams.get("lectures");
     const courseDataParam = searchParams.get("courseData");
 
+    setLectureId(id);
     if (lecturesParam) {
       const lecturesArray: Lecture[] = JSON.parse(decodeURIComponent(lecturesParam));
       setLectures(lecturesArray);
@@ -40,13 +44,13 @@ const useQueryParams = () => {
     }
   }, []);
 
-  return { lectures, courseData };
+  return { lectureId, lectures, courseData };
 };
 
 const Page = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const { lectures } = useQueryParams();
+  const { lectures, courseData } = useQueryParams();
   const [, setActiveTab] = useState("");
   const [, setRefreshTabs] = useState(false);
   const [quizData, setQuizData] = useState<Quiz[] | null>(null);
@@ -114,7 +118,7 @@ const Page = () => {
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} courseData={undefined} onLectureClick={handleLectureClick} />
+        <Navbar lectures={lectures}  />
         <div className="w-[45%] mt-6 mb-20">
           <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} />
         </div>
