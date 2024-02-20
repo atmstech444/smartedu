@@ -5,18 +5,20 @@ import SecondaryNav from "../../../../components/SecondaryNav";
 import Image from "next/image";
 import Arrow from "../../../../../../../public/assets/icons/arrowLeft.svg";
 import { useParams, useRouter } from "next/navigation";
+import { useAppSelector } from "@/redux/store";
 
 interface Props {
-  lectureDetail?: LectureTypes | undefined;
   id: any;
 }
-const QuizScore = ({ id, lectureDetail }: Props) => {
+const QuizScore = ({ id }: Props) => {
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
   const router = useRouter();
 
   const toggleMenuVisibility = () => {
     setIsMenuOpened((prev) => !prev);
   };
+  const lectureDetail = useAppSelector((state) => state.lecture.lecture);
+
   const params = useParams();
   const navigateToQuiz = () => {
     router.push(`/watch/${params.id}/quiz/${lectureDetail?.id}/start`);
@@ -26,7 +28,7 @@ const QuizScore = ({ id, lectureDetail }: Props) => {
       <main className="relative w-full bg-white">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-            <SecondaryNav id={id} lectureDetail={lectureDetail} />
+            <SecondaryNav id={id} />
           </UserMobileMenu>
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] md:w-[80%] lg:w-[90%]   rounded-md">

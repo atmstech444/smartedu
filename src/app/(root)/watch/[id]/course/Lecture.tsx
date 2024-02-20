@@ -8,6 +8,8 @@ import { useAppSelector } from "@/redux/store";
 import Book from "@/public/assets/icons/book.svg";
 import Quizzes from "@/public/assets/icons/archive-book.svg";
 import Video from "@/public/assets/icons/video-circle.svg";
+import { useDispatch } from "react-redux";
+import { setLecture } from "@/redux/slices/lectureDetail";
 
 export interface LectureTypes {
   course_id: number;
@@ -36,22 +38,25 @@ interface Quizzes {
 }
 
 const Lecture = (id: { id: any }) => {
-  const [lectureDetail, setLectureDetail] = useState<LectureTypes>();
   const router = useRouter();
   const params = useParams();
   const token = useAppSelector((state) => state.user.user?.token);
+  const dispatch = useDispatch();
 
   const fetchData = async () => {
     try {
       const lectureDetail = await Get_Lecture_Detail(params.courseId, token);
-      setLectureDetail(lectureDetail.lecture[0]);
+      dispatch(setLecture(lectureDetail.lecture[0]));
     } catch (error) {
       console.error("Error fetching lecture detail:", error);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  const lectureDetail = useAppSelector((state) => state.lecture.lecture);
 
   const navigateToReading = (lectureId: any) => {
     router.push(`/watch/${id.id}/reading/${lectureId}`);
@@ -62,6 +67,7 @@ const Lecture = (id: { id: any }) => {
   const navigateToQuiz = (id: any) => {
     router.push(`/watch/${params.id}/quiz/${id}`);
   };
+
   return (
     <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md ">
       <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />

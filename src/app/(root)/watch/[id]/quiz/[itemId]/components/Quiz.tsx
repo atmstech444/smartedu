@@ -7,16 +7,17 @@ import UserMobileMenu from "../../../../components/UserMobileMenu";
 import { LectureTypes } from "../../../course/Lecture";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/redux/store";
 
 interface Props {
-  lectureDetail?: LectureTypes | undefined;
+  // lectureDetail?: LectureTypes | undefined;
   id: any;
 }
 
 interface AnswerState {
   [questionIndex: number]: number;
 }
-const Quiz = ({ id, lectureDetail }: Props) => {
+const Quiz = ({ id }: Props) => {
   const params = useParams();
   const router = useRouter();
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
@@ -28,6 +29,8 @@ const Quiz = ({ id, lectureDetail }: Props) => {
       [questionIndex]: answerIndex,
     }));
   };
+
+  const lectureDetail = useAppSelector((state) => state.lecture.lecture);
 
   const toggleMenuVisibility = () => {
     setIsMenuOpened((prev) => !prev);
@@ -43,7 +46,7 @@ const Quiz = ({ id, lectureDetail }: Props) => {
       <main className="relative w-full bg-white">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-            <SecondaryNav id={id} lectureDetail={lectureDetail} />
+            <SecondaryNav id={id} />
           </UserMobileMenu>
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] md:w-[80%] lg:w-[90%]   rounded-md">
