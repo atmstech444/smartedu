@@ -9,7 +9,7 @@ export const deleteTutor = async (token: any, id: number) => {
   };
   try {
     const { data } = await axios.delete(
-      `http://192.168.99.238:8000/admin/lecturer/${id}`,
+      `https://smarteducation.shop/smarteducation_backend/public/admin/lecturer/${id}`,
       config
     );
     return data;

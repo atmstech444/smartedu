@@ -9,7 +9,7 @@ export const addTutor = async (token: any, newData: any) => {
   };
   try {
     const { data } = await axios.post(
-      "http://192.168.99.238:8000/admin/lecturer/store",
+      "https://smarteducation.shop/smarteducation_backend/public/admin/lecturer/store",
       newData,
       config
     );
