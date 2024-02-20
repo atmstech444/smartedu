@@ -11,16 +11,15 @@ import { useAppDispatch } from "@/redux/store";
 import { closeNavbar } from "@/redux/slices/MobileMenuSlice";
 import { useAppSelector } from "@/redux/store";
 
-
 interface Props {
   id: any;
 }
 
-
 const SecondaryNav = ({ id }: Props) => {
- const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const closeMenu = () => {
     dispatch(closeNavbar());
+  };
   const params = useParams();
   const pathName = usePathname();
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
