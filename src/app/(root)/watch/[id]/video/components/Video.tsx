@@ -34,7 +34,7 @@ const Video = ({ id, lectureDetail }: Props) => {
           <div>ვიდეო</div>
           {lectureDetail?.videos[0].video && (
             <video controls className="rounded-lg">
-              <source src={`http://192.168.1.106:8000/${video?.video}`} type="video/mp4" />
+              <source src={`https://smarteducation.shop/smarteducation_backend/public/${video?.video}`} type="video/mp4" />
             </video>
           )}
         </div>

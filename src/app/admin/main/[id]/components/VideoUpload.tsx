@@ -167,7 +167,7 @@ const VideoUpload = () => {
                 </h1>
                 {videosData && (
                   <video controls className="rounded-lg">
-                    <source src={`http://192.168.1.106:8000/${video?.video}`} type="video/mp4" />
+                    <source src={`https://smarteducation.shop/smarteducation_backend/public/${video?.video}`} type="video/mp4" />
                   </video>
                 )}
 
