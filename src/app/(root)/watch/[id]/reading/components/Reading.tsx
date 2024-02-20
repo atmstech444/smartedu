@@ -7,23 +7,24 @@ import UserMobileMenu from "../../../components/UserMobileMenu";
 import { LectureTypes } from "../../course/Lecture";
 import icon from "../../../../../../public/assets/icons/Export.svg";
 import arrow from "../../../../../../public/assets/icons/arrowrightblue.svg";
+import { useAppSelector } from "@/redux/store";
 interface Props {
   lectureDetail?: LectureTypes | undefined;
   id: any;
 }
-const Reading = ({ id, lectureDetail }: Props) => {
+const Reading = ({ id }: Props) => {
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
   const toggleMenuVisibility = () => {
     setIsMenuOpened((prev) => !prev);
   };
+  const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const reading = lectureDetail?.readings;
-  console.log(lectureDetail);
   return (
     <>
       <main className="relative w-full">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-            <SecondaryNav id={id} lectureDetail={lectureDetail} />
+            <SecondaryNav id={id} />
           </UserMobileMenu>
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] md:w-[80%] lg:w-[90%]  bg-white rounded-md">
