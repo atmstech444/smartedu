@@ -1,7 +1,5 @@
-import { useParams, useRouter } from "next/navigation";
 import React from "react";
-import { LectureTypes } from "../[id]/course/Lecture";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Image from "next/image";
 import Book from "@/public/assets/icons/book.svg";
 import Quizzes from "@/public/assets/icons/archive-book.svg";
@@ -65,7 +63,9 @@ const SecondaryNav = ({ id }: Props) => {
         {lectureDetail && lectureDetail.quizzes !== null && (
           <Link
             href={`/watch/${params.id}/quiz/${lectureDetail.id}`}
-            className={`text-mainGray flex gap-4 text-base rounded-md p-3  cursor-pointer ${pathName === `/watch/${params.id}/quiz/${lectureDetail.id}` ? "bg-lightestBlue" : "bg-transparent"}`}
+            className={`text-mainGray flex gap-4 text-base rounded-md p-3 cursor-pointer ${
+              pathName === `/watch/${params.id}/quiz/${lectureDetail.id}` || pathName === `/watch/${params.id}/quiz/${lectureDetail.id}/start` ? "bg-lightestBlue" : "bg-transparent"
+            }`}
           >
             <Image alt="quizzes" src={Quizzes} />
             <div>
