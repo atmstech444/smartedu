@@ -9,6 +9,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import { deleteVideo } from "../services/deleteVideo";
 import ChunkedVideoUpload from "./ChunkedVideoUpload";
 import LectureTitleAndDescription from "./LectureTitleAndDescription";
+import VideoUploadModal from "./VideoUploadModal";
 
 interface Video {
   id: number;
@@ -37,6 +38,7 @@ const VideoUpload = () => {
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
   const [currentChunk, setCurrentChunk] = useState<number | null>(null);
   const [totalSizeUploaded, setTotalSizeUploaded] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleFileInputChange = (event: any) => {
     const file = event.target.files[0];
@@ -47,7 +49,7 @@ const VideoUpload = () => {
     if (!videoFile) {
       return;
     }
-
+    setIsModalOpen(false);
     const formData = new FormData();
     formData.append("video", videoFile);
 
@@ -60,6 +62,7 @@ const VideoUpload = () => {
         setTotalSizeUploaded(loaded);
       });
       if (response.message === "Video uploaded successfully") {
+        setIsModalOpen(false);
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -68,6 +71,7 @@ const VideoUpload = () => {
         });
         fetchData();
       } else {
+        setIsModalOpen(true);
         console.error("An unexpected error occurred");
         Swal.fire({
           icon: "warning",
@@ -110,7 +114,6 @@ const VideoUpload = () => {
       if (response.message === "video remove successfully") {
         const updatedVideosData = videosData.filter((video) => video.id !== idToDelete);
         setVideosData(updatedVideosData);
-
         Swal.fire({
           icon: "success",
           title: response.message,
@@ -133,29 +136,13 @@ const VideoUpload = () => {
   return (
     <div className="grid grid-cols-6 w-full">
       <div className="flex flex-col gap-3 col-span-5">
-        {videoFile && (
-          <div className="flex flex-col gap-2 w-[300px]">
-            <video controls className="rounded-lg">
-              <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-
-            <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleDeleteVideo}>
-              წაშლა
-            </button>
-          </div>
-        )}
-
-        {!videoFile && (
-          <div className="flex flex-col gap-3 cursor-pointer w-[145px]">
-            <h1>ვიდეო</h1>
-            <label className="flex flex-col items-center gap-[6px] pt-3 pb-[6px] px-4 bg-[#EEE] rounded-lg w-36 cursor-pointer">
-              <Image src="/assets/img/admin/AddVideo.png" alt={""} width={25} height={27} />
-              <p className="text-xs text-[#CACACA] font-medium">ვიდეოს ატვირთვა</p>
-              <input type="file" className="hidden" onChange={handleFileInputChange} />
-            </label>
-          </div>
-        )}
+        <div className="flex flex-col gap-3 cursor-pointer w-[145px]">
+          <h1>ვიდეო</h1>
+          <label className="flex flex-col items-center gap-[6px] pt-3 pb-[6px] px-4 bg-[#EEE] rounded-lg w-36 cursor-pointer" onClick={() => setIsModalOpen(true)}>
+            <Image src="/assets/img/admin/AddVideo.png" alt={""} width={25} height={27} />
+            <p className="text-xs text-[#CACACA] font-medium">ვიდეოს ატვირთვა</p>
+          </label>
+        </div>
 
         {videosData.length === 0 && (
           <div className="">
@@ -184,13 +171,7 @@ const VideoUpload = () => {
         {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} currentChunk={currentChunk} totalSizeUploaded={totalSizeUploaded} />}
       </div>
 
-      <div className="col-span-1">
-        <div className="w-full flex mt-[300px] col-span-2">
-          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleVideoupload}>
-            შენახვა
-          </button>
-        </div>
-      </div>
+      {isModalOpen && <VideoUploadModal closeModal={() => setIsModalOpen(false)} handleFileInputChange={handleFileInputChange} handleVideoupload={handleVideoupload} videoFile={videoFile} handleDeleteVideo={handleDeleteVideo} />}
     </div>
   );
 };
