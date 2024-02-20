@@ -36,7 +36,6 @@ const VideoUpload = () => {
   const [videosData, setVideosData] = useState<Video[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
-  const [currentChunk, setCurrentChunk] = useState<number | null>(null);
   const [totalSizeUploaded, setTotalSizeUploaded] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -168,7 +167,7 @@ const VideoUpload = () => {
           </div>
         )}
 
-        {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} currentChunk={currentChunk} totalSizeUploaded={totalSizeUploaded} />}
+        {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} totalSizeUploaded={totalSizeUploaded} />}
       </div>
 
       {isModalOpen && <VideoUploadModal closeModal={() => setIsModalOpen(false)} handleFileInputChange={handleFileInputChange} handleVideoupload={handleVideoupload} videoFile={videoFile} handleDeleteVideo={handleDeleteVideo} />}
