@@ -189,7 +189,7 @@ const AddCourse = () => {
               {errorMessages.course_category && <p className="text-red pt-2 pl-10 w-full">{errorMessages.course_category[0]}</p>}
 
               <CourseDetails selectedIntro={selectedIntro} onIntroUpload={handleIntroUpload} onDeleteIntro={handleDeleteIntro} selectedLecture={selectedLecture} onLectureChange={handleLectureChange} errorMessages={errorMessages} />
-              <button className="mt-14 mb-28 py-3 px-12 bg-dark rounded-[32px] text-white self-center" onClick={handleCreate} disabled={isLoading}>
+              <button className="mt-14 mb-28 py-3 px-12 bg-[#006CFA]  rounded-[32px] text-white self-center" onClick={handleCreate} disabled={isLoading}>
                 {isLoading ? <LoadingSpinner /> : "შენახვა"}
               </button>
             </div>

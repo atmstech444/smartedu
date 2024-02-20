@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+"use client";
+import React, { useRef, useState } from "react";
 import CustomSelect from "./CustomSelect";
 // @ts-ignore
 import { OptionsType } from "react-select";
@@ -12,11 +13,22 @@ interface CourseDetailsProps {
 }
 
 const CourseDetailsComponent: React.FC<CourseDetailsProps> = ({ data, lectures, selectedLecturerId, handleLecturerChange, handleFileChange }) => {
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const options: OptionsType<any> = lectures.map((lecturer: { id: any; first_name: any; last_name: any }) => ({
     value: lecturer.id,
     label: `${lecturer.first_name} ${lecturer.last_name}`,
   }));
+
+  const [uploadedVideo, setUploadedVideo] = useState<File | null>(null);
+
+  const handleDelete = () => {
+    setUploadedVideo(null);
+    if (videoRef.current) {
+      videoRef.current.src = "";
+    }
+  };
+
+  console.log(uploadedVideo);
 
   return (
     <div className="mt-16 flex flex-col items-start gap-6 pr-4 w-[355px]">
@@ -25,23 +37,37 @@ const CourseDetailsComponent: React.FC<CourseDetailsProps> = ({ data, lectures, 
       <div className="rounded-[32px] shadow-shad p-5 mr-5">
         <h1 className=" text-dark text-base font-normal">ინტროს რედაქტირება</h1>
         <div className="my-2">
-          {data.intro && (
-            <video controls ref={videoRef}>
-              <source src={`https://smarteducation.shop/smarteducation_backend/public/${data.intro}`} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          {!uploadedVideo && data.intro && (
+            <div className="flex flex-col gap-3">
+              <video controls ref={videoRef} className="w-full">
+                <source src={`https://smarteducation.shop/smarteducation_backend/public/${data.intro}`} type="video/mp4" className="w-full" />
+                Your browser does not support the video tag.
+              </video>
+              <input
+                type="file"
+                className="w-[215px] mt-5"
+                onChange={(e) => {
+                  const selectedFile = e.target?.files?.[0];
+                  if (selectedFile) {
+                    setUploadedVideo(selectedFile);
+                    handleFileChange(selectedFile);
+                  }
+                }}
+              />
+            </div>
           )}
 
-          <input
-            type="file"
-            className="w-[215px] mt-5"
-            onChange={(e) => {
-              const selectedFile = e.target?.files?.[0];
-              if (selectedFile) {
-                handleFileChange(selectedFile);
-              }
-            }}
-          />
+          {uploadedVideo && (
+            <div className="flex flex-col gap-10">
+              <video controls>
+                <source src={URL.createObjectURL(uploadedVideo)} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <button className="cursor-pointer text-red-500 bg-[#006CFA] p-2 rounded-md text-white" onClick={handleDelete}>
+                წაშლა
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-4">

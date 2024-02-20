@@ -35,7 +35,7 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
       // localStorage.removeItem(`course_${id}`);
     };
   }, [id, data]);
-  
+
   const handleClick = (e: any) => {
     e.stopPropagation();
     router.push(`/admin/main/${id}`);
@@ -93,9 +93,16 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
             <h2>ნამდვილად გსურთ წაშალოთ კურსი</h2>
             <p>{data.title}</p>
             <div className="flex gap-4 mt-5">
-              <button className="bg-dark rounded-mediumBorder py-3 px-8 text-white  transition-all ease-in-out delay-150 hover:opacity-75" onClick={() => handleDeleteLecture(data.id)}>
+              <button
+                className="bg-dark rounded-mediumBorder py-3 px-8 text-white  transition-all ease-in-out delay-150 hover:opacity-75"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteLecture(data.id);
+                }}
+              >
                 დადასტურება
               </button>
+
               <button className="bg-transparent border border-dark rounded-mediumBorder py-3 px-10 text-dark  transition-all ease-in-out delay-150 hover:opacity-75" onClick={closeModal}>
                 უარყოფა
               </button>
