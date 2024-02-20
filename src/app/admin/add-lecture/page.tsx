@@ -82,7 +82,7 @@ const AddLecturePage = () => {
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} courseData={courseData} onLectureClick={handleLectureClick} />
+        <Navbar lectures={lectures} />
         <div className="flex flex-col gap-10  mt-11 w-[97%]">
           <Tabs activeTab={activeTab} setActiveTab={setActiveTab} lectureNames={lectureNames} key={refreshTabs ? "refreshed" : "not-refreshed"} />
           {content}

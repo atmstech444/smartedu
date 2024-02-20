@@ -1,7 +1,7 @@
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { LectureTypes } from "../[id]/course/Lecture";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Book from "@/public/assets/icons/book.svg";
 import Quizzes from "@/public/assets/icons/archive-book.svg";

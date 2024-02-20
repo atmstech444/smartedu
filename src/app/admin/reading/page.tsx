@@ -81,10 +81,6 @@ const Page = () => {
       <div className="flex gap-8 w-[100%]">
         <Navbar
           lectures={lectures}
-          courseData={undefined}
-          onLectureClick={function (lectureId: number): void {
-            throw new Error("Function not implemented.");
-          }}
         />
         <div className="flex justify-between w-[85%] mt-6">
           <ReadingPage readingsData={readingsData} setReadingsData={setReadingsData} />
