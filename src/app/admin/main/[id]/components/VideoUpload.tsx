@@ -14,6 +14,7 @@ import VideoUploadModal from "./VideoUploadModal";
 interface Video {
   id: number;
   video: string;
+  title: string;
 }
 
 const useQueryParams = () => {
@@ -33,6 +34,7 @@ const VideoUpload = () => {
   const token = cookies.authToken;
   const lectureId = useQueryParams();
   const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [title, setTitle] = useState<string>("");
   const [videosData, setVideosData] = useState<Video[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
@@ -46,11 +48,17 @@ const VideoUpload = () => {
 
   const handleVideoupload = async () => {
     if (!videoFile) {
+      alert("ატვირთეთ ვიდეო.");
+      return;
+    }
+    if (!title) {
+      alert("დაამატეთ სათაური");
       return;
     }
     setIsModalOpen(false);
     const formData = new FormData();
     formData.append("video", videoFile);
+    formData.append("title", title);
 
     try {
       setUploading(true);
@@ -96,6 +104,7 @@ const VideoUpload = () => {
     try {
       if (lectureId !== undefined) {
         const response = await getAllVideos(token, lectureId);
+        console.log(response);
         setVideosData(response.lecture_videos);
       }
     } catch (error) {
@@ -152,14 +161,17 @@ const VideoUpload = () => {
         {videosData.length > 0 && (
           <div className="flex gap-4 mt-4 flex-wrap mb-5">
             {videosData.map((video) => (
-              <div key={video.id} className="w-[200px] flex flex-col gap-2 items-center">
+              <div key={video.id} className="w-[400px] p-2 flex flex-col gap-2 items-start border border-1-[#D1D1D1] rounded-md">
+                <h1>
+                  <span className="text-lg font-bold">სათაური:</span> {video.title}
+                </h1>
                 {videosData && (
                   <video controls className="rounded-lg">
                     <source src={`http://192.168.1.106:8000/${video?.video}`} type="video/mp4" />
                   </video>
                 )}
 
-                <button className="text-white bg-[#2FA8FF] py-1 px-1 rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
+                <button className="text-white bg-[#2FA8FF] py-2 px-2 w-[150px] rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
                   წაშლა
                 </button>
               </div>
@@ -170,7 +182,9 @@ const VideoUpload = () => {
         {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} totalSizeUploaded={totalSizeUploaded} />}
       </div>
 
-      {isModalOpen && <VideoUploadModal closeModal={() => setIsModalOpen(false)} handleFileInputChange={handleFileInputChange} handleVideoupload={handleVideoupload} videoFile={videoFile} handleDeleteVideo={handleDeleteVideo} />}
+      {isModalOpen && (
+        <VideoUploadModal closeModal={() => setIsModalOpen(false)} handleFileInputChange={handleFileInputChange} handleVideoupload={handleVideoupload} videoFile={videoFile} handleDeleteVideo={handleDeleteVideo} title={title} setTitle={setTitle} />
+      )}
     </div>
   );
 };

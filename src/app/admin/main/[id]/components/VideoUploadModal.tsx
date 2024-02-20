@@ -7,23 +7,28 @@ interface VideoUploadModalProps {
   handleVideoupload: any;
   videoFile: any;
   handleDeleteVideo: any;
+  title: string;
+  setTitle: (title: string) => void;
 }
 
-const VideoUploadModal: React.FC<VideoUploadModalProps> = ({ closeModal, handleFileInputChange, handleVideoupload, videoFile, handleDeleteVideo }) => {
+const VideoUploadModal: React.FC<VideoUploadModalProps> = ({ closeModal, handleFileInputChange, handleVideoupload, videoFile, handleDeleteVideo, title, setTitle }) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg p-6 relative">
+      <div className="bg-white rounded-lg p-6 relative w-[500px]">
         <span className="absolute top-0 right-0 m-4 cursor-pointer" onClick={closeModal}>
           დახურვა
         </span>
         <div className="flex flex-col items-start gap-2 mt-10">
           <div className="w-full flex flex-col gap-3">
             <h1>სათაური</h1>
-            <input type="text" className="w-full border border-1-[#D1D1D1] outline-none bg-transparent rounded-md" />
+            <input type="text" className="w-full border border-1-[#D1D1D1] outline-none bg-transparent rounded-md" value={title} onChange={handleTitleChange} />
           </div>
 
           {videoFile && (
-            <div className="flex flex-col gap-2 w-[300px]">
+            <div className="flex flex-col gap-2 w-full">
               <video controls className="rounded-lg">
                 <source src={URL.createObjectURL(videoFile)} type="video/mp4" />
                 Your browser does not support the video tag.
