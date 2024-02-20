@@ -1,20 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Arrow from "../../../../../../public/assets/icons/arrowLeft.svg";
 import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
 import { LectureTypes } from "../../course/Lecture";
 import icon from "../../../../../../public/assets/icons/Export.svg";
-import arrow from "../../../../../../public/assets/icons/arrowrightblue.svg";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
+import { toggleNavbar } from "@/redux/slices/MobileMenuSlice";
+import NextButton from "../../../components/NextButton";
 interface Props {
   lectureDetail?: LectureTypes | undefined;
   id: any;
 }
 const Reading = ({ id, lectureDetail }: Props) => {
-  const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+  const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
+  const dispatch = useAppDispatch();
   const toggleMenuVisibility = () => {
-    setIsMenuOpened((prev) => !prev);
+    dispatch(toggleNavbar());
   };
   const reading = lectureDetail?.readings;
   console.log(lectureDetail);
@@ -30,10 +33,7 @@ const Reading = ({ id, lectureDetail }: Props) => {
           <Image src={Arrow} width="15" height="15" alt="back" className="md:hidden" onClick={toggleMenuVisibility} />
           <div className="flex items-center justify-between">
             <h3>მასალა</h3>
-            <div className="flex items-center gap-4 cursor-pointer">
-              <p className="mb-0 text-base text-mainBlue font-semibold">შემდეგი</p>
-              <Image src={arrow} alt="next" width="7" height="7" />
-            </div>
+            <NextButton />
           </div>
 
           <div className="mb-4">{reading && reading[0]?.description}</div>
