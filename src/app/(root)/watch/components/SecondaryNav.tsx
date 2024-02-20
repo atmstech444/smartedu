@@ -22,8 +22,9 @@ const SecondaryNav = ({ lectureDetail, id }: Props) => {
   const navigateToVideo = (id: any, videoId: any) => {
     router.push(`/watch/${params.id}/video/${id}/${videoId}`);
   };
-  console.log(lectureDetail);
-
+  const navigateToQuiz = (id: any) => {
+    router.push(`/watch/${params.id}/quiz/${id}`);
+  };
   return (
     <>
       <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full">
@@ -54,14 +55,14 @@ const SecondaryNav = ({ lectureDetail, id }: Props) => {
             <div className="flex gap-3 cursor-pointer mb-4" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
               <Image alt="video" src={Video} />
               <div>
-                <p className=" m-0 font-medium	 text-black">პროგრამირების საწყისები</p>
+                <p className=" m-0 font-medium	 text-black">{video.title}</p>
                 <p className=" m-0">ვიდეო</p>
               </div>
             </div>
           ))}
 
         {lectureDetail && lectureDetail.quizzes !== null && (
-          <div className="flex gap-3 cursor-pointer mb-4">
+          <div className="flex gap-3 cursor-pointer mb-4" onClick={() => navigateToQuiz(lectureDetail.id)}>
             <Image alt="quizzes" src={Quizzes} />
             <div>
               <p className=" m-0 font-medium text-black">ლექციის ბოლოს</p>

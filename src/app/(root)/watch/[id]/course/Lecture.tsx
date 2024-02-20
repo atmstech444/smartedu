@@ -24,6 +24,7 @@ export interface LectureTypes {
     duration: string;
     id: number;
     video: string;
+    title: string;
   }[];
 }
 interface Quizzes {
@@ -58,6 +59,9 @@ const Lecture = (id: { id: any }) => {
   const navigateToVideo = (id: any, videoId: any) => {
     router.push(`/watch/${params.id}/video/${id}/${videoId}`);
   };
+  const navigateToQuiz = (id: any) => {
+    router.push(`/watch/${params.id}/quiz/${id}`);
+  };
   return (
     <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md ">
       <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
@@ -83,14 +87,14 @@ const Lecture = (id: { id: any }) => {
           <div className="flex gap-3 cursor-pointer" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
             <Image alt="video" src={Video} />
             <div>
-              <p className=" m-0 font-medium	 text-black">პროგრამირების საწყისები</p>
+              <p className=" m-0 font-medium	 text-black">{video.title}</p>
               <p className=" m-0">ვიდეო</p>
             </div>
           </div>
         ))}
 
       {lectureDetail && lectureDetail.quizzes !== null && (
-        <div className="flex gap-3 cursor-pointer">
+        <div className="flex gap-3 cursor-pointer" onClick={() => navigateToQuiz(lectureDetail.id)}>
           <Image alt="quizzes" src={Quizzes} />
           <div>
             <p className=" m-0 font-medium text-black">ლექციის ბოლოს</p>

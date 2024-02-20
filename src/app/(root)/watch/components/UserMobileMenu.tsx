@@ -8,7 +8,6 @@ interface MobileMenuProps {
 }
 const UserMobileMenu = ({ isOpen, onClose, children }: MobileMenuProps) => {
   useEffect(() => {
-    // Disable scrolling on the body element when the menu is open
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
