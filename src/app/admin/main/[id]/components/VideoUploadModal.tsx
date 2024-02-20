@@ -18,7 +18,7 @@ const VideoUploadModal: React.FC<VideoUploadModalProps> = ({ closeModal, handleF
         </span>
         <div className="flex flex-col items-start gap-2 mt-10">
           <div className="w-full flex flex-col gap-3">
-            <h1>აღწერა</h1>
+            <h1>სათაური</h1>
             <input type="text" className="w-full border border-1-[#D1D1D1] outline-none bg-transparent rounded-md" />
           </div>
 
