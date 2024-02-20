@@ -9,7 +9,7 @@ export const addQuiz = async (token: any, formdata: any, id: any) => {
     };
     try {
       const { data } = await axios.post(
-        `http://192.168.99.238:8000/admin/course-lecture-quizzes/${id}`,
+        `https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-quizzes/${id}`,
         formdata,
         config
       );

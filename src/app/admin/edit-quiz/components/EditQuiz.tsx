@@ -233,7 +233,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                 )}
               </span>
             </div>
-            {quiz.url === null || showImage[quiz.id] === false ? "" : <img src={`http://192.168.1.106:8000/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
+            {quiz.url === null || showImage[quiz.id] === false ? "" : <img src={`https://smarteducation.shop/smarteducation_backend/public/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
             {editingQuizId === quiz.id && (
               <>
                 {showImage && quiz.url && (

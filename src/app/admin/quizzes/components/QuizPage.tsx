@@ -32,7 +32,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMess
               <span>{index + 1}.</span>
               <p>{quiz.question}</p>
             </div>
-            {quiz.url && <img src={`http://192.168.99.238:8000/${quiz.url}`} alt="Quiz Image" className="w-32 h-auto" />}
+            {quiz.url && <img src={`https://smarteducation.shop/smarteducation_backend/public/${quiz.url}`} alt="Quiz Image" className="w-32 h-auto" />}
 
             <div>
               {quiz.answer.map((answer, answerIndex) => (

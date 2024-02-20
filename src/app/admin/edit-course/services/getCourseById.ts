@@ -8,7 +8,7 @@ export const getCourseById = async (token: any, id: number) => {
     },
   };
   try {
-    const { data } = await axios.get(`http://192.168.99.238:8000/admin/courses/${id}`, config);
+    const { data } = await axios.get(`https://smarteducation.shop/smarteducation_backend/public/admin/courses/${id}`, config);
     return data;
   } catch (error) {
     console.error(error);

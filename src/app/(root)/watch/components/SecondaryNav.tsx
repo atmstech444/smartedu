@@ -16,7 +16,15 @@ interface Props {
 }
 const SecondaryNav = ({ lectureDetail, id }: Props) => {
   const params = useParams();
+
   const pathName = usePathname();
+
+
+  const router = useRouter();
+ 
+  const navigateToQuiz = (id: any) => {
+    router.push(`/watch/${params.id}/quiz/${id}`);
+  };
 
   return (
     <>
@@ -55,14 +63,14 @@ const SecondaryNav = ({ lectureDetail, id }: Props) => {
             >
               <Image alt="video" src={Video} />
               <div>
-                <p className=" m-0 font-medium	 text-black">პროგრამირების საწყისები</p>
+                <p className=" m-0 font-medium	 text-black">{video.title}</p>
                 <p className=" m-0">ვიდეო</p>
               </div>
             </Link>
           ))}
 
         {lectureDetail && lectureDetail.quizzes !== null && (
-          <div className="flex gap-3 cursor-pointer mb-4">
+          <div className="flex gap-3 cursor-pointer mb-4" onClick={() => navigateToQuiz(lectureDetail.id)}>
             <Image alt="quizzes" src={Quizzes} />
             <div>
               <p className=" m-0 font-medium text-black">ლექციის ბოლოს</p>

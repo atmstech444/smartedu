@@ -27,7 +27,7 @@ const CourseDetailsComponent: React.FC<CourseDetailsProps> = ({ data, lectures, 
         <div className="my-2">
           {data.intro && (
             <video controls ref={videoRef}>
-              <source src={`http://192.168.1.106:8000/${data.intro}`} type="video/mp4" />
+              <source src={`https://smarteducation.shop/smarteducation_backend/public/${data.intro}`} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           )}
