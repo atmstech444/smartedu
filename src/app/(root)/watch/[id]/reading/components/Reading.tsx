@@ -9,24 +9,26 @@ import icon from "../../../../../../public/assets/icons/Export.svg";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { toggleNavbar } from "@/redux/slices/MobileMenuSlice";
 import NextButton from "../../../components/NextButton";
+import arrow from "../../../../../../public/assets/icons/arrowrightblue.svg";
+
 interface Props {
-  lectureDetail?: LectureTypes | undefined;
   id: any;
 }
-const Reading = ({ id, lectureDetail }: Props) => {
-  const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
-  const dispatch = useAppDispatch();
+
+const Reading = ({ id }: Props) => {
+   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
+    const dispatch = useAppDispatch();
   const toggleMenuVisibility = () => {
     dispatch(toggleNavbar());
   };
+  const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const reading = lectureDetail?.readings;
-  console.log(lectureDetail);
   return (
     <>
       <main className="relative w-full">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-            <SecondaryNav id={id} lectureDetail={lectureDetail} />
+            <SecondaryNav id={id} />
           </UserMobileMenu>
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] md:w-[80%] lg:w-[90%]  bg-white rounded-md">

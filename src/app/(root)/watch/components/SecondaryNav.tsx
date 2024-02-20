@@ -1,7 +1,5 @@
-import { useParams } from "next/navigation";
 import React from "react";
-import { LectureTypes } from "../[id]/course/Lecture";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Image from "next/image";
 import Book from "@/public/assets/icons/book.svg";
 import Quizzes from "@/public/assets/icons/archive-book.svg";
@@ -11,25 +9,21 @@ import nav from "@/public/assets/icons/nav.svg";
 import Link from "next/link";
 import { useAppDispatch } from "@/redux/store";
 import { closeNavbar } from "@/redux/slices/MobileMenuSlice";
+import { useAppSelector } from "@/redux/store";
+
 
 interface Props {
-  lectureDetail?: LectureTypes;
   id: any;
 }
-const SecondaryNav = ({ lectureDetail, id }: Props) => {
-  const dispatch = useAppDispatch();
+
+
+const SecondaryNav = ({ id }: Props) => {
+ const dispatch = useAppDispatch();
   const closeMenu = () => {
     dispatch(closeNavbar());
-  };
   const params = useParams();
-
   const pathName = usePathname();
-
-  const router = useRouter();
-
-  const navigateToQuiz = (id: any) => {
-    router.push(`/watch/${params.id}/quiz/${id}`);
-  };
+  const lectureDetail = useAppSelector((state) => state.lecture.lecture);
 
   return (
     <>
@@ -64,7 +58,7 @@ const SecondaryNav = ({ lectureDetail, id }: Props) => {
             <Link
               key={index}
               href={`/watch/${params.id}/video/${lectureDetail.id}/${video.id}`}
-              className={`text-mainGray flex flex-col text-base rounded-md p-3  cursor-pointer ${pathName === `/watch/${params.id}/video/${lectureDetail.id}/${video.id}` ? "bg-lightestBlue" : "bg-transparent"}`}
+              className={`text-mainGray flex gap-4 text-base rounded-md p-3  cursor-pointer ${pathName === `/watch/${params.id}/video/${lectureDetail.id}/${video.id}` ? "bg-lightestBlue" : "bg-transparent"}`}
             >
               <Image alt="video" src={Video} />
               <div>
@@ -75,13 +69,18 @@ const SecondaryNav = ({ lectureDetail, id }: Props) => {
           ))}
 
         {lectureDetail && lectureDetail.quizzes !== null && (
-          <div className="flex gap-3 cursor-pointer mb-4" onClick={() => navigateToQuiz(lectureDetail.id)}>
+          <Link
+            href={`/watch/${params.id}/quiz/${lectureDetail.id}`}
+            className={`text-mainGray flex gap-4 text-base rounded-md p-3 cursor-pointer ${
+              pathName === `/watch/${params.id}/quiz/${lectureDetail.id}` || pathName === `/watch/${params.id}/quiz/${lectureDetail.id}/start` ? "bg-lightestBlue" : "bg-transparent"
+            }`}
+          >
             <Image alt="quizzes" src={Quizzes} />
             <div>
               <p className=" m-0 font-medium text-black">ლექციის ბოლოს</p>
               <p className=" m-0">ქვიზი</p>
             </div>
-          </div>
+          </Link>
         )}
       </div>
     </>
