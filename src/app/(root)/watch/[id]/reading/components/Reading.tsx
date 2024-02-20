@@ -7,7 +7,7 @@ import UserMobileMenu from "../../../components/UserMobileMenu";
 import { LectureTypes } from "../../course/Lecture";
 import icon from "../../../../../../public/assets/icons/Export.svg";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
-import { toggleNavbar } from "@/redux/slices/MobileMenuSlice";
+import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
 import NextButton from "../../../components/NextButton";
 import arrow from "../../../../../../public/assets/icons/arrowrightblue.svg";
 
@@ -16,8 +16,8 @@ interface Props {
 }
 
 const Reading = ({ id }: Props) => {
-   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
-    const dispatch = useAppDispatch();
+  const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
+  const dispatch = useAppDispatch();
   const toggleMenuVisibility = () => {
     dispatch(toggleNavbar());
   };
