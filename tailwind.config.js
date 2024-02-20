@@ -23,6 +23,7 @@ module.exports = {
         transparent: "transparent",
         blue: " #0FA4EF",
         lightblue: "#D9EBF4",
+        lightestBlue: "#F3F4F8",
       },
       borderRadius: {
         faqBordeR: "8px",
