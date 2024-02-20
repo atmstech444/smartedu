@@ -7,12 +7,20 @@ import Video from "@/public/assets/icons/video-circle.svg";
 import arrow from "@/public/assets/icons/arrowLeft.svg";
 import nav from "@/public/assets/icons/nav.svg";
 import Link from "next/link";
+import { useAppDispatch } from "@/redux/store";
+import { closeNavbar } from "@/redux/slices/MobileMenuSlice";
 import { useAppSelector } from "@/redux/store";
+
 
 interface Props {
   id: any;
 }
+
+
 const SecondaryNav = ({ id }: Props) => {
+ const dispatch = useAppDispatch();
+  const closeMenu = () => {
+    dispatch(closeNavbar());
   const params = useParams();
   const pathName = usePathname();
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
@@ -22,7 +30,7 @@ const SecondaryNav = ({ id }: Props) => {
       <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full">
         <p className="hidden md:block text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
         <div className="flex items-center  justify-between md:hidden">
-          <Image src={arrow} alt="arrow" />
+          <Image src={arrow} alt="arrow" onClick={closeMenu} />
           <div className="flex items-center justify-center gap-3">
             <p className="mb-0 text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
             <Image src={nav} alt="navicon" />

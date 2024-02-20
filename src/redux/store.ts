@@ -4,7 +4,9 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import coursesSlice from "./slices/coursesSlice";
 import myCoursesSlice from "./slices/myCoursesSlice";
 import progressSlice from "./slices/progressSlice";
+import navbarSlice from "./slices/MobileMenuSlice";
 import lectureDetail from "./slices/lectureDetail";
+
 
 const store = configureStore({
   reducer: {
@@ -12,7 +14,8 @@ const store = configureStore({
     courses: coursesSlice,
     myCourses: myCoursesSlice,
     progress: progressSlice,
-    lecture: lectureDetail,
+    navbar: navbarSlice,
+    lecture: lectureDetail
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
