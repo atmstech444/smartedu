@@ -6,11 +6,11 @@ const LoadingSpinner = ({ uploadPercentage }: any) => {
       <div className="loading-spinner"></div>
       <span>
         {uploadPercentage ? (
-          <p className="text-black text-xl font-normal">
+          <p className="text-white text-xl font-normal">
             იტვირთება... {uploadPercentage} %
           </p>
         ) : (
-          <p className="text-black text-xl font-normal">იტვირთება...</p>
+          <p className="text-white text-xl font-normal">იტვირთება...</p>
         )}
       </span>
     </div>

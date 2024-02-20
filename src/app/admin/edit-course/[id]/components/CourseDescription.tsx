@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+"use client";
+import React, { useState } from "react";
 
 const CourseDescription = ({ data, onFileChange }: any) => {
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+
+  const handleDelete = () => {
+    setUploadedFile(null);
+  };
   return (
     <div className="mt-6 w-[50%]">
       <div>
@@ -21,17 +27,29 @@ const CourseDescription = ({ data, onFileChange }: any) => {
         <div className="pt-9">
           <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო</p>
           <div className="flex flex-col mt-2 w-[300px] justify-center items-center">
-            <img src={`https://smarteducation.shop/smarteducation_backend/public/${data.cover_image}`} alt="Uploaded" className="mt-10" />
-            <input
-              type="file"
-              className="w-full mt-5"
-              onChange={(e) => {
-                const selectedFile = e.target?.files?.[0];
-                if (selectedFile) {
-                  onFileChange(selectedFile);
-                }
-              }}
-            />
+            {uploadedFile ? (
+              <div className="flex flex-col gap-10">
+                <img src={URL.createObjectURL(uploadedFile)} alt="Uploaded" className="mt-10" />
+                <button className="cursor-pointer text-red-500 bg-[#006CFA] p-2 rounded-md text-white" onClick={handleDelete}>
+                  წაშლა
+                </button>
+              </div>
+            ) : (
+              <div>
+                <img src={`https://smarteducation.shop/smarteducation_backend/public/${data.cover_image}`} alt="Uploaded" className="mt-10" />
+                <input
+                  type="file"
+                  className="w-full mt-5"
+                  onChange={(e) => {
+                    const selectedFile = e.target?.files?.[0];
+                    if (selectedFile) {
+                      setUploadedFile(selectedFile);
+                      onFileChange(selectedFile);
+                    }
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
