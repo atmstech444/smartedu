@@ -46,6 +46,8 @@ const NextButton = ({ id }: any) => {
       }
     }
   };
+  console.log(arr);
+
   return (
     <>
       <div className="flex items-center gap-4 cursor-pointer" onClick={() => handleClick()}>

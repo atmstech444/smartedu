@@ -34,7 +34,7 @@ const AboutCourse = () => {
       <AboutCourseText>{course?.description}</AboutCourseText>
       <Course>ლექტორი</Course>
       <LecturerContainer>
-        <LecturerImage src={`https://smarteducation.shop/smarteducation_backend/public/${course?.lecturer.image}`} alt="Lecturer Image" />
+        <LecturerImage src={`https://smarteducation.shop/smarteducation_backend/public/${course && course.lecturer.image ? course.lecturer.image : null}`} alt="Lecturer Image" />
         <div>
           <Lecturer>{`${course?.lecturer.first_name} ${course?.lecturer.last_name}`}</Lecturer>
           <LecturerDesc>{course?.lecturer.description}</LecturerDesc>
