@@ -6,7 +6,7 @@ interface LectureState {
 }
 
 const initialState: LectureState = {
-  lecture: { course_id: 0, id: 0, lecture_name: "", lecture_content: "", quizzes: [], readings: [], videos: [] },
+  lecture: { course_id: 0, id: 0, lecture_name: "", lecture_content: { title: "" }, quizzes: [], readings: [], videos: [] },
 };
 
 const lectureDetail = createSlice({
