@@ -27,7 +27,7 @@ const useQueryParams = () => {
   return id;
 };
 
-const Reading = ({ lectures }: any) => {
+const Reading = ({ lectures, courseData }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const id = useQueryParams();
@@ -122,7 +122,7 @@ const Reading = ({ lectures }: any) => {
   }, [id]);
 
   const handleSeeReading = () => {
-    router.push(`/admin/reading?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
+    router.push(`/admin/reading?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
 
   return (

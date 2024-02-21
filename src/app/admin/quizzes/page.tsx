@@ -48,7 +48,7 @@ const useQueryParams = () => {
 const Page = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const { lectures } = useQueryParams();
+  const { lectures, courseData } = useQueryParams();
   const [, setActiveTab] = useState("");
   const [, setRefreshTabs] = useState(false);
   const [quizData, setQuizData] = useState<any>();
@@ -109,7 +109,7 @@ const Page = () => {
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} />
+        <Navbar lectures={lectures} courseData={courseData} />
         <div className="flex justify-between w-[85%] mt-6">
           <QuizPage quizzes={quizData} handleDeleteQuiz={handleDeleteQuiz} swalMessage={swalMessage} />
         </div>
