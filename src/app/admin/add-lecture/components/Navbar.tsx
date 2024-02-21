@@ -14,12 +14,9 @@ interface CourseDataProps {
   cover_image: string;
 }
 
-const Navbar = ({ lectures,  }: { lectures: Lecture[] }) => {
-  const cookies = parseCookies();
-  const token = cookies.authToken;
+const Navbar = ({ lectures, courseData  }: { lectures: Lecture[], courseData: any }) => {
   const router = useRouter();
   const [currentLectureId, setCurrentLectureId] = useState<number | null>(null);
-  const [courseData, setCourseData] = useState<CourseDataProps | null>(null);
   const handleOpenTabs = (lectureId: number) => {
     const lecturesData = lectures.map((lecture) => ({
       id: lecture.id,
@@ -30,18 +27,6 @@ const Navbar = ({ lectures,  }: { lectures: Lecture[] }) => {
       setCurrentLectureId(lectureId);
     }, 200);
   };
-
-  useEffect(() => {
-    const fetchAllCourses = async () => {
-      try {
-        const data = await getAllCourses(token);
-        setCourseData(data.courses[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchAllCourses();
-  }, [token]);
 
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">

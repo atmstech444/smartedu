@@ -25,7 +25,7 @@ const useQueryParams = () => {
   return id;
 };
 
-const QuizUpload = ({ lectures }: any) => {
+const QuizUpload = ({ lectures, courseData }: any) => {
   const router = useRouter();
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number[]>>({});
   const cookies = parseCookies();
@@ -150,10 +150,10 @@ const QuizUpload = ({ lectures }: any) => {
   };
 
   const handleSeeQuiz = () => {
-    router.push(`/admin/quizzes?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
+    router.push(`/admin/quizzes?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
   const handleEditQuiz = () => {
-    router.push(`/admin/edit-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}`);
+    router.push(`/admin/edit-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
   return (
     <main className="w-full flex flex-col">

@@ -71,18 +71,18 @@ const AddLecturePage = () => {
 
   let content = null;
   if (activeTab === "წასაკითხი") {
-    content = <ReadingUpload lectures={lectures}/>;
+    content = <ReadingUpload lectures={lectures} courseData={courseData} />;
   } else if (activeTab === "ვიდეო") {
     content = <VideoUpload />;
   } else if (activeTab === "ქვიზი") {
-    content = <QuizUpload lectures={lectures} />;
+    content = <QuizUpload lectures={lectures} courseData={courseData} />;
   }
 
   return (
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} />
+        <Navbar lectures={lectures} courseData={courseData} />
         <div className="flex flex-col gap-10  mt-11 w-[97%]">
           <Tabs activeTab={activeTab} setActiveTab={setActiveTab} lectureNames={lectureNames} key={refreshTabs ? "refreshed" : "not-refreshed"} />
           {content}
