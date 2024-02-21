@@ -15,7 +15,9 @@ export interface LectureTypes {
   course_id: number;
   id: number;
   lecture_name: string;
-  lecture_content: string;
+  lecture_content: {
+    title: string;
+  };
   quizzes: Quizzes[];
   readings: {
     description: string;
@@ -72,7 +74,7 @@ const Lecture = (id: { id: any }) => {
     <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md ">
       <Image onClick={() => router.push(`/watch/${params.id}`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
       <h1 className="text-base font-bold text-black">ლექციის აღწერა</h1>
-      <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content}</p>
+      <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content.title}</p>
       <p className="text-base font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
       {lectureDetail && lectureDetail.readings !== null ? (
         <div className="flex gap-3 cursor-pointer" onClick={() => navigateToReading(lectureDetail.id)}>

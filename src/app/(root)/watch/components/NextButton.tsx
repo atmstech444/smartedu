@@ -13,13 +13,11 @@ const NextButton = ({ id }: any) => {
       arr.push(reading);
     });
   }
-
   if (lectureDetail.videos) {
     lectureDetail.videos.forEach((video) => {
       arr.push(video);
     });
   }
-
   if (lectureDetail.quizzes) {
     arr.push(lectureDetail.quizzes);
   }
@@ -46,7 +44,6 @@ const NextButton = ({ id }: any) => {
       }
     }
   };
-  console.log(arr);
 
   return (
     <>
