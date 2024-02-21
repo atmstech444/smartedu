@@ -6,6 +6,7 @@ import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
 import { useParams } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
+import NextButton from "../../../components/NextButton";
 
 interface Props {
   id: any;
@@ -28,7 +29,10 @@ const Video = ({ id }: Props) => {
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] md:w-[80%] lg:w-[90%]   rounded-md">
           <Image src={Arrow} width="15" height="15" alt="back" className="md:hidden" onClick={toggleMenuVisibility} />
-          <h1 className=" text-xl m-0">{video?.title}</h1>
+          <div className=" flex justify-between">
+            <h1 className=" text-xl m-0">{video?.title}</h1>
+            <NextButton id={video?.id} />
+          </div>
           {video && (
             <video controls className="rounded-lg">
               <source src={`https://smarteducation.shop/smarteducation_backend/public/${video?.video}`} type="video/mp4" />
