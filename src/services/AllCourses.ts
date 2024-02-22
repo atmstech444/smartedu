@@ -8,10 +8,6 @@ export interface POST_Login_Success {
 
 const url = API_PATH;
 
-
-const url = "http://192.168.1.101:8000/api/";
-
-
 export interface I_Course {
   id: number;
   title: string;
