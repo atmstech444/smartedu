@@ -77,18 +77,16 @@ const Lecture = (id: { id: any }) => {
   };
 
   return (
-
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
         <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
           <Navigation id={id.id} />
         </UserMobileMenu>
-
       )}
       <div className="flex gap-[24px] flex-col p-[24px] w-[90%]  bg-white rounded-md ">
         <Image onClick={toggleMenuVisibility} src={Arrow} width={24} height={24} alt="image" className="lg:hidden mb-4" />
         <h1 className="text-base font-bold text-black">ლექციის აღწერა</h1>
-        <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content}</p>
+        <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content.title}</p>
         <p className="text-base font-bold	text-black">{lectureDetail?.lecture_name}</p>
         {lectureDetail && lectureDetail.readings !== null ? (
           <div className="flex gap-3 cursor-pointer" onClick={() => navigateToReading(lectureDetail.id)}>
