@@ -6,6 +6,7 @@ import myCoursesSlice from "./slices/myCoursesSlice";
 import progressSlice from "./slices/progressSlice";
 import navbarSlice from "./slices/mobileMenuSlice";
 import lectureDetail from "./slices/lectureDetail";
+import indexSlice from "./slices/indexSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     progress: progressSlice,
     navbar: navbarSlice,
     lecture: lectureDetail,
+    index: indexSlice,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

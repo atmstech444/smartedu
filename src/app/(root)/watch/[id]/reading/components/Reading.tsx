@@ -10,6 +10,7 @@ import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
 import NextButton from "../../../components/NextButton";
 import arrow from "../../../../../../public/assets/icons/arrowrightblue.svg";
+import { updateIndexInfo } from "@/redux/slices/indexSlice";
 
 interface Props {
   id: any;
@@ -21,6 +22,7 @@ const Reading = ({ id }: Props) => {
   const toggleMenuVisibility = () => {
     dispatch(toggleNavbar());
   };
+  const index = useAppSelector((state) => state.index.index);
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const reading = lectureDetail?.readings;
   return (
@@ -35,14 +37,16 @@ const Reading = ({ id }: Props) => {
           <Image src={Arrow} width="15" height="15" alt="back" className="lg:hidden" onClick={toggleMenuVisibility} />
           <div className="flex items-center justify-between">
             <h3>მასალა</h3>
-            <NextButton id={reading[0].id} />
+            <div onClick={() => dispatch(updateIndexInfo(index + 1))}>
+              <NextButton />
+            </div>
           </div>
 
           <div className="mb-4">{reading && reading[0]?.description}</div>
           {reading &&
             reading?.map((item) =>
               item.url?.map((link, index) => (
-                <a href={`https://${link}`} target="_blank" rel="noopener noreferrer" key={index} className="flex items-center gap-2">
+                <a href={`https://${link}`} target="_blank" rel="noopener noreferrer" key={index} className="flex items-center gap-2 break-all">
                   <p className="mb-0 text-sm text-mainBlue">{link}</p>
                   <Image src={icon} alt="icon" width="15" height="15" />
                 </a>

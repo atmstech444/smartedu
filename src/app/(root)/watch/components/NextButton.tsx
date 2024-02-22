@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import arrow from "../../../../public/assets/icons/arrowrightblue.svg";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useParams, useRouter } from "next/navigation";
+import { updateIndexInfo } from "@/redux/slices/indexSlice";
 
 const NextButton = ({ id }: any) => {
+  const params = useParams();
+  const index = useAppSelector((state) => state.index.index);
+  const dispath = useAppDispatch();
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const arr = [];
 
@@ -22,8 +26,8 @@ const NextButton = ({ id }: any) => {
     arr.push(lectureDetail.quizzes);
   }
 
-  const currentIndex = arr.findIndex((item: any) => item.id === id);
-  const params = useParams();
+  const currentIndex = arr.findIndex((item: any, itemIndex: number) => itemIndex == index);
+
   const findNextElement = (arr: any, currentIndex: number) => {
     if (currentIndex !== -1 && currentIndex < arr.length - 1) {
       const nextElement = arr[currentIndex + 1];
@@ -31,6 +35,10 @@ const NextButton = ({ id }: any) => {
     }
     return null;
   };
+
+  // useEffect(() => {
+  //   dispath(updateIndexInfo(index + 1));
+  // }, []);
 
   const nextElement = findNextElement(arr, currentIndex);
   const router = useRouter();
@@ -44,6 +52,8 @@ const NextButton = ({ id }: any) => {
       }
     }
   };
+  console.log(nextElement);
+  console.log(index);
 
   return (
     <>
