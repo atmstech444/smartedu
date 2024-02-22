@@ -2,19 +2,25 @@
 import { I_Course_Details } from "@/api/GET_CourseDetails";
 // import Wrapper from "@/layout/DefaultWrapper";
 import { Get_Course_Detail } from "@/services/AllCourses";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
 import { API_STORAGE } from "@/api/API_PATH";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
+import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
+import { Navigation } from "./Navigation";
+import UserMobileMenu from "./UserMobileMenu";
 
 const AboutCourse = () => {
   const id = useParams();
-
   const [course, setCourse] = useState<I_Course_Details | null>(null);
-  const router = useRouter();
-
+  const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
+  const dispatch = useAppDispatch();
+  const toggleMenuVisibility = () => {
+    dispatch(toggleNavbar());
+  };
   const fetchData = async () => {
     try {
       const courseDetail = await Get_Course_Detail(id.id);
@@ -28,32 +34,39 @@ const AboutCourse = () => {
   }, []);
 
   return (
-    <div className="flex gap-[24px] flex-col p-[24px] md:w-[60%] lg:w-[80%]  bg-white rounded-md">
-      <Image onClick={() => router.push(`/watch/${id.id}`)} src={Arrow} width={24} height={24} alt="Back" className="md:hidden mb-4" />
-      <Course>{course?.title}</Course>
-      <Course>ლექციის აღწერა</Course>
-      <AboutCourseText>{course?.description}</AboutCourseText>
-      <Course>ლექტორი</Course>
-      <LecturerContainer>
+    <main className="relative w-full flex items-center justify-center lg:block">
+      {isMenuOpened && (
+        <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
+          <Navigation id={id.id} />
+        </UserMobileMenu>
+      )}
+      <div className="flex gap-[24px] flex-col p-[24px] w-[90%]  bg-white rounded-md">
+        <Image onClick={toggleMenuVisibility} src={Arrow} width={24} height={24} alt="Back" className="lg:hidden mb-4" />
+        <Course>{course?.title}</Course>
+        <Course>ლექციის აღწერა</Course>
+        <AboutCourseText>{course?.description}</AboutCourseText>
+        <Course>ლექტორი</Course>
+        <LecturerContainer>
         <LecturerImage src={`${API_STORAGE} ${course && course.lecturer.image ? course.lecturer.image : null}`} alt="Lecturer Image" />
-        <div>
-          <Lecturer>{`${course?.lecturer.first_name} ${course?.lecturer.last_name}`}</Lecturer>
-          <LecturerDesc>{course?.lecturer.description}</LecturerDesc>
-        </div>
-      </LecturerContainer>
-      <Course>სილაბუსი</Course>
-      {course &&
-        course.syllabus.map((item, index) => (
-          <div key={index}>
-            <Lecture>{item.title}</Lecture>
-            <LectureDesc>
-              {item.descriptions.map((desc, i) => (
-                <div key={i}>{desc.description}</div>
-              ))}
-            </LectureDesc>
+          <div>
+            <Lecturer>{`${course?.lecturer.first_name} ${course?.lecturer.last_name}`}</Lecturer>
+            <LecturerDesc>{course?.lecturer.description}</LecturerDesc>
           </div>
-        ))}
-    </div>
+        </LecturerContainer>
+        <Course>სილაბუსი</Course>
+        {course &&
+          course.syllabus.map((item, index) => (
+            <div key={index}>
+              <Lecture>{item.title}</Lecture>
+              <LectureDesc>
+                {item.descriptions.map((desc, i) => (
+                  <div key={i}>{desc.description}</div>
+                ))}
+              </LectureDesc>
+            </div>
+          ))}
+      </div>
+    </main>
   );
 };
 

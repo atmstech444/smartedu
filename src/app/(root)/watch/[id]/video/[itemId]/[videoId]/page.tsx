@@ -17,11 +17,11 @@ const Page = () => {
     <>
       {isClient && (
         <Wrapper>
-          <div className="md:pt-[24px] bg-[#F3F4F8] max-w-screen-xl mx-auto">
-            <div className="md:hidden mt-[20%] flex flex-col gap-[24px]">
+          <div className="lg:pt-[24px] bg-[#F3F4F8] max-w-screen-xl mx-auto">
+            <div className="lg:hidden mt-[20%] flex flex-col gap-[24px]">
               <Video id={params.id} />
             </div>
-            <div className="hidden md:flex mt-[10%]  md:gap-[24px] lg:gap-[50px] px-[72px]">
+            <div className="hidden lg:flex mt-[150px]  md:gap-[24px] lg:gap-[50px] px-[72px]">
               <SecondaryNav id={params.id} />
               <Video id={params.id} />
             </div>

@@ -5,30 +5,34 @@ import Arrow from "../../../../../../public/assets/icons/arrowLeft.svg";
 import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
 import { useParams } from "next/navigation";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
 import NextButton from "../../../components/NextButton";
 import { API_STORAGE } from "@/api/API_PATH";
+
 
 interface Props {
   id: any;
 }
 const Video = ({ id }: Props) => {
-  const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
   const params: any = useParams();
   const toggleMenuVisibility = () => {
-    setIsMenuOpened((prev) => !prev);
+    dispatch(toggleNavbar());
   };
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const video = lectureDetail?.videos.find((item) => item.id == params.videoId);
+
   return (
     <>
-      <main className="relative w-full bg-white">
+      <main className="relative w-full bg-white flex items-center justify-center lg:block">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
             <SecondaryNav id={id} />
           </UserMobileMenu>
         )}
-        <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] md:w-[80%] lg:w-[90%]   rounded-md">
+        <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] w-[90%]   rounded-md">
           <Image src={Arrow} width="15" height="15" alt="back" className="md:hidden" onClick={toggleMenuVisibility} />
           <div className=" flex justify-between">
             <h1 className=" text-xl m-0">{video?.title}</h1>

@@ -16,6 +16,11 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMess
   }
   return (
     <div className="flex flex-col gap-8">
+      <div className="flex justify-start">
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => router.back()}>
+          უკან
+        </button>
+      </div>
       {quizzes?.length === 0 || swalMessage === "Quiz remove successfully" ? (
         <div className="flex flex-col gap-3 items-start text-base ">
           <h1 className="text-black font-extrabold">ქვიზი არ არის დამატებული</h1>
