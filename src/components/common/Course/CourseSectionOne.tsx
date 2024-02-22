@@ -40,7 +40,7 @@ const CourseSectionOne = () => {
               <div className="course__item white-bg mb-30 fix">
                 <div className="course__thumb w-img p-relative fix">
                   <Link href={`/course-details/${item.id}`}>
-                    <img src={API_STORAGE + item.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
+                    <img src={API_STORAGE + item?.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
                   </Link>
                   <div className="course__tag">
                     <Link href={`/course-details/${item.id}`} className={item.category.title ? `${item.category.title}` : ""}>
@@ -67,9 +67,9 @@ const CourseSectionOne = () => {
                     <Link href={`/course-details/${item.id}`}>{item.title}</Link>
                   </h3>
                   <div className=" text-center flex">
-                    <img className="course__teacher-thumb mr-15 rounded-full" src={API_STORAGE + item.lecturer.image} style={{ width: "50px", height: "50px" }} alt="image not found" />{" "}
+                    <img className="course__teacher-thumb mr-15 rounded-full" src={API_STORAGE + item?.lecturer?.image} style={{ width: "50px", height: "50px" }} alt="image not found" />{" "}
                     <p className="flex my-auto">
-                      {item.lecturer.first_name} {item.lecturer.last_name}
+                      {item?.lecturer?.first_name} {item?.lecturer?.last_name}
                     </p>
                   </div>
                 </div>
