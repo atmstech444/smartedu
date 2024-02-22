@@ -6,15 +6,15 @@ import { Navigation } from "../../components/Navigation";
 import Wrapper from "@/layout/DefaultWrapper";
 
 const Page = () => {
-  const params = useParams();
-  const [isClient, setIsClient] = useState(false);
+  // const params = useParams();
+  // const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
   return (
     <>
-      {isClient && (
+      {/* {isClient && (
         <Wrapper>
           <div className="pt-[24px] bg-[#F3F4F8] max-w-screen-xl mx-auto">
             <div className="md:hidden mt-[20%] flex flex-col gap-[24px]">
@@ -26,7 +26,7 @@ const Page = () => {
             </div>
           </div>
         </Wrapper>
-      )}
+      )} */}
     </>
   );
 };

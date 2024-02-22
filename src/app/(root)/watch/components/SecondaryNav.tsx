@@ -27,11 +27,11 @@ const SecondaryNav = ({ id }: Props) => {
   return (
     <>
       <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full">
-        <p className="hidden md:block text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
-        <div className="flex items-center  justify-between md:hidden">
+        <p className="hidden lg:block text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
+        <div className="flex items-center justify-between mb-3 lg:hidden">
           <Image src={arrow} alt="arrow" onClick={closeMenu} />
           <div className="flex items-center justify-center gap-3">
-            <p className="mb-0 text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
+            <p className="mb-0 text-lg font-bold	text-black">{lectureDetail?.lecture_name}</p>
             <Image src={nav} alt="navicon" />
           </div>
         </div>
