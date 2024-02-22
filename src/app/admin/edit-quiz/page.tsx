@@ -84,7 +84,6 @@ const Page = () => {
     }
   };
 
-  // New function to add a new answer to a quiz
   const handleAddAnswer = (quizId: number) => {
     if (quizData) {
       const updatedQuizData = quizData.map((quiz) => {
@@ -118,7 +117,7 @@ const Page = () => {
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures}  />
+        <Navbar lectures={lectures} courseData={courseData}  />
         <div className="w-[45%] mt-6 mb-20">
           <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} />
         </div>

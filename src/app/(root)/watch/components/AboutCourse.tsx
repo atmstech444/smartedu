@@ -33,6 +33,7 @@ const AboutCourse = () => {
   }, []);
 
   return (
+
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
         <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
@@ -50,6 +51,7 @@ const AboutCourse = () => {
           <div>
             <Lecturer>{`${course?.lecturer.first_name} ${course?.lecturer.last_name}`}</Lecturer>
             <LecturerDesc>{course?.lecturer.description}</LecturerDesc>
+
           </div>
         </LecturerContainer>
         <Course>სილაბუსი</Course>

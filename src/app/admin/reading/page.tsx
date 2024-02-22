@@ -53,7 +53,7 @@ const useQueryParams = () => {
 const Page = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const { lectures } = useQueryParams();
+  const { lectures, courseData } = useQueryParams();
   const searchParams = useSearchParams();
   const [readingsData, setReadingsData] = useState<ReadingData[]>([]);
 
@@ -81,6 +81,7 @@ const Page = () => {
       <div className="flex gap-8 w-[100%]">
         <Navbar
           lectures={lectures}
+          courseData={courseData}
         />
         <div className="flex justify-between w-[85%] mt-6">
           <ReadingPage readingsData={readingsData} setReadingsData={setReadingsData} />

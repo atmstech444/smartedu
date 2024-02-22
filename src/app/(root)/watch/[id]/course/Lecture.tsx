@@ -18,7 +18,9 @@ export interface LectureTypes {
   course_id: number;
   id: number;
   lecture_name: string;
-  lecture_content: string;
+  lecture_content: {
+    title: string;
+  };
   quizzes: Quizzes[];
   readings: {
     description: string;
@@ -75,11 +77,13 @@ const Lecture = (id: { id: any }) => {
   };
 
   return (
+
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
         <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
           <Navigation id={id.id} />
         </UserMobileMenu>
+
       )}
       <div className="flex gap-[24px] flex-col p-[24px] w-[90%]  bg-white rounded-md ">
         <Image onClick={toggleMenuVisibility} src={Arrow} width={24} height={24} alt="image" className="lg:hidden mb-4" />

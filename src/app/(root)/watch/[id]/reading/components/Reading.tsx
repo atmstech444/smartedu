@@ -35,7 +35,7 @@ const Reading = ({ id }: Props) => {
           <Image src={Arrow} width="15" height="15" alt="back" className="lg:hidden" onClick={toggleMenuVisibility} />
           <div className="flex items-center justify-between">
             <h3>მასალა</h3>
-            <NextButton />
+            <NextButton id={reading[0].id} />
           </div>
 
           <div className="mb-4">{reading && reading[0]?.description}</div>
