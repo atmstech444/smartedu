@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
+import { API_STORAGE } from "@/api/API_PATH";
 
 const AboutCourse = () => {
   const id = useParams();
@@ -34,7 +35,7 @@ const AboutCourse = () => {
       <AboutCourseText>{course?.description}</AboutCourseText>
       <Course>ლექტორი</Course>
       <LecturerContainer>
-        <LecturerImage src={`https://smarteducation.shop/smarteducation_backend/public/${course && course.lecturer.image ? course.lecturer.image : null}`} alt="Lecturer Image" />
+        <LecturerImage src={`${API_STORAGE} ${course && course.lecturer.image ? course.lecturer.image : null}`} alt="Lecturer Image" />
         <div>
           <Lecturer>{`${course?.lecturer.first_name} ${course?.lecturer.last_name}`}</Lecturer>
           <LecturerDesc>{course?.lecturer.description}</LecturerDesc>

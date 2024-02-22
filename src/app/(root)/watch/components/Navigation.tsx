@@ -7,6 +7,7 @@ import Image from "next/image";
 import arrow from "../../../../public/assets/icons/courserow.svg";
 import { Get_Lecture } from "@/services/AllCourses";
 import Link from "next/link";
+import { API_STORAGE } from "@/api/API_PATH";
 
 interface LectureTypes {
   course_id: number;
@@ -46,7 +47,7 @@ export const Navigation = (id: { id: any }) => {
       <div>
         <Image onClick={() => router.push(`/profile`)} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
         <div className="w-full h-full">
-          <Image width={500} height={500} alt="image" className="rounded-md " src={`https://smarteducation.shop/smarteducation_backend/public/${course?.cover_image}`} />
+          <Image width={500} height={500} alt="image" className="rounded-md " src={`${API_STORAGE}${course?.cover_image}`} />
         </div>
         <h1 className="text-dark mb-8 text-lg p-3 font-medium">{course?.title}</h1>
         <Link className={`text-dark text-base rounded-md p-3 font-semibold cursor-pointer ${pathname === `/watch/${id.id}/about` ? "bg-lightestBlue" : "bg-transparent"}`} href={`/watch/${id.id}/about`}>

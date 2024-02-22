@@ -7,6 +7,7 @@ import UserMobileMenu from "../../../components/UserMobileMenu";
 import { useParams } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
 import NextButton from "../../../components/NextButton";
+import { API_STORAGE } from "@/api/API_PATH";
 
 interface Props {
   id: any;
@@ -35,7 +36,7 @@ const Video = ({ id }: Props) => {
           </div>
           {video && (
             <video controls className="rounded-lg">
-              <source src={`https://smarteducation.shop/smarteducation_backend/public/${video?.video}`} type="video/mp4" />
+              <source src={`${API_STORAGE + video?.video}`} type="video/mp4" />
             </video>
           )}
         </div>

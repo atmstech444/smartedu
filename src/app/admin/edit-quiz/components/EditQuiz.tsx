@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { parseCookies } from "nookies";
 import { editQuiz } from "../services/editQuiz";
 import { boolean } from "yup";
+import { API_STORAGE } from "@/api/API_PATH";
 
 interface QuizPageProps {
   quizzes: Quiz[] | null;
@@ -233,7 +234,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
                 )}
               </span>
             </div>
-            {quiz.url === null || showImage[quiz.id] === false ? "" : <img src={`https://smarteducation.shop/smarteducation_backend/public/${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
+            {quiz.url === null || showImage[quiz.id] === false ? "" : <img src={`${API_STORAGE}${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
             {editingQuizId === quiz.id && (
               <>
                 {showImage && quiz.url && (

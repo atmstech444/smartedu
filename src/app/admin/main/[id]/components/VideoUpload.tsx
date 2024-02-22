@@ -10,6 +10,7 @@ import { deleteVideo } from "../services/deleteVideo";
 import ChunkedVideoUpload from "./ChunkedVideoUpload";
 import LectureTitleAndDescription from "./LectureTitleAndDescription";
 import VideoUploadModal from "./VideoUploadModal";
+import { API_STORAGE } from "@/api/API_PATH";
 
 interface Video {
   id: number;
@@ -167,7 +168,7 @@ const VideoUpload = () => {
                 </h1>
                 {videosData && (
                   <video controls className="rounded-lg">
-                    <source src={`https://smarteducation.shop/smarteducation_backend/public/${video?.video}`} type="video/mp4" />
+                    <source src={`${API_STORAGE}${video?.video}`} type="video/mp4" />
                   </video>
                 )}
 

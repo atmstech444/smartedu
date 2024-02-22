@@ -34,12 +34,14 @@ const CourseSectionOne = () => {
             </Div>
           </div> */}
         </Div2>
-        <div className="row">
+        <div className="row mt-10">
           {courses.slice(0, 6).map((item) => (
             <div key={item.id} className="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
               <div className="course__item white-bg mb-30 fix">
                 <div className="course__thumb w-img p-relative fix">
-                  <Link href={`/course-details/${item.id}`}>{/* <img src={API_STORAGE + item.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" /> */}</Link>
+                  <Link href={`/course-details/${item.id}`}>
+                    <img src={API_STORAGE + item.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
+                  </Link>
                   <div className="course__tag">
                     <Link href={`/course-details/${item.id}`} className={item.category.title ? `${item.category.title}` : ""}>
                       {item.category.title}
@@ -54,21 +56,21 @@ const CourseSectionOne = () => {
                         {item.lectures_count} გაკვეთილი
                       </span>
                     </div>
-                    {/* <div className="course__rating">
+                    <div className="course__rating">
                       <span>
                         <i className="fas fa-star"></i>
                         Rating
                       </span>
-                    </div> */}
+                    </div>
                   </div>
                   <h3 className="course__title" style={{ height: "48px" }}>
                     <Link href={`/course-details/${item.id}`}>{item.title}</Link>
                   </h3>
-                  <div className="course__teacher d-flex align-items-baseline">
-                    <div className="course__teacher-thumb mr-15">{/* <img src={API_STORAGE + item.lecturer.image} style={{ width: "50px", height: "50px" }} alt="image not found" /> */}</div>
-                    <h6>
-                      <p>{/* {item.lecturer.first_name} {item.lecturer.last_name} */}</p>
-                    </h6>
+                  <div className=" text-center flex">
+                    <img className="course__teacher-thumb mr-15 rounded-full" src={API_STORAGE + item.lecturer.image} style={{ width: "50px", height: "50px" }} alt="image not found" />{" "}
+                    <p className="flex my-auto">
+                      {item.lecturer.first_name} {item.lecturer.last_name}
+                    </p>
                   </div>
                 </div>
                 <div className="course__more d-flex justify-content-between align-items-center">

@@ -48,7 +48,7 @@ export async function POST_Login(data: POST_Login_Params, setErrors: any, router
     return config;
   });
   try {
-    const response = await axios.post<POST_Login_Success>("https://smarteducation.shop/smarteducation_backend/public/api/" + "auth/login", data);
+    const response = await axios.post<POST_Login_Success>(API_PATH + "auth/login", data);
     const { user, token } = response.data;
     dispatch(
       setUser({
