@@ -47,10 +47,10 @@ const AboutCourse = () => {
         <AboutCourseText>{course?.description}</AboutCourseText>
         <Course>ლექტორი</Course>
         <LecturerContainer>
-        <LecturerImage src={`${API_STORAGE} ${course && course.lecturer.image ? course.lecturer.image : null}`} alt="Lecturer Image" />
+          <LecturerImage src={`${API_STORAGE} ${course && course.lecturer?.image ? course.lecturer.image : null}`} alt="Lecturer Image" />
           <div>
-            <Lecturer>{`${course?.lecturer.first_name} ${course?.lecturer.last_name}`}</Lecturer>
-            <LecturerDesc>{course?.lecturer.description}</LecturerDesc>
+            <Lecturer>{`${course?.lecturer?.first_name} ${course?.lecturer?.last_name}`}</Lecturer>
+            <LecturerDesc>{course?.lecturer?.description}</LecturerDesc>
           </div>
         </LecturerContainer>
         <Course>სილაბუსი</Course>
