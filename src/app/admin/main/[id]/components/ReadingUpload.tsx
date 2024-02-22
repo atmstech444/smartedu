@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { addReading } from "../services/addReading";
 import { parseCookies } from "nookies";
 import { getReadings } from "../services/getReadings";
-import { deleteReading } from "../services/deleteReading";
 import { useRouter } from "next/navigation";
 
 type ReadingData = {
@@ -34,23 +33,32 @@ const Reading = ({ lectures, courseData }: any) => {
   const router = useRouter();
   const [isTyping, setIsTyping] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([]);
+  const [inputs, setInputs] = useState<{ key: number; element: JSX.Element }[]>([
+    {
+      key: 1,
+      element: (
+        <div className="relative w-[220px] flex items-center gap-1" key={1}>
+          <input id={`text-${1}`} ref={fileInputRef} type="url" placeholder="ლინკის ატვირთვა" className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2" onChange={() => {}} />
+          <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
+          <Image src={"/assets/img/admin/closeIcon.png"} width={10} height={10} alt="delete icon" className="hover:cursor-pointer absolute top-4 -right-0" onClick={() => handleDeleteInput(1)} />
+        </div>
+      ),
+    },
+  ]);
+  const handleDeleteInput = (key: number) => {
+    setInputs((prevInputs) => prevInputs.filter((input) => input.key !== key));
+  };
   const [description, setDescription] = useState("");
   const [_, setReadingsData] = useState<ReadingData[]>([]);
 
   const handleImageClick = () => {
-    
     const newInputKey = inputs.length + 1;
-
-    const handleDeleteInput = () => {
-      setInputs((prevInputs) => prevInputs.filter((input) => input.key !== newInputKey));
-    };
 
     const newInput = (
       <div className="relative w-[220px] flex items-center gap-1" key={newInputKey}>
         <input id={`text-${newInputKey}`} ref={fileInputRef} type="url" placeholder="ლინკის ატვირთვა" className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2" onChange={() => {}} />
         <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
-        <Image src={"/assets/img/admin/closeIcon.png"} width={10} height={10} alt="delete icon" className="hover:cursor-pointer absolute top-4 -right-0" onClick={handleDeleteInput} />
+        <Image src={"/assets/img/admin/closeIcon.png"} width={10} height={10} alt="delete icon" className="hover:cursor-pointer absolute top-4 -right-0" onClick={() => handleDeleteInput(newInputKey)} />
       </div>
     );
 
@@ -127,7 +135,9 @@ const Reading = ({ lectures, courseData }: any) => {
 
   return (
     <div>
-      <button className="text-white bg-[#2FA8FF] p-2 rounded-md text-sm mb-5" onClick={() => handleSeeReading()}>წასაკითხი მასალა</button>
+      <button className="text-white bg-[#2FA8FF] p-2 rounded-md text-sm mb-5" onClick={() => handleSeeReading()}>
+        წასაკითხი მასალა
+      </button>
       <div className="grid grid-cols-6   w-full">
         <div className="flex flex-col gap-3 col-span-5">
           <h1 className="text-gray-600 font-FiraGO font-medium text-base md:text-lg lg:text-xl xl:text-2xl">წასაკითხი</h1>
@@ -148,10 +158,6 @@ const Reading = ({ lectures, courseData }: any) => {
 
           <div className="flex justify-between max-w-[780px]">
             <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-1 w-[220px]">
-                <p className="border border-1-[#D1D1D1] outline-none w-44 rounded-lg p-2 text-gray-500">ლინკის ატვირთვა</p>
-                <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
-              </div>
               {inputs.map((input) => input.element)}
               <div>
                 <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
