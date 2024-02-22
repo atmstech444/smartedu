@@ -1,4 +1,5 @@
 "use client";
+import { API_STORAGE } from "@/api/API_PATH";
 import React, { useState } from "react";
 
 const CourseDescription = ({ data, onFileChange }: any) => {
@@ -36,7 +37,7 @@ const CourseDescription = ({ data, onFileChange }: any) => {
               </div>
             ) : (
               <div>
-                <img src={`https://smarteducation.shop/smarteducation_backend/public/${data.cover_image}`} alt="Uploaded" className="mt-10" />
+                <img src={`${API_STORAGE}${data.cover_image}`} alt="Uploaded" className="mt-10" />
                 <input
                   type="file"
                   className="w-full mt-5"

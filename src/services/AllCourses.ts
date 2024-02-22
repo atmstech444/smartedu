@@ -1,3 +1,4 @@
+import { API_PATH } from "@/api/API_PATH";
 import axios from "axios";
 import { parseCookies } from "nookies";
 
@@ -5,7 +6,7 @@ export interface POST_Login_Success {
   courses: I_Course[];
 }
 
-const url = "https://smarteducation.shop/smarteducation_backend/public/api/";
+const url = API_PATH;
 
 
 const url = "http://192.168.1.101:8000/api/";

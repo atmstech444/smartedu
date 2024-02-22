@@ -1,5 +1,6 @@
 import React from "react";
 import { Purchase } from "./UsersIdContent";
+import { API_STORAGE } from "@/api/API_PATH";
 
 interface PurchaseHistoryProps {
   purchases: Purchase[] | undefined;
@@ -15,11 +16,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ purchases }) => {
 
             {purchases.map((purchase, index) => (
               <p key={index}>
-                <img
-                  src={`https://smarteducation.shop/smarteducation_backend/public/${purchase.course.cover_image}`}
-                  alt="Course Cover"
-                  className="pb-3"
-                />
+                <img src={`${API_STORAGE}${purchase.course.cover_image}`} alt="Course Cover" className="pb-3" />
                 {purchase.course.title}
               </p>
             ))}
@@ -33,15 +30,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = ({ purchases }) => {
                 <div className="flex flex-col gap-8 pb-10">
                   <div className="flex gap-6 items-center">
                     <p>სტატუსი:</p>
-                    <div
-                      className={`border rounded-borderHalf bg-white text-center px-6 ${
-                        purchase.order_status === "completed"
-                          ? "border-[#1E9B24] text-[#1E9B24]"
-                          : purchase.order_status === "rejected"
-                          ? "border-[#C72626] text-[#C72626]"
-                          : ""
-                      }`}
-                    >
+                    <div className={`border rounded-borderHalf bg-white text-center px-6 ${purchase.order_status === "completed" ? "border-[#1E9B24] text-[#1E9B24]" : purchase.order_status === "rejected" ? "border-[#C72626] text-[#C72626]" : ""}`}>
                       <p>{purchase.order_status}</p>
                     </div>
                   </div>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAllCourses } from "../../main/services/getCourses";
 import { parseCookies } from "nookies";
+import { API_STORAGE } from "@/api/API_PATH";
 
 interface Lecture {
   id: any;
@@ -33,7 +34,7 @@ const Navbar = ({ lectures, courseData }: { lectures: Lecture[]; courseData: any
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
         {courseData && (
           <>
-            <img src={`https://smarteducation.shop/smarteducation_backend/public/${courseData?.cover_image}`} className="rounded-2xl" />
+            <img src={`${API_STORAGE}${courseData?.cover_image}`} className="rounded-2xl" />
             <p className="text-base text-black font-semibold">{courseData?.title}</p>
           </>
         )}

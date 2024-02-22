@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
+import { API_STORAGE } from "@/api/API_PATH";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
 import { Navigation } from "./Navigation";
@@ -33,7 +34,6 @@ const AboutCourse = () => {
   }, []);
 
   return (
-
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
         <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
@@ -47,11 +47,10 @@ const AboutCourse = () => {
         <AboutCourseText>{course?.description}</AboutCourseText>
         <Course>ლექტორი</Course>
         <LecturerContainer>
-          <LecturerImage src={`https://smarteducation.shop/smarteducation_backend/public/${course?.lecturer.image}`} alt="Lecturer Image" />
+        <LecturerImage src={`${API_STORAGE} ${course && course.lecturer.image ? course.lecturer.image : null}`} alt="Lecturer Image" />
           <div>
             <Lecturer>{`${course?.lecturer.first_name} ${course?.lecturer.last_name}`}</Lecturer>
             <LecturerDesc>{course?.lecturer.description}</LecturerDesc>
-
           </div>
         </LecturerContainer>
         <Course>სილაბუსი</Course>

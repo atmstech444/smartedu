@@ -6,8 +6,11 @@ import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
 import Image from "next/image";
 import arrow from "../../../../public/assets/icons/courserow.svg";
 import { Get_Lecture } from "@/services/AllCourses";
+import Link from "next/link";
+import { API_STORAGE } from "@/api/API_PATH";
 import { closeNavbar } from "@/redux/slices/mobileMenuSlice";
 import { useAppDispatch } from "@/redux/store";
+
 
 interface LectureTypes {
   course_id: number;
@@ -54,7 +57,9 @@ export const Navigation = (id: { id: any }) => {
       <div>
         <Image onClick={closeNavMenu} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
         <div className="w-full h-full">
-          <Image width={50} height={70} alt="image" className="rounded-md " src={`https://smarteducation.shop/smarteducation_backend/public/${course?.cover_image}`} />
+
+          <Image width={500} height={70} alt="image" className="rounded-md " src={`${API_STORAGE}${course?.cover_image}`} />
+
         </div>
         <h1 className="text-dark mb-8 text-lg p-3 font-medium">{course?.title}</h1>
         <div className={`text-dark text-base rounded-md p-3 font-semibold cursor-pointer ${pathname === `/watch/${id.id}` ? "bg-lightestBlue" : "bg-transparent"}`} onClick={navigateToAboutCourse}>
