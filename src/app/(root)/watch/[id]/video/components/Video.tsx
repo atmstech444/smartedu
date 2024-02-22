@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
 import NextButton from "../../../components/NextButton";
 import { API_STORAGE } from "@/api/API_PATH";
-
+import { updateIndexInfo } from "@/redux/slices/indexSlice";
 
 interface Props {
   id: any;
@@ -21,6 +21,7 @@ const Video = ({ id }: Props) => {
   const toggleMenuVisibility = () => {
     dispatch(toggleNavbar());
   };
+  const index = useAppSelector((state) => state.index.index);
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const video = lectureDetail?.videos.find((item) => item.id == params.videoId);
 
@@ -36,7 +37,9 @@ const Video = ({ id }: Props) => {
           <Image src={Arrow} width="15" height="15" alt="back" className="md:hidden" onClick={toggleMenuVisibility} />
           <div className=" flex justify-between">
             <h1 className=" text-xl m-0">{video?.title}</h1>
-            <NextButton id={video?.id} />
+            <div onClick={() => dispatch(updateIndexInfo(index + 1))}>
+              <NextButton />
+            </div>
           </div>
           {video && (
             <video controls className="rounded-lg">

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import SecondaryNav from "../../../components/SecondaryNav";
 import Reading from "../components/Reading";
+import { useAppSelector } from "@/redux/store";
 
 const Page = () => {
   const [isClient, setIsClient] = useState(false);
