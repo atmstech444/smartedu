@@ -25,14 +25,14 @@ const Reading = ({ id }: Props) => {
   const reading = lectureDetail?.readings;
   return (
     <>
-      <main className="relative w-full">
+      <main className="relative w-full flex items-center justify-center lg:block">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
             <SecondaryNav id={id} />
           </UserMobileMenu>
         )}
-        <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] md:w-[80%] lg:w-[90%]  bg-white rounded-md">
-          <Image src={Arrow} width="15" height="15" alt="back" className="md:hidden" onClick={toggleMenuVisibility} />
+        <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px]  w-[90%]  bg-white rounded-md">
+          <Image src={Arrow} width="15" height="15" alt="back" className="lg:hidden" onClick={toggleMenuVisibility} />
           <div className="flex items-center justify-between">
             <h3>მასალა</h3>
             <NextButton />

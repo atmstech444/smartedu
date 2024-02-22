@@ -46,15 +46,15 @@ const Footer = () => {
           <div className="footer__top pt-60 ">
             <div className="container">
               <div className="row">
-                <div className="col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-6">
+                <div className="col-xxl-3 col-xl-3 col-lg-6 col-md-5">
                   <div className="footer__widget mb-50" style={{ padding: "24px" }}>
                     <div className="footer__widget-head mb-22">
                       <FooterLoogo isprofileroute={isProfileRoute.toString()}>
+                        {/* <Link href="/">
+                          <Image src={FooterLogo} alt="logo" className="img-fluid d-none d-md-block" />
+                        </Link> */}
                         <Link href="/">
-                          <Image src={FooterLogo} alt="logo" className="img-fluid d-none d-sm-block" />
-                        </Link>
-                        <Link href="/">
-                          <Image src={FooterLogo} alt="logo" className="img-fluid d-block d-sm-none w-50 h-auto" />
+                          <Image src={FooterLogo} alt="logo" className="w-60 h-auto" />
                         </Link>
                       </FooterLoogo>
                     </div>
@@ -87,7 +87,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xxl-2 mt-auto offset-xxl-2 col-xl-2 offset-xl-2 col-lg-3 offset-lg-1 col-md-2 offset-md-2 col-sm-5 offset-sm-1" style={{ padding: "24px" }}>
+                <div className="col-xxl-2 mt-5 lg:m-0 offset-xxl-2 col-xl-2 offset-xl-2 col-lg-3 offset-lg-1 col-md-2 offset-md-2 col-sm-5 offset-sm-1" style={{ padding: "24px" }}>
                   <div className="footer__widget mb-50">
                     <div className="footer__widget-head mb-22">
                       <h3 className="footer__widget-title">ნავიგაცია</h3>
@@ -148,7 +148,7 @@ const Footer = () => {
 
 const FooterContainer = styled.footer<FooterLogoProps>`
   @media (min-width: 365px) and (max-width: 1024px) {
-    margin-top: ${({ isprofileroute }) => (isprofileroute ? "-150px" : "0")};
+    margin-top: ${({ isprofileroute }) => (isprofileroute ? "150px" : "0")};
   }
 `;
 type FooterLogoProps = {
@@ -156,8 +156,8 @@ type FooterLogoProps = {
 };
 
 const FooterLoogo = styled.div<FooterLogoProps>`
-  @media (min-width: 365px) and (max-width: 1024px) {
+  /* @media (min-width: 365px) and (max-width: 1024px) {
     padding-top: ${({ isprofileroute }) => (isprofileroute ? "150px" : "0")};
-  }
+  } */
 `;
 export default Footer;
