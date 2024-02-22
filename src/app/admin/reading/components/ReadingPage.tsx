@@ -59,7 +59,14 @@ const ReadingPage = ({ readingsData, setReadingsData }: any) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-black font-bold text-xl">წასაკითხი მასალა</h2>
+      <div className="flex justify-between gap-20">
+        <h2 className="text-black font-bold text-xl">წასაკითხი მასალა</h2>
+        <div className="flex justify-center">
+          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => router.back()}>
+            უკან
+          </button>
+        </div>
+      </div>
       {readingsData.map((reading: ReadingData, index: number) => (
         <div key={index} className="flex flex-col gap-6 items-start">
           <h3 className="font-normal text-base text-black">{reading.description}</h3>
