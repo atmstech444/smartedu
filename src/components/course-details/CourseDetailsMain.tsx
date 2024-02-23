@@ -47,7 +47,7 @@ const CourseDetailsMain = ({ id }: idType) => {
               <div className="col-xxl-8 col-xl-8 col-lg-8">
                 <div className="course__wrapper">
                   <div className="page__title-content mb-25">
-                    <span className="page__title-pre">{course?.category.title}</span>
+                    <span className="page__title-pre">{course?.category?.title}</span>
                     <h5 className="page__title-3">{course?.title}</h5>
                   </div>
                   {course && <CourseAreaSection course={course} />}
@@ -65,9 +65,8 @@ const CourseDetailsMain = ({ id }: idType) => {
                           aria-selected="true"
                           style={{ display: "flex", gap: "8px", alignItems: "center", width: "120px", padding: "5px" }}
                         >
-                          {" "}
                           <Image src={info} alt="info" width="20" height="20" />
-                          <span>აღწერა</span>{" "}
+                          <span>აღწერა</span>
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
@@ -82,8 +81,7 @@ const CourseDetailsMain = ({ id }: idType) => {
                           aria-selected="false"
                           style={{ display: "flex", gap: "8px", alignItems: "center", width: "120px", padding: "5px" }}
                         >
-                          {" "}
-                          <i className="fas fa-book"></i> <span>სილაბუსი</span>{" "}
+                          <i className="fas fa-book"></i> <span>სილაბუსი</span>
                         </button>
                       </li>
                       {/* <li className="nav-item" role="presentation">
@@ -103,7 +101,7 @@ const CourseDetailsMain = ({ id }: idType) => {
                   <div className="course__tab-content mb-95">
                     <div className="tab-content" id="courseTabContent">
                       <div className="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                        <CourseDescription desc={course.description} />
+                        <CourseDescription desc={course?.description} />
                       </div>
                       <div className="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                         <CourseTabAccordion course={course} />
