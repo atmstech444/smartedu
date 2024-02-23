@@ -40,12 +40,12 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
       <div className="course__sidebar-widget-2 white-bg mb-20">
         <div className="course__video">
           <div className="course__video-thumb w-img mb-25">
-            <img src={API_STORAGE + course.cover_image} style={{ width: "100%", height: "150px" }} alt="image not found" />
+            <img src={API_STORAGE + course?.cover_image} style={{ width: "100%", height: "150px" }} alt="image not found" />
             <div className="course__video-play">
               <button
                 className="play-btn"
                 onClick={() => {
-                  openVideoModal(API_STORAGE + course.intro);
+                  openVideoModal(API_STORAGE + course?.intro);
                 }}
               >
                 <i className="fas fa-play"></i>
@@ -55,7 +55,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
           <div className="course__video-meta mb-25 d-flex align-items-center justify-content-between">
             <div className="course__video-price">
               <h5>
-                {course.price} <span>₾</span>
+                {course?.price} <span>₾</span>
               </h5>
             </div>
           </div>
@@ -70,7 +70,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                 </div>
                 <div className="course__video-info">
                   <h5>
-                    <span>ტუტორი :</span> {course.lecturer.first_name} {course.lecturer.last_name}
+                    <span>ტუტორი :</span> {course?.lecturer?.first_name} {course?.lecturer?.last_name}
                   </h5>
                 </div>
               </li>
@@ -84,7 +84,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                 <div className="course__video-info">
                   <h5>
                     <span>ლექციები :</span>
-                    {course.lectures_count}
+                    {course?.lectures_count}
                   </h5>
                 </div>
               </li>
@@ -107,7 +107,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                 <div className="course__video-info">
                   <h5>
                     <span>ხანგრძილობა :</span>
-                    {course.duration} სთ
+                    {course?.duration} სთ
                   </h5>
                 </div>
               </li>
@@ -135,7 +135,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                 <div className="course__video-info">
                   <h5>
                     <span>ენა :</span>
-                    {course.language}
+                    {course?.language}
                   </h5>
                 </div>
               </li>

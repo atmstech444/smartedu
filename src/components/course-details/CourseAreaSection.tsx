@@ -30,13 +30,13 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
       <div className="course__meta-2 d-sm-flex mb-30">
         <div className="course__teacher-3 d-flex align-items-center mr-70 mb-30">
           <div className="course__teacher-thumb-3 mr-15">
-            <img src={API_STORAGE + course.lecturer.image} style={{ width: "auto", height: "auto" }} alt="image not found" />
+            <img src={API_STORAGE + course?.lecturer?.image} style={{ width: "auto", height: "auto" }} alt="image not found" />
           </div>
           <div className="course__teacher-info-3">
             <h5 style={{ fontWeight: 500 }}>ტუტორი</h5>
             <p style={{ fontWeight: 500 }}>
               <Link href="#">
-                {course.lecturer.first_name} {course.lecturer.last_name}
+                {course?.lecturer?.first_name} {course?.lecturer?.last_name}
               </Link>
             </p>
           </div>
@@ -46,12 +46,12 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
           <p>July 24, 2023</p>
         </div> */}
         <div className="course__rating-2 mb-30">
-          {course.average_rating !== 0 ? (
+          {course?.average_rating !== 0 ? (
             <>
               <h5>შეფასება:</h5>
               <div className="course__rating-inner d-flex align-items-center">
                 <ul>{stars}</ul>
-                <p>{course.average_rating.toFixed(1)}</p>
+                <p>{course?.average_rating.toFixed(1)}</p>
               </div>
             </>
           ) : (
@@ -60,7 +60,7 @@ const CourseAreaSection = ({ course }: { course: I_Course_Details }) => {
         </div>
       </div>
       <div className="course__img w-img mb-30">
-        <img src={API_STORAGE + course.cover_image} style={{ width: "100%", height: "420px", objectFit: "cover" }} alt="image not found" />
+        <img src={API_STORAGE + course?.cover_image} style={{ width: "100%", height: "420px", objectFit: "cover" }} alt="image not found" />
       </div>
     </>
   );
