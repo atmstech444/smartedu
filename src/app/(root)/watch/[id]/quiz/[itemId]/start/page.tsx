@@ -4,6 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import SecondaryNav from "../../../../components/SecondaryNav";
 import Quiz from "../components/Quiz";
+import { useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { Get_Lecture_Detail } from "@/services/AllCourses";
+import { setLecture } from "@/redux/slices/lectureDetail";
 
 const Page = () => {
   const [isClient, setIsClient] = useState(false);
@@ -11,7 +15,20 @@ const Page = () => {
   useEffect(() => {
     setIsClient(true);
   }, []);
-
+  const token = useAppSelector((state) => state.user.user?.token);
+  const lectureDetail = useAppSelector((state) => state.lecture.lecture);
+  const dispatch = useDispatch();
+  if (lectureDetail?.course_id == 0) {
+    const fetchData = async () => {
+      try {
+        const lectureDetail = await Get_Lecture_Detail(params.itemId, token);
+        dispatch(setLecture(lectureDetail.lecture[0]));
+      } catch (error) {
+        console.error("Error fetching lecture detail:", error);
+      }
+    };
+    fetchData();
+  }
   return (
     <>
       {isClient && (

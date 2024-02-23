@@ -59,7 +59,6 @@ const Lecture = (id: { id: any }) => {
       console.error("Error fetching lecture detail:", error);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
