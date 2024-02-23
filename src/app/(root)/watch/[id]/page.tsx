@@ -9,27 +9,6 @@ import { usePathname } from "next/navigation";
 import AboutCourse from "../components/AboutCourse";
 
 export default function Page({ params }: { params: { id: number } }) {
-  // const [isDesktop, setIsDesktop] = useState(false);
-  //  const router = useRouter();
-  // const pathname = usePathname();
-
-  // const updateIsDesktop = () => {
-  //   setIsDesktop(window.innerWidth > 768);
-  // };
-  // useEffect(() => {
-  //   updateIsDesktop();
-  //   window.addEventListener("resize", updateIsDesktop);
-  //   return () => {
-  //     window.removeEventListener("resize", updateIsDesktop);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   if (isDesktop) {
-  //     router.push(pathname + "/about");
-  //   }
-  // }, [isDesktop]);
-
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

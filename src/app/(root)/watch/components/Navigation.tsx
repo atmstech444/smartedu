@@ -25,7 +25,6 @@ export const Navigation = (id: { id: any }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const toggleCourseLectures = () => {
-    console.log("bla");
     setIsOpened((prev) => !prev);
   };
   const closeNavMenu = () => {

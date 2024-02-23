@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import arrow from "../../../../public/assets/icons/arrowrightblue.svg";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
 import { useParams, useRouter } from "next/navigation";
-import { updateIndexInfo } from "@/redux/slices/indexSlice";
 
 const NextButton = ({ id }: any) => {
   const params = useParams();
   const index = useAppSelector((state) => state.index.index);
-  const dispath = useAppDispatch();
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const arr = [];
 
@@ -36,10 +34,6 @@ const NextButton = ({ id }: any) => {
     return null;
   };
 
-  // useEffect(() => {
-  //   dispath(updateIndexInfo(index + 1));
-  // }, []);
-
   const nextElement = findNextElement(arr, currentIndex);
   const router = useRouter();
   const handleClick = () => {
@@ -52,8 +46,6 @@ const NextButton = ({ id }: any) => {
       }
     }
   };
-  console.log(nextElement);
-  console.log(index);
 
   return (
     <>
