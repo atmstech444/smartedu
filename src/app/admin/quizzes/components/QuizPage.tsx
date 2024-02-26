@@ -2,18 +2,27 @@ import React from "react";
 import { Quiz } from "../page";
 import { useRouter } from "next/navigation";
 import { API_STORAGE } from "@/api/API_PATH";
+import SecondLoadingSpinner from "@/components/LoadingSpinner";
 
 interface QuizPageProps {
   quizzes: Quiz[] | null;
   handleDeleteQuiz: () => void;
   swalMessage: string;
+  isLoading: any;
 }
 
-const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMessage }) => {
+const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMessage, isLoading }) => {
   const router = useRouter();
-  if (quizzes === null || quizzes === undefined) {
-    return <div>ქვიზი ვერ მოიძებნა...</div>;
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-3 justify-start items-center">
+        <SecondLoadingSpinner />
+        <p>იტვირთება...</p>
+      </div>
+    );
   }
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex justify-start">

@@ -56,18 +56,22 @@ const Page = () => {
   const { lectures, courseData } = useQueryParams();
   const searchParams = useSearchParams();
   const [readingsData, setReadingsData] = useState<ReadingData[]>([]);
+  const [isLoading, setIsLoading] = useState(true); 
 
   const lectureId = searchParams.get("lectureId");
 
   const fetchData = async () => {
     try {
       if (lectureId !== undefined) {
+        setIsLoading(true);
         const response = await getReadings(token, lectureId);
         const { reading } = response;
         setReadingsData(reading);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    }finally {
+      setIsLoading(false);
     }
   };
 
@@ -84,7 +88,7 @@ const Page = () => {
           courseData={courseData}
         />
         <div className="flex justify-between w-[85%] mt-6">
-          <ReadingPage readingsData={readingsData} setReadingsData={setReadingsData} />
+          <ReadingPage readingsData={readingsData} setReadingsData={setReadingsData} isLoading={isLoading}/>
         </div>
       </div>
     </>
