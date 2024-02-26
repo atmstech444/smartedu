@@ -32,7 +32,7 @@ const AboutCourse = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  console.log(course?.syllabus);
   return (
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
@@ -43,7 +43,7 @@ const AboutCourse = () => {
       <div className="flex gap-[24px] flex-col p-[24px] w-[90%]  bg-white rounded-md">
         <Image onClick={toggleMenuVisibility} src={Arrow} width={24} height={24} alt="Back" className="lg:hidden mb-4" />
         <Course>{course?.title}</Course>
-        <Course>ლექციის აღწერა</Course>
+        <Course>კურსის აღწერა</Course>
         <AboutCourseText>{course?.description}</AboutCourseText>
         <Course>ლექტორი</Course>
         <LecturerContainer>
@@ -59,9 +59,13 @@ const AboutCourse = () => {
             <div key={index}>
               <Lecture>{item.title}</Lecture>
               <LectureDesc>
-                {item.descriptions.map((desc, i) => (
-                  <div key={i}>{desc.description}</div>
-                ))}
+                <ul>
+                  {item.descriptions.map((desc, i) => (
+                    <li style={{ listStyle: "disc" }} key={i}>
+                      {desc.description}
+                    </li>
+                  ))}
+                </ul>
               </LectureDesc>
             </div>
           ))}
