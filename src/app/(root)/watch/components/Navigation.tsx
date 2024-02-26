@@ -24,8 +24,20 @@ export const Navigation = (id: { id: any }) => {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const router = useRouter();
+
+  useEffect(() => {
+    const storedState = localStorage.getItem("lecturesOpened");
+    if (storedState) {
+      setIsOpened(JSON.parse(storedState));
+    }
+  }, []);
+
   const toggleCourseLectures = () => {
-    setIsOpened((prev) => !prev);
+    setIsOpened((prev) => {
+      const newState = !prev;
+      localStorage.setItem("lecturesOpened", JSON.stringify(newState));
+      return newState;
+    });
   };
   const closeNavMenu = () => {
     dispatch(closeNavbar());
@@ -62,7 +74,7 @@ export const Navigation = (id: { id: any }) => {
         <div className={`text-dark text-base rounded-md p-3 font-semibold cursor-pointer ${pathname === `/watch/${id.id}` ? "bg-lightestBlue" : "bg-transparent"}`} onClick={navigateToAboutCourse}>
           კურსის შესახებ
         </div>
-        <main>
+        <div>
           <div className="self-start flex items-center my-3 gap-2 cursor-pointer relative" onClick={toggleCourseLectures}>
             <span className="text-base font-semibold p-3 text-dark">კურსი</span>
             <Image src={arrow} height="25" width="25" alt="arrow" />
@@ -81,7 +93,7 @@ export const Navigation = (id: { id: any }) => {
                 ))}
             </>
           )}
-        </main>
+        </div>
       </div>
     </div>
   );
