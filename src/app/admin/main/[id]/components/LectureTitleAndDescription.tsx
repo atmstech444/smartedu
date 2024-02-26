@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { getLectureAndDescriptions } from "../services/getLectureAndDescriptions";
 import { deleteTitleAndDescription } from "../services/deleteTitleAndDescription";
 import { useSearchParams } from "next/navigation";
+import SecondLoadingSpinner from "@/components/LoadingSpinner";
 
 const LectureTitleAndDescription = () => {
   const cookies = parseCookies();
@@ -16,6 +17,7 @@ const LectureTitleAndDescription = () => {
   const [lectureTitle, setLectureTitle] = useState("");
   const [lectureDescription, setLectureDescription] = useState("");
   const [titleDescriptionData, setTitleDescriptionData] = useState<{ id: number; title: string; description: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const searchParams = useSearchParams();
 
@@ -101,6 +103,7 @@ const LectureTitleAndDescription = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const data = await getLectureAndDescriptions(token, lectureId);
         if (data.lecture_content) {
           setTitleDescriptionData(data.lecture_content);
@@ -109,6 +112,8 @@ const LectureTitleAndDescription = () => {
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     if (lectureId !== undefined && lectureId !== null) {
@@ -118,7 +123,12 @@ const LectureTitleAndDescription = () => {
 
   return (
     <>
-      {titleDescriptionData !== null ? (
+      {isLoading ? (
+        <div className="flex flex-col gap-3 justify-start items-center w-36">
+          <SecondLoadingSpinner />
+          <p>იტვირთება...</p>
+        </div>
+      ) : titleDescriptionData !== null ? (
         <div className="relative flex flex-col gap-4">
           <div className="w-48 relative">
             <input

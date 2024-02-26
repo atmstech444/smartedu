@@ -55,6 +55,7 @@ const Page = () => {
   const [, setRefreshTabs] = useState(false);
   const [quizData, setQuizData] = useState<Quiz[] | null>(null);
   const [swalMessage, setSwalMessage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true); 
   const searchParams = useSearchParams();
 
   const lectureId = searchParams.get("lectureId");
@@ -103,10 +104,13 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const response = await getQuiz(token, lectureId);
         setQuizData(response.quizzes);
       } catch (error) {
         console.error("Error fetching courses:", error);
+      }finally {
+        setIsLoading(false);
       }
     };
 
@@ -119,7 +123,7 @@ const Page = () => {
       <div className="flex gap-8 w-[100%]">
         <Navbar lectures={lectures} courseData={courseData}  />
         <div className="w-[45%] mt-6 mb-20">
-          <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} />
+          <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} isLoading={isLoading}/>
         </div>
       </div>
     </>

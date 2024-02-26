@@ -6,12 +6,14 @@ import { parseCookies } from "nookies";
 import { editQuiz } from "../services/editQuiz";
 import { boolean } from "yup";
 import { API_STORAGE } from "@/api/API_PATH";
+import SecondLoadingSpinner from "@/components/LoadingSpinner";
 
 interface QuizPageProps {
   quizzes: Quiz[] | null;
   onDeleteAnswer: (quizId: number, answerIndex: number) => void;
   onAddAnswer: (quizId: number, newAnswer: string) => void;
   setQuizData: any;
+  isLoading: any
 }
 
 interface CheckedAnswers {
@@ -28,7 +30,7 @@ interface QuizData {
   _method: any;
 }
 
-const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPageProps) => {
+const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData, isLoading }: QuizPageProps) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const router = useRouter();
@@ -194,8 +196,13 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
     }));
   };
 
-  if (quizzes === null || quizzes === undefined) {
-    return <div>ქვიზი ვერ მოიძებნა...</div>;
+ if (isLoading) {
+    return (
+      <div className="flex flex-col gap-3 justify-start items-center">
+        <SecondLoadingSpinner />
+        <p>იტვირთება...</p>
+      </div>
+    );
   }
 
   return (
@@ -205,7 +212,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
           უკან
         </button>
       </div>
-      {quizzes.length === 0 ? (
+      {quizzes?.length === 0 ? (
         <div className="flex flex-col gap-3 items-start text-base w-full">
           <h1 className="text-black font-extrabold">ქვიზი არ არის დამატებული</h1>
           <div className="flex justify-center">
@@ -215,7 +222,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData }: QuizPag
           </div>
         </div>
       ) : (
-        quizzes.map((quiz, index) => (
+        quizzes?.map((quiz, index) => (
           <div className="flex flex-col gap-3 justify-between items-start" key={quiz.id}>
             <div className="flex gap-1 items-baseline text-base text-black font-extrabold w-full">
               <span>{index + 1}.</span>

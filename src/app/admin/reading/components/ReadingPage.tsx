@@ -3,18 +3,29 @@ import { deleteReading } from "../../main/[id]/services/deleteReading";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/navigation";
+import SecondLoadingSpinner from "@/components/LoadingSpinner";
 
 type ReadingData = {
   id: number;
   description: string;
   lecture_id: number;
   url: string[];
+  isLoading: any;
 };
 
-const ReadingPage = ({ readingsData, setReadingsData }: any) => {
+const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const router = useRouter();
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-3 justify-start items-center">
+        <SecondLoadingSpinner />
+        <p>იტვირთება...</p>
+      </div>
+    );
+  }
 
   if (!readingsData || readingsData.length === 0) {
     return (
