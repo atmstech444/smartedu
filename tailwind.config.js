@@ -24,6 +24,7 @@ module.exports = {
         blue: " #0FA4EF",
         lightblue: "#D9EBF4",
         lightestBlue: "#F3F4F8",
+        gray: "#7F7F7F",
       },
       borderRadius: {
         faqBordeR: "8px",
