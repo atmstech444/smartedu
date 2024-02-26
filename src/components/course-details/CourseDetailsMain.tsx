@@ -13,7 +13,7 @@ import { idType } from "@/interFace/interFace";
 import Breadcrumb from "../common/breadcrumb/Breadcrumb";
 import { GET_CourseDetails, I_Course_Details } from "@/api/GET_CourseDetails";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import info from "../../../public/assets/img/profile/info.png";
+import info from "../../../public/assets/img/profile/open-book.png";
 import Image from "next/image";
 
 const CourseDetailsMain = ({ id }: idType) => {
