@@ -32,6 +32,8 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
         });
         router.push("/sign-in");
       }
+    } else {
+      router.push(`/watch/${course.id}`);
     }
   };
 
@@ -148,7 +150,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
           </div>
           <div className="course__enroll-btn">
             <button onClick={purchase} className="e-btn e-btn-7 w-100 btnFont" style={{ textTransform: "lowercase" }}>
-              {isBought ? "ნაყიდია" : "ყიდვა"}
+              {isBought && user ? "განაგრძე" : "ყიდვა"}
             </button>
           </div>
         </div>

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const Tab = ({ index, item }: { index: number; item: { title: string; descriptions: { description: string }[] } }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(item)
+
   return (
     <>
       <div className="accordion" id="course__accordion">
