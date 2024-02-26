@@ -56,12 +56,12 @@ const CourseSectionOne = () => {
                         {item.lectures_count} გაკვეთილი
                       </span>
                     </div>
-                    <div className="course__rating">
+                    {/* <div className="course__rating">
                       <span>
                         <i className="fas fa-star"></i>
                         Rating
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                   <h3 className="course__title" style={{ height: "48px" }}>
                     <Link href={`/course-details/${item.id}`}>{item.title}</Link>
