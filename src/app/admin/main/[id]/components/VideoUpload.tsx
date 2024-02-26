@@ -11,11 +11,13 @@ import ChunkedVideoUpload from "./ChunkedVideoUpload";
 import LectureTitleAndDescription from "./LectureTitleAndDescription";
 import VideoUploadModal from "./VideoUploadModal";
 import { API_STORAGE } from "@/api/API_PATH";
+import SecondLoadingSpinner from "@/components/LoadingSpinner";
 
 interface Video {
   id: number;
   video: string;
   title: string;
+  lecture_videos?: any;
 }
 
 const useQueryParams = () => {
@@ -41,6 +43,7 @@ const VideoUpload = () => {
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
   const [totalSizeUploaded, setTotalSizeUploaded] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleFileInputChange = (event: any) => {
     const file = event.target.files[0];
@@ -104,12 +107,15 @@ const VideoUpload = () => {
   const fetchData = async () => {
     try {
       if (lectureId !== undefined) {
+        setIsLoading(true);
         const response = await getAllVideos(token, lectureId);
         console.log(response);
         setVideosData(response.lecture_videos);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -142,6 +148,7 @@ const VideoUpload = () => {
       console.error("Error deleting video:", error);
     }
   };
+  console.log(isLoading);
   return (
     <div className="grid grid-cols-6 w-full">
       <div className="flex flex-col gap-3 col-span-5">
@@ -153,31 +160,31 @@ const VideoUpload = () => {
           </label>
         </div>
 
-        {videosData.length === 0 && (
-          <div className="">
-            <p>ვიდეოები არაა დამატებული</p>
+        {isLoading ? (
+          <div className="flex flex-col gap-3 mt-10 w-28 items-center">
+            <SecondLoadingSpinner />
+            <p>იტვირთება...</p>
           </div>
-        )}
-
-        {videosData.length > 0 && (
+        ) : videosData.length > 0 ? (
           <div className="flex gap-4 mt-4 flex-wrap mb-5">
             {videosData.map((video) => (
               <div key={video.id} className="w-[400px] p-2 flex flex-col gap-2 items-start border border-1-[#D1D1D1] rounded-md">
                 <h1>
                   <span className="text-lg font-bold">სათაური:</span> {video.title}
                 </h1>
-                {videosData && (
+                {video && (
                   <video controls className="rounded-lg">
-                    <source src={`${API_STORAGE}${video?.video}`} type="video/mp4" />
+                    <source src={`${API_STORAGE}${video.video}`} type="video/mp4" />
                   </video>
                 )}
-
                 <button className="text-white bg-[#2FA8FF] py-2 px-2 w-[150px] rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
                   წაშლა
                 </button>
               </div>
             ))}
           </div>
+        ) : (
+          <p className="mt-7">ვიდეოები არ არის დამატებული</p>
         )}
 
         {uploading && <LoadingSpinner uploadPercentage={uploadPercentage} totalSizeUploaded={totalSizeUploaded} />}
