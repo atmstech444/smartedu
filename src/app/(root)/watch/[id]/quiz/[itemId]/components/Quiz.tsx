@@ -10,24 +10,36 @@ import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
 
 interface Props {
-  // lectureDetail?: LectureTypes | undefined;
   id: any;
 }
 
 interface AnswerState {
-  [questionIndex: number]: number;
+  questionIndex: number;
+  answer: any;
 }
 const Quiz = ({ id }: Props) => {
   const params = useParams();
   const router = useRouter();
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
-  const [selectedAnswers, setSelectedAnswers] = useState<AnswerState>({});
+  const [selectedAnswers, setSelectedAnswers] = useState<AnswerState[]>([]);
 
-  const handleCheckboxChange = (questionIndex: number, answerIndex: number) => {
-    setSelectedAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [questionIndex]: answerIndex,
-    }));
+  const handleCheckboxChange = (questionIndex: number, answer: any) => {
+    setSelectedAnswers((prevAnswers) => {
+      const index = prevAnswers.findIndex((item) => item.questionIndex === questionIndex);
+      if (index !== -1) {
+        const updatedAnswers = [...prevAnswers[index].answer];
+        const answerIndex = updatedAnswers.indexOf(answer);
+        if (answerIndex !== -1) {
+          updatedAnswers.splice(answerIndex, 1);
+        } else {
+          updatedAnswers.push(answer);
+        }
+
+        return [...prevAnswers.slice(0, index), { questionIndex, answer: updatedAnswers }, ...prevAnswers.slice(index + 1)];
+      } else {
+        return [...prevAnswers, { questionIndex, answer: [answer] }];
+      }
+    });
   };
 
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
@@ -41,6 +53,24 @@ const Quiz = ({ id }: Props) => {
     router.push(`/watch/${params.id}/quiz/${lectureDetail?.id}`);
   };
 
+  const handleSubmit = () => {
+    if (quiz.length > 0 && selectedAnswers.length > 0) {
+      const results = quiz.map((question, index) => {
+        const correctAnswers = question.correct_answer;
+        const selectedAnswersForQuestion = selectedAnswers.find((item) => item.questionIndex === index)?.answer || [];
+        const isCorrect = correctAnswers.length === selectedAnswersForQuestion.length && correctAnswers.every((correctAnswer) => selectedAnswersForQuestion.includes(correctAnswer));
+        return {
+          questionIndex: index,
+          isCorrect,
+        };
+      });
+
+      console.log("Results:", results);
+    }
+  };
+
+  // console.log(quiz);
+  // console.log(selectedAnswers);
   return (
     <>
       <main className="relative w-full bg-white">
@@ -49,7 +79,7 @@ const Quiz = ({ id }: Props) => {
             <SecondaryNav id={id} />
           </UserMobileMenu>
         )}
-        <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] md:w-[80%] lg:w-[90%]   rounded-md">
+        <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] w-[100%]   rounded-md">
           <div className=" flex gap-3">
             <Image src={Arrow} width="15" height="15" alt="back" onClick={navigateToQuiz} />
             <h1 className="text-xl m-0">ქვიზი</h1>
@@ -58,24 +88,30 @@ const Quiz = ({ id }: Props) => {
           {quiz &&
             quiz.map((item, questionIndex) => (
               <div key={questionIndex}>
-                <h1 className="text-black text-base m-0">{`${questionIndex + 1}. ${item.question}`}</h1>
-                <ul className=" mt-[25px]">
-                  {item.answer.map((answer, answerIndex) => (
-                    <li key={answerIndex} className=" my-2 flex gap-3">
+                <div className=" flex justify-between">
+                  <h1 className="text-black text-base m-0 w-[70%]">{`${questionIndex + 1}. ${item.question}`}</h1>
+                  <p className=" text-black font-bold bg-[#CCE2FE] px-2 py-1 rounded-sm">1 ქულა</p>
+                </div>
+                <ul className="mt-[25px]">
+                  {item.answer.map((ans, answerIndex) => (
+                    <li key={answerIndex} className="my-2 flex gap-3">
                       <input
                         type="checkbox"
                         id={`answer-${questionIndex}-${answerIndex}`}
                         name={`answer-${questionIndex}`}
                         className="p-2"
-                        checked={selectedAnswers[questionIndex] === answerIndex}
-                        onChange={() => handleCheckboxChange(questionIndex, answerIndex)}
+                        checked={selectedAnswers.some((item) => item.questionIndex === questionIndex && item.answer.includes(ans))}
+                        onChange={() => handleCheckboxChange(questionIndex, ans)}
                       />
-                      <label htmlFor={`answer-${questionIndex}-${answerIndex}`}>{answer}</label>
+                      <label htmlFor={`answer-${questionIndex}-${answerIndex}`}>{ans}</label>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
+          <button className=" text-white bg-[#006CFA] rounded-md py-2 px-2 w-[140px]" onClick={handleSubmit}>
+            დადასტურება
+          </button>
         </div>
       </main>
     </>
