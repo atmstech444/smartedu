@@ -71,3 +71,18 @@ export async function Get_Lecture_Detail(id: any, token: any) {
     throw error;
   }
 }
+
+export async function POST_QUIZ(token: any, data: any) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const response = await axios.post(url + `midterm-quiz-check-anwer`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error sending quiz answers:", error);
+    throw error;
+  }
+}

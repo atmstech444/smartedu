@@ -21,6 +21,8 @@ export interface LectureTypes {
   lecture_content: {
     title: string;
   };
+  mideterm_quiz_check_answers: any;
+  mideterm_quiz_answer_percents: any;
   quizzes: Quizzes[];
   readings: {
     description: string;
@@ -40,6 +42,7 @@ interface Quizzes {
   id: number;
   question: string;
   url: string;
+  lecture_id: number;
 }
 
 const Lecture = (id: { id: any }) => {
@@ -64,7 +67,6 @@ const Lecture = (id: { id: any }) => {
   }, []);
 
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
-
   const navigateToReading = (lectureId: any) => {
     router.push(`/watch/${id.id}/reading/${lectureId}`);
   };
