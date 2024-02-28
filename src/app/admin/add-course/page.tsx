@@ -14,12 +14,14 @@ import IntroUploader from "./components/IntroUploader";
 import CourseDetails from "./components/CourseDetails";
 import { CourseTitleInput } from "./components/CourseTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import MobileimageUpload from "./components/MobileImageUpload";
 
 const AddCourse = () => {
   const router = useRouter();
   const [courseDescription, setCourseDescription] = useState("");
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedMobileImage, setSelectedMobileImage] = useState<File | null>(null);
   const [selectedIntro, setSelectedIntro] = useState<File | null>(null);
 
   const [selectedLecture, setSelectedLecture] = useState<LectureOption[]>([]);
@@ -87,7 +89,8 @@ const AddCourse = () => {
       lecturer: selectedLecture,
       duration: durationInput.value,
       language: languageInput.value,
-      cover_image: selectedImage,
+      cover_image_desktop: selectedImage,
+      cover_image_mobile: selectedMobileImage,
       intro: selectedIntro,
       course_category: checkedIndexes.join(","),
     };
@@ -127,7 +130,10 @@ const AddCourse = () => {
     formData.append("course_category_id", checkedIndexes.join(","));
 
     if (selectedImage instanceof File) {
-      formData.append("cover_image", selectedImage);
+      formData.append("cover_image_desktop", selectedImage);
+    }
+    if (selectedImage instanceof File) {
+      formData.append("cover_image_mobile", selectedImage);
     }
     if (selectedIntro instanceof File) {
       formData.append("intro", selectedIntro);
@@ -176,11 +182,20 @@ const AddCourse = () => {
               <CourseAndSyllabus onCourseDescriptionChange={handleCourseDescriptionChange} />
               {errorMessages.description && <p className="text-red pt-2">{errorMessages.description[0]}</p>}
 
-              <div className="pt-9">
-                <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო</p>
+              <div className="flex gap-10">
+                <div className="pt-9">
+                  <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო(Desktop)</p>
 
-                <ImageUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedImage(file)} onDeletePhoto={() => setSelectedImage(null)} selectedImage={selectedImage} />
+                  <ImageUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedImage(file)} onDeletePhoto={() => setSelectedImage(null)} selectedImage={selectedImage} />
+                </div>
+
+                <div className="pt-9">
+                  <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო(Mobile)</p>
+
+                  <MobileimageUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedMobileImage(file)} onDeletePhoto={() => setSelectedMobileImage(null)} selectedImage={selectedMobileImage} />
+                </div>
               </div>
+
               {errorMessages.cover_image && <p className="text-red pt-2">{errorMessages.cover_image[0]}</p>}
             </div>
 

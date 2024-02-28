@@ -23,6 +23,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
   const [data, setData] = useState<any>([]);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedMobileImage, setSelectedMobileImage] = useState<File | null>(null);
   const [selectedIntro, setSelectedIntro] = useState<File | null>(null);
 
   const initialSelectedCategoryId = data?.category?.id ?? null;
@@ -94,7 +95,11 @@ const Editcourse: FC<pageProps> = ({ params }) => {
     formData.append("lecturer_id", lecturerIdToAppend);
 
     if (selectedImage instanceof File) {
-      formData.append("cover_image", selectedImage);
+      formData.append("cover_image_desktop", selectedImage);
+    }
+
+    if (selectedMobileImage instanceof File) {
+      formData.append("cover_image_mobile", selectedMobileImage);
     }
 
     if (selectedIntro instanceof File) {
@@ -129,6 +134,10 @@ const Editcourse: FC<pageProps> = ({ params }) => {
     setSelectedImage(selectedFile);
   };
 
+  const handleMobileFileChange = (selectedFile: File) => {
+    setSelectedMobileImage(selectedFile);
+  }
+
   const handleIntroChange = (selectedFile: File) => {
     setSelectedIntro(selectedFile);
   };
@@ -150,6 +159,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
               selectedLecturerId={selectedLecturerId}
               handleLecturerChange={handleLecturerChange}
               handleFileChange={handleFileChange}
+              handleMobileFileChange={handleMobileFileChange}
               handleIntroChange={handleIntroChange}
               handleEdit={handleEdit}
             />

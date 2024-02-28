@@ -2,11 +2,16 @@
 import { API_STORAGE } from "@/api/API_PATH";
 import React, { useState } from "react";
 
-const CourseDescription = ({ data, onFileChange }: any) => {
+const CourseDescription = ({ data, onFileChange, handleMobileFileChange }: any) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadFileMobile, setUploadFileMobile] = useState<File | null>(null);
 
   const handleDelete = () => {
     setUploadedFile(null);
+  };
+
+  const handleDeleteMobile = () => {
+    setUploadFileMobile(null);
   };
   return (
     <div className="mt-6 w-[50%]">
@@ -29,15 +34,17 @@ const CourseDescription = ({ data, onFileChange }: any) => {
           <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო</p>
           <div className="flex flex-col mt-2 w-[300px] justify-center items-center">
             {uploadedFile ? (
-              <div className="flex flex-col gap-10">
-                <img src={URL.createObjectURL(uploadedFile)} alt="Uploaded" className="mt-10" />
+              <div className="flex flex-col gap-1 mt-7">
+                <h1>Desktop ფოტო</h1>
+                <img src={URL.createObjectURL(uploadedFile)} alt="Uploaded" className="" />
                 <button className="cursor-pointer text-red-500 bg-[#006CFA] p-2 rounded-md text-white" onClick={handleDelete}>
                   წაშლა
                 </button>
               </div>
             ) : (
-              <div>
-                <img src={`${API_STORAGE}${data.cover_image}`} alt="Uploaded" className="mt-10" />
+              <div className="flex flex-col gap-1">
+                <h1>Desktop ფოტო</h1>
+                <img src={`${API_STORAGE}${data.cover_image_desktop}`} alt="Uploaded" className="" />
                 <input
                   type="file"
                   className="w-full mt-5"
@@ -46,6 +53,32 @@ const CourseDescription = ({ data, onFileChange }: any) => {
                     if (selectedFile) {
                       setUploadedFile(selectedFile);
                       onFileChange(selectedFile);
+                    }
+                  }}
+                />
+              </div>
+            )}
+
+            {uploadFileMobile ? (
+              <div className="flex flex-col gap-1 mt-10">
+                <h1>Mobile ფოტო</h1>
+                <img src={URL.createObjectURL(uploadFileMobile)} alt="Uploaded" className="" />
+                <button className="cursor-pointer text-red-500 bg-[#006CFA] p-2 rounded-md text-white" onClick={handleDeleteMobile}>
+                  წაშლა
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1 mt-10">
+                <h1>Mobile ფოტო</h1>
+                <img src={`${API_STORAGE}${data.cover_image_mobile}`} alt="Uploaded" className="" />
+                <input
+                  type="file"
+                  className="w-full mt-5"
+                  onChange={(e) => {
+                    const selectedFile = e.target?.files?.[0];
+                    if (selectedFile) {
+                      setUploadFileMobile(selectedFile);
+                      handleMobileFileChange(selectedFile);
                     }
                   }}
                 />
