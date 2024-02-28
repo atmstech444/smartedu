@@ -4,14 +4,14 @@ import Image from "next/image";
 import Arrow from "../../../../../../public/assets/icons/arrowLeft.svg";
 import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
-import { LectureTypes } from "../../course/Lecture";
 import icon from "../../../../../../public/assets/icons/Export.svg";
 import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
 import NextButton from "../../../components/NextButton";
-import arrow from "../../../../../../public/assets/icons/arrowrightblue.svg";
 import { updateIndexInfo } from "@/redux/slices/indexSlice";
-
+import BackToCourse from "../../../components/BackToCourse";
+import { useRouter } from "next/navigation";
+import MobileNavOpener from "../../../components/MobileNavOpener";
 interface Props {
   id: any;
 }
@@ -22,9 +22,14 @@ const Reading = ({ id }: Props) => {
   const toggleMenuVisibility = () => {
     dispatch(toggleNavbar());
   };
+  const router = useRouter();
   const index = useAppSelector((state) => state.index.index);
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const reading = lectureDetail?.readings;
+  const navigateToCourse = () => {
+    router.push(`/watch/${id}/course/${lectureDetail.id}`);
+  };
+
   return (
     <>
       <main className="relative w-full flex items-center justify-center lg:block">
@@ -34,7 +39,8 @@ const Reading = ({ id }: Props) => {
           </UserMobileMenu>
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px]  w-[90%]  bg-white rounded-md">
-          <Image src={Arrow} width="15" height="15" alt="back" className="lg:hidden" onClick={toggleMenuVisibility} />
+          <BackToCourse lecture_name={lectureDetail.lecture_name} onClick={navigateToCourse} />
+          <MobileNavOpener lecture_name={lectureDetail.lecture_name} onArrowClick={navigateToCourse} onNavClick={toggleMenuVisibility} />
           <div className="flex items-center justify-between">
             <h3>მასალა</h3>
             <div onClick={() => dispatch(updateIndexInfo(index + 1))}>

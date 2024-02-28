@@ -62,8 +62,8 @@ const SecondaryNav = ({ id }: Props) => {
               >
                 <Image alt="book" src={Book} />
                 <div>
-                  <p className=" m-0 font-medium text-black">მასალა</p>
-                  <p className=" m-0">წასაკითხი</p>
+                  <p className="mb-0 font-medium text-black">მასალა</p>
+                  <p className="mb-0">წასაკითხი</p>
                 </div>
               </Link>
             )}
