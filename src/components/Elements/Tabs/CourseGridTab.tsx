@@ -9,6 +9,7 @@ import Image from "next/image";
 const CourseGridTab = () => {
   const courses: I_Course[] = useAppSelector((state) => state.courses.courses);
 
+  console.log(courses);
   return (
     <section className="course__area pt-120 pb-120">
       <div className="container">
@@ -18,7 +19,7 @@ const CourseGridTab = () => {
               <div className="tab-content" id="courseTabContent">
                 {courses.length === 0 ? (
                   <div className="text-center" style={{ paddingTop: "30px" }}>
-                    <Image src={Logo} alt="Logo" style={{ width: "150px", height: "40px" }} />
+                    {/* <Image src={Logo} alt="Logo" style={{ width: "150px", height: "40px" }} /> */}
                   </div>
                 ) : (
                   <div className="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
@@ -28,7 +29,8 @@ const CourseGridTab = () => {
                           <div className="course__item white-bg mb-30 fix">
                             <div className="course__thumb w-img p-relative fix">
                               <Link href="/course-details/[id]" as={`/course-details/${item?.id}`}>
-                                <img src={API_STORAGE + item?.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
+                                <img className="flex lg:hidden" src={API_STORAGE + item?.cover_image_mobile} style={{ width: "100%", height: "200px" }} alt="image not found" />
+                                <img className="hidden lg:flex" src={API_STORAGE + item?.cover_image_desktop} style={{ width: "100%", height: "200px" }} alt="image not found" />
                               </Link>
                               <div className="course__tag">
                                 <Link href={`/course-details/${item?.id}`} className={item?.category.title ? `${item?.category.title}` : ""}>

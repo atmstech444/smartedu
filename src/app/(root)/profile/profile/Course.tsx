@@ -12,7 +12,7 @@ export default function Course({ course }: { course: I_MyCourse }) {
         <Icon src={API_STORAGE + course.cover_image} />
         <Title>{course.title}</Title>
       </Header>
-      <ProgressText>{Math.round(course.completion_percentage)}%</ProgressText>
+      <ProgressText>{Math.round(course?.completion_percentage && course.completion_percentage)}%</ProgressText>
       <Progress max={100} value={Math.round(course.completion_percentage)} />
 
       <Link href={`/watch/${course.id}`}>
