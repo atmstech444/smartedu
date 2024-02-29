@@ -125,6 +125,10 @@ const QuizUpload = ({ lectures, courseData }: any) => {
         if (file) {
           formData.append(`quiz_content[${index}][image]`, file);
         }
+        const isOpenCheckbox = document.getElementById(`isOpen_${id}`) as HTMLInputElement;
+        const isOpen = isOpenCheckbox.checked;
+        formData.append(`quiz_content[${index}][isOpen]`, isOpen ? "1" : "0");
+        console.log(isOpenCheckbox);
       });
       const response = await addQuiz(token, formData, id);
 
@@ -199,6 +203,10 @@ const QuizUpload = ({ lectures, courseData }: any) => {
                       <input id={`file_${id}`} type="file" className="hidden" onChange={(e) => handleFileUpload(id, e.target.files?.[0])} />
                     </label>
                   )}
+                </div>
+                <div className="flex gap-2">
+                  <input type="checkbox" id={`isOpen_${id}`} />
+                  <label htmlFor="">მონიშნე როგორც ღია კითხვა</label>
                 </div>
               </div>
             </section>
