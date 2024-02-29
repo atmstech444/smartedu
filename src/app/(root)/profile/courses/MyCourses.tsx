@@ -7,8 +7,8 @@ import { useAppSelector } from "@/redux/store";
 export default function MyCourses() {
   const courses = useAppSelector((state) => state.myCourses.courses);
   if (courses.length > 0) {
-    let unwatched = courses.filter((course) => course.completion_percentage !== 100);
-    let watched = courses.filter((course) => course.completion_percentage === 100);
+    let unwatched = courses.filter((course) => course?.completion_percentage !== 100);
+    let watched = courses.filter((course) => course?.completion_percentage === 100);
     return (
       <div style={{ padding: "24px" }}>
         {unwatched.length > 0 && <CourseWrapper>{unwatched.map((item, index) => item && <CourseItem course={item} key={"sf" + index} />)}</CourseWrapper>}

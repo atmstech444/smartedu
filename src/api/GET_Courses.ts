@@ -11,7 +11,8 @@ export interface POST_Login_Success {
 export interface I_Course {
   id: number;
   title: string;
-  cover_image: string;
+  cover_image_mobile: string;
+  cover_image_desktop: string;
   price: string;
   lecturer_id: number;
   course_category_id: number;
