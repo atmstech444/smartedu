@@ -148,7 +148,6 @@ const VideoUpload = () => {
       console.error("Error deleting video:", error);
     }
   };
-  console.log(isLoading);
   return (
     <div className="grid grid-cols-6 w-full">
       <div className="flex flex-col gap-3 col-span-5">
