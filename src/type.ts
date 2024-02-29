@@ -21,7 +21,8 @@ export interface CourseData {
 }
 
 export interface AllCourses {
-  cover_image: string;
+  cover_image_desktop: string;
+  cover_image_mobile: string;
   id: number;
   lecture_count: number;
   title: string;
