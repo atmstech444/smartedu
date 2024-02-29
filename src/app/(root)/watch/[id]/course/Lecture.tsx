@@ -41,8 +41,9 @@ interface Quizzes {
   correct_answer: string[];
   id: number;
   question: string;
-  url: string;
+  url: null | string;
   lecture_id: number;
+  is_open: string;
 }
 
 const Lecture = (id: { id: any }) => {

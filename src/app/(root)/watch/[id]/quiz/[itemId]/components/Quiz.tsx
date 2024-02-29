@@ -83,7 +83,17 @@ const Quiz = ({ id }: Props) => {
       handleQuizSubmit(results);
     }
   };
-  // console.log(lectureDetail.mideterm_quiz_check_answers);
+  const handleTextChange = (questionIndex: number, answer: any) => {
+    setSelectedAnswers((prevAnswers) => {
+      const index = prevAnswers.findIndex((item) => item.questionIndex === questionIndex);
+
+      if (index !== -1) {
+        return [...prevAnswers.slice(0, index), { questionIndex, answer: [answer] }, ...prevAnswers.slice(index + 1)];
+      } else {
+        return [...prevAnswers, { questionIndex, answer: [answer] }];
+      }
+    });
+  };
   return (
     <>
       <main className="relative w-full bg-white">
@@ -102,12 +112,11 @@ const Quiz = ({ id }: Props) => {
             ? lectureDetail.mideterm_quiz_check_answers?.map((ans: any, index: number) => (
                 <div key={index}>
                   <li className="my-2 gap-3">
-                    {/* <p>{`${index + 1}. ${ans.course_lecture_quizzes.question}`}</p> */}
-
                     <div className="flex justify-between">
                       <h1 className="text-black text-base m-0 w-[70%]">{`${index + 1}. ${ans.course_lecture_quizzes.question}`}</h1>
                       <p className="text-black font-bold bg-[#CCE2FE] px-2 py-1 rounded-sm h-[37px]"> {ans.correct_answer ? "1/1 ქულა" : "0/1 ქულა"} </p>
                     </div>
+                    {ans.course_lecture_quizzes.url && <Image src={process.env.NEXT_PUBLIC_API_STORAGE + ans.course_lecture_quizzes.url} width="200" height="200" alt="back" />}
 
                     <div className=" bg-[#F5FDF6] rounded-sm h-10 flex items-center pl-3 mt-3">
                       {ans.correct_answer ? (
@@ -142,20 +151,31 @@ const Quiz = ({ id }: Props) => {
                     <h1 className="text-black text-base m-0 w-[70%]">{`${questionIndex + 1}. ${item.question}`}</h1>
                     <p className="text-black font-bold bg-[#CCE2FE] px-2 py-1 rounded-sm">1 ქულა</p>
                   </div>
+                  {item.url && <Image src={process.env.NEXT_PUBLIC_API_STORAGE + item.url} width="200" height="200" alt="back" />}
                   <ul className="mt-[25px]">
-                    {item.answer.map((ans, answerIndex) => (
-                      <li key={answerIndex} className="my-2 flex gap-3">
-                        <input
-                          type="checkbox"
-                          id={`answer-${questionIndex}-${answerIndex}`}
-                          name={`answer-${questionIndex}`}
-                          className="p-2"
-                          checked={selectedAnswers.some((item) => item.questionIndex === questionIndex && item.answer.includes(ans))}
-                          onChange={() => handleCheckboxChange(questionIndex, ans)}
-                        />
-                        <label htmlFor={`answer-${questionIndex}-${answerIndex}`}>{ans}</label>
-                      </li>
-                    ))}
+                    {item.is_open ? (
+                      <input
+                        type="text"
+                        className="rounded-md border border-solid border-[#5A5454] p-2 w-full"
+                        placeholder="შეიყვანე პასუხი"
+                        value={selectedAnswers.find((item) => item.questionIndex === questionIndex)?.answer[0] || ""}
+                        onChange={(e) => handleTextChange(questionIndex, e.target.value)}
+                      />
+                    ) : (
+                      item.answer.map((ans, answerIndex) => (
+                        <li key={answerIndex} className="my-2 flex gap-3">
+                          <input
+                            type="checkbox"
+                            id={`answer-${questionIndex}-${answerIndex}`}
+                            name={`answer-${questionIndex}`}
+                            className="p-2"
+                            checked={selectedAnswers.some((item) => item.questionIndex === questionIndex && item.answer.includes(ans))}
+                            onChange={() => handleCheckboxChange(questionIndex, ans)}
+                          />
+                          <label htmlFor={`answer-${questionIndex}-${answerIndex}`}>{ans}</label>
+                        </li>
+                      ))
+                    )}
                   </ul>
                 </div>
               ))}

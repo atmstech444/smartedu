@@ -41,7 +41,7 @@ const QuizScore = ({ id }: Props) => {
     };
     fetchData();
   }, []);
-  console.log(lectureDetail);
+
   const percentArray = lectureDetail.mideterm_quiz_answer_percents;
   return (
     <>
