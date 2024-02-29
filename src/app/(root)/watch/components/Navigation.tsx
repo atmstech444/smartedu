@@ -68,7 +68,7 @@ export const Navigation = (id: { id: any }) => {
       <div>
         <Image onClick={closeNavMenu} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
         <div className="w-full h-full">
-          <Image width={500} height={70} alt="image" className="rounded-md " src={`${API_STORAGE}${course?.cover_image}`} />
+          <Image width={500} height={70} alt="image" className="rounded-md " src={`${API_STORAGE}${course?.cover_image_mobile}`} />
         </div>
         <h1 className="text-dark mb-8 text-lg p-3 font-medium">{course?.title}</h1>
         <div className={`text-dark text-base rounded-md p-3 font-semibold cursor-pointer ${pathname === `/watch/${id.id}` ? "bg-lightestBlue" : "bg-transparent"}`} onClick={navigateToAboutCourse}>
