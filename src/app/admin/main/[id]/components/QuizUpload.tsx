@@ -32,11 +32,15 @@ const QuizUpload = ({ lectures, courseData }: any) => {
     router.push(`/admin/edit-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
 
+  const handleSeeFinalQuiz = () => {
+    router.push(`/admin/final-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
+  };
+
   return (
     <main className="w-full flex flex-col">
       {isFinalQuiz ? (
         <div className="flex gap-2">
-          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeQuiz()}>
+          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeFinalQuiz()}>
             ნახე საბოლოო ქვიზი
           </button>
           <button className="text-white bg-[#2FA8FF] py-1 text-center rounded-lg w-[270px]" onClick={() => handleEditQuiz()}>
