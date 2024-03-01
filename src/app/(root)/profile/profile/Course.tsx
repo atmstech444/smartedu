@@ -16,7 +16,7 @@ export default function Course({ course }: { course: I_MyCourse }) {
       <Progress max={100} value={Math.round(course.completion_percentage)} />
 
       <Link href={`/watch/${course.id}`}>
-        <Button>{`${Math.round(course.completion_percentage) !== 0}` ? "განაგრძე კურსი" : "დაიწყე"}</Button>
+        <Button>{`${Math.round(course.completion_percentage) === 0}` ? "დაიწყე" : "განაგრძე კურსი"}</Button>
       </Link>
     </Wrapper>
   );
