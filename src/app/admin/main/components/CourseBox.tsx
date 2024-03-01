@@ -17,7 +17,7 @@ interface Props {
 const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleVisibility }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
-  const { cover_image_desktop, title, id } = data;
+  const { cover_image, title, id } = data;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -47,7 +47,7 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
         <div
           className="w-72 h-36 flex flex-col relative items-start p-4 justify-between bg-cover bg-no-repeat bg-center"
           style={{
-            backgroundImage: `url(${API_STORAGE}${cover_image_desktop})`,
+            backgroundImage: `url(${API_STORAGE}${cover_image})`,
           }}
         >
           {isOpen && (
