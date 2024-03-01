@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
 import { useParams } from "next/navigation";
@@ -16,6 +16,8 @@ interface Props {
   id: any;
 }
 const Video = ({ id }: Props) => {
+  const [currentTime, setCurrentTime] = useState<any>(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const dispatch = useAppDispatch();
   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
   const params: any = useParams();
@@ -26,9 +28,46 @@ const Video = ({ id }: Props) => {
   const index = useAppSelector((state) => state.index.index);
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const video = lectureDetail?.videos.find((item) => item.id == params.videoId);
+  console.log(video?.video);
   const navigateToCourse = () => {
     router.push(`/watch/${id}/course/${lectureDetail.id}`);
   };
+
+  const onVideoEnd = () => {
+    console.log("ended");
+  };
+
+  useEffect(() => {
+    if (!video) return;
+    const storedTime = localStorage.getItem(`${API_STORAGE + video?.video}`);
+    if (storedTime && videoRef.current) {
+      const parsedTime = parseFloat(storedTime);
+      console.log(parsedTime);
+      if (!isNaN(parsedTime)) {
+        videoRef.current.currentTime = parsedTime;
+      }
+    }
+
+    const updateCurrentTime = () => {
+      if (videoRef.current) {
+        const currentTime = videoRef.current.currentTime;
+        setCurrentTime(currentTime);
+        localStorage.setItem(`${API_STORAGE + video?.video}`, currentTime.toString());
+      }
+    };
+
+    if (videoRef.current) {
+      videoRef.current.addEventListener("timeupdate", updateCurrentTime);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener("timeupdate", updateCurrentTime);
+        window.removeEventListener("beforeunload", updateCurrentTime);
+      }
+    };
+  }, [video]);
+
   return (
     <>
       <main className="relative w-full bg-white flex items-center justify-center lg:block">
@@ -47,7 +86,7 @@ const Video = ({ id }: Props) => {
             </div>
           </div>
           {video && (
-            <video controls className="rounded-lg">
+            <video controls className="rounded-lg" ref={videoRef} onEnded={onVideoEnd}>
               <source src={`${API_STORAGE + video?.video}`} type="video/mp4" />
             </video>
           )}
