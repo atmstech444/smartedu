@@ -12,7 +12,6 @@ import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
 import { Navigation } from "./Navigation";
 import UserMobileMenu from "./UserMobileMenu";
-import LoadingSpinner from "@/components/LoadingSpinner";
 
 const AboutCourse = () => {
   const id = useParams();
