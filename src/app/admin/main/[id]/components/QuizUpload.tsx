@@ -35,6 +35,9 @@ const QuizUpload = ({ lectures, courseData }: any) => {
   const handleSeeFinalQuiz = () => {
     router.push(`/admin/final-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
+  const handleEditFinalQuiz = () => {
+    router.push(`/admin/edit-final-quiz?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
+  };
 
   return (
     <main className="w-full flex flex-col">
@@ -43,7 +46,7 @@ const QuizUpload = ({ lectures, courseData }: any) => {
           <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeFinalQuiz()}>
             ნახე საბოლოო ქვიზი
           </button>
-          <button className="text-white bg-[#2FA8FF] py-1 text-center rounded-lg w-[270px]" onClick={() => handleEditQuiz()}>
+          <button className="text-white bg-[#2FA8FF] py-1 text-center rounded-lg w-[270px]" onClick={() => handleEditFinalQuiz()}>
             რედაქტირება(საბოლოო ქვიზი)
           </button>
           <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => toggleFinalQuiz()}>
