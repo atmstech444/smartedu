@@ -44,7 +44,7 @@ export default function Profile() {
     employment_industry: null,
     employment_position: null,
   });
-
+  console.log(myCourses);
   const rateCourses = myCourses.filter((course) => course.completion_percentage === 100);
   const firstThreeCourses = myCourses.filter((course) => course.completion_percentage !== 100).slice(0, 3);
 
@@ -271,7 +271,7 @@ export default function Profile() {
         <InfoBox img={done} infoTitle="გავლილი კურსები" infoValue={progress.completed_courses_count} />
       </Flexbox>
 
-      {firstThreeCourses.length > 0 && (
+      {firstThreeCourses?.length > 0 && (
         <>
           <Devider />
           <Title>განაგრძე ყურება</Title>
@@ -282,7 +282,7 @@ export default function Profile() {
           </Flexbox>
         </>
       )}
-      {rateCourses.length > 0 && (
+      {rateCourses?.length > 0 && (
         <>
           <Devider />
           <Title>შეაფასე გავლილი კურსები</Title>
