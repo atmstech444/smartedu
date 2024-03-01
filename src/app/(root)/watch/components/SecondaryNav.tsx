@@ -68,7 +68,7 @@ const SecondaryNav = ({ id }: Props) => {
               </Link>
             )}
 
-            {item.video && (
+            {item.video?.length > 0 && (
               <Link
                 key={index}
                 href={`/watch/${params.id}/video/${lectureDetail.id}/${item.id}`}
@@ -89,12 +89,15 @@ const SecondaryNav = ({ id }: Props) => {
                 className={`text-mainGray flex gap-4 text-base rounded-md p-3 cursor-pointer ${
                   pathName === `/watch/${params.id}/quiz/${lectureDetail.id}` || pathName === `/watch/${params.id}/quiz/${lectureDetail.id}/start` ? "bg-lightestBlue" : "bg-transparent"
                 }`}
-                onClick={() => dispatch(updateIndexInfo(index))}
+                onClick={() => {
+                  console.log("Clicked link");
+                  dispatch(updateIndexInfo(index));
+                }}
               >
                 <Image alt="quizzes" src={Quizzes} />
                 <div>
-                  <p className=" m-0 font-medium text-black">ლექციის ბოლოს</p>
-                  <p className=" m-0">ქვიზი</p>
+                  <p className="m-0 font-medium text-black">ლექციის ბოლოს</p>
+                  <p className="m-0">ქვიზი</p>
                 </div>
               </Link>
             )}

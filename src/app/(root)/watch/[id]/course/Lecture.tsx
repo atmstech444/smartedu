@@ -91,7 +91,8 @@ const Lecture = (id: { id: any }) => {
           <h1 className="text-base font-bold text-black">ლექციის აღწერა</h1>
           <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content?.title}</p>
           <p className="text-base font-bold	text-black">{lectureDetail?.lecture_name}</p>
-          {lectureDetail && lectureDetail.readings !== null ? (
+
+          {lectureDetail && lectureDetail.readings.length > 0 ? (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToReading(lectureDetail.id)}>
               <Image alt="book" src={Book} />
               <div>
@@ -104,7 +105,7 @@ const Lecture = (id: { id: any }) => {
           )}
 
           {lectureDetail &&
-            lectureDetail.videos !== null &&
+            lectureDetail.videos.length &&
             lectureDetail &&
             lectureDetail.videos.map((video, index) => (
               <div className="flex gap-3 cursor-pointer" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
@@ -116,7 +117,7 @@ const Lecture = (id: { id: any }) => {
               </div>
             ))}
 
-          {lectureDetail && lectureDetail.quizzes !== null && (
+          {lectureDetail && lectureDetail.quizzes.length > 0 && (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToQuiz(lectureDetail.id)}>
               <Image alt="quizzes" src={Quizzes} />
               <div>
