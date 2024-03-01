@@ -62,7 +62,7 @@ const AddTutor = () => {
       const formData = new FormData();
       formData.append("first_name", first_name);
       formData.append("last_name", last_name);
-      formData.append("description", description.value);
+      // formData.append("description", description.value);
 
       if (selectedImage instanceof File) {
         formData.append("image", selectedImage);

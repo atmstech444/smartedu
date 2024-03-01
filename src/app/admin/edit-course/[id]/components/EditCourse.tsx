@@ -17,26 +17,22 @@ interface pageProps {
 const Editcourse: FC<pageProps> = ({ params }) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-
   const [categories, setCategories] = useState<any[]>([]);
   const [lectures, setLectures] = useState<any[]>([]);
   const [data, setData] = useState<any>([]);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [selectedMobileImage, setSelectedMobileImage] = useState<File | null>(null);
   const [selectedIntro, setSelectedIntro] = useState<File | null>(null);
 
   const initialSelectedCategoryId = data?.category?.id ?? null;
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(initialSelectedCategoryId);
   const initialSelectedLecturerId = data?.lecturer?.id ?? null;
   const [selectedLecturerId, setSelectedLecturerId] = useState<number | null>(initialSelectedLecturerId);
-
   useLayoutEffect(() => {
     if (!token) {
       redirect("/");
     }
   }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,11 +41,9 @@ const Editcourse: FC<pageProps> = ({ params }) => {
         setData(courseResponse.course);
         setSelectedCategoryId(courseResponse.course.category.id);
         setSelectedLecturerId(courseResponse.course.lecturer_id);
-
         // Fetch categories
         const categoriesResponse = await getCategories(token);
         setCategories(categoriesResponse.course_categories);
-
         // Fetch lectures
         const lecturesResponse = await getLecturers(token);
         setLectures(lecturesResponse.lecturers);
@@ -57,55 +51,39 @@ const Editcourse: FC<pageProps> = ({ params }) => {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
-
   const handleCheckboxChange = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
   };
-
   const handleLecturerChange = (selectedValue: number) => {
     setSelectedLecturerId(selectedValue);
   };
-
   const handleEdit = async () => {
     const courseTitle = document.getElementById("courseTitle") as HTMLInputElement;
     const descriptionInput = document.getElementById("descriptionInput") as HTMLTextAreaElement;
     const priceInput = document.getElementById("priceInput") as HTMLInputElement;
-
     const durationInput = document.getElementById("durationInput") as HTMLInputElement;
     const languageInput = document.getElementById("languageInput") as HTMLInputElement;
-
     const formData = new FormData();
-
     formData.append("_method", "PUT");
-
     formData.append("title", courseTitle.value);
     formData.append("description", descriptionInput.value);
     formData.append("price", priceInput.value);
     formData.append("duration", durationInput.value);
     formData.append("language", languageInput.value);
     const categoryIdToAppend = selectedCategoryId !== null ? selectedCategoryId.toString() : (initialSelectedCategoryId ?? "").toString();
-
     formData.append("course_category_id", categoryIdToAppend);
-
     const lecturerIdToAppend = selectedLecturerId !== null ? selectedLecturerId.toString() : (initialSelectedLecturerId ?? "").toString();
-
     formData.append("lecturer_id", lecturerIdToAppend);
 
     if (selectedImage instanceof File) {
-      formData.append("cover_image_desktop", selectedImage);
-    }
-
-    if (selectedMobileImage instanceof File) {
-      formData.append("cover_image_mobile", selectedMobileImage);
+      formData.append("cover_image", selectedImage);
     }
 
     if (selectedIntro instanceof File) {
       formData.append("intro", selectedIntro);
     }
-
     try {
       const response = await editCourseById(token, params.id, formData);
       if (response.message) {
@@ -128,27 +106,20 @@ const Editcourse: FC<pageProps> = ({ params }) => {
       console.error("An unexpected error occurred", error);
     }
   };
-
   const handleFileChange = (selectedFile: File) => {
     console.log(selectedFile);
     setSelectedImage(selectedFile);
   };
 
-  const handleMobileFileChange = (selectedFile: File) => {
-    setSelectedMobileImage(selectedFile);
-  }
-
   const handleIntroChange = (selectedFile: File) => {
     setSelectedIntro(selectedFile);
   };
-
   return (
     <div>
       <Header />
       <div>
         <div className="flex gap-8">
           <Navbar />
-
           <div className="flex justify-between w-[85%]">
             <EditFullCourse
               data={data}
@@ -159,7 +130,6 @@ const Editcourse: FC<pageProps> = ({ params }) => {
               selectedLecturerId={selectedLecturerId}
               handleLecturerChange={handleLecturerChange}
               handleFileChange={handleFileChange}
-              handleMobileFileChange={handleMobileFileChange}
               handleIntroChange={handleIntroChange}
               handleEdit={handleEdit}
             />
@@ -169,5 +139,4 @@ const Editcourse: FC<pageProps> = ({ params }) => {
     </div>
   );
 };
-
 export default Editcourse;

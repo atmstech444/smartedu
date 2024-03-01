@@ -14,32 +14,25 @@ import IntroUploader from "./components/IntroUploader";
 import CourseDetails from "./components/CourseDetails";
 import { CourseTitleInput } from "./components/CourseTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import MobileimageUpload from "./components/MobileImageUpload";
 
 const AddCourse = () => {
   const router = useRouter();
   const [courseDescription, setCourseDescription] = useState("");
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [selectedMobileImage, setSelectedMobileImage] = useState<File | null>(null);
   const [selectedIntro, setSelectedIntro] = useState<File | null>(null);
 
   const [selectedLecture, setSelectedLecture] = useState<LectureOption[]>([]);
-
   const [errorMessages, setErrorMessages] = useState<Record<string, string[]>>({});
   const [isLoading, setIsLoading] = useState(false);
-
   const componentMounted = useRef(false);
-
   const cookies = parseCookies();
   const token = cookies.authToken;
-
   useLayoutEffect(() => {
     if (!token) {
       redirect("/");
     }
   }, []);
-
   useEffect(() => {
     if (componentMounted.current) {
       checkedIndexes.length > 0 ? checkedIndexes[0] : null;
@@ -47,33 +40,26 @@ const AddCourse = () => {
       componentMounted.current = true;
     }
   }, [checkedIndexes]);
-
   const handleCourseDescriptionChange = (text: any) => {
     setCourseDescription(text);
   };
-
   const handleCheckChange = (newCheckedIndexes: number[]) => {
     if (!arraysEqual(checkedIndexes, newCheckedIndexes)) {
       setCheckedIndexes(newCheckedIndexes);
     }
   };
-
   function arraysEqual(a: any[], b: any[]) {
     return JSON.stringify(a) === JSON.stringify(b);
   }
-
   const handleDeleteIntro = () => {
     setSelectedIntro(null);
   };
-
   const handleLectureChange = (selectedLecture: LectureOption[]) => {
     setSelectedLecture(selectedLecture);
   };
-
   const handleIntroUpload = (selectedFile: React.SetStateAction<File | null>) => {
     setSelectedIntro(selectedFile);
   };
-
   const handleCreate = async () => {
     const showLoadingSpinner = () => setIsLoading(true);
     const hideLoadingSpinner = () => setIsLoading(false);
@@ -81,7 +67,6 @@ const AddCourse = () => {
     const priceInput = document.getElementById("priceInput") as HTMLInputElement;
     const durationInput = document.getElementById("durationInput") as HTMLInputElement;
     const languageInput = document.getElementById("languageInput") as HTMLInputElement;
-
     const requiredFields = {
       title: courseTitle.value,
       description: courseDescription,
@@ -89,20 +74,16 @@ const AddCourse = () => {
       lecturer: selectedLecture,
       duration: durationInput.value,
       language: languageInput.value,
-      cover_image_desktop: selectedImage,
-      cover_image_mobile: selectedMobileImage,
+      cover_image: selectedImage,
       intro: selectedIntro,
       course_category: checkedIndexes.join(","),
     };
-
     const errors: Record<string, string[]> = {};
-
     Object.entries(requiredFields).forEach(([field, value]) => {
       if (!value) {
         errors[field] = [`The ${field.replace("_", " ")} field is required.`];
       }
     });
-
     const numericFields = ["price", "lecture_count"];
     numericFields.forEach((field) => {
       const value = requiredFields[field as keyof typeof requiredFields];
@@ -110,15 +91,11 @@ const AddCourse = () => {
         errors[field] = [`The ${field.replace("_", " ")} field must be a number.`];
       }
     });
-
     setErrorMessages(errors);
-
     if (Object.keys(errors).length > 0) {
       return;
     }
-
     const formData = new FormData();
-
     formData.append("title", courseTitle.value);
     formData.append("description", courseDescription);
     formData.append("price", priceInput.value);
@@ -126,19 +103,14 @@ const AddCourse = () => {
     formData.append("lecturer_id", selectedLecture);
     formData.append("duration", durationInput.value);
     formData.append("language", languageInput.value);
-
     formData.append("course_category_id", checkedIndexes.join(","));
 
     if (selectedImage instanceof File) {
-      formData.append("cover_image_desktop", selectedImage);
-    }
-    if (selectedImage instanceof File) {
-      formData.append("cover_image_mobile", selectedImage);
+      formData.append("cover_image", selectedImage);
     }
     if (selectedIntro instanceof File) {
       formData.append("intro", selectedIntro);
     }
-
     try {
       showLoadingSpinner();
       const response = await createCourse(token, formData);
@@ -165,44 +137,30 @@ const AddCourse = () => {
       hideLoadingSpinner();
     }
   };
-
   return (
     <div>
       <Header />
-
       <div>
         <div className="flex gap-8">
           <Navbar />
-
           <div className="flex justify-between w-[85%]">
             <div className="mt-6">
               <CourseTitleInput />
               {errorMessages.title && <p className="text-red pt-2">{errorMessages.title[0]}</p>}
-
               <CourseAndSyllabus onCourseDescriptionChange={handleCourseDescriptionChange} />
               {errorMessages.description && <p className="text-red pt-2">{errorMessages.description[0]}</p>}
 
-              <div className="flex gap-10">
-                <div className="pt-9">
-                  <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო(Desktop)</p>
+              <div className="pt-9">
+                <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო</p>
 
-                  <ImageUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedImage(file)} onDeletePhoto={() => setSelectedImage(null)} selectedImage={selectedImage} />
-                </div>
-
-                <div className="pt-9">
-                  <p className="text-dark text-xl font-normal">დაამატე კურსის ფოტო(Mobile)</p>
-
-                  <MobileimageUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedMobileImage(file)} onDeletePhoto={() => setSelectedMobileImage(null)} selectedImage={selectedMobileImage} />
-                </div>
+                <ImageUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedImage(file)} onDeletePhoto={() => setSelectedImage(null)} selectedImage={selectedImage} />
               </div>
-
               {errorMessages.cover_image && <p className="text-red pt-2">{errorMessages.cover_image[0]}</p>}
             </div>
 
             <div className="flex flex-col items-end">
               <CourseCategory onCheckChange={handleCheckChange} />
               {errorMessages.course_category && <p className="text-red pt-2 pl-10 w-full">{errorMessages.course_category[0]}</p>}
-
               <CourseDetails selectedIntro={selectedIntro} onIntroUpload={handleIntroUpload} onDeleteIntro={handleDeleteIntro} selectedLecture={selectedLecture} onLectureChange={handleLectureChange} errorMessages={errorMessages} />
               <button className="mt-14 mb-28 py-3 px-12 bg-[#006CFA]  rounded-[32px] text-white self-center" onClick={handleCreate} disabled={isLoading}>
                 {isLoading ? <LoadingSpinner /> : "შენახვა"}
@@ -214,5 +172,4 @@ const AddCourse = () => {
     </div>
   );
 };
-
 export default AddCourse;
