@@ -26,12 +26,15 @@ interface Lecture {
 const useQueryParams = () => {
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [courseData, setCourseData] = useState<Quiz[] | null>(null);
+  const [courseId, setCourseId] = useState<string | undefined | null>(undefined);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const lecturesParam = searchParams.get("lectures");
     const courseDataParam = searchParams.get("courseData");
+    const courseId = searchParams.get("courseId");
 
+    setCourseId(courseId);
     if (lecturesParam) {
       const lecturesArray: Lecture[] = JSON.parse(decodeURIComponent(lecturesParam));
       setLectures(lecturesArray);
@@ -43,50 +46,38 @@ const useQueryParams = () => {
     }
   }, []);
 
-  return { lectures, courseData };
+  return { lectures, courseData, courseId };
 };
 
 const Page = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const { lectures, courseData } = useQueryParams();
-  const [, setActiveTab] = useState("");
-  const [, setRefreshTabs] = useState(false);
+  const { lectures, courseData, courseId } = useQueryParams();
   const [quizData, setQuizData] = useState<any>();
   const [swalMessage, setSwalMessage] = useState<string>("");
-  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
 
-  const lectureId = searchParams.get("lectureId");
-
-  const handleRefreshTabs = () => {
-    setRefreshTabs(true);
-  };
-
-  const handleLectureClick = (lectureId: number) => {
-    setActiveTab("");
-    handleRefreshTabs();
-  };
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await getQuiz(token, lectureId);
-        setQuizData(response.final_quizzes);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (courseId) {
+      const fetchData = async () => {
+        try {
+          setIsLoading(true);
+          const response = await getQuiz(token, courseId);
+          setQuizData(response.final_quizzes);
+        } catch (error) {
+          console.error("Error fetching courses:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }
+  }, [courseId]);
 
   const handleDeleteQuiz = async () => {
     try {
-      const response = await deleteQuiz(token, lectureId);
+      const response = await deleteQuiz(token, courseId);
       setQuizData(response.quizzes);
       if (response.message === "Final Quiz remove successfully") {
         setSwalMessage(response.message);

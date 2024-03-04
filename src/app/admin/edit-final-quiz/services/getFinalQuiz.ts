@@ -8,7 +8,7 @@ export const getFinalQuiz = async (token: any, id: any) => {
     },
   };
   try {
-    const { data } = await axios.get(`https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-final-quizzes/${id}`, config);
+    const { data } = await axios.get(`https://smarteducation.shop/smarteducation_backend/public/admin/course-final-quizzes/${id}`, config);
     return data;
   } catch (error) {
     console.error(error);

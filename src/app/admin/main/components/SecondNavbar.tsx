@@ -104,13 +104,20 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     router.push(`/admin/add-lecture?lectureId=${lectureId}&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
 
+  const handleAddFinalQuiz = () => {
+    const lecturesData = lectures.map((lecture) => ({
+      id: lecture.id,
+      name: lecture.lecture_name,
+    }));
+    router.push(`/admin/add-final-quiz?&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
+  };
+
   return (
     <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
         <img src={`https://smarteducation.shop/smarteducation_backend/public/${courseData?.cover_image}`} className="rounded-2xl" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
-
         {lectures.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
             <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
@@ -122,20 +129,21 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
             </button>
           </div>
         ))}
-
         {inputs.map((_, index) => (
           <div className="relative" key={index}>
             <input ref={(ref) => (inputRefs.current[index] = ref!)} type="text" placeholder="ლექცია" className="border border-1-black rounded-lg px-3 py-1 outline-none max-w-[200px]" name={`name-${index}`} />
             <Image src="/assets/img/admin/closeIcon.png" width={10} height={10} alt="delete icon" className="hover:cursor-pointer absolute right-3 top-3" onClick={() => setInputs((prevInputs) => prevInputs.filter((_, i) => i !== index))} />
           </div>
         ))}
-
         <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
         <div>
           <button onClick={handleCreateLecture} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-4 py-2">
             შენახვა
           </button>
         </div>
+        <button className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddFinalQuiz}>
+          დაამატე საბოლოო ქვიზი
+        </button>
       </div>
     </div>
   );

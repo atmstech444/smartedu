@@ -8,7 +8,7 @@ export const deleteQuiz = async (token: any, quizId: any) => {
     },
   };
   try {
-    const { data } = await axios.delete(`https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-final-quizzes/${quizId}`, config);
+    const { data } = await axios.delete(`https://smarteducation.shop/smarteducation_backend/public/admin/course-final-quizzes/${quizId}`, config);
     return data;
   } catch (error) {
     console.error(error);
