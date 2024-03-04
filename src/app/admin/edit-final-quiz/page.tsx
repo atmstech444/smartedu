@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import EditQuiz from "./components/EditQuiz";
 import Header from "@/components/Header";
 import { getFinalQuiz } from "./services/getFinalQuiz";
+import SecondNavbar from "../main/components/SecondNavbar";
 
 export interface Quiz {
   answer: string[];
@@ -25,13 +26,16 @@ const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [courseData, setCourseData] = useState<any | null>(null);
+  const [courseId, setCourseId] = useState<string | undefined | null>(undefined);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("lectureId");
     const lecturesParam = searchParams.get("lectures");
     const courseDataParam = searchParams.get("courseData");
+    const courseId = searchParams.get("courseId");
 
+    setCourseId(courseId);
     setLectureId(id);
     if (lecturesParam) {
       const lecturesArray: Lecture[] = JSON.parse(decodeURIComponent(lecturesParam));
@@ -44,30 +48,18 @@ const useQueryParams = () => {
     }
   }, []);
 
-  return { lectureId, lectures, courseData };
+  return { lectureId, lectures, courseData, courseId };
 };
 
 const Page = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const { lectures, courseData } = useQueryParams();
-  const [, setActiveTab] = useState("");
-  const [, setRefreshTabs] = useState(false);
+  const { lectures, courseData, courseId } = useQueryParams();
   const [quizData, setQuizData] = useState<Quiz[] | null>(null);
-  const [swalMessage, setSwalMessage] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
 
   const lectureId = searchParams.get("lectureId");
-
-  const handleRefreshTabs = () => {
-    setRefreshTabs(true);
-  };
-
-  const handleLectureClick = (lectureId: number) => {
-    setActiveTab("");
-    handleRefreshTabs();
-  };
 
   const handleDeleteAnswer = (quizId: number, answerIndex: number) => {
     if (quizData) {
@@ -102,28 +94,30 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await getFinalQuiz(token, lectureId);
-        setQuizData(response.final_quizzes);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }finally {
-        setIsLoading(false);
-      }
-    };
+    if (courseId) {
+      const fetchData = async () => {
+        try {
+          setIsLoading(true);
+          const response = await getFinalQuiz(token, courseId);
+          setQuizData(response.final_quizzes);
+        } catch (error) {
+          console.error("Error fetching courses:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }
+  }, [courseId]);
 
   return (
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} courseData={courseData}  />
+        <Navbar lectures={lectures} courseData={courseData} />
         <div className="w-[45%] mt-6 mb-20">
-          <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} isLoading={isLoading}/>
+          <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} isLoading={isLoading} />
         </div>
       </div>
     </>

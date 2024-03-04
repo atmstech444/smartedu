@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
-import { addFinalQuiz } from "../services/addFinalQuiz";
+import { addFinalQuiz } from "../../main/[id]/services/addFinalQuiz";
+import { useRouter } from "next/navigation";
 
 interface Section {
   id: number;
@@ -25,13 +26,13 @@ const useQueryParams = () => {
   return id;
 };
 
-const page = () => {
+const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
+  const router = useRouter();
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number[]>>({});
   const cookies = parseCookies();
   const token = cookies.authToken;
   const id = useQueryParams();
   const [sections, setSections] = useState<Section[]>([{ id: 1, question: "", answers: [] }]);
-
   const handleAddContent = (id: number) => {
     setSections((prevSections) =>
       prevSections.map((section) =>
@@ -132,7 +133,7 @@ const page = () => {
         const score = parseInt(scoreInput.value);
         formData.append(`final_quiz_content[${index}][score]`, score.toString());
       });
-      const response = await addFinalQuiz(token, formData, id);
+      const response = await addFinalQuiz(token, formData, courseId);
       if (response.message === "Final quiz create successfully") {
         Swal.fire({
           icon: "success",
@@ -154,10 +155,26 @@ const page = () => {
     }
   };
 
+  const handleSeeFinalQuiz = (courseId: number) => {
+    router.push(`/admin/final-quiz?&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}&courseId=${courseId}`);
+  };
+  const handleEditFinalQuiz = (courseId: number) => {
+    router.push(`/admin/edit-final-quiz?&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}&courseId=${courseId}`);
+  };
+
   return (
     <main className="w-full flex flex-col">
-      <div className="flex gap-2">
-        <h1 className="mt-5 text-3xl">საბოლოო ქვიზი</h1>
+      <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => router.back()}>
+        უკან
+      </button>
+
+      <div className="flex gap-2 mt-10">
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeFinalQuiz(courseId)}>
+          ნახე ქვიზი
+        </button>
+        <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleEditFinalQuiz(courseId)}>
+          რედაქტირება
+        </button>
       </div>
 
       {sections.map(({ id, question, answers, file, fileName }, sectionIndex) => (
@@ -249,4 +266,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default FinalQuizAdding;
