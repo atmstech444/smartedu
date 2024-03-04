@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
 import { useParams } from "next/navigation";
@@ -16,7 +16,6 @@ interface Props {
   id: any;
 }
 const Video = ({ id }: Props) => {
-  const [currentTime, setCurrentTime] = useState<any>(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const dispatch = useAppDispatch();
   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
@@ -28,7 +27,6 @@ const Video = ({ id }: Props) => {
   const index = useAppSelector((state) => state.index.index);
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const video = lectureDetail?.videos.find((item) => item.id == params.videoId);
-  console.log(video?.video);
   const navigateToCourse = () => {
     router.push(`/watch/${id}/course/${lectureDetail.id}`);
   };
@@ -42,7 +40,7 @@ const Video = ({ id }: Props) => {
     const storedTime = localStorage.getItem(`${API_STORAGE + video?.video}`);
     if (storedTime && videoRef.current) {
       const parsedTime = parseFloat(storedTime);
-      console.log(parsedTime);
+
       if (!isNaN(parsedTime)) {
         videoRef.current.currentTime = parsedTime;
       }
@@ -51,7 +49,6 @@ const Video = ({ id }: Props) => {
     const updateCurrentTime = () => {
       if (videoRef.current) {
         const currentTime = videoRef.current.currentTime;
-        setCurrentTime(currentTime);
         localStorage.setItem(`${API_STORAGE + video?.video}`, currentTime.toString());
       }
     };
@@ -68,6 +65,7 @@ const Video = ({ id }: Props) => {
     };
   }, [video]);
 
+  console.log("rendered");
   return (
     <>
       <main className="relative w-full bg-white flex items-center justify-center lg:block">
