@@ -65,7 +65,6 @@ const Video = ({ id }: Props) => {
     };
   }, [video]);
 
-  console.log("rendered");
   return (
     <>
       <main className="relative w-full bg-white flex items-center justify-center lg:block">
@@ -84,7 +83,7 @@ const Video = ({ id }: Props) => {
             </div>
           </div>
           {video && (
-            <video controls className="rounded-lg" ref={videoRef} onEnded={onVideoEnd}>
+            <video controls controlsList="nodownload" className="rounded-lg" ref={videoRef} onEnded={onVideoEnd}>
               <source src={`${API_STORAGE + video?.video}`} type="video/mp4" />
             </video>
           )}
