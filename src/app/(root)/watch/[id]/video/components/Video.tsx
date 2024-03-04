@@ -47,7 +47,7 @@ const Video = ({ id }: Props) => {
             </div>
           </div>
           {video && (
-            <video controls className="rounded-lg">
+            <video controls controlsList="nodownload" className="rounded-lg">
               <source src={`${API_STORAGE + video?.video}`} type="video/mp4" />
             </video>
           )}
