@@ -1,7 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import SecondNavbar from "../main/components/SecondNavbar";
-import { useParams } from "next/navigation";
+import React, { Suspense, useEffect, useState } from "react";
 import FinalQuizAdding from "./components/FinalQuizAdding";
 import Header from "@/components/Header";
 import Navbar from "../add-lecture/components/Navbar";
@@ -36,7 +34,7 @@ const useQueryParams = () => {
 
   return { lectureId, lectures, courseData };
 };
-const page = () => {
+const Page = () => {
   const { lectures, courseData } = useQueryParams();
   return (
     <div className="flex flex-col gap-8 w-[100%]">
@@ -52,4 +50,12 @@ const page = () => {
   );
 };
 
-export default page;
+const PageWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Page />
+    </Suspense>
+  );
+};
+
+export default PageWrapper;

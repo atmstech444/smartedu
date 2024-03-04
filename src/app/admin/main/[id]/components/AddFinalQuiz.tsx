@@ -25,7 +25,7 @@ const useQueryParams = () => {
   return id;
 };
 
-const page = () => {
+const Page = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number[]>>({});
   const cookies = parseCookies();
   const token = cookies.authToken;
@@ -249,4 +249,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
