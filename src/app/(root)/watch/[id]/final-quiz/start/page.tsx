@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { Navigation } from "../../../components/Navigation";
 import QuizStart from "../components/QuizStart";
 
-const page = () => {
+const Page = () => {
   const [isClient, setIsClient] = useState(false);
   const params = useParams();
   useEffect(() => {
@@ -30,4 +30,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

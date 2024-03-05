@@ -10,7 +10,7 @@ import { setLecture } from "@/redux/slices/lectureDetail";
 import { Navigation } from "../../components/Navigation";
 import FinalQuiz from "./components/FinalQuiz";
 
-const page = () => {
+const Page = () => {
   const [isClient, setIsClient] = useState(false);
   const params = useParams();
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
@@ -40,4 +40,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
