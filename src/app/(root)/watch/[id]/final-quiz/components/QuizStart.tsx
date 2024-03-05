@@ -74,8 +74,6 @@ const QuizStart = () => {
       console.error("Error fetching lecture:", error);
     }
   };
-  // console.log(finalQuiz);
-  // console.log(selectedAnswers);
 
   useEffect(() => {
     fetchData();

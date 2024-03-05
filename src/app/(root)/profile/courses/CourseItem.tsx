@@ -10,7 +10,7 @@ export default function CourseItem({ course }: { course: I_MyCourse }) {
   };
 
   return (
-    <div style={{ width: "250px", marginInline: "auto" }}>
+    <div style={{ width: "250px", marginInline: "auto", cursor: "pointer" }}>
       <div onClick={handleClick}>
         <div style={{ height: "340px" }}>
           <div className="course__item white-bg mb-30 fix">
