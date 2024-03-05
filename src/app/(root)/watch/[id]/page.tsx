@@ -7,6 +7,8 @@ import { Navigation } from "../components/Navigation";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import AboutCourse from "../components/AboutCourse";
+import { Get_Lecture } from "@/services/AllCourses";
+import { useAppSelector } from "@/redux/store";
 
 export default function Page({ params }: { params: { id: number } }) {
   const [isClient, setIsClient] = useState(false);
@@ -14,6 +16,7 @@ export default function Page({ params }: { params: { id: number } }) {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
   return (
     <>
       {isClient && (
