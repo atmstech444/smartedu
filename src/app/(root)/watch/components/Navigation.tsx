@@ -65,7 +65,7 @@ export const Navigation = (id: { id: any }) => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(id);
+
   const navigateToAboutCourse = () => {
     closeNavMenu();
     router.push(`/watch/${id.id}`);
