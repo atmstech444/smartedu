@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const deleteQuiz = async (token: any, quizId: any) => {
+export const deleteQuizById = async (token: any, id: any, lectureId: any) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -8,7 +8,7 @@ export const deleteQuiz = async (token: any, quizId: any) => {
     },
   };
   try {
-    const { data } = await axios.delete(`http://192.168.1.101:8000/admin/course-lecture-quizzes-all/${quizId}`, config);
+    const { data } = await axios.delete(`http://192.168.1.101:8000/admin/course-lecture-quizzes/${id}/${lectureId}`, config);
     return data;
   } catch (error) {
     console.error(error);
