@@ -86,3 +86,18 @@ export async function POST_QUIZ(token: any, data: any) {
     throw error;
   }
 }
+
+export async function POST_FINAL_QUIZ(token: any, data: any) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const response = await axios.post(url + `final-quiz-check-anwer`, data, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error sending final quiz answers:", error);
+    throw error;
+  }
+}

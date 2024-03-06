@@ -44,7 +44,7 @@ export default function Profile() {
     employment_industry: null,
     employment_position: null,
   });
-  console.log(myCourses);
+
   const rateCourses = myCourses.filter((course) => course.completion_percentage === 100);
   const firstThreeCourses = myCourses.filter((course) => course.completion_percentage !== 100).slice(0, 3);
 

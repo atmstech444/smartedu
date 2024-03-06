@@ -9,7 +9,6 @@ import Image from "next/image";
 const CourseGridTab = () => {
   const courses: I_Course[] = useAppSelector((state) => state.courses.courses);
 
-  console.log(courses);
   return (
     <section className="course__area pt-120 pb-120">
       <div className="container">
