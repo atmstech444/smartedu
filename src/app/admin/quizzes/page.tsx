@@ -87,7 +87,7 @@ const Page = () => {
     try {
       const response = await deleteQuiz(token, lectureId);
       setQuizData(response.quizzes);
-      if (response.message === "Quiz remove successfully") {
+      if (response.message === "All Quiz remove successfully") {
         setSwalMessage(response.message);
         Swal.fire({
           icon: "success",

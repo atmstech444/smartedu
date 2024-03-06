@@ -80,7 +80,7 @@ const Page = () => {
     try {
       const response = await deleteQuiz(token, courseId);
       setQuizData(response.quizzes);
-      if (response.message === "Final Quiz remove successfully") {
+      if (response.message === "All Final Quiz remove successfully") {
         setSwalMessage(response.message);
         Swal.fire({
           icon: "success",
@@ -101,10 +101,9 @@ const Page = () => {
       console.error("Error deleting quiz:", error);
     }
   };
-
   const handleDeleteQuizById = async (id: number) => {
     try {
-      const response = await deleteQuizById(token, id);
+      const response = await deleteQuizById(token, id, courseId);
       setQuizData(response.final_quizzes);
       if (response.message === "Final Quiz remove successfully") {
         setSwalMessage(response.message);

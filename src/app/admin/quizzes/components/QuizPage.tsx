@@ -40,36 +40,36 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMess
           </div>
         </div>
       ) : (
-        quizzes?.map((quiz, index) => (
-          <div className="flex  gap-9 justify-between items-center border border-pink-100 p-2 rounded-md" key={quiz.id}>
-            <section className="flex flex-col gap-9 justify-between">
-              <div className="flex gap-1 items-start text-base text-black font-extrabold">
-                <span>{index + 1}.</span>
-                <p>{quiz.question}</p>
-              </div>
-              {quiz.url && <img src={`${API_STORAGE}${quiz.url}`} alt="Quiz Image" className="w-32 h-auto" />}
+        <>
+          {quizzes?.map((quiz, index) => (
+            <div className="flex  gap-9 justify-between items-center border border-pink-100 p-2 rounded-md" key={quiz.id}>
+              <section className="flex flex-col gap-9 justify-between">
+                <div className="flex gap-1 items-start text-base text-black font-extrabold">
+                  <span>{index + 1}.</span>
+                  <p>{quiz.question}</p>
+                </div>
+                {quiz.url && <img src={`${API_STORAGE}${quiz.url}`} alt="Quiz Image" className="w-32 h-auto" />}
 
-              <div>
-                {quiz.answer.map((answer, answerIndex) => (
-                  <div key={answerIndex} className="flex gap-[8px] items-center">
-                    <input type="checkbox" checked={Array.isArray(quiz.correct_answer) && quiz.correct_answer.includes(answer)} readOnly />
-                    <label>{answer}</label>
-                  </div>
-                ))}
-              </div>
-            </section>
-            <button className="text-white bg-red py-1 px-7 rounded-lg" onClick={() => handleDeleteQuizById(quiz.id)}>
-              წაშალე
+                <div>
+                  {quiz.answer.map((answer, answerIndex) => (
+                    <div key={answerIndex} className="flex gap-[8px] items-center">
+                      <input type="checkbox" checked={Array.isArray(quiz.correct_answer) && quiz.correct_answer.includes(answer)} readOnly />
+                      <label>{answer}</label>
+                    </div>
+                  ))}
+                </div>
+              </section>
+              <button className="text-white bg-red py-1 px-7 rounded-lg" onClick={() => handleDeleteQuizById(quiz.id)}>
+                წაშალე
+              </button>
+            </div>
+          ))}
+          <div>
+            <button className="text-white bg-red py-1 px-7 rounded-lg w-[200px]" onClick={handleDeleteQuiz}>
+              წაშალე ქვიზი
             </button>
           </div>
-        ))
-      )}
-      {quizzes && quizzes.length !== 0 && (
-        <div>
-          <button className="text-white bg-red py-1 px-7 rounded-lg w-[200px]" onClick={handleDeleteQuiz}>
-            წაშალე ქვიზი
-          </button>
-        </div>
+        </>
       )}
     </div>
   );
