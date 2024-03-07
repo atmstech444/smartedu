@@ -8,7 +8,7 @@ export const deleteQuizById = async (token: any, id: any, lectureId: any) => {
     },
   };
   try {
-    const { data } = await axios.delete(`http://192.168.1.101:8000/admin/course-lecture-quizzes/${id}/${lectureId}`, config);
+    const { data } = await axios.delete(`https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-quizzes/${id}/${lectureId}`, config);
     return data;
   } catch (error) {
     console.error(error);
