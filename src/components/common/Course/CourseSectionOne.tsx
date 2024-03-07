@@ -9,6 +9,31 @@ import { API_STORAGE } from "@/api/API_PATH";
 
 const CourseSectionOne = () => {
   const courses = useAppSelector((state) => state.courses.courses);
+  // const getColorFromName = (name: string) => {
+  //   // Use a hash function to generate a numeric value from the category name
+  //   const hashCode = name.split("").reduce((acc, char) => {
+  //     return char.charCodeAt(0) + ((acc << 5) - acc);
+  //   }, 0);
+  //   // Convert the numeric value to a hexadecimal color code
+  //   const color = `#${((hashCode & 0x00ffffff) | 0x800000).toString(16).slice(1)}`;
+  //   return color;
+  // };
+  const getCategoryColor = (title: string) => {
+    switch (title) {
+      case "დიზაინი":
+        return "#F0722D";
+      case "მონაცემთა ანალიზი":
+        return "#b128ff";
+      case "პროგრამირება":
+        return "#2DD3F0";
+      case "ბიზნესი":
+        return "#2DF051";
+      case "ქსელები და კიბერუსაფრთხოება":
+        return "#0B090A";
+      default:
+        return "#b128ff";
+    }
+  };
   return (
     <section className="course__area pt-115 pb-120 grey-bg">
       <div className="container">
@@ -42,8 +67,8 @@ const CourseSectionOne = () => {
                   <Link href={`/course-details/${item.id}`}>
                     <img src={API_STORAGE + item?.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
                   </Link>
-                  <div className="course__tag">
-                    <Link href={`/course-details/${item.id}`} className={item.category.title ? `${item.category.title}` : ""}>
+                  <div className="absolute top-[20px] left-[20px] rounded-sm" style={{ backgroundColor: getCategoryColor(item.category.title) }}>
+                    <Link href={`/course-details/${item.id}`} className="h-[24px] text-sm text-white font-medium px-3">
                       {item.category.title}
                     </Link>
                   </div>
