@@ -76,8 +76,26 @@ const FinalQuiz = () => {
                 <p className=" m-0 mt-2">ჩაბარებისთვის საჭიროა 50% ან მეტის მიღება</p>
               </div>
               <div>
-                <p className=" font-bold">შენი ქულა</p>
+                <p className=" font-bold m-0">შენი ქულა</p>
                 <p className=" text-red font-bold">{percent + "%"}</p>
+              </div>
+            </div>
+          )}
+
+          {percent !== null && percent > 49 && (
+            <div className="md:flex justify-between ">
+              <div>
+                <div className=" flex gap-2 ">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="#1F8354" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M7.75 12L10.58 14.83L16.25 9.16998" stroke="#1F8354" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <p className=" m-0">შენ წარმატებით გაიარე გამოცდა</p>
+                </div>
+              </div>
+              <div className="mt-3">
+                <p className=" font-bold m-0">შენი ქულა</p>
+                <p className=" text-[#1F8354] font-bold">{percent + "%"}</p>
               </div>
             </div>
           )}
