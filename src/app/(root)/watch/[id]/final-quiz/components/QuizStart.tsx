@@ -25,9 +25,9 @@ interface QuizesTypes {
 const QuizStart = () => {
   const params = useParams();
   const router = useRouter();
-  const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
   const [selectedAnswers, setSelectedAnswers] = useState<AnswerState[]>([]);
   const [finalQuiz, setFinalQuiz] = useState<QuizesTypes[]>([]);
+  const [percent, setPercent] = useState(null);
   const token = useAppSelector((state) => state.user.user?.token);
 
   const handleCheckboxChange = (questionIndex: number, answer: any) => {
@@ -69,6 +69,7 @@ const QuizStart = () => {
   const fetchData = async () => {
     try {
       const lecture = await Get_Lecture(params.id, token);
+      setPercent(lecture.final_quiz_percent);
       setFinalQuiz(lecture.final_quiz);
     } catch (error) {
       console.error("Error fetching lecture:", error);
@@ -85,7 +86,7 @@ const QuizStart = () => {
     };
     try {
       const result = await POST_FINAL_QUIZ(token, requestData);
-      // router.push(`/watch/${params.id}/quiz/${lectureDetail.id}`);
+      router.push(`/watch/${params.id}/final-quiz/`);
       console.log("Final quiz submission successful!", result);
     } catch (error) {
       console.error("Error submitting quiz:", error);
@@ -111,11 +112,6 @@ const QuizStart = () => {
   return (
     <>
       <main className="relative w-full bg-white">
-        {/* {isMenuOpened && (
-      <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-        <SecondaryNav id={id} />
-      </UserMobileMenu>
-    )} */}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] w-[100%] rounded-md">
           <div className="flex gap-3">
             <Image src={Arrow} width="15" height="15" alt="back" onClick={navigateToQuiz} />
@@ -144,7 +140,7 @@ const QuizStart = () => {
                       <input
                         type="checkbox"
                         id={`answer-${index}-${answerIndex}`}
-                        name={`answer-${index}`} // Ensure this is unique for each group
+                        name={`answer-${index}`}
                         className="p-2"
                         checked={selectedAnswers.some((item) => item.questionIndex === index && item.answer.includes(ans))}
                         onChange={() => handleCheckboxChange(index, ans)}

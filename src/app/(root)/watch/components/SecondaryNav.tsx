@@ -39,7 +39,6 @@ const SecondaryNav = ({ id }: Props) => {
   if (lectureDetail.quizzes) {
     arr.push(lectureDetail.quizzes);
   }
-
   return (
     <>
       <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full">
