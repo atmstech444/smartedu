@@ -8,7 +8,22 @@ import Image from "next/image";
 
 const CourseGridTab = () => {
   const courses: I_Course[] = useAppSelector((state) => state.courses.courses);
-
+  const getCategoryColor = (title: string) => {
+    switch (title) {
+      case "დიზაინი":
+        return "#F0722D";
+      case "მონაცემთა ანალიზი":
+        return "#b128ff";
+      case "პროგრამირება":
+        return "#2DD3F0";
+      case "ბიზნესი":
+        return "#2DF051";
+      case "ქსელები და კიბერუსაფრთხოება":
+        return "#0B090A";
+      default:
+        return "#b128ff";
+    }
+  };
   return (
     <section className="course__area pt-120 pb-120">
       <div className="container">
@@ -30,8 +45,8 @@ const CourseGridTab = () => {
                               <Link href="/course-details/[id]" as={`/course-details/${item?.id}`}>
                                 <img className="" src={API_STORAGE + item?.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
                               </Link>
-                              <div className="course__tag">
-                                <Link href={`/course-details/${item?.id}`} className={item?.category.title ? `${item?.category.title}` : ""}>
+                              <div className="absolute top-[20px] left-[20px] rounded-sm" style={{ backgroundColor: getCategoryColor(item.category.title) }}>
+                                <Link href={`/course-details/${item?.id}`} className="h-[24px] text-sm text-white font-medium px-3">
                                   {item?.category.title}
                                 </Link>
                               </div>
