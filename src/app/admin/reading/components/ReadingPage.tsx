@@ -106,7 +106,7 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
             )}
           </ul>
 
-          <button className="p-1 bg-red rounded-md text-white " onClick={() => handleDeleteReading(reading.id)}>
+          <button className="p-2 bg-red rounded-xl w-[200px] text-white " onClick={() => handleDeleteReading(reading.id)}>
             წაშლა
           </button>
         </div>
