@@ -11,9 +11,9 @@ const Tabs = ({ setActiveTab, activeTab }: any) => {
       <Suspense>
         <LectureTitleAndDescription />
       </Suspense>
-      <div className="flex gap-9 items-center border border-1-[#D1D1D1] p-1 w-[325px]">
+      <div className="flex gap-9 items-center border border-1-[#D1D1D1] p-1 w-[395px]">
         <h1 className={`cursor-pointer ${activeTab === "წასაკითხი" ? "active" : ""}`} onClick={() => handleTabClick("წასაკითხი")}>
-          წასაკითხი
+          დამხმარე მასალა
         </h1>
         <h1 className={`cursor-pointer ${activeTab === "ვიდეო" ? "active" : ""}`} onClick={() => handleTabClick("ვიდეო")}>
           ვიდეო
