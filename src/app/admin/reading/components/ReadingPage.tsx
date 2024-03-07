@@ -27,7 +27,6 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
       </div>
     );
   }
-  console.log(readingsData);
   if (!readingsData || readingsData.length === 0) {
     return (
       <div className="flex flex-col gap-3 items-start text-base">
