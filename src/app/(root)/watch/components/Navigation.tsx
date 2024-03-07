@@ -79,7 +79,6 @@ export const Navigation = (id: { id: any }) => {
     closeNavMenu();
     router.push(`/watch/${id.id}/final-quiz`);
   };
-
   return (
     <div className="mt-[20%] p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full ">
       <div>

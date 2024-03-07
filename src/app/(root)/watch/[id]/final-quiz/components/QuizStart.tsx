@@ -85,7 +85,7 @@ const QuizStart = () => {
     };
     try {
       const result = await POST_FINAL_QUIZ(token, requestData);
-      // router.push(`/watch/${params.id}/quiz/${lectureDetail.id}`);
+      router.push(`/watch/${params.id}/final-quiz/`);
       console.log("Final quiz submission successful!", result);
     } catch (error) {
       console.error("Error submitting quiz:", error);

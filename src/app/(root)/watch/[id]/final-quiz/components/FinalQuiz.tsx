@@ -1,5 +1,7 @@
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
+import Arrow from "../../../../../../public/assets/icons/arrowLeft.svg";
 
 const FinalQuiz = () => {
   const router = useRouter();
@@ -8,10 +10,16 @@ const FinalQuiz = () => {
   const navigateToQuiz = () => {
     router.push(`/watch/${params.id}/final-quiz/start`);
   };
+  const navigateToQuizStart = () => {
+    router.push(`/watch/${params.id}`);
+  };
   return (
     <>
       <main className="relative w-full bg-white flex items-center justify-center lg:block">
         <div className="mt-[55px] sm:mt-0 flex gap-3 flex-col p-[24px] w-[90%]   rounded-md">
+          <div className="flex gap-3">
+            <Image src={Arrow} width="15" height="15" alt="back" onClick={navigateToQuizStart} />
+          </div>
           <h1 className="text-xl m-0">ქვიზი</h1>
           <p className="text-base	m-0 text-black mt-5">პროგრამირების საწყისები</p>
           <button className={`text-base bg-[#006CFA] w-[200px] h-[35px] text-white rounded-sm`} onClick={navigateToQuiz}>

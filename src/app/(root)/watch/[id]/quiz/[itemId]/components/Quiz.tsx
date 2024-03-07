@@ -4,7 +4,6 @@ import Image from "next/image";
 import Arrow from "../../../../../../../public/assets/icons/arrowLeft.svg";
 import SecondaryNav from "../../../../components/SecondaryNav";
 import UserMobileMenu from "../../../../components/UserMobileMenu";
-import { LectureTypes } from "../../../course/Lecture";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
