@@ -67,7 +67,6 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
       console.error("An unexpected error occurred", error);
     }
   };
-
   return (
     <div className="flex flex-col gap-6 mb-40">
       <div className="flex justify-between gap-20">
@@ -85,23 +84,23 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
             <div className="border border-sky-200 p-2 rounded-lg text-center">
               <a href={reading.pdf_file} target="_blank" download className="text-[#006CFA] font-normal text-base ">
                 PDF File
-                <p>{reading.pdf_file}</p>
+                <p>{reading.pdf_file.split("_")[1]}</p>
               </a>
             </div>
           )}
           <ul>
             {Array.isArray(reading.url) ? (
               reading.url.map((url, urlIndex) => (
-                <li key={urlIndex}>
-                  <a href={url} target="_blank" rel="noopener noreferrer" className="text-[#006CFA] font-normal text-base">
-                    {url}
+                <li key={urlIndex} className="mt-4">
+                  <a href={url} target="_blank" rel="noopener noreferrer" className="text-[#006CFA] font-normal text-base ">
+                    <span className="text-xl font-bold text-black">URL:</span> {url.length > 30 ? url.substring(0, 30) + "..." : url}
                   </a>
                 </li>
               ))
             ) : (
               <li>
                 <a href={reading.url} target="_blank" rel="noopener noreferrer" className="text-[#006CFA] font-normal text-base">
-                  {reading.url}
+                  {(reading.url as string).length > 30 ? (reading.url as string).substring(0, 30) + "..." : reading.url}
                 </a>
               </li>
             )}
