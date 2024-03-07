@@ -48,22 +48,21 @@ const Reading = ({ id }: Props) => {
             </div>
           </div>
 
-          <div className="mb-4">{reading && reading[0]?.description}</div>
+          <div className="mb-4 break-all">{reading && reading[0]?.description}</div>
           {reading &&
             reading?.map((item) =>
               item.url
                 ? item.url.map(
                     (link, index) =>
                       link !== null && (
-                        <a href={`https://${link}`} target="_blank" rel="noopener noreferrer" key={index} className="flex items-center gap-2 break-all">
-                          <p className="mb-0 text-sm text-mainBlue">{link}</p>
+                        <a href={`${link}`} target="_blank" rel="noopener noreferrer" key={index} className="flex items-center gap-2 break-all">
+                          <p className="mb-0 text-sm text-mainBlue break-all">{link}</p>
                           <Image src={icon} alt="icon" width="15" height="15" />
                         </a>
                       )
                   )
                 : null
             )}
-
           <button className="self-start text-base font-medium text-white py-2 px-3 bg-mainBlue rounded-md">მონიშნე წაკითხულად</button>
         </div>
       </main>
