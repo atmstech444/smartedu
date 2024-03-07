@@ -35,6 +35,8 @@ const Reading = ({ lectures, courseData }: any) => {
   const [description, setDescription] = useState("");
   const [inputs, setInputs] = useState<string[]>([""]);
   const fileInputRefs = useRef<HTMLInputElement[]>([]);
+  const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const handleTyping = () => {
     setIsTyping(true);
@@ -63,7 +65,10 @@ const Reading = ({ lectures, courseData }: any) => {
   const handleCreateReading = async () => {
     const formData = new FormData();
     formData.append("description", description);
-
+    if (file) {
+      formData.append("pdf_file", file);
+    }
+    console.log(file);
     inputs.forEach((url) => {
       formData.append("url[]", url);
     });
@@ -95,14 +100,22 @@ const Reading = ({ lectures, courseData }: any) => {
     router.push(`/admin/reading?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFile(file);
+      setFileName(file.name);
+    }
+  };
+
   return (
     <div>
       <button className="text-white bg-[#2FA8FF] p-2 rounded-md text-sm mb-5" onClick={handleSeeReading}>
-        წასაკითხი მასალა
+        ნახე დამხმარე მასალები
       </button>
       <div className="grid grid-cols-6 w-full">
         <div className="flex flex-col gap-3 col-span-5">
-          <h1 className="text-gray-600 font-FiraGO font-medium text-base md:text-lg lg:text-xl xl:text-2xl">წასაკითხი</h1>
+          <h1 className="text-gray-600 font-FiraGO font-medium text-base md:text-lg lg:text-xl xl:text-2xl">დამხმარე მასალა</h1>
           <div className="relative w-full max-w-[780px]">
             <textarea
               className="w-full h-auto resize-none rounded-lg px-2 pl-7 py-1 border border-1-[#D1D1D1] outline-none bg-transparent placeholder-[#000000] placeholder-opacity-60"
@@ -116,6 +129,25 @@ const Reading = ({ lectures, courseData }: any) => {
             ></textarea>
             {!isTyping && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
           </div>
+
+          {file ? (
+            <div className="flex gap-5 items-center">
+              <div className="flex flex-col gap2 items-start">
+                <p>ატვირთული ფაილი:</p>
+                <span>{fileName}</span>
+              </div>
+
+              <button className="text-white bg-[#2FA8FF] p-2 rounded-md text-sm" onClick={() => setFile(null)}>
+                წაშლა
+              </button>
+            </div>
+          ) : (
+            <label className="flex flex-col items-center gap-[6px] pt-3 pb-[6px] px-4 bg-[#EEE] rounded-lg w-36 cursor-pointer">
+              <input type="file" accept="application/pdf" style={{ display: "none" }} onChange={(e) => handleFileUpload(e)} />
+              <Image src="/assets/img/admin/AddVideo.png" alt={""} width={25} height={27} />
+              <p className="text-lg text-center text-[#CACACA] font-medium">ატვირთე pdf მასალა</p>
+            </label>
+          )}
           <div className="flex justify-between max-w-[780px]">
             <div className="flex flex-col gap-2">
               {inputs.map((url, index) => (

@@ -4,7 +4,7 @@ export const addReading = async (token: any, formdata: any, id: any) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      "Content-Type": "application/pdf",
     },
   };
   try {

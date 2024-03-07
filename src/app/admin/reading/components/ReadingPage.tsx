@@ -11,6 +11,7 @@ type ReadingData = {
   lecture_id: number;
   url: string[];
   isLoading: any;
+  pdf_file: any;
 };
 
 const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
@@ -26,7 +27,7 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
       </div>
     );
   }
-
+  console.log(readingsData);
   if (!readingsData || readingsData.length === 0) {
     return (
       <div className="flex flex-col gap-3 items-start text-base">
@@ -69,7 +70,7 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 mb-40">
       <div className="flex justify-between gap-20">
         <h2 className="text-black font-bold text-xl">წასაკითხი მასალა</h2>
         <div className="flex justify-center">
@@ -78,19 +79,36 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
           </button>
         </div>
       </div>
-      {readingsData.map((reading: ReadingData, index: number) => (
+      {readingsData?.map((reading: ReadingData, index: number) => (
         <div key={index} className="flex flex-col gap-6 items-start">
           <h3 className="font-normal text-base text-black">{reading.description}</h3>
+          {reading.pdf_file && (
+            <div className="border border-sky-200 p-2 rounded-lg text-center">
+              <a href={reading.pdf_file} target="_blank" download className="text-[#006CFA] font-normal text-base ">
+                PDF File
+                <p>{reading.pdf_file}</p>
+              </a>
+            </div>
+          )}
           <ul>
-            {reading?.url?.map((url, urlIndex) => (
-              <li key={urlIndex}>
-                <a href={url} target="_blank" rel="noopener noreferrer" className="text-[#006CFA] font-normal text-base">
-                  {url}
+            {Array.isArray(reading.url) ? (
+              reading.url.map((url, urlIndex) => (
+                <li key={urlIndex}>
+                  <a href={url} target="_blank" rel="noopener noreferrer" className="text-[#006CFA] font-normal text-base">
+                    {url}
+                  </a>
+                </li>
+              ))
+            ) : (
+              <li>
+                <a href={reading.url} target="_blank" rel="noopener noreferrer" className="text-[#006CFA] font-normal text-base">
+                  {reading.url}
                 </a>
               </li>
-            ))}
+            )}
           </ul>
-          <button className="p-1 bg-red rounded-md text-white" onClick={() => handleDeleteReading(reading.id)}>
+
+          <button className="p-1 bg-red rounded-md text-white " onClick={() => handleDeleteReading(reading.id)}>
             წაშლა
           </button>
         </div>
