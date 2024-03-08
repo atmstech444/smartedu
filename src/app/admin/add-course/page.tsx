@@ -65,6 +65,7 @@ const AddCourse = () => {
     const hideLoadingSpinner = () => setIsLoading(false);
     const courseTitle = document.getElementById("courseTitle") as HTMLInputElement;
     const priceInput = document.getElementById("priceInput") as HTMLInputElement;
+    const discountedPrice = document.getElementById("discountedPrice") as HTMLInputElement;
     const durationInput = document.getElementById("durationInput") as HTMLInputElement;
     const languageInput = document.getElementById("languageInput") as HTMLInputElement;
     const requiredFields = {
@@ -80,10 +81,13 @@ const AddCourse = () => {
     };
     const errors: Record<string, string[]> = {};
     Object.entries(requiredFields).forEach(([field, value]) => {
-      if (!value) {
+      if (!value && field !== "lecturer") {
+        errors[field] = [`The ${field.replace("_", " ")} field is required.`];
+      } else if (field === "lecturer" && Array.isArray(value) && value.length === 0) {
         errors[field] = [`The ${field.replace("_", " ")} field is required.`];
       }
     });
+
     const numericFields = ["price", "lecture_count"];
     numericFields.forEach((field) => {
       const value = requiredFields[field as keyof typeof requiredFields];
@@ -99,6 +103,11 @@ const AddCourse = () => {
     formData.append("title", courseTitle.value);
     formData.append("description", courseDescription);
     formData.append("price", priceInput.value);
+    if (discountedPrice.value.trim() !== "") {
+      formData.append("discounted_price", discountedPrice.value);
+    } else {
+      formData.append("discounted_price", "");
+    }
     //@ts-ignore
     formData.append("lecturer_id", selectedLecture);
     formData.append("duration", durationInput.value);
