@@ -29,8 +29,6 @@ const CourseDetailsComponent: React.FC<CourseDetailsProps> = ({ data, lectures, 
     }
   };
 
-  console.log(uploadedVideo);
-
   return (
     <div className="mt-16 flex flex-col items-start gap-6 pr-4 w-[355px]">
       <h1 className="self-center text-dark text-xl font-normal">კურსის დეტალები</h1>
@@ -75,6 +73,11 @@ const CourseDetailsComponent: React.FC<CourseDetailsProps> = ({ data, lectures, 
           <div className="flex flex-col gap-1">
             <p className="text-[#6A6A6A] text-base font-normal">ფასი:</p>
             <input id="priceInput" type="text" className="border border-[#c1c1c1] rounded-[32px] outline-none pl-2" defaultValue={data.price} />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <p className="text-[#6A6A6A] text-base font-normal">ფასდაკლებული ფასი:</p>
+            <input id="discountedPrice" type="text" className="border border-[#c1c1c1] rounded-[32px] outline-none pl-2" defaultValue={data.discounted_price} />
           </div>
 
           <div className="flex flex-col gap-1">

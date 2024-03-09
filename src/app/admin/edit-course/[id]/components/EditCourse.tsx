@@ -63,6 +63,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
     const courseTitle = document.getElementById("courseTitle") as HTMLInputElement;
     const descriptionInput = document.getElementById("descriptionInput") as HTMLTextAreaElement;
     const priceInput = document.getElementById("priceInput") as HTMLInputElement;
+    const discountedPriceInput = document.getElementById("discountedPrice") as HTMLInputElement;
     const durationInput = document.getElementById("durationInput") as HTMLInputElement;
     const languageInput = document.getElementById("languageInput") as HTMLInputElement;
     const formData = new FormData();
@@ -70,6 +71,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
     formData.append("title", courseTitle.value);
     formData.append("description", descriptionInput.value);
     formData.append("price", priceInput.value);
+    formData.append("discounted_price", discountedPriceInput.value);
     formData.append("duration", durationInput.value);
     formData.append("language", languageInput.value);
     const categoryIdToAppend = selectedCategoryId !== null ? selectedCategoryId.toString() : (initialSelectedCategoryId ?? "").toString();
