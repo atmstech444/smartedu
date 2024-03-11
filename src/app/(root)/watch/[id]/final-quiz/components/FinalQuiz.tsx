@@ -61,14 +61,15 @@ const FinalQuiz = () => {
       console.error("Error fetching lecture:", error);
     }
   };
-
+  console.log(remainingTime);
   useEffect(() => {
     fetchData();
   }, []);
+  console.log(remainingTime == null ? false : remainingTime === 0 ? false : true);
   return (
     <>
       <main className="relative w-full bg-white flex items-center justify-center lg:block">
-        <div className="mt-[55px] sm:mt-0 flex gap-3 flex-col p-[24px] w-[90%]   rounded-md">
+        <div className="mt-[55px] sm:mt-0 flex gap-3 flex-col p-[24px] w-[90%] rounded-md">
           <div className="flex gap-3">
             <Image src={Arrow} width="15" height="15" alt="back" onClick={navigateToQuizStart} />
           </div>
@@ -92,7 +93,11 @@ const FinalQuiz = () => {
           <hr />
 
           {quiz === "final quiz unavailable" || (percent && percent > 49) ? null : (
-            <button className={`text-base bg-[#006CFA] w-[200px] h-[35px] text-white rounded-sm ${remainingTime !== null && "bg-[#8DB1E0]"}`} onClick={navigateToQuiz} disabled={remainingTime !== null}>
+            <button
+              className={`text-base bg-[#006CFA] w-[200px] h-[35px] text-white rounded-sm ${(remainingTime == null ? false : remainingTime === 0 ? false : true) && "bg-[#8DB1E0]"}`}
+              onClick={navigateToQuiz}
+              disabled={remainingTime == null ? false : remainingTime === 0 ? false : true}
+            >
               {percent !== null ? "თავიდან დაწყება" : "დაწყება"}
             </button>
           )}
