@@ -10,16 +10,50 @@ const FinalQuiz = () => {
   const params = useParams();
   const [percent, setPercent] = useState(null);
   const token = useAppSelector((state) => state.user.user?.token);
+  const [submitedTime, setSubmitedTime] = useState<string>("");
+  const [remainingTime, setRemainingTime] = useState<any>(null);
+
+  useEffect(() => {
+    if ((percent ?? 0) < 50) {
+      const calculateRemainingTime = () => {
+        const currentTime = new Date();
+        const submittedTimeArray = submitedTime.split(":");
+        if (submittedTimeArray.length !== 3) {
+          console.error("Invalid time format");
+          return;
+        }
+        const submissionTimestamp = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), parseInt(submittedTimeArray[0], 10), parseInt(submittedTimeArray[1], 10), parseInt(submittedTimeArray[2], 10));
+        const differenceInMillis = currentTime.getTime() - submissionTimestamp.getTime();
+        const remainingTimeInSeconds = Math.max(24 * 60 * 60 - Math.floor(differenceInMillis / 1000), 0);
+        setRemainingTime(remainingTimeInSeconds);
+      };
+
+      calculateRemainingTime();
+      const intervalId = setInterval(calculateRemainingTime, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [percent, submitedTime]);
+
+  const formatTime = (time: number): string => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    return formattedTime;
+  };
 
   const navigateToQuiz = () => {
     router.push(`/watch/${params.id}/final-quiz/start`);
   };
+
   const navigateToQuizStart = () => {
     router.push(`/watch/${params.id}`);
   };
+
   const fetchData = async () => {
     try {
       const lecture = await Get_Lecture(params.id, token);
+      setSubmitedTime(lecture.time);
       setPercent(lecture.final_quiz_percent);
     } catch (error) {
       console.error("Error fetching lecture:", error);
@@ -29,7 +63,6 @@ const FinalQuiz = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(percent);
   return (
     <>
       <main className="relative w-full bg-white flex items-center justify-center lg:block">
@@ -49,7 +82,7 @@ const FinalQuiz = () => {
                   fill="#E6AC3A"
                 />
               </svg>
-              <p className="m-0 text-[#E6AC3A]">მეორე და საბოლოო ცდა , თავიდან დაწყებას შეძლებ 23:59</p>
+              <p className="m-0 text-[#E6AC3A]">მეორე და საბოლოო ცდა , თავიდან დაწყებას შეძლებ {formatTime(remainingTime)}</p>
             </div>
           )}
           {percent !== null ? (
