@@ -81,9 +81,14 @@ const QuizStart = () => {
   }, []);
 
   const handleQuizSubmit = async (data: any) => {
+    const currentTime = new Date();
+    const currentTimeString = currentTime.toLocaleTimeString("en-US", { hour12: false });
+
     const requestData = {
       final_quiz_check_answers: data,
+      time: currentTimeString,
     };
+
     try {
       const result = await POST_FINAL_QUIZ(token, requestData);
       router.push(`/watch/${params.id}/final-quiz/`);

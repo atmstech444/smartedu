@@ -49,7 +49,6 @@ export async function Get_Lecture(id: any, token: any) {
   };
   try {
     const response = await axios.get(url + `courses/${id}/lectures`, config);
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error fetching lecture:", error);
@@ -89,6 +88,7 @@ export async function POST_QUIZ(token: any, data: any) {
 }
 
 export async function POST_FINAL_QUIZ(token: any, data: any) {
+  console.log(data);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
