@@ -72,7 +72,6 @@ const QuizScore = ({ id }: Props) => {
                     </svg>
                     <p className=" m-0">მიღებული შედეგი</p>
                   </div>
-                  {/* <p>ჩაბარებისთვის საჭიროა 80% ან მეტის მიღება</p> */}
                 </>
               ) : (
                 <div className=" flex gap-2">
@@ -83,7 +82,6 @@ const QuizScore = ({ id }: Props) => {
                   <p>შენ წარმატებით გაიარე გამოცდა</p>
                 </div>
               )}
-              {/* <p>{percentArray[0].percent < 80 && "ჩაბარებისთვის საჭიროა 80% ან მეტის მიღება"}</p> */}
             </>
           )}
 

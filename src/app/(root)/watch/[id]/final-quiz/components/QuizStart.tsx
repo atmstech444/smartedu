@@ -88,7 +88,7 @@ const QuizStart = () => {
       final_quiz_check_answers: data,
       time: currentTimeString,
     };
-    console.log(requestData);
+
     try {
       const result = await POST_FINAL_QUIZ(token, requestData);
       router.push(`/watch/${params.id}/final-quiz/`);
