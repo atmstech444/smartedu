@@ -102,3 +102,34 @@ export async function POST_FINAL_QUIZ(token: any, data: any) {
     throw error;
   }
 }
+
+//PROGRESS BAR
+export async function POST_READING(token: any, id: any) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const response = await axios.post(url + `user-made-reading`, id, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error", error);
+    throw error;
+  }
+}
+
+export async function POST_VIDEO(token: any, id: any) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const response = await axios.post(url + `user-made-video`, id, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error", error);
+    throw error;
+  }
+}

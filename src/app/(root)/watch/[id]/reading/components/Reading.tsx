@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import Arrow from "../../../../../../public/assets/icons/arrowLeft.svg";
 import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
 import icon from "../../../../../../public/assets/icons/Export.svg";
@@ -12,17 +11,22 @@ import { updateIndexInfo } from "@/redux/slices/indexSlice";
 import BackToCourse from "../../../components/BackToCourse";
 import { useRouter } from "next/navigation";
 import MobileNavOpener from "../../../components/MobileNavOpener";
+import { useParams } from "next/navigation";
+import { POST_READING } from "@/services/AllCourses";
 interface Props {
   id: any;
 }
 
 const Reading = ({ id }: Props) => {
   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
+  const [isDone, setIsDone] = useState<string>("მონიშნე წაკითხულად");
+  const params = useParams();
   const dispatch = useAppDispatch();
   const toggleMenuVisibility = () => {
     dispatch(toggleNavbar());
   };
   const router = useRouter();
+  const token = useAppSelector((state) => state.user.user?.token);
   const index = useAppSelector((state) => state.index.index);
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const reading = lectureDetail?.readings;
@@ -30,6 +34,19 @@ const Reading = ({ id }: Props) => {
     router.push(`/watch/${id}/course/${lectureDetail.id}`);
   };
 
+  const markAsDone = async (id: any) => {
+    const data = {
+      id: id,
+    };
+    try {
+      const result = await POST_READING(token, data);
+      setIsDone(result.message);
+      console.log("submitted", result);
+    } catch (error) {
+      console.error("Error submitting quiz:", error);
+    }
+  };
+  console.log(lectureDetail);
   return (
     <>
       <main className="relative w-full flex items-center justify-center lg:block">
@@ -63,7 +80,9 @@ const Reading = ({ id }: Props) => {
                   )
                 : null
             )}
-          <button className="self-start text-base font-medium text-white py-2 px-3 bg-mainBlue rounded-md">მონიშნე წაკითხულად</button>
+          <button className="self-start text-base font-medium text-white py-2 px-3 bg-mainBlue rounded-md" onClick={() => markAsDone(params.itemId)}>
+            {isDone}
+          </button>
         </div>
       </main>
     </>
