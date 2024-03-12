@@ -24,13 +24,19 @@ interface QuizesTypes {
   score: number;
   correct_answer: string[];
 }
+
+interface DataTypes {
+  lectures: LectureTypes[];
+  final_quiz: QuizesTypes[];
+  time: string;
+  final_quiz_percent: number;
+}
+
 export const Navigation = (id: { id: any }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
-  const [finalQuiz, setFinalQuiz] = useState<QuizesTypes[]>([]);
   const courses = useAppSelector((state) => state.courses.courses);
   const course = courses.find((cours) => cours.id == id.id);
-  const [lecture, setLecture] = useState<LectureTypes[]>([]);
-  const [percent, setPercent] = useState<number>();
+  const [data, setData] = useState<DataTypes | null>(null);
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -57,9 +63,7 @@ export const Navigation = (id: { id: any }) => {
   const fetchData = async () => {
     try {
       const lecture = await Get_Lecture(id.id, token);
-      setFinalQuiz(lecture.final_quiz);
-      setLecture(lecture.lectures);
-      setPercent(lecture.final_quiz_percent);
+      setData(lecture);
     } catch (error) {
       console.error("Error fetching lecture:", error);
     }
@@ -100,8 +104,8 @@ export const Navigation = (id: { id: any }) => {
           </div>
           {isOpened && (
             <>
-              {lecture &&
-                lecture.map((item) => (
+              {data?.lectures &&
+                data?.lectures.map((item) => (
                   <div
                     onClick={() => navigateToLecture(item.id)}
                     key={item.id}
@@ -110,7 +114,7 @@ export const Navigation = (id: { id: any }) => {
                     {item.lecture_name}
                   </div>
                 ))}
-              {finalQuiz.length > 0 && (
+              {data?.final_quiz && data.final_quiz.length > 0 && (
                 <div
                   className={`flex gap-2 items-center text-mainGray text-base rounded-md p-3 cursor-pointer ${pathname === `/watch/${id.id}/final-quiz` || pathname === `/watch/${id.id}/final-quiz/start` ? "bg-lightestBlue" : "bg-transparent"}`}
                   onClick={navigateToFinalQuiz}
@@ -142,7 +146,7 @@ export const Navigation = (id: { id: any }) => {
                 className={`flex gap-2 items-center text-mainGray text-base rounded-md p-3 cursor-pointer ${pathname === `/watch/${id.id}/certificate` ? "bg-lightestBlue" : "bg-transparent"}`}
                 onClick={() => router.push(`/watch/${id.id}/certificate`)}
               >
-                {percent && percent > 49 && <p>სერთიფიკატი</p>}
+                {data?.final_quiz_percent && data.final_quiz_percent > 49 && <p>სერთიფიკატი</p>}
               </div>
             </>
           )}
