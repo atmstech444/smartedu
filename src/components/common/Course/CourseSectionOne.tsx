@@ -61,11 +61,11 @@ const CourseSectionOne = () => {
         </Div2>
         <div className="row mt-10">
           {courses.slice(0, 6).map((item) => (
-            <div key={item.id} className="col-xxl-4 col-xl-4 col-lg-4 col-md-6">
-              <div className="course__item white-bg mb-30 fix">
-                <div className="course__thumb w-img p-relative fix">
+            <div key={item.id} className="col-xxl-4 col-xl-4 col-lg-4 col-md-6 flex justify-center items-center">
+              <div className="course__item white-bg mb-30 fix w-[360px]">
+                <div className="course__thumb p-relative fix flex justify-center items-center">
                   <Link href={`/course-details/${item.id}`}>
-                    <img src={API_STORAGE + item?.cover_image} style={{ width: "100%", height: "200px" }} alt="image not found" />
+                    <img src={API_STORAGE + item?.cover_image} alt="image not found" className="" />
                   </Link>
                   <div className="absolute top-[20px] left-[20px] rounded-sm" style={{ backgroundColor: getCategoryColor(item.category.title) }}>
                     <Link href={`/course-details/${item.id}`} className="h-[24px] text-sm text-white font-medium px-3">
