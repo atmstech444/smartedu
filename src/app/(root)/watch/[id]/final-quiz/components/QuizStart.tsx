@@ -27,7 +27,6 @@ const QuizStart = () => {
   const router = useRouter();
   const [selectedAnswers, setSelectedAnswers] = useState<AnswerState[]>([]);
   const [finalQuiz, setFinalQuiz] = useState<QuizesTypes[]>([]);
-  const [percent, setPercent] = useState(null);
   const token = useAppSelector((state) => state.user.user?.token);
 
   const handleCheckboxChange = (questionIndex: number, answer: any) => {
@@ -54,7 +53,6 @@ const QuizStart = () => {
   const handleTextChange = (questionIndex: number, answer: any) => {
     setSelectedAnswers((prevAnswers) => {
       const index = prevAnswers.findIndex((item) => item.questionIndex === questionIndex);
-
       if (index !== -1) {
         return [...prevAnswers.slice(0, index), { questionIndex, answer: [answer] }, ...prevAnswers.slice(index + 1)];
       } else {
@@ -62,6 +60,7 @@ const QuizStart = () => {
       }
     });
   };
+
   const navigateToQuiz = () => {
     router.push(`/watch/${params.id}/final-quiz/`);
   };
@@ -69,7 +68,6 @@ const QuizStart = () => {
   const fetchData = async () => {
     try {
       const lecture = await Get_Lecture(params.id, token);
-      setPercent(lecture.final_quiz_percent);
       setFinalQuiz(lecture.final_quiz);
     } catch (error) {
       console.error("Error fetching lecture:", error);
@@ -99,9 +97,10 @@ const QuizStart = () => {
   const handleSubmit = () => {
     if (finalQuiz.length > 0 && selectedAnswers.length > 0) {
       const results = finalQuiz.map((question, index) => {
-        const correctAnswers = question.correct_answer;
+        const correctAnswers = question.correct_answer.map((answer) => answer.toLowerCase().trim());
         const selectedAnswersForQuestion = selectedAnswers.find((item) => item.questionIndex === index)?.answer || [];
-        const isCorrect = correctAnswers.length === selectedAnswersForQuestion.length && correctAnswers.every((correctAnswer) => selectedAnswersForQuestion.includes(correctAnswer));
+        const selectedAnswersLowerCaseTrimmed = selectedAnswersForQuestion.map((answer: any) => answer.toLowerCase().trim());
+        const isCorrect = correctAnswers.length === selectedAnswersLowerCaseTrimmed.length && correctAnswers.every((correctAnswer) => selectedAnswersLowerCaseTrimmed.includes(correctAnswer));
         return {
           course_final_quiz_id: question.id,
           correct_answer: isCorrect ? 1 : 0,

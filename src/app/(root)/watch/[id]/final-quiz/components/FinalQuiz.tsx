@@ -8,11 +8,8 @@ import { useAppSelector } from "@/redux/store";
 const FinalQuiz = () => {
   const router = useRouter();
   const params = useParams();
-  const [percent, setPercent] = useState(null);
   const token = useAppSelector((state) => state.user.user?.token);
-  const [submitedTime, setSubmitedTime] = useState<string>("");
   const [remainingTime, setRemainingTime] = useState<any>(null);
-  const [quiz, setQuiz] = useState("");
   const [lecture, setLecture] = useState<any>();
 
   useEffect(() => {
@@ -55,9 +52,6 @@ const FinalQuiz = () => {
     try {
       const lecture = await Get_Lecture(params.id, token);
       setLecture(lecture);
-      // setQuiz(lecture.final_quiz);
-      // setSubmitedTime(lecture.time);
-      // setPercent(lecture.final_quiz_percent);
     } catch (error) {
       console.error("Error fetching lecture:", error);
     }
