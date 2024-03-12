@@ -7,6 +7,7 @@ import { parseCookies } from "nookies";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { deleteLecture } from "../[id]/services/deleteLecture";
+import { editLectureName } from "../[id]/services/editLectureName";
 
 type Lecture = {
   course_id: any;
@@ -28,7 +29,9 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   const [inputs, setInputs] = useState<string[]>([]);
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const { id } = useParams();
-  const courseId = Array.isArray(id) ? parseInt(id[0]) : parseInt(id);
+
+  const [editingLectureId, setEditingLectureId] = useState<number | null>(null);
+  const [newLectureName, setNewLectureName] = useState<string>("");
 
   useEffect(() => {
     if (courseData) {
@@ -112,23 +115,110 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     router.push(`/admin/add-final-quiz?&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
 
+  const updateLecture = async (lectureId: number, newLectureName: string) => {
+    try {
+      const response = await editLectureName(token, { lecture_name: newLectureName }, lectureId);
+      if (response.message === "Lecture updated successfully") {
+        setLectures((prevLectures) =>
+          prevLectures.map((lecture) => {
+            if (lecture.id === lectureId) {
+              return {
+                ...lecture,
+                lecture_name: newLectureName,
+              };
+            }
+            return lecture;
+          })
+        );
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred", error);
+    }
+  };
+
   return (
-    <div className="w-64 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
-      <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
+    <div className="w-80 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
+      <div className=" flex flex-col gap-4 w-[280px] ">
         <img src={`https://smarteducation.shop/smarteducation_backend/public/${courseData?.cover_image}`} className="rounded-2xl" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
         {lectures.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
-            <h1 onClick={() => handleOpenTabs(lecture.id)} className="cursor-pointer underline">
-              {lecture.lecture_name}
-            </h1>
+            {editingLectureId === lecture.id ? (
+              <input
+                type="text"
+                value={newLectureName}
+                className="w-[150px] border border-black rounded-md p-1"
+                placeholder={lecture.lecture_name}
+                onChange={(e) => setNewLectureName(e.target.value)}
+                onBlur={() => {
+                  setEditingLectureId(null);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    updateLecture(lecture.id, newLectureName);
+                    setEditingLectureId(null);
+                  }
+                }}
+              />
+            ) : (
+              <h1 className="cursor-pointer underline w-[150px]" onClick={() => handleOpenTabs(lecture.id)}>
+                {lecture.lecture_name}
+              </h1>
+            )}
+            {editingLectureId === lecture.id ? (
+              <div className="flex gap-2 items-center">
+                <p
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (editingLectureId === lecture.id) {
+                      setEditingLectureId(null);
+                    } else {
+                      setEditingLectureId(lecture.id);
+                      setNewLectureName(lecture.lecture_name);
+                    }
+                  }}
+                >
+                  გაუქმება
+                </p>
+              </div>
+            ) : (
+              <div className="flex gap-4 items-center">
+                <Image
+                  src={"/assets/img/admin/pencil.png"}
+                  width={20}
+                  height={20}
+                  alt={""}
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (editingLectureId === lecture.id) {
+                      setEditingLectureId(null);
+                    } else {
+                      setEditingLectureId(lecture.id);
+                      setNewLectureName(lecture.lecture_name);
+                    }
+                  }}
+                />
 
-            <button onClick={() => handleDeleteLecture(lecture.id)} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-1 py-1">
-              წაშლა
-            </button>
+                <Image src={"/assets/img/admin/closeIcon.png"} width={15} height={15} alt={""} className="cursor-pointer" onClick={() => handleDeleteLecture(lecture.id)} />
+              </div>
+            )}
           </div>
         ))}
+
         {inputs.map((_, index) => (
           <div className="relative" key={index}>
             <input ref={(ref) => (inputRefs.current[index] = ref!)} type="text" placeholder="ლექცია" className="border border-1-black rounded-lg px-3 py-1 outline-none max-w-[200px]" name={`name-${index}`} />
@@ -141,7 +231,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
             შენახვა
           </button>
         </div>
-        <button className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddFinalQuiz}>
+        <button className="bg-mainBlue rounded-faqBordeR text-base mt-20 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddFinalQuiz}>
           დაამატე საბოლოო ქვიზი
         </button>
       </div>
