@@ -30,6 +30,7 @@ export const Navigation = (id: { id: any }) => {
   const courses = useAppSelector((state) => state.courses.courses);
   const course = courses.find((cours) => cours.id == id.id);
   const [lecture, setLecture] = useState<LectureTypes[]>([]);
+  const [percent, setPercent] = useState<number>();
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -58,6 +59,7 @@ export const Navigation = (id: { id: any }) => {
       const lecture = await Get_Lecture(id.id, token);
       setFinalQuiz(lecture.final_quiz);
       setLecture(lecture.lectures);
+      setPercent(lecture.final_quiz_percent);
     } catch (error) {
       console.error("Error fetching lecture:", error);
     }
@@ -136,6 +138,12 @@ export const Navigation = (id: { id: any }) => {
                   <p className=" my-auto">ქვიზი</p>
                 </div>
               )}
+              <div
+                className={`flex gap-2 items-center text-mainGray text-base rounded-md p-3 cursor-pointer ${pathname === `/watch/${id.id}/certificate` ? "bg-lightestBlue" : "bg-transparent"}`}
+                onClick={() => router.push(`/watch/${id.id}/certificate`)}
+              >
+                {percent && percent > 49 && <p>სერთიფიკატი</p>}
+              </div>
             </>
           )}
         </div>

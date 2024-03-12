@@ -48,6 +48,11 @@ const FinalQuiz = () => {
   const navigateToQuizStart = () => {
     router.push(`/watch/${params.id}`);
   };
+
+  const navigateToCertificate = () => {
+    router.push(`/watch/${params.id}/certificate`);
+  };
+
   const fetchData = async () => {
     try {
       const lecture = await Get_Lecture(params.id, token);
@@ -73,7 +78,7 @@ const FinalQuiz = () => {
               <p className="text-base	m-0 text-black mt-5">პროგრამირების საწყისები</p>
             </div>
             {lecture?.final_quiz_percent > 49 ? (
-              <button className="flex gap-2 my-auto text-[#006CFA] font-medium">
+              <button className="flex gap-2 my-auto text-[#006CFA] font-medium" onClick={navigateToCertificate}>
                 მიიღე სერთიფიკატი
                 <svg className="m-auto" xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
                   <path
