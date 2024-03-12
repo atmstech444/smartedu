@@ -11,6 +11,7 @@ import { updateIndexInfo } from "@/redux/slices/indexSlice";
 import BackToCourse from "../../../components/BackToCourse";
 import MobileNavOpener from "../../../components/MobileNavOpener";
 import { useRouter } from "next/navigation";
+import { POST_VIDEO } from "@/services/AllCourses";
 
 interface Props {
   id: any;
@@ -24,15 +25,26 @@ const Video = ({ id }: Props) => {
   const toggleMenuVisibility = () => {
     dispatch(toggleNavbar());
   };
+
+  const token = useAppSelector((state) => state.user.user?.token);
   const index = useAppSelector((state) => state.index.index);
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const video = lectureDetail?.videos.find((item) => item.id == params.videoId);
+
   const navigateToCourse = () => {
     router.push(`/watch/${id}/course/${lectureDetail.id}`);
   };
 
-  const onVideoEnd = () => {
-    console.log("ended");
+  const onVideoEnded = async (id: any) => {
+    const data = {
+      id: id,
+    };
+    try {
+      const result = await POST_VIDEO(token, data);
+      console.log("submitted", result);
+    } catch (error) {
+      console.error("Error submitting quiz:", error);
+    }
   };
 
   useEffect(() => {
@@ -83,7 +95,7 @@ const Video = ({ id }: Props) => {
             </div>
           </div>
           {video && (
-            <video controls controlsList="nodownload" className="rounded-lg" ref={videoRef} onEnded={onVideoEnd}>
+            <video controls controlsList="nodownload" className="rounded-lg" ref={videoRef} onEnded={() => onVideoEnded(params.videoId)}>
               <source src={`${API_STORAGE + video?.video}`} type="video/mp4" />
             </video>
           )}

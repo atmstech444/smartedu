@@ -78,6 +78,8 @@ const Lecture = (id: { id: any }) => {
     router.push(`/watch/${params.id}/quiz/${id}`);
   };
 
+  console.log(lectureDetail);
+
   return (
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
