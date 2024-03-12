@@ -13,12 +13,13 @@ const FinalQuiz = () => {
   const [submitedTime, setSubmitedTime] = useState<string>("");
   const [remainingTime, setRemainingTime] = useState<any>(null);
   const [quiz, setQuiz] = useState("");
+  const [lecture, setLecture] = useState<any>();
 
   useEffect(() => {
-    if (percent !== null && percent < 49) {
+    if (lecture?.final_quiz_percent !== null && lecture?.final_quiz_percent < 49) {
       const calculateRemainingTime = () => {
         const currentTime = new Date();
-        const submittedTimeArray = submitedTime.split(":");
+        const submittedTimeArray = lecture.time.split(":");
         if (submittedTimeArray.length !== 3) {
           console.error("Invalid time format");
           return;
@@ -33,7 +34,7 @@ const FinalQuiz = () => {
       const intervalId = setInterval(calculateRemainingTime, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [percent, submitedTime]);
+  }, [lecture?.final_quiz_percent, lecture?.time]);
 
   const formatTime = (time: number): string => {
     const hours = Math.floor(time / 3600);
@@ -53,9 +54,10 @@ const FinalQuiz = () => {
   const fetchData = async () => {
     try {
       const lecture = await Get_Lecture(params.id, token);
-      setQuiz(lecture.final_quiz);
-      setSubmitedTime(lecture.time);
-      setPercent(lecture.final_quiz_percent);
+      setLecture(lecture);
+      // setQuiz(lecture.final_quiz);
+      // setSubmitedTime(lecture.time);
+      // setPercent(lecture.final_quiz_percent);
     } catch (error) {
       console.error("Error fetching lecture:", error);
     }
@@ -76,19 +78,21 @@ const FinalQuiz = () => {
               <h1 className="text-xl m-0">ქვიზი</h1>
               <p className="text-base	m-0 text-black mt-5">პროგრამირების საწყისები</p>
             </div>
-            <button className="flex gap-2 my-auto text-[#006CFA] font-medium">
-              მიიღე სერთიფიკატი
-              <svg className="m-auto" xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M0.504823 1.00507C0.77819 0.731707 1.22141 0.731707 1.49477 1.00507L1.06134 1.4385C1.49478 1.00508 1.49473 1.00503 1.49477 1.00507L1.54072 1.05115L1.66884 1.18013C1.77903 1.2913 1.93625 1.45049 2.12485 1.64302C2.50175 2.02777 3.00524 2.54698 3.50954 3.08279C4.01215 3.61681 4.52264 4.17482 4.91024 4.63509C5.10277 4.86373 5.27501 5.08004 5.40256 5.26339C5.46563 5.35406 5.52776 5.45082 5.57691 5.54606C5.61058 5.61129 5.6998 5.78684 5.6998 6.00005C5.6998 6.21325 5.61058 6.38881 5.57691 6.45403C5.52776 6.54927 5.46563 6.64604 5.40256 6.73671C5.27501 6.92006 5.10277 7.13637 4.91024 7.36501C4.52264 7.82528 4.01215 8.38328 3.50954 8.9173C3.00524 9.45312 2.50175 9.97232 2.12485 10.3571C1.93625 10.5496 1.77903 10.7088 1.66884 10.82L1.54072 10.9489L1.49562 10.9942L1.49485 10.9949C1.4948 10.995 1.49477 10.995 0.999798 10.5L0.504839 10.0051L0.548717 9.96106L0.674503 9.83443C0.783063 9.7249 0.938341 9.56768 1.12475 9.37739C1.49784 8.99652 1.99435 8.48448 2.49006 7.95779C2.98745 7.42931 3.47696 6.89357 3.83936 6.46322C3.99417 6.27938 4.1186 6.12323 4.20846 6.00005C4.1186 5.87687 3.99417 5.72072 3.83936 5.53688C3.47696 5.10653 2.98745 4.57078 2.49006 4.0423C1.99435 3.51562 1.49784 3.00357 1.12475 2.62271C0.938341 2.43242 0.783063 2.2752 0.674503 2.16567L0.548717 2.03904L0.50543 1.99563C0.232063 1.72226 0.231456 1.27844 0.504823 1.00507ZM4.33284 6.18816C4.34004 6.20618 4.3426 6.20707 4.33284 6.18816C4.33272 6.18792 4.33297 6.18841 4.33284 6.18816ZM0.504823 10.995C0.231456 10.7217 0.231472 10.2784 0.504839 10.0051L0.999798 10.5L1.49485 10.9949C1.22148 11.2683 0.77819 11.2684 0.504823 10.995Z"
-                  fill="#006CFA"
-                />
-              </svg>
-            </button>
+            {lecture?.final_quiz_percent > 49 ? (
+              <button className="flex gap-2 my-auto text-[#006CFA] font-medium">
+                მიიღე სერთიფიკატი
+                <svg className="m-auto" xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M0.504823 1.00507C0.77819 0.731707 1.22141 0.731707 1.49477 1.00507L1.06134 1.4385C1.49478 1.00508 1.49473 1.00503 1.49477 1.00507L1.54072 1.05115L1.66884 1.18013C1.77903 1.2913 1.93625 1.45049 2.12485 1.64302C2.50175 2.02777 3.00524 2.54698 3.50954 3.08279C4.01215 3.61681 4.52264 4.17482 4.91024 4.63509C5.10277 4.86373 5.27501 5.08004 5.40256 5.26339C5.46563 5.35406 5.52776 5.45082 5.57691 5.54606C5.61058 5.61129 5.6998 5.78684 5.6998 6.00005C5.6998 6.21325 5.61058 6.38881 5.57691 6.45403C5.52776 6.54927 5.46563 6.64604 5.40256 6.73671C5.27501 6.92006 5.10277 7.13637 4.91024 7.36501C4.52264 7.82528 4.01215 8.38328 3.50954 8.9173C3.00524 9.45312 2.50175 9.97232 2.12485 10.3571C1.93625 10.5496 1.77903 10.7088 1.66884 10.82L1.54072 10.9489L1.49562 10.9942L1.49485 10.9949C1.4948 10.995 1.49477 10.995 0.999798 10.5L0.504839 10.0051L0.548717 9.96106L0.674503 9.83443C0.783063 9.7249 0.938341 9.56768 1.12475 9.37739C1.49784 8.99652 1.99435 8.48448 2.49006 7.95779C2.98745 7.42931 3.47696 6.89357 3.83936 6.46322C3.99417 6.27938 4.1186 6.12323 4.20846 6.00005C4.1186 5.87687 3.99417 5.72072 3.83936 5.53688C3.47696 5.10653 2.98745 4.57078 2.49006 4.0423C1.99435 3.51562 1.49784 3.00357 1.12475 2.62271C0.938341 2.43242 0.783063 2.2752 0.674503 2.16567L0.548717 2.03904L0.50543 1.99563C0.232063 1.72226 0.231456 1.27844 0.504823 1.00507ZM4.33284 6.18816C4.34004 6.20618 4.3426 6.20707 4.33284 6.18816C4.33272 6.18792 4.33297 6.18841 4.33284 6.18816ZM0.504823 10.995C0.231456 10.7217 0.231472 10.2784 0.504839 10.0051L0.999798 10.5L1.49485 10.9949C1.22148 11.2683 0.77819 11.2684 0.504823 10.995Z"
+                    fill="#006CFA"
+                  />
+                </svg>
+              </button>
+            ) : null}
           </div>
-          {quiz !== "final quiz unavailable" && percent !== null && percent < 50 && (
+          {lecture?.final_quiz !== "final quiz unavailable" && lecture?.final_quiz_percent !== null && lecture?.final_quiz_percent < 50 && (
             <div className=" flex gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
@@ -105,17 +109,17 @@ const FinalQuiz = () => {
           {/* {quiz === "final quiz unavailable" || (percent && percent > 49 && <hr />)} */}
           <hr />
 
-          {quiz === "final quiz unavailable" || (percent && percent > 49) ? null : (
+          {lecture?.final_quiz === "final quiz unavailable" || lecture?.final_quiz_percent > 49 ? null : (
             <button
               className={`text-base bg-[#006CFA] w-[200px] h-[35px] text-white rounded-sm ${(remainingTime == null ? false : remainingTime === 0 ? false : true) && "bg-[#8DB1E0]"}`}
               onClick={navigateToQuiz}
               disabled={remainingTime == null ? false : remainingTime === 0 ? false : true}
             >
-              {percent !== null ? "თავიდან დაწყება" : "დაწყება"}
+              {lecture?.final_quiz_percent !== null ? "თავიდან დაწყება" : "დაწყება"}
             </button>
           )}
 
-          {percent !== null && percent < 50 && (
+          {lecture?.final_quiz_percent !== null && lecture?.final_quiz_percent < 50 && (
             <div className="md:flex justify-between ">
               <div>
                 <div className=" flex gap-2 ">
@@ -130,12 +134,12 @@ const FinalQuiz = () => {
               </div>
               <div>
                 <p className=" font-bold m-0">შენი ქულა</p>
-                <p className=" text-red font-bold">{percent + "%"}</p>
+                <p className=" text-red font-bold">{lecture?.final_quiz_percent + "%"}</p>
               </div>
             </div>
           )}
 
-          {percent !== null && percent > 49 && (
+          {lecture?.final_quiz_percent !== null && lecture?.final_quiz_percent > 49 && (
             <div className="md:flex justify-between ">
               <div>
                 <div className=" flex gap-2 ">
@@ -148,7 +152,7 @@ const FinalQuiz = () => {
               </div>
               <div className="mt-3">
                 <p className=" font-bold m-0">შენი ქულა</p>
-                <p className=" text-[#1F8354] font-bold">{percent + "%"}</p>
+                <p className=" text-[#1F8354] font-bold">{lecture?.final_quiz_percent + "%"}</p>
               </div>
             </div>
           )}
