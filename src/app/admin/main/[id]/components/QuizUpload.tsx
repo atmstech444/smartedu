@@ -94,6 +94,10 @@ const QuizUpload = ({ lectures, courseData }: any) => {
   };
   const handleCreateQuiz = async () => {
     try {
+      const isValid = validateForm();
+      if (!isValid) {
+        return;
+      }
       const formData = new FormData();
       sections.forEach(({ id, question, answers, file }, index) => {
         formData.append(`quiz_content[${index}][question]`, question);
@@ -134,6 +138,44 @@ const QuizUpload = ({ lectures, courseData }: any) => {
     } catch (error) {
       console.error("An unexpected error occurred", error);
     }
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+
+    sections.forEach(({ id, question, answers }) => {
+      if (question.trim() === "") {
+        Swal.fire({
+          icon: "warning",
+          title: "გთხოვთ შეიყვანოთ შეკითხვა ყველა განყოფილებისთვის.",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        isValid = false;
+      }
+
+      if (answers.filter((answer) => answer.trim() !== "").length === 0) {
+        Swal.fire({
+          icon: "warning",
+          title: `გთხოვთ, ჩაწეროთ მინიმუმ ერთი პასუხი კითხვაზე ${id}.`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        isValid = false;
+      }
+
+      if (!(selectedAnswers[id]?.length > 0)) {
+        Swal.fire({
+          icon: "warning",
+          title: `გთხოვთ, მონიშნოთ მინიმუმ ერთი სწორი პასუხი კითხვაზე ${id}.`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        isValid = false;
+      }
+    });
+
+    return isValid;
   };
   const handleSeeQuiz = () => {
     router.push(`/admin/quizzes?lectureId=${id}&lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);

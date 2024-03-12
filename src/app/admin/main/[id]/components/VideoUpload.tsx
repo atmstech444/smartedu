@@ -12,6 +12,7 @@ import LectureTitleAndDescription from "./LectureTitleAndDescription";
 import VideoUploadModal from "./VideoUploadModal";
 import { API_STORAGE } from "@/api/API_PATH";
 import SecondLoadingSpinner from "@/components/LoadingSpinner";
+import { editVideoTitle } from "../services/editVideoTitle";
 
 interface Video {
   id: number;
@@ -44,6 +45,9 @@ const VideoUpload = () => {
   const [totalSizeUploaded, setTotalSizeUploaded] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [editingVideoId, setEditingVideoId] = useState<number | null>(null);
+  const [newVideoTitle, setNewVideoTitle] = useState<string>("");
 
   const handleFileInputChange = (event: any) => {
     const file = event.target.files[0];
@@ -148,6 +152,31 @@ const VideoUpload = () => {
       console.error("Error deleting video:", error);
     }
   };
+
+  const updateLecture = async (videoId: number, newVideoTitle: string) => {
+    try {
+      const response = await editVideoTitle(token, { title: newVideoTitle }, videoId);
+      if (response.message === "Video title change successfully") {
+        setVideosData((prevVideos) => prevVideos.map((video) => (video.id === videoId ? { ...video, title: newVideoTitle } : video)));
+        Swal.fire({
+          icon: "success",
+          title: response.message,
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred", error);
+    }
+  };
+
   return (
     <div className="grid grid-cols-6 w-full">
       <div className="flex flex-col gap-3 col-span-5">
@@ -168,9 +197,68 @@ const VideoUpload = () => {
           <div className="flex gap-4 mt-4 flex-wrap mb-5">
             {videosData.map((video) => (
               <div key={video.id} className="w-[400px] p-2 flex flex-col gap-2 items-start border border-1-[#D1D1D1] rounded-md">
-                <h1>
-                  <span className="text-lg font-bold">სათაური:</span> {video.title}
-                </h1>
+                {editingVideoId === video.id ? (
+                  <div className="flex justify-between w-full items-center">
+                    <div className="flex gap-3 items-center">
+                      <h1 className="text-lg font-bold">სათაური:</h1>
+                      <input
+                        type="text"
+                        value={newVideoTitle}
+                        className="w-[150px] border border-black rounded-md p-1"
+                        placeholder={video.title}
+                        onChange={(e) => setNewVideoTitle(e.target.value)}
+                        onBlur={() => {
+                          setEditingVideoId(null);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            updateLecture(video.id, newVideoTitle);
+                            setEditingVideoId(null);
+                          }
+                        }}
+                      />
+                    </div>
+
+                    <div className="flex gap-2 items-center">
+                      <p
+                        className="cursor-pointer"
+                        onClick={() => {
+                          if (editingVideoId === video.id) {
+                            setEditingVideoId(null);
+                          } else {
+                            setEditingVideoId(video.id);
+                            setNewVideoTitle(video.title);
+                          }
+                        }}
+                      >
+                        გაუქმება
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex justify-between items-center w-full">
+                    <h1>
+                      <span className="text-lg font-bold">სათაური:</span> {video.title}
+                    </h1>
+
+                    <Image
+                      src={"/assets/img/admin/pencil.png"}
+                      width={20}
+                      height={20}
+                      alt={""}
+                      className="cursor-pointer"
+                      onClick={() => {
+                        if (editingVideoId === video.id) {
+                          setEditingVideoId(null);
+                        } else {
+                          setEditingVideoId(video.id);
+                          setNewVideoTitle(video.title);
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+
                 {video && (
                   <video controls className="rounded-lg">
                     <source src={`${API_STORAGE}${video.video}`} type="video/mp4" />
