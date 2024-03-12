@@ -109,6 +109,11 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
 
   const handleCreateQuiz = async () => {
     try {
+      const isValid = validateForm();
+      if (!isValid) {
+        return;
+      }
+
       const formData = new FormData();
       sections.forEach(({ id, question, answers, file }, index) => {
         formData.append(`final_quiz_content[${index}][question]`, question);
@@ -133,6 +138,7 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
         const score = parseInt(scoreInput.value);
         formData.append(`final_quiz_content[${index}][score]`, score.toString());
       });
+
       const response = await addFinalQuiz(token, formData, courseId);
       if (response.message === "Final quiz create successfully") {
         Swal.fire({
@@ -153,6 +159,56 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
     } catch (error) {
       console.error("An unexpected error occurred", error);
     }
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+
+    sections.forEach(({ id, question, answers }) => {
+      if (question.trim() === "") {
+        Swal.fire({
+          icon: "warning",
+          title: "გთხოვთ შეიყვანოთ შეკითხვა ყველა განყოფილებისთვის.",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        isValid = false;
+      }
+
+      if (answers.filter((answer) => answer.trim() !== "").length === 0) {
+        Swal.fire({
+          icon: "warning",
+          title: `გთხოვთ, ჩაწეროთ მინიმუმ ერთი პასუხი კითხვაზე ${id}.`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        isValid = false;
+      }
+
+      if (!(selectedAnswers[id]?.length > 0)) {
+        Swal.fire({
+          icon: "warning",
+          title: `გთხოვთ, მონიშნოთ მინიმუმ ერთი სწორი პასუხი კითხვაზე ${id}.`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        isValid = false;
+      }
+
+      const scoreInput = document.getElementById(`score_${id}`) as HTMLInputElement;
+      const score = parseInt(scoreInput.value);
+      if (isNaN(score) || score <= 0) {
+        Swal.fire({
+          icon: "warning",
+          title: `გთხოვთ, შეიყვანოთ ქულა შეკითხვისთვის ${id}.`,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        isValid = false;
+      }
+    });
+
+    return isValid;
   };
 
   const handleSeeFinalQuiz = (courseId: number) => {
