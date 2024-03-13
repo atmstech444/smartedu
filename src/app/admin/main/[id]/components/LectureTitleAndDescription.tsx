@@ -106,6 +106,8 @@ const LectureTitleAndDescription = () => {
           timer: 1500,
         });
         setTitleDescriptionData(null);
+        setLectureTitle("");
+        setLectureDescription("");
       } else {
         console.error("An unexpected error occurred");
         Swal.fire({
