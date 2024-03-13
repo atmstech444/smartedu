@@ -35,11 +35,11 @@ const Page = () => {
         <Wrapper>
           <div className="md:pt-[24px] bg-[#F3F4F8] max-w-screen-xl mx-auto">
             <div className="lg:hidden mt-[20%] flex flex-col gap-[24px]">
-              <Reading id={params.id} />
+              <Reading />
             </div>
             <div className="hidden lg:flex mt-[150px]  md:gap-[24px] lg:gap-[50px] px-[72px]">
-              <SecondaryNav id={params.id} />
-              <Reading id={params.id} />
+              <SecondaryNav />
+              <Reading />
             </div>
           </div>
         </Wrapper>

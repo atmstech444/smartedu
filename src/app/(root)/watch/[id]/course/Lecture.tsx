@@ -51,6 +51,7 @@ interface Quizzes {
   is_open: string;
 }
 
+
 interface DoneReading {
   completed: number;
   course_lecture_reading_id: number;
@@ -65,7 +66,9 @@ interface DoneVideo {
   user_id: number;
 }
 
-const Lecture = (id: { id: any }) => {
+
+const Lecture = () => {
+
   const router = useRouter();
   const params = useParams();
   const token = useAppSelector((state) => state.user.user?.token);
@@ -88,7 +91,7 @@ const Lecture = (id: { id: any }) => {
 
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const navigateToReading = (lectureId: any) => {
-    router.push(`/watch/${id.id}/reading/${lectureId}`);
+    router.push(`/watch/${params.id}/reading/${lectureId}`);
   };
   const navigateToVideo = (id: any, videoId: any) => {
     router.push(`/watch/${params.id}/video/${id}/${videoId}`);
@@ -97,15 +100,18 @@ const Lecture = (id: { id: any }) => {
     router.push(`/watch/${params.id}/quiz/${id}`);
   };
 
+
   const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
 
   console.log(lectureDetail);
+
+
   return (
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
         <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-          <Navigation id={id.id} />
+          <Navigation />
         </UserMobileMenu>
       )}
       {lectureDetail.course_id ? (
@@ -115,7 +121,7 @@ const Lecture = (id: { id: any }) => {
           <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content?.title}</p>
           <p className="text-base font-bold	text-black">{lectureDetail?.lecture_name}</p>
 
-          {lectureDetail && lectureDetail.readings.length > 0 ? (
+          {lectureDetail && lectureDetail.readings && lectureDetail.readings.length > 0 ? (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToReading(lectureDetail.id)}>
               {completedReading === 1 ? (
                 <>
@@ -152,7 +158,7 @@ const Lecture = (id: { id: any }) => {
               </div>
             ))}
 
-          {lectureDetail && lectureDetail.quizzes.length > 0 && (
+          {lectureDetail && lectureDetail.quizzes && lectureDetail.quizzes.length > 0 && (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToQuiz(lectureDetail.id)}>
               {quizResult > 80 ? (
                 <>

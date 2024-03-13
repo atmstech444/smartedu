@@ -9,10 +9,7 @@ import MobileNavOpener from "@/app/(root)/watch/components/MobileNavOpener";
 import { Get_Lecture_Detail } from "@/services/AllCourses";
 import { setLecture } from "@/redux/slices/lectureDetail";
 
-interface Props {
-  id: any;
-}
-const QuizScore = ({ id }: Props) => {
+const QuizScore = () => {
   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -28,7 +25,7 @@ const QuizScore = ({ id }: Props) => {
     router.push(`/watch/${params.id}/quiz/${lectureDetail?.id}/start`);
   };
   const navigateToCourse = () => {
-    router.push(`/watch/${id}/course/${lectureDetail.id}`);
+    router.push(`/watch/${params.id}/course/${lectureDetail.id}`);
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +45,7 @@ const QuizScore = ({ id }: Props) => {
       <main className="relative w-full bg-white flex items-center justify-center lg:block">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-            <SecondaryNav id={id} />
+            <SecondaryNav />
           </UserMobileMenu>
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-3 flex-col p-[24px] w-[90%]   rounded-md">

@@ -17,7 +17,8 @@ interface Props {
   id: any;
 }
 
-const SecondaryNav = ({ id }: Props) => {
+const SecondaryNav = () => {
+
   const isDone = localStorage.getItem("isDone");
   console.log(isDone);
   const dispatch = useAppDispatch();
