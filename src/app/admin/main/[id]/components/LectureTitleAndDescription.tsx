@@ -44,6 +44,26 @@ const LectureTitleAndDescription = () => {
   };
 
   const handleSaveLecture = async () => {
+    if (!lectureTitle.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "გთხოვთ შეიყვანეთ ლექციის სათაური",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+
+    if (!lectureDescription.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "გთხოვთ შეიყვანეთ ლექციის აღწერა",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("title", lectureTitle);
     formData.append("description", lectureDescription);
@@ -107,8 +127,12 @@ const LectureTitleAndDescription = () => {
         const data = await getLectureAndDescriptions(token, lectureId);
         if (data.lecture_content) {
           setTitleDescriptionData(data.lecture_content);
+          setLectureTitle(data.lecture_content.title || "");
+          setLectureDescription(data.lecture_content.description || "");
         } else {
           setTitleDescriptionData(null);
+          setLectureTitle("");
+          setLectureDescription("");
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -120,7 +144,7 @@ const LectureTitleAndDescription = () => {
       fetchData();
     }
   }, [lectureId]);
-
+  console.log(titleDescriptionData);
   return (
     <>
       {isLoading ? (
