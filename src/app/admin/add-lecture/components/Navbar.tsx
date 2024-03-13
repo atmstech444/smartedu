@@ -1,9 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getAllCourses } from "../../main/services/getCourses";
-import { parseCookies } from "nookies";
-import { API_STORAGE } from "@/api/API_PATH";
 
 interface Lecture {
   id: any;
