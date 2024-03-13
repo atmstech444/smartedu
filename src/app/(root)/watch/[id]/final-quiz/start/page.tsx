@@ -20,7 +20,7 @@ const Page = () => {
               <QuizStart />
             </div>
             <div className="hidden md:flex mt-[10%]  md:gap-[24px] lg:gap-[50px] px-[72px]">
-              <Navigation id={params.id} />
+              <Navigation />
               <QuizStart />
             </div>
           </div>

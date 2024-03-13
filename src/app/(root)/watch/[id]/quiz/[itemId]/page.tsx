@@ -37,11 +37,11 @@ const Page = () => {
         <Wrapper>
           <div className="md:pt-[24px] bg-[#F3F4F8] max-w-screen-xl mx-auto">
             <div className="lg:hidden mt-[20%] flex flex-col gap-[24px]">
-              <QuizScore id={params.id} />
+              <QuizScore />
             </div>
             <div className="hidden lg:flex mt-[10%]  md:gap-[24px] lg:gap-[50px] px-[72px]">
-              <SecondaryNav id={params.id} />
-              <QuizScore id={params.id} />
+              <SecondaryNav />
+              <QuizScore />
             </div>
           </div>
         </Wrapper>

@@ -16,7 +16,7 @@ interface Props {
   id: any;
 }
 
-const SecondaryNav = ({ id }: Props) => {
+const SecondaryNav = () => {
   const dispatch = useAppDispatch();
   const closeMenu = () => {
     dispatch(closeNavbar());

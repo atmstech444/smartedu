@@ -9,7 +9,7 @@ export interface POST_Login_Success {
 }
 
 export interface I_Course {
-  id: number;
+  id: any;
   title: string;
   cover_image: string;
   price: string;

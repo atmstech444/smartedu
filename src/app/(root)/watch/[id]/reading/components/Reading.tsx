@@ -13,11 +13,8 @@ import { useRouter } from "next/navigation";
 import MobileNavOpener from "../../../components/MobileNavOpener";
 import { useParams } from "next/navigation";
 import { POST_READING } from "@/services/AllCourses";
-interface Props {
-  id: any;
-}
 
-const Reading = ({ id }: Props) => {
+const Reading = () => {
   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
   const [isDone, setIsDone] = useState<string>("მონიშნე წაკითხულად");
   const params = useParams();
@@ -31,7 +28,7 @@ const Reading = ({ id }: Props) => {
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const reading = lectureDetail?.readings;
   const navigateToCourse = () => {
-    router.push(`/watch/${id}/course/${lectureDetail.id}`);
+    router.push(`/watch/${params.id}/course/${lectureDetail.id}`);
   };
 
   const markAsDone = async (id: any) => {
@@ -52,7 +49,7 @@ const Reading = ({ id }: Props) => {
       <main className="relative w-full flex items-center justify-center lg:block">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-            <SecondaryNav id={id} />
+            <SecondaryNav />
           </UserMobileMenu>
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px]  w-[90%]  bg-white rounded-md">

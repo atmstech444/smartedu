@@ -46,7 +46,7 @@ interface Quizzes {
   is_open: string;
 }
 
-const Lecture = (id: { id: any }) => {
+const Lecture = () => {
   const router = useRouter();
   const params = useParams();
   const token = useAppSelector((state) => state.user.user?.token);
@@ -69,7 +69,7 @@ const Lecture = (id: { id: any }) => {
 
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const navigateToReading = (lectureId: any) => {
-    router.push(`/watch/${id.id}/reading/${lectureId}`);
+    router.push(`/watch/${params.id}/reading/${lectureId}`);
   };
   const navigateToVideo = (id: any, videoId: any) => {
     router.push(`/watch/${params.id}/video/${id}/${videoId}`);
@@ -78,13 +78,11 @@ const Lecture = (id: { id: any }) => {
     router.push(`/watch/${params.id}/quiz/${id}`);
   };
 
-  console.log(lectureDetail);
-
   return (
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
         <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-          <Navigation id={id.id} />
+          <Navigation />
         </UserMobileMenu>
       )}
       {lectureDetail.course_id ? (
@@ -94,7 +92,7 @@ const Lecture = (id: { id: any }) => {
           <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content?.title}</p>
           <p className="text-base font-bold	text-black">{lectureDetail?.lecture_name}</p>
 
-          {lectureDetail && lectureDetail.readings.length > 0 ? (
+          {lectureDetail && lectureDetail.readings && lectureDetail.readings.length > 0 ? (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToReading(lectureDetail.id)}>
               <Image alt="book" src={Book} />
               <div>
@@ -119,7 +117,7 @@ const Lecture = (id: { id: any }) => {
               </div>
             ))}
 
-          {lectureDetail && lectureDetail.quizzes.length > 0 && (
+          {lectureDetail && lectureDetail.quizzes && lectureDetail.quizzes.length > 0 && (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToQuiz(lectureDetail.id)}>
               <Image alt="quizzes" src={Quizzes} />
               <div>

@@ -1,12 +1,11 @@
 "use client";
 import { useAppSelector } from "@/redux/store";
 import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
 import Image from "next/image";
 import arrow from "../../../../public/assets/icons/courserow.svg";
 import { Get_Lecture } from "@/services/AllCourses";
-import Link from "next/link";
 import { API_STORAGE } from "@/api/API_PATH";
 import { closeNavbar } from "@/redux/slices/mobileMenuSlice";
 import { useAppDispatch } from "@/redux/store";
@@ -32,10 +31,11 @@ interface DataTypes {
   final_quiz_percent: number;
 }
 
-export const Navigation = (id: { id: any }) => {
+export const Navigation = () => {
+  const params = useParams();
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const courses = useAppSelector((state) => state.courses.courses);
-  const course = courses.find((cours) => cours.id == id.id);
+  const course = courses.find((cours) => cours.id == params.id);
   const [data, setData] = useState<DataTypes | null>(null);
   const pathname = usePathname();
   const dispatch = useAppDispatch();
@@ -62,7 +62,7 @@ export const Navigation = (id: { id: any }) => {
 
   const fetchData = async () => {
     try {
-      const lecture = await Get_Lecture(id.id, token);
+      const lecture = await Get_Lecture(params.id, token);
       setData(lecture);
     } catch (error) {
       console.error("Error fetching lecture:", error);
@@ -74,27 +74,27 @@ export const Navigation = (id: { id: any }) => {
 
   const navigateToAboutCourse = () => {
     closeNavMenu();
-    router.push(`/watch/${id.id}`);
+    router.push(`/watch/${params.id}`);
   };
   const navigateToLecture = (lectureId: number) => {
     closeNavMenu();
-    router.push(`/watch/${id.id}/course/${lectureId}`);
+    router.push(`/watch/${params.id}/course/${lectureId}`);
   };
 
   const navigateToFinalQuiz = () => {
     closeNavMenu();
-    router.push(`/watch/${id.id}/final-quiz`);
+    router.push(`/watch/${params.id}/final-quiz`);
   };
 
   return (
-    <div className="mt-[20%] p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full ">
+    <div className="mt-[20%] p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:min-h-[600px] ">
       <div>
         <Image onClick={closeNavMenu} src={Arrow} width={24} height={24} alt="image" className="md:hidden mb-4" />
         <div className="w-full h-full">
           <Image width={500} height={70} alt="image" className="rounded-md " src={`${API_STORAGE}${course?.cover_image}`} />
         </div>
         <h1 className="text-dark mb-8 text-lg p-3 font-medium">{course?.title}</h1>
-        <div className={`text-dark text-base rounded-md p-3 font-semibold cursor-pointer ${pathname === `/watch/${id.id}` ? "bg-lightestBlue" : "bg-transparent"}`} onClick={navigateToAboutCourse}>
+        <div className={`text-dark text-base rounded-md p-3 font-semibold cursor-pointer ${pathname === `/watch/${params.id}` ? "bg-lightestBlue" : "bg-transparent"}`} onClick={navigateToAboutCourse}>
           კურსის შესახებ
         </div>
         <div>
@@ -109,14 +109,16 @@ export const Navigation = (id: { id: any }) => {
                   <div
                     onClick={() => navigateToLecture(item.id)}
                     key={item.id}
-                    className={`text-mainGray flex flex-col text-base rounded-md p-3  cursor-pointer ${pathname === `/watch/${id.id}/course/${item.id}` ? "bg-lightestBlue" : "bg-transparent"}`}
+                    className={`text-mainGray flex flex-col text-base rounded-md p-3  cursor-pointer ${pathname === `/watch/${params.id}/course/${item.id}` ? "bg-lightestBlue" : "bg-transparent"}`}
                   >
                     {item.lecture_name}
                   </div>
                 ))}
               {data?.final_quiz && data.final_quiz.length > 0 && (
                 <div
-                  className={`flex gap-2 items-center text-mainGray text-base rounded-md p-3 cursor-pointer ${pathname === `/watch/${id.id}/final-quiz` || pathname === `/watch/${id.id}/final-quiz/start` ? "bg-lightestBlue" : "bg-transparent"}`}
+                  className={`flex gap-2 items-center text-mainGray text-base rounded-md p-3 cursor-pointer ${
+                    pathname === `/watch/${params.id}/final-quiz` || pathname === `/watch/${params.id}/final-quiz/start` ? "bg-lightestBlue" : "bg-transparent"
+                  }`}
                   onClick={navigateToFinalQuiz}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -143,8 +145,8 @@ export const Navigation = (id: { id: any }) => {
                 </div>
               )}
               <div
-                className={`flex gap-2 items-center text-mainGray text-base rounded-md p-3 cursor-pointer ${pathname === `/watch/${id.id}/certificate` ? "bg-lightestBlue" : "bg-transparent"}`}
-                onClick={() => router.push(`/watch/${id.id}/certificate`)}
+                className={`flex gap-2 items-center text-mainGray text-base rounded-md p-3 cursor-pointer ${pathname === `/watch/${params.id}/certificate` ? "bg-lightestBlue" : "bg-transparent"}`}
+                onClick={() => router.push(`/watch/${params.id}/certificate`)}
               >
                 {data?.final_quiz_percent && data.final_quiz_percent > 49 && <p>სერთიფიკატი</p>}
               </div>
