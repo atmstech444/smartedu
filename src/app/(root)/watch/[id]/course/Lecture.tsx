@@ -13,6 +13,7 @@ import { setLecture } from "@/redux/slices/lectureDetail";
 import { toggleNavbar } from "@/redux/slices/mobileMenuSlice";
 import { Navigation } from "../../components/Navigation";
 import UserMobileMenu from "../../components/UserMobileMenu";
+import success from "../../../../../public/assets/icons/tick-circle.svg";
 
 export interface LectureTypes {
   course_id: number;
@@ -27,6 +28,9 @@ export interface LectureTypes {
   readings: {
     description: string;
     id: number;
+    lecture_id: number;
+    pdf_file?: string;
+    user_made_readings?: DoneReading[];
     url: [];
   }[];
   videos: {
@@ -34,6 +38,7 @@ export interface LectureTypes {
     id: number;
     video: string;
     title: string;
+    user_made_videos?: DoneVideo[];
   }[];
 }
 interface Quizzes {
@@ -44,6 +49,20 @@ interface Quizzes {
   url: null | string;
   lecture_id: number;
   is_open: string;
+}
+
+interface DoneReading {
+  completed: number;
+  course_lecture_reading_id: number;
+  id: number;
+  user_id: number;
+}
+
+interface DoneVideo {
+  completed: number;
+  course_lecture_video_id: number;
+  id: number;
+  user_id: number;
 }
 
 const Lecture = (id: { id: any }) => {
@@ -78,8 +97,10 @@ const Lecture = (id: { id: any }) => {
     router.push(`/watch/${params.id}/quiz/${id}`);
   };
 
-  console.log(lectureDetail);
+  const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
+  const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
 
+  console.log(lectureDetail);
   return (
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
@@ -96,7 +117,13 @@ const Lecture = (id: { id: any }) => {
 
           {lectureDetail && lectureDetail.readings.length > 0 ? (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToReading(lectureDetail.id)}>
-              <Image alt="book" src={Book} />
+              {completedReading === 1 ? (
+                <>
+                  <Image alt="success" src={success} />
+                </>
+              ) : (
+                <Image src={Book} alt="book" />
+              )}
               <div>
                 <p className=" m-0 font-medium text-black">მასალა</p>
                 <p className=" m-0">წასაკითხი</p>
@@ -111,7 +138,13 @@ const Lecture = (id: { id: any }) => {
             lectureDetail &&
             lectureDetail.videos.map((video, index) => (
               <div className="flex gap-3 cursor-pointer" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
-                <Image alt="video" src={Video} />
+                {video.user_made_videos?.[0]?.completed === 1 ? (
+                  <>
+                    <Image alt="success" src={success} />
+                  </>
+                ) : (
+                  <Image src={Video} alt="video" />
+                )}
                 <div>
                   <p className=" m-0 font-medium	 text-black">{video.title}</p>
                   <p className=" m-0">ვიდეო</p>
@@ -121,7 +154,13 @@ const Lecture = (id: { id: any }) => {
 
           {lectureDetail && lectureDetail.quizzes.length > 0 && (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToQuiz(lectureDetail.id)}>
-              <Image alt="quizzes" src={Quizzes} />
+              {quizResult > 80 ? (
+                <>
+                  <Image alt="success" src={success} />
+                </>
+              ) : (
+                <Image src={Quizzes} alt="quizz" />
+              )}
               <div>
                 <p className=" m-0 font-medium text-black">ლექციის ბოლოს</p>
                 <p className=" m-0">ქვიზი</p>

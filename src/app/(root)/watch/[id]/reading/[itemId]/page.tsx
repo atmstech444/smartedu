@@ -18,7 +18,7 @@ const Page = () => {
   const token = useAppSelector((state) => state.user.user?.token);
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
   const dispatch = useDispatch();
-  if (lectureDetail?.course_id == 0) {
+  if (lectureDetail?.course_id === 0) {
     const fetchData = async () => {
       try {
         const lectureDetail = await Get_Lecture_Detail(params.itemId, token);
