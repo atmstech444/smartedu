@@ -39,7 +39,7 @@ const Page = () => {
               <Video id={params.id} />
             </div>
             <div className="hidden lg:flex mt-[150px]  md:gap-[24px] lg:gap-[50px] px-[72px]">
-              <SecondaryNav id={params.id} />
+              <SecondaryNav />
               <Video id={params.id} />
             </div>
           </div>

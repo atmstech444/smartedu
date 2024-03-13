@@ -1,14 +1,9 @@
 "use client";
 import React from "react";
-import { GET_Courses, I_Course } from "@/api/GET_Courses";
 import Wrapper from "@/layout/DefaultWrapper";
 import { useState, useEffect } from "react";
 import { Navigation } from "../components/Navigation";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
 import AboutCourse from "../components/AboutCourse";
-import { Get_Lecture } from "@/services/AllCourses";
-import { useAppSelector } from "@/redux/store";
 
 export default function Page({ params }: { params: { id: number } }) {
   const [isClient, setIsClient] = useState(false);
@@ -26,7 +21,7 @@ export default function Page({ params }: { params: { id: number } }) {
               <AboutCourse />
             </div>
             <div className="hidden lg:flex mt-[10%]  md:gap-[24px] lg:gap-[50px] px-[72px]">
-              <Navigation id={params.id} />
+              <Navigation />
               <AboutCourse />
             </div>
           </div>

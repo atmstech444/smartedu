@@ -17,7 +17,7 @@ interface AnswerState {
   questionIndex: number;
   answer: any;
 }
-const Quiz = ({ id }: Props) => {
+const Quiz = () => {
   const params = useParams();
   const router = useRouter();
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
@@ -98,7 +98,7 @@ const Quiz = ({ id }: Props) => {
       <main className="relative w-full bg-white">
         {isMenuOpened && (
           <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-            <SecondaryNav id={id} />
+            <SecondaryNav />
           </UserMobileMenu>
         )}
         <div className="mt-[55px] sm:mt-0 flex gap-[24px] flex-col p-[24px] w-[100%] rounded-md">

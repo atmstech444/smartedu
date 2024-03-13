@@ -6,7 +6,6 @@ import { useParams } from "next/navigation";
 import Lecture from "../Lecture";
 
 const Page = () => {
-  const params = useParams();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -19,11 +18,11 @@ const Page = () => {
         <Wrapper>
           <div className="pt-[24px] bg-[#F3F4F8] max-w-screen-xl mx-auto">
             <div className="lg:hidden mt-[150px] flex flex-col gap-[24px]">
-              <Lecture id={params.id} />
+              <Lecture />
             </div>
             <div className="hidden lg:flex mt-[10%]  md:gap-[24px] lg:gap-[50px] px-[72px]">
-              <Navigation id={params.id} />
-              <Lecture id={params.id} />
+              <Navigation />
+              <Lecture />
             </div>
           </div>
         </Wrapper>

@@ -12,10 +12,6 @@ import FinalQuiz from "./components/FinalQuiz";
 
 const Page = () => {
   const [isClient, setIsClient] = useState(false);
-  const params = useParams();
-  const lectureDetail = useAppSelector((state) => state.lecture.lecture);
-  const token = useAppSelector((state) => state.user.user?.token);
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setIsClient(true);
@@ -30,7 +26,7 @@ const Page = () => {
               <FinalQuiz />
             </div>
             <div className="hidden lg:flex mt-[10%]  md:gap-[24px] lg:gap-[50px] px-[72px]">
-              <Navigation id={params.id} />
+              <Navigation />
               <FinalQuiz />
             </div>
           </div>

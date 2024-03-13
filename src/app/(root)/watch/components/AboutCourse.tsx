@@ -48,7 +48,7 @@ const AboutCourse = () => {
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
         <UserMobileMenu isOpen={isMenuOpened} onClose={toggleMenuVisibility}>
-          <Navigation id={id.id} />
+          <Navigation />
         </UserMobileMenu>
       )}
       {course ? (
