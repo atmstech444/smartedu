@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import SecondaryNav from "../../../components/SecondaryNav";
 import UserMobileMenu from "../../../components/UserMobileMenu";
@@ -16,7 +16,7 @@ import { POST_READING } from "@/services/AllCourses";
 
 const Reading = () => {
   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
-  const [isDone, setIsDone] = useState<string>("მონიშნე წაკითხულად");
+  const [isDone, setIsDone] = useState<any>(localStorage.getItem("isDone") || "მონიშნე წაკითხულად");
   const params = useParams();
   const dispatch = useAppDispatch();
   const toggleMenuVisibility = () => {
@@ -43,7 +43,9 @@ const Reading = () => {
       console.error("Error submitting quiz:", error);
     }
   };
-  console.log(lectureDetail);
+  useEffect(() => {
+    localStorage.setItem("isDone", isDone);
+  }, [isDone]);
   return (
     <>
       <main className="relative w-full flex items-center justify-center lg:block">

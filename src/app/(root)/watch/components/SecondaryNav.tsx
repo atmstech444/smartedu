@@ -11,12 +11,16 @@ import { useAppDispatch } from "@/redux/store";
 import { closeNavbar } from "@/redux/slices/mobileMenuSlice";
 import { useAppSelector } from "@/redux/store";
 import { updateIndexInfo } from "@/redux/slices/indexSlice";
+import success from "../../../../public/assets/icons/tick-circle.svg";
 
 interface Props {
   id: any;
 }
 
 const SecondaryNav = () => {
+
+  const isDone = localStorage.getItem("isDone");
+  console.log(isDone);
   const dispatch = useAppDispatch();
   const closeMenu = () => {
     dispatch(closeNavbar());
@@ -24,7 +28,6 @@ const SecondaryNav = () => {
   const params = useParams();
   const pathName = usePathname();
   const lectureDetail = useAppSelector((state) => state.lecture.lecture);
-
   const arr = [];
   if (lectureDetail.readings) {
     lectureDetail.readings.forEach((reading) => {
@@ -39,6 +42,10 @@ const SecondaryNav = () => {
   if (lectureDetail.quizzes) {
     arr.push(lectureDetail.quizzes);
   }
+
+  console.log(arr);
+  const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
+  const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
   return (
     <>
       <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full">
@@ -59,7 +66,13 @@ const SecondaryNav = () => {
                 href={`/watch/${params.id}/reading/${lectureDetail.id}`}
                 onClick={() => dispatch(updateIndexInfo(index))}
               >
-                <Image alt="book" src={Book} />
+                {completedReading === 1 || isDone === "დასრულებულია" ? (
+                  <>
+                    <Image alt="success" src={success} />
+                  </>
+                ) : (
+                  <Image src={Book} alt="book" />
+                )}
                 <div>
                   <p className="mb-0 font-medium text-black">მასალა</p>
                   <p className="mb-0">წასაკითხი</p>
@@ -74,7 +87,13 @@ const SecondaryNav = () => {
                 className={`text-mainGray flex gap-4 text-base rounded-md p-3  cursor-pointer ${pathName === `/watch/${params.id}/video/${lectureDetail.id}/${item.id}` ? "bg-lightestBlue" : "bg-transparent"}`}
                 onClick={() => dispatch(updateIndexInfo(index))}
               >
-                <Image alt="video" src={Video} />
+                {item.user_made_videos?.[0]?.completed === 1 ? (
+                  <>
+                    <Image alt="success" src={success} />
+                  </>
+                ) : (
+                  <Image src={Video} alt="video" />
+                )}
                 <div>
                   <p className=" m-0 font-medium	 text-black">{item.title}</p>
                   <p className=" m-0">ვიდეო</p>
@@ -93,7 +112,13 @@ const SecondaryNav = () => {
                   dispatch(updateIndexInfo(index));
                 }}
               >
-                <Image alt="quizzes" src={Quizzes} />
+                {quizResult > 80 ? (
+                  <>
+                    <Image alt="success" src={success} />
+                  </>
+                ) : (
+                  <Image src={Quizzes} alt="quizz" />
+                )}
                 <div>
                   <p className="m-0 font-medium text-black">ლექციის ბოლოს</p>
                   <p className="m-0">ქვიზი</p>
