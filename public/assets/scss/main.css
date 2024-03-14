@@ -36573,6 +36573,7 @@ label {
 .course__tab-2 .nav-tabs .nav-item .nav-link.active {
   background: #2b4eff;
   color: #ffffff;
+  filter: invert(100%);
 }
 
 .course__tab-2 .nav-tabs .nav-item:not(:last-child) .nav-link {

@@ -65,8 +65,7 @@ const CourseDetailsMain = ({ id }: idType) => {
                           aria-selected="true"
                           style={{ display: "flex", gap: "8px", alignItems: "center", width: "120px", padding: "5px" }}
                         >
-                          <Image src={info} alt="info" width="20" height="20" />
-                          <span>აღწერა</span>
+                          <i className="fa-solid fa-book-open"></i> <span>აღწერა</span>
                         </button>
                       </li>
                       <li className="nav-item" role="presentation">
