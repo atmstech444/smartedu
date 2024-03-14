@@ -70,8 +70,8 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                     <polyline className="st0" points="6,14.7 6,8 10,8 10,14.7" />
                   </svg>
                 </div>
-                <div className="course__video-info">
-                  <h5>
+                <div className="course__video-info ">
+                  <h5 className="flex flex-col gap-[10px]">
                     <span>ტუტორი :</span> {course?.lecturer?.first_name} {course?.lecturer?.last_name}
                   </h5>
                 </div>
