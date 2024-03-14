@@ -12,11 +12,11 @@ import BackToCourse from "../../../components/BackToCourse";
 import { useRouter } from "next/navigation";
 import MobileNavOpener from "../../../components/MobileNavOpener";
 import { useParams } from "next/navigation";
-import { POST_READING } from "@/services/AllCourses";
+import { Get_Lecture_Detail, POST_READING } from "@/services/AllCourses";
+import { setLecture } from "@/redux/slices/lectureDetail";
 
 const Reading = () => {
   const isMenuOpened = useAppSelector((state) => state.navbar.isOpen);
-  const [isDone, setIsDone] = useState<any>(localStorage.getItem("isDone") || "მონიშნე წაკითხულად");
   const params = useParams();
   const dispatch = useAppDispatch();
   const toggleMenuVisibility = () => {
@@ -30,22 +30,28 @@ const Reading = () => {
   const navigateToCourse = () => {
     router.push(`/watch/${params.id}/course/${lectureDetail.id}`);
   };
-
+  const fetchData = async () => {
+    try {
+      const lectureDetail = await Get_Lecture_Detail(params.itemId, token);
+      dispatch(setLecture(lectureDetail.lecture[0]));
+    } catch (error) {
+      console.error("Error fetching lecture detail:", error);
+    }
+  };
   const markAsDone = async (id: any) => {
     const data = {
       id: id,
     };
     try {
       const result = await POST_READING(token, data);
-      setIsDone(result.message);
+      fetchData();
       console.log("submitted", result);
     } catch (error) {
       console.error("Error submitting quiz:", error);
     }
   };
-  useEffect(() => {
-    localStorage.setItem("isDone", isDone);
-  }, [isDone]);
+
+  const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   return (
     <>
       <main className="relative w-full flex items-center justify-center lg:block">
@@ -79,8 +85,8 @@ const Reading = () => {
                   )
                 : null
             )}
-          <button className="self-start text-base font-medium text-white py-2 px-3 bg-mainBlue rounded-md" onClick={() => markAsDone(params.itemId)}>
-            {isDone}
+          <button className={`self-start text-base font-medium text-white py-2 px-3 ${completedReading ? "opacity-50" : "opacity-100"} bg-mainBlue rounded-md`} onClick={() => markAsDone(params.itemId)} disabled={completedReading === 1}>
+            {completedReading ? "დასრულებულია" : "მონიშნე წაკითხულად"}
           </button>
         </div>
       </main>

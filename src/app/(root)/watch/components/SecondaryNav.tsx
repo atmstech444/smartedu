@@ -14,13 +14,10 @@ import { updateIndexInfo } from "@/redux/slices/indexSlice";
 import success from "../../../../public/assets/icons/tick-circle.svg";
 
 interface Props {
-  id: any;
+  isDone?: any;
 }
 
-const SecondaryNav = () => {
-
-  const isDone = localStorage.getItem("isDone");
-  console.log(isDone);
+const SecondaryNav = ({ isDone }: Props) => {
   const dispatch = useAppDispatch();
   const closeMenu = () => {
     dispatch(closeNavbar());
@@ -43,7 +40,6 @@ const SecondaryNav = () => {
     arr.push(lectureDetail.quizzes);
   }
 
-  console.log(arr);
   const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
   return (
@@ -66,7 +62,7 @@ const SecondaryNav = () => {
                 href={`/watch/${params.id}/reading/${lectureDetail.id}`}
                 onClick={() => dispatch(updateIndexInfo(index))}
               >
-                {completedReading === 1 || isDone === "დასრულებულია" ? (
+                {completedReading === 1 ? (
                   <>
                     <Image alt="success" src={success} />
                   </>
@@ -108,7 +104,6 @@ const SecondaryNav = () => {
                   pathName === `/watch/${params.id}/quiz/${lectureDetail.id}` || pathName === `/watch/${params.id}/quiz/${lectureDetail.id}/start` ? "bg-lightestBlue" : "bg-transparent"
                 }`}
                 onClick={() => {
-                  console.log("Clicked link");
                   dispatch(updateIndexInfo(index));
                 }}
               >
