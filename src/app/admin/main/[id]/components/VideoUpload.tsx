@@ -55,14 +55,25 @@ const VideoUpload = () => {
   };
 
   const handleVideoupload = async () => {
+    if (!title.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "გთხოვთ შეიყვანეთ სათაური",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
     if (!videoFile) {
-      alert("ატვირთეთ ვიდეო.");
+      Swal.fire({
+        icon: "warning",
+        title: "გთხოვთ ატვირთეთ ვიდეო",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return;
     }
-    if (!title) {
-      alert("დაამატეთ სათაური");
-      return;
-    }
+
     setIsModalOpen(false);
     const formData = new FormData();
     formData.append("video", videoFile);
