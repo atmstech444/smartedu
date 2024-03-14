@@ -11,6 +11,7 @@ import { setLecture } from "@/redux/slices/lectureDetail";
 
 const Page = () => {
   const [isClient, setIsClient] = useState(false);
+  // const [isDone, setIsDone] = useState<string>(localStorage.getItem("isDone") || "მონიშნე წაკითხულად");
   const params = useParams();
   useEffect(() => {
     setIsClient(true);

@@ -11,7 +11,8 @@ import { updateIndexInfo } from "@/redux/slices/indexSlice";
 import BackToCourse from "../../../components/BackToCourse";
 import MobileNavOpener from "../../../components/MobileNavOpener";
 import { useRouter } from "next/navigation";
-import { POST_VIDEO } from "@/services/AllCourses";
+import { Get_Lecture_Detail, POST_VIDEO } from "@/services/AllCourses";
+import { setLecture } from "@/redux/slices/lectureDetail";
 
 interface Props {
   id: any;
@@ -35,18 +36,29 @@ const Video = ({ id }: Props) => {
     router.push(`/watch/${id}/course/${lectureDetail.id}`);
   };
 
-  const onVideoEnded = async (id: any) => {
-    const data = {
-      id: id,
-    };
+  const fetchData = async () => {
     try {
-      const result = await POST_VIDEO(token, data);
-      console.log("submitted", result);
+      const lectureDetail = await Get_Lecture_Detail(params.itemId, token);
+      dispatch(setLecture(lectureDetail.lecture[0]));
     } catch (error) {
-      console.error("Error submitting quiz:", error);
+      console.error("Error fetching lecture detail:", error);
     }
   };
 
+  const onVideoEnded = async (id: any) => {
+    if (video?.user_made_videos?.[0]?.completed !== 1) {
+      const data = {
+        id: id,
+      };
+      try {
+        const result = await POST_VIDEO(token, data);
+        fetchData();
+        console.log("submitted", result);
+      } catch (error) {
+        console.error("Error submitting quiz:", error);
+      }
+    }
+  };
   useEffect(() => {
     if (!video) return;
     const storedTime = localStorage.getItem(`${API_STORAGE + video?.video}`);

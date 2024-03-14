@@ -50,15 +50,12 @@ interface Quizzes {
   lecture_id: number;
   is_open: string;
 }
-
-
 interface DoneReading {
   completed: number;
   course_lecture_reading_id: number;
   id: number;
   user_id: number;
 }
-
 interface DoneVideo {
   completed: number;
   course_lecture_video_id: number;
@@ -66,9 +63,7 @@ interface DoneVideo {
   user_id: number;
 }
 
-
 const Lecture = () => {
-
   const router = useRouter();
   const params = useParams();
   const token = useAppSelector((state) => state.user.user?.token);
@@ -100,12 +95,8 @@ const Lecture = () => {
     router.push(`/watch/${params.id}/quiz/${id}`);
   };
 
-
   const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
-
-  console.log(lectureDetail);
-
 
   return (
     <main className="relative w-full flex items-center justify-center lg:block">
