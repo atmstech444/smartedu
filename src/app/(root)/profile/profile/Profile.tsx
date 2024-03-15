@@ -45,8 +45,8 @@ export default function Profile() {
     employment_position: null,
   });
 
-  const rateCourses = myCourses.filter((course) => course.completion_percentage === 100);
-  const firstThreeCourses = myCourses.filter((course) => course.completion_percentage !== 100).slice(0, 3);
+  const rateCourses = myCourses.filter((course) => course?.completion_percentage === 100);
+  const firstThreeCourses = myCourses.filter((course) => course?.completion_percentage !== 100).slice(0, 3);
 
   useEffect(() => {
     if (user && request) {
@@ -271,13 +271,13 @@ export default function Profile() {
         <InfoBox img={done} infoTitle="გავლილი კურსები" infoValue={progress.completed_courses_count} />
       </Flexbox>
 
-      {firstThreeCourses?.length > 0 && (
+      {firstThreeCourses?.length > 0 && firstThreeCourses[0] !== null && (
         <>
           <Devider />
           <Title>განაგრძე ყურება</Title>
           <Flexbox>
             {firstThreeCourses.map((course) => {
-              return <Course course={course} key={course.id + "sokf"} />;
+              return <Course course={course} key={course?.id + "sokf"} />;
             })}
           </Flexbox>
         </>
@@ -288,7 +288,7 @@ export default function Profile() {
           <Title>შეაფასე გავლილი კურსები</Title>
           <Flexbox>
             {rateCourses.map((course) => {
-              return <RateCourse course={course} key={course.id + "sokf"} />;
+              return <RateCourse course={course} key={course?.id + "sokf"} />;
             })}
           </Flexbox>
         </>
