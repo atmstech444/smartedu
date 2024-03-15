@@ -73,7 +73,6 @@ const QuizStart = () => {
       console.error("Error fetching lecture:", error);
     }
   };
-  console.log(finalQuiz);
   useEffect(() => {
     fetchData();
   }, []);
@@ -110,7 +109,6 @@ const QuizStart = () => {
       handleQuizSubmit(results);
     }
   };
-
   return (
     <>
       <main className="relative w-full bg-white">

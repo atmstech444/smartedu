@@ -71,7 +71,7 @@ const SidebarVideoArea = ({ course, isBought }: { course: I_Course_Details; isBo
                   </svg>
                 </div>
                 <div className="course__video-info ">
-                  <h5 className="flex flex-col gap-[10px]">
+                  <h5 className="flex">
                     <span>ტუტორი :</span> {course?.lecturer?.first_name} {course?.lecturer?.last_name}
                   </h5>
                 </div>
