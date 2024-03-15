@@ -75,7 +75,6 @@ const FinalQuiz = () => {
           <div className="flex justify-between">
             <div>
               <h1 className="text-xl m-0">ქვიზი</h1>
-              <p className="text-base	m-0 text-black mt-5">პროგრამირების საწყისები</p>
             </div>
             {lecture?.final_quiz_percent > 49 ? (
               <button className="flex gap-2 my-auto text-[#006CFA] font-medium" onClick={navigateToCertificate}>

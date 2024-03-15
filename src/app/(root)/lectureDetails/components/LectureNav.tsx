@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import  styled  from "styled-components";
+import styled from "styled-components";
 import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
 import Image from "next/image";
 import Book from "@/public/assets/dynamic_icons/Book";
@@ -32,7 +32,6 @@ const LectureNav = (id: any) => {
   const navigateToAboutPage = () => {
     router.push(`/watch/${id.id}/about`);
   };
-
   return (
     <div className="mt-[20%] p-[24px] md:mt-0 md:w-[30%] lg:w-[20%] bg-white rounded-md md:h-full">
       <div className="flex flex-col">

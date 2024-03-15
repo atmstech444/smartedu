@@ -52,7 +52,6 @@ const QuizScore = () => {
           <BackToCourse lecture_name={lectureDetail.lecture_name} onClick={navigateToCourse} />
           <MobileNavOpener lecture_name={lectureDetail.lecture_name} onArrowClick={navigateToCourse} onNavClick={toggleMenuVisibility} />
           <h1 className="text-xl m-0">ქვიზი</h1>
-          <p className="text-base	m-0 text-black mt-5">პროგრამირების საწყისები</p>
           {percentArray?.length > 0 && (
             <>
               <div>
