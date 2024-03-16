@@ -65,6 +65,15 @@ const Reading = ({ lectures, courseData }: any) => {
   };
 
   const handleCreateReading = async () => {
+    if (!description.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "გთხოვთ შეიყვანეთ აღწერა",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
     const formData = new FormData();
     formData.append("description", description);
     if (file) {
