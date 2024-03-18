@@ -6,7 +6,7 @@ import { AllCourses } from "@/type";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Modal from "@/components/Modal";
-import { API_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE, API_STORAGE } from "@/api/API_PATH";
 interface Props {
   data: AllCourses;
   handleDeleteLecture: any;
@@ -47,7 +47,7 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
         <div
           className="w-72 h-36 flex flex-col relative items-start p-4 justify-between bg-cover bg-no-repeat bg-center"
           style={{
-            backgroundImage: `url(${API_STORAGE}${cover_image})`,
+            backgroundImage: `url(${API_ADMIN_STORAGE}${cover_image})`,
           }}
         >
           {isOpen && (

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { parseCookies } from "nookies";
+import { API_ADMIN_PATH } from "@/api/API_PATH";
 
 const ChunkedVideoUpload = ({ videoFile, handleDeleteVideo, handleFileInputChange }: any) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -25,16 +26,12 @@ const ChunkedVideoUpload = ({ videoFile, handleDeleteVideo, handleFileInputChang
       formData.append("totalChunks", String(totalChunks));
 
       try {
-        await axios.post(
-          `https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-video/138`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        await axios.post(`${API_ADMIN_PATH}admin/course-lecture-video/138`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log(`Chunk ${i + 1} uploaded successfully`);
       } catch (error: any) {
         console.error(error);

@@ -93,7 +93,7 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
               reading.url.map((url, urlIndex) => (
                 <li key={urlIndex} className="mt-4">
                   <a href={url} target="_blank" rel="noopener noreferrer" className="text-[#006CFA] font-normal text-base ">
-                    <span className="text-xl font-bold text-black">URL:</span> {url.length > 30 ? url.substring(0, 30) + "..." : url}
+                    <span className="text-xl font-bold text-black">URL:</span> {url?.length > 30 ? url.substring(0, 30) + "..." : url}
                   </a>
                 </li>
               ))

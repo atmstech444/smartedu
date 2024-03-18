@@ -1,5 +1,6 @@
+import { API_ADMIN_PATH } from "@/api/API_PATH";
 import axios from "axios";
-const url = "https://smarteducation.shop/smarteducation_backend/public/admin";
+const url = { API_ADMIN_PATH };
 import { parseCookies } from "nookies";
 
 export const storeCategory = async (data: any) => {
@@ -12,7 +13,7 @@ export const storeCategory = async (data: any) => {
         "Content-Type": "application/json",
       },
     };
-    const response = await axios.post(url + "/category/store", data, config);
+    const response = await axios.post(API_ADMIN_PATH + "category/store", data, config);
     return response;
   } catch (error) {
     console.log(error);
@@ -29,7 +30,7 @@ export const deleteCategory = async (id: number) => {
         "Content-Type": "application/json",
       },
     };
-    const response = await axios.delete(url + "/category/" + id, config);
+    const response = await axios.delete(API_ADMIN_PATH + "category/" + id, config);
     return response;
   } catch (error) {
     console.log(error);

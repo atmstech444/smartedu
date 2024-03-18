@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import CustomSelect from "./CustomSelect";
 // @ts-ignore
 import { OptionsType } from "react-select";
-import { API_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE, API_STORAGE } from "@/api/API_PATH";
 
 interface CourseDetailsProps {
   data: any;
@@ -39,7 +39,7 @@ const CourseDetailsComponent: React.FC<CourseDetailsProps> = ({ data, lectures, 
           {!uploadedVideo && data.intro && (
             <div className="flex flex-col gap-3">
               <video controls ref={videoRef} className="w-full">
-                <source src={`${API_STORAGE}${data.intro}`} type="video/mp4" className="w-full" />
+                <source src={`${API_ADMIN_STORAGE}${data.intro}`} type="video/mp4" className="w-full" />
                 Your browser does not support the video tag.
               </video>
               <input

@@ -1,3 +1,4 @@
+import { API_ADMIN_PATH } from "@/api/API_PATH";
 import axios from "axios";
 
 export const addlectureTitleAndDescription = async (token: any, formdata: any, id: any) => {
@@ -8,7 +9,7 @@ export const addlectureTitleAndDescription = async (token: any, formdata: any, i
     },
   };
   try {
-    const { data } = await axios.post(`https://smarteducation.shop/smarteducation_backend/public/admin/lecture-content/${id}`, formdata, config);
+    const { data } = await axios.post(`${API_ADMIN_PATH}lecture-content/${id}`, formdata, config);
     return data;
   } catch (error) {
     console.error(error);
