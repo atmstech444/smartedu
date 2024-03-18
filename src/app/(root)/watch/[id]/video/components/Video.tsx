@@ -44,11 +44,10 @@ const Video = ({ id }: Props) => {
       console.error("Error fetching lecture detail:", error);
     }
   };
-
   const onVideoEnded = async (id: any) => {
     if (video?.user_made_videos?.[0]?.completed !== 1) {
       const data = {
-        id: id,
+        id: video?.id,
       };
       try {
         const result = await POST_VIDEO(token, data);

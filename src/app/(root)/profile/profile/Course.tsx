@@ -12,8 +12,8 @@ export default function Course({ course }: { course: I_MyCourse }) {
         <Icon src={API_STORAGE + course?.cover_image} />
         <Title>{course?.title}</Title>
       </Header>
-      <ProgressText>{Math.round(course?.completion_percentage && course?.completion_percentage)}%</ProgressText>
-      <Progress max={100} value={Math.round(course?.completion_percentage)} />
+      <ProgressText>{Math.round(course.user_course_progress && course.user_course_progress[0] ? course?.user_course_progress[0]?.progress_total_count : 0)}%</ProgressText>
+      <Progress max={100} value={Math.round(course.user_course_progress && course.user_course_progress[0] ? course?.user_course_progress[0]?.progress_total_count : 0)} />
 
       <Link href={`/watch/${course?.id}`}>
         <Button>{`${Math.round(course?.completion_percentage) === 0}` ? "დაიწყე" : "განაგრძე კურსი"}</Button>

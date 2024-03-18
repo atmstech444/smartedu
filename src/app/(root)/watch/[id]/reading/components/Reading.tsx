@@ -40,7 +40,7 @@ const Reading = () => {
   };
   const markAsDone = async (id: any) => {
     const data = {
-      id: id,
+      id: reading[0].id,
     };
     try {
       const result = await POST_READING(token, data);

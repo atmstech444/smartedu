@@ -26,6 +26,7 @@ export interface I_MyCourse {
   lectures_count: number;
   average_rating: number;
   completion_percentage: number;
+  user_course_progress?: Progress[];
   user_rating: number | null;
   lecturer: {
     id: number;
@@ -46,7 +47,9 @@ export interface I_MyCourse {
     deleted_at: string | null;
   };
 }
-
+interface Progress {
+  progress_total_count: number;
+}
 export async function GET_MyCourses(data: POST_Login_Params, dispatch: any) {
   const config = {
     headers: {

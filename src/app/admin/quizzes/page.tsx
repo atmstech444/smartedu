@@ -110,7 +110,6 @@ const Page = () => {
   };
 
   const handleDeleteQuizById = async (id: number) => {
-    console.log(lectureId);
     try {
       const response = await deleteQuizById(token, id, lectureId);
       setQuizData(response.quizzes);
@@ -135,7 +134,6 @@ const Page = () => {
       console.error("Error deleting quiz:", error);
     }
   };
-  console.log(quizData);
   return (
     <>
       <Header />

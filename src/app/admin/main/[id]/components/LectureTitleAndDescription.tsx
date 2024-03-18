@@ -146,6 +146,7 @@ const LectureTitleAndDescription = () => {
       fetchData();
     }
   }, [lectureId]);
+
   return (
     <>
       {isLoading ? (
