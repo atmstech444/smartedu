@@ -1,3 +1,4 @@
+import { API_ADMIN_PATH } from "@/api/API_PATH";
 import axios from "axios";
 
 export const getLecturers = async (token: any) => {
@@ -8,7 +9,7 @@ export const getLecturers = async (token: any) => {
     },
   };
   try {
-    const { data } = await axios.get("https://smarteducation.shop/smarteducation_backend/public/admin/lecturer", config);
+    const { data } = await axios.get(`${API_ADMIN_PATH}lecturer`, config);
     return data;
   } catch (error) {
     console.error(error);

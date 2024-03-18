@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { deleteLecture } from "../[id]/services/deleteLecture";
 import { editLectureName } from "../[id]/services/editLectureName";
+import { API_ADMIN_STORAGE } from "@/api/API_PATH";
 
 type Lecture = {
   course_id: any;
@@ -114,6 +115,13 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     }));
     router.push(`/admin/add-final-quiz?&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
+  const handleAddCertificate = () => {
+    const lecturesData = lectures.map((lecture) => ({
+      id: lecture.id,
+      name: lecture.lecture_name,
+    }));
+    router.push(`/admin/add-certificate?&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
+  };
 
   const updateLecture = async (lectureId: number, newLectureName: string) => {
     try {
@@ -152,7 +160,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   return (
     <div className="w-80 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[280px] ">
-        <img src={`https://smarteducation.shop/smarteducation_backend/public/${courseData?.cover_image}`} className="rounded-2xl" />
+        <img src={`${API_ADMIN_STORAGE}/${courseData?.cover_image}`} className="rounded-2xl" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
         {lectures.map((lecture) => (
@@ -233,6 +241,9 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
         </div>
         <button className="bg-mainBlue rounded-faqBordeR text-base mt-20 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddFinalQuiz}>
           დაამატე საბოლოო ქვიზი
+        </button>
+        <button className="bg-mainBlue rounded-faqBordeR text-base mt-5 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddCertificate}>
+          დაამატე სერთიფიკატი
         </button>
       </div>
     </div>

@@ -1,8 +1,7 @@
+import { API_ADMIN_PATH } from "@/api/API_PATH";
 import { syllabusData } from "@/app/admin/syllabus/[id]/types";
 import axios from "axios";
 import { parseCookies } from "nookies";
-
-const url = "https://smarteducation.shop/smarteducation_backend/public/admin";
 
 export const getSyllabus = async (course: string) => {
   try {
@@ -14,7 +13,7 @@ export const getSyllabus = async (course: string) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.get(url + "/syllabus/index/" + course, config);
+    const { data } = await axios.get(API_ADMIN_PATH + "syllabus/index/" + course, config);
     return data;
   } catch (error) {
     return { status: 404 };
@@ -31,7 +30,7 @@ export const postSyllabus = async (course: string, syllabusData: syllabusData[])
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(url + "/syllabus/store/" + course, { lectures: syllabusData }, config);
+    const { data } = await axios.post(API_ADMIN_PATH + "syllabus/store/" + course, { lectures: syllabusData }, config);
     return data;
   } catch (error) {
     return { status: 404 };
@@ -48,7 +47,7 @@ export const deleteLecture = async (id: number) => {
         "Content-Type": "application/json",
       },
     };
-    const response = await axios.delete(url + "/syllabus/delete/syllabus/" + id, config);
+    const response = await axios.delete(API_ADMIN_PATH + "syllabus/delete/syllabus/" + id, config);
     return response;
   } catch (error) {
     return { status: 404 };
@@ -65,7 +64,7 @@ export const deleteDescription = async (id: number) => {
         "Content-Type": "application/json",
       },
     };
-    const response = await axios.delete(url + "/syllabus/delete/description/" + id, config);
+    const response = await axios.delete(API_ADMIN_PATH + "syllabus/delete/description/" + id, config);
 
     return response;
   } catch (error) {
@@ -84,7 +83,7 @@ export const changeSyllabusTitle = async (id: number, title: string) => {
       },
     };
     const { data } = await axios.put(
-      url + "/syllabus/update/syllabus/" + id,
+      API_ADMIN_PATH + "syllabus/update/syllabus/" + id,
       {
         title,
       },
@@ -108,7 +107,7 @@ export const changeDescription = async (id: number, description: string) => {
     };
 
     const { data } = await axios.put(
-      url + "/syllabus/update/description/" + id,
+      API_ADMIN_PATH + "syllabus/update/description/" + id,
       {
         description,
       },
@@ -131,7 +130,7 @@ export const addNewDescription = async (id: number, descriptionArray: string[]) 
       },
     };
     const response = await axios.post(
-      url + "/syllabus/add-description/" + id,
+      API_ADMIN_PATH + "syllabus/add-description/" + id,
       {
         descriptions: descriptionArray,
       },
