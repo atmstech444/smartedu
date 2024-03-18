@@ -115,7 +115,6 @@ const QuizUpload = ({ lectures, courseData }: any) => {
         const isOpenCheckbox = document.getElementById(`isOpen_${id}`) as HTMLInputElement;
         const isOpen = isOpenCheckbox.checked;
         formData.append(`quiz_content[${index}][isOpen]`, isOpen ? "1" : "0");
-        console.log(isOpenCheckbox);
       });
       const response = await addQuiz(token, formData, id);
 
