@@ -66,7 +66,7 @@ const SyllabusContent = ({ params }: PageProps) => {
   return (
     <div className="mt-11">
       <p className="text-xl pt-6">დაამატე სილაბუსი</p>
-      {syllabus.map((lecture) => (
+      {syllabus?.map((lecture) => (
         <Lecture key={lecture.id} id={lecture.id} lecture={lecture} removeSyllabus={removeSyllabus} />
       ))}
 

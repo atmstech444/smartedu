@@ -23,6 +23,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMess
       </div>
     );
   }
+
   return (
     <div className="flex flex-col gap-8  mb-96">
       <div className="flex justify-start">

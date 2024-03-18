@@ -1,3 +1,4 @@
+import { API_ADMIN_PATH } from "@/api/API_PATH";
 import axios from "axios";
 
 export const getAllUsers = async (token: any) => {
@@ -8,10 +9,7 @@ export const getAllUsers = async (token: any) => {
     },
   };
   try {
-    const { data } = await axios.get(
-      "https://smarteducation.shop/smarteducation_backend/public/admin/user/all",
-      config
-    );
+    const { data } = await axios.get(`${API_ADMIN_PATH}user/all`, config);
     return data;
   } catch (error) {
     console.error(error);

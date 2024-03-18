@@ -1,3 +1,4 @@
+import { API_ADMIN_PATH } from "@/api/API_PATH";
 import axios from "axios";
 
 export const addFinalQuiz = async (token: any, formdata: any, id: any) => {
@@ -8,7 +9,7 @@ export const addFinalQuiz = async (token: any, formdata: any, id: any) => {
     },
   };
   try {
-    const { data } = await axios.post(`https://smarteducation.shop/smarteducation_backend/public/admin/course-final-quizzes/${id}`, formdata, config);
+    const { data } = await axios.post(`${API_ADMIN_PATH}course-final-quizzes/${id}`, formdata, config);
     return data;
   } catch (error) {
     console.error(error);

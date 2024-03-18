@@ -1,3 +1,4 @@
+import { API_ADMIN_PATH } from "@/api/API_PATH";
 import axios from "axios";
 
 export const deleteReading = async (token: any, id: number) => {
@@ -8,7 +9,7 @@ export const deleteReading = async (token: any, id: number) => {
     },
   };
   try {
-    const { data } = await axios.delete(`https://smarteducation.shop/smarteducation_backend/public/admin/course-lecture-reading/${id}`, config);
+    const { data } = await axios.delete(`${API_ADMIN_PATH}course-lecture-reading/${id}`, config);
     return data;
   } catch (error) {
     console.error(error);
