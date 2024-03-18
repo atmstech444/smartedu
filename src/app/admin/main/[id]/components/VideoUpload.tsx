@@ -10,7 +10,7 @@ import { deleteVideo } from "../services/deleteVideo";
 import ChunkedVideoUpload from "./ChunkedVideoUpload";
 import LectureTitleAndDescription from "./LectureTitleAndDescription";
 import VideoUploadModal from "./VideoUploadModal";
-import { API_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE, API_STORAGE } from "@/api/API_PATH";
 import SecondLoadingSpinner from "@/components/LoadingSpinner";
 import { editVideoTitle } from "../services/editVideoTitle";
 
@@ -272,7 +272,7 @@ const VideoUpload = () => {
 
                 {video && (
                   <video controls className="rounded-lg">
-                    <source src={`${API_STORAGE}${video.video}`} type="video/mp4" />
+                    <source src={`${API_ADMIN_STORAGE}${video.video}`} type="video/mp4" />
                   </video>
                 )}
                 <button className="text-white bg-[#2FA8FF] py-2 px-2 w-[150px] rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
