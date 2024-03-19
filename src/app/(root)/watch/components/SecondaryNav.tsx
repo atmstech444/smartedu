@@ -39,7 +39,6 @@ const SecondaryNav = ({ isDone }: Props) => {
   if (lectureDetail.quizzes) {
     arr.push(lectureDetail.quizzes);
   }
-
   const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
   return (
@@ -76,7 +75,7 @@ const SecondaryNav = ({ isDone }: Props) => {
               </Link>
             )}
 
-            {item.video?.length > 0 && (
+            {item.video?.length > 0 ? (
               <Link
                 key={index}
                 href={`/watch/${params.id}/video/${lectureDetail.id}/${item.id}`}
@@ -95,9 +94,9 @@ const SecondaryNav = ({ isDone }: Props) => {
                   <p className=" m-0">ვიდეო</p>
                 </div>
               </Link>
-            )}
+            ) : null}
 
-            {Array.isArray(item) && item.length > 0 && (
+            {Array.isArray(item) && item.length > 0 ? (
               <Link
                 href={`/watch/${params.id}/quiz/${lectureDetail.id}`}
                 className={`text-mainGray flex gap-4 text-base rounded-md p-3 cursor-pointer ${
@@ -119,7 +118,7 @@ const SecondaryNav = ({ isDone }: Props) => {
                   <p className="m-0">ქვიზი</p>
                 </div>
               </Link>
-            )}
+            ) : null}
           </div>
         ))}
       </div>

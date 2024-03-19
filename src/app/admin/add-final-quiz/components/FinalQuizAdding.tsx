@@ -220,9 +220,10 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
 
   return (
     <main className="w-full flex flex-col">
-      <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => router.back()}>
-        უკან
-      </button>
+      <div className="flex justify-start items-center relative cursor-pointer" onClick={() => router.back()}>
+        <img src={"/assets/img/admin/go-back-arrow.svg"} alt="go-back" className="w-7 h-7 absolute" />
+        <button className="text-black ml-10 rounded-lg">უკან</button>
+      </div>
 
       <div className="flex gap-2 mt-10">
         <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-[200px]" onClick={() => handleSeeFinalQuiz(courseId)}>
