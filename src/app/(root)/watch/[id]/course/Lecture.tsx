@@ -130,26 +130,25 @@ const Lecture = () => {
             ""
           )}
 
-          {lectureDetail &&
-            lectureDetail.videos.length &&
-            lectureDetail &&
-            lectureDetail.videos.map((video, index) => (
-              <div className="flex gap-3 cursor-pointer" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
-                {video.user_made_videos?.[0]?.completed === 1 ? (
-                  <>
-                    <Image alt="success" src={success} />
-                  </>
-                ) : (
-                  <Image src={Video} alt="video" />
-                )}
-                <div>
-                  <p className=" m-0 font-medium	 text-black">{video.title}</p>
-                  <p className=" m-0">ვიდეო</p>
+          {lectureDetail && lectureDetail.videos.length > 1
+            ? lectureDetail.videos.map((video, index) => (
+                <div className="flex gap-3 cursor-pointer" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
+                  {video.user_made_videos?.[0]?.completed === 1 ? (
+                    <>
+                      <Image alt="success" src={success} />
+                    </>
+                  ) : (
+                    <Image src={Video} alt="video" />
+                  )}
+                  <div>
+                    <p className=" m-0 font-medium	 text-black">{video.title}</p>
+                    <p className=" m-0">ვიდეო</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            : null}
 
-          {lectureDetail && lectureDetail.quizzes && lectureDetail.quizzes.length > 0 && (
+          {lectureDetail && lectureDetail.quizzes && lectureDetail.quizzes.length > 0 ? (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToQuiz(lectureDetail.id)}>
               {quizResult > 80 ? (
                 <>
@@ -163,7 +162,7 @@ const Lecture = () => {
                 <p className=" m-0">ქვიზი</p>
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       ) : (
         <div className="flex gap-[24px] flex-col p-[24px] w-[90%]  bg-white rounded-md">
