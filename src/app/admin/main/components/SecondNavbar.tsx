@@ -120,7 +120,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
       id: lecture.id,
       name: lecture.lecture_name,
     }));
-    router.push(`/admin/add-certificate?&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
+    router.push(`/admin/certificate?&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
 
   const updateLecture = async (lectureId: number, newLectureName: string) => {
@@ -243,7 +243,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
           დაამატე საბოლოო ქვიზი
         </button>
         <button className="bg-mainBlue rounded-faqBordeR text-base mt-5 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddCertificate}>
-          დაამატე სერთიფიკატი
+          სერთიფიკატი
         </button>
       </div>
     </div>

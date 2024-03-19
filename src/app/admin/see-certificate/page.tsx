@@ -2,7 +2,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Navbar from "../add-lecture/components/Navbar";
-import AddCertificate from "./components/AddCertificate";
+import SeeCertificate from "./components/SeeCertificate";
 
 interface Lecture {
   id: any;
@@ -36,7 +36,6 @@ const useQueryParams = () => {
 };
 const Page = () => {
   const { lectures, courseData } = useQueryParams();
-
   return (
     <div className="flex flex-col gap-8 w-[100%]">
       <Header />
@@ -44,7 +43,7 @@ const Page = () => {
         <Navbar lectures={lectures} courseData={courseData} />
 
         <div className="flex flex-col gap-10  mt-11 w-[97%]">
-          <AddCertificate courseId={courseData?.id} courseData={courseData} lectures={lectures} />
+          <SeeCertificate courseId={courseData?.id} courseData={courseData} lectures={lectures} />
         </div>
       </div>
     </div>
