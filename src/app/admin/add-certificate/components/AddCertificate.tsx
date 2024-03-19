@@ -4,14 +4,12 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
 import { addCertificat } from "../services/addCertificate";
-import DeleteIcon from "@/public/assets/dynamic_icons/DeleteIcon";
-import { API_ADMIN_PATH, API_ADMIN_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE } from "@/api/API_PATH";
 import { deleteCertificat } from "../services/deleteCertificate";
 
 const AddCertificate = ({ courseId, courseData }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  console.log(courseData);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [certificateImageUrl, setCertificateImageUrl] = useState<string | null>(null);
 
@@ -64,11 +62,11 @@ const AddCertificate = ({ courseId, courseData }: any) => {
       console.error("An unexpected error occurred", error);
     }
   };
-
   const deleteCertificate = async () => {
     try {
       const response = await deleteCertificat(token, courseData?.certificate?.id);
-      if (response) {
+      console.log(response);
+      if (response.message === "Certificate deleted successfully") {
         Swal.fire({
           icon: "success",
           title: "სერთიფიკატი წაიშალა",
@@ -76,6 +74,7 @@ const AddCertificate = ({ courseId, courseData }: any) => {
           timer: 1500,
         });
         setCertificateImageUrl(null);
+        courseData.certificate.certificate_image = null;
       } else {
         console.error("Failed to delete certificate");
         Swal.fire({
@@ -116,7 +115,7 @@ const AddCertificate = ({ courseId, courseData }: any) => {
                 წაშლა
               </button>
               <button className="bg-[#2FA8FF] text-white py-1 w-[200px] px-2 rounded-full cursor-pointer" onClick={addCertificate}>
-                შენხვა
+                შენახვა
               </button>
             </div>
           ) : (
