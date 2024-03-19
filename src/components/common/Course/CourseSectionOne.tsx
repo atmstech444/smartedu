@@ -65,7 +65,7 @@ const CourseSectionOne = () => {
               <div className="course__item white-bg mb-30 fix w-[360px]">
                 <div className="course__thumb p-relative fix flex justify-center items-center">
                   <Link href={`/course-details/${item.id}`}>
-                    <img src={API_STORAGE + item?.cover_image} alt="image not found" className="" />
+                    <img src={API_STORAGE + item?.cover_image} alt="image not found" className="w-[356px] h-[210px]" />
                   </Link>
                   <div className="absolute top-[20px] left-[20px] rounded-sm" style={{ backgroundColor: getCategoryColor(item.category.title) }}>
                     <Link href={`/course-details/${item.id}`} className="h-[24px] text-sm text-white font-medium px-3">

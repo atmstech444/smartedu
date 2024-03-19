@@ -149,7 +149,7 @@ const Lecture = () => {
               </div>
             ))}
 
-          {lectureDetail && lectureDetail.quizzes && lectureDetail.quizzes.length > 0 && (
+          {lectureDetail && lectureDetail.quizzes && lectureDetail.quizzes.length > 0 ? (
             <div className="flex gap-3 cursor-pointer" onClick={() => navigateToQuiz(lectureDetail.id)}>
               {quizResult > 80 ? (
                 <>
@@ -163,7 +163,7 @@ const Lecture = () => {
                 <p className=" m-0">ქვიზი</p>
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       ) : (
         <div className="flex gap-[24px] flex-col p-[24px] w-[90%]  bg-white rounded-md">
