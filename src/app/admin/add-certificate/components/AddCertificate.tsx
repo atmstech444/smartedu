@@ -6,6 +6,7 @@ import { parseCookies } from "nookies";
 import { addCertificat } from "../services/addCertificate";
 import DeleteIcon from "@/public/assets/dynamic_icons/DeleteIcon";
 import { API_ADMIN_PATH, API_ADMIN_STORAGE } from "@/api/API_PATH";
+import { deleteCertificat } from "../services/deleteCertificate";
 
 const AddCertificate = ({ courseId, courseData }: any) => {
   const cookies = parseCookies();
@@ -63,13 +64,39 @@ const AddCertificate = ({ courseId, courseData }: any) => {
       console.error("An unexpected error occurred", error);
     }
   };
+
+  const deleteCertificate = async () => {
+    try {
+      const response = await deleteCertificat(token, courseData?.certificate?.id);
+      if (response) {
+        Swal.fire({
+          icon: "success",
+          title: "სერთიფიკატი წაიშალა",
+          showConfirmButton: true,
+          timer: 1500,
+        });
+        setCertificateImageUrl(null);
+      } else {
+        console.error("Failed to delete certificate");
+        Swal.fire({
+          icon: "warning",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       {courseData?.certificate?.certificate_image ? (
         <div className="flex flex-col gap-12">
           <h1 className="text-lg">სერთიფიკატი ატვირთულია</h1>
           <Image src={API_ADMIN_STORAGE + courseData.certificate.certificate_image} width={300} height={300} alt="Certificate" className="rounded-md" />
-          <button className="bg-red text-white py-1 w-[200px] px-2 rounded-full cursor-pointer" onClick={handleDelete}>
+          <button className="bg-red text-white py-1 w-[200px] px-2 rounded-full cursor-pointer" onClick={deleteCertificate}>
             წაშლა
           </button>
         </div>
