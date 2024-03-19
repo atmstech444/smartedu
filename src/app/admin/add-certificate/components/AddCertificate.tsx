@@ -10,7 +10,6 @@ import { API_ADMIN_PATH, API_ADMIN_STORAGE } from "@/api/API_PATH";
 const AddCertificate = ({ courseId, courseData }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  console.log(courseId);
   console.log(courseData);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [certificateImageUrl, setCertificateImageUrl] = useState<string | null>(null);
@@ -64,33 +63,44 @@ const AddCertificate = ({ courseId, courseData }: any) => {
       console.error("An unexpected error occurred", error);
     }
   };
-  console.log(certificateImageUrl);
   return (
-    <div>
-      {certificateImageUrl ? (
+    <>
+      {courseData?.certificate?.certificate_image ? (
         <div className="flex flex-col gap-12">
-          <Image src={API_ADMIN_STORAGE + certificateImageUrl} width={300} height={300} alt="Certificate" className="rounded-md" />
+          <h1 className="text-lg">სერთიფიკატი ატვირთულია</h1>
+          <Image src={API_ADMIN_STORAGE + courseData.certificate.certificate_image} width={300} height={300} alt="Certificate" className="rounded-md" />
           <button className="bg-red text-white py-1 w-[200px] px-2 rounded-full cursor-pointer" onClick={handleDelete}>
             წაშლა
           </button>
         </div>
-      ) : uploadedImage ? (
-        <div className="flex flex-col gap-12">
-          <Image src={URL.createObjectURL(uploadedImage)} width={300} height={300} alt="Certificate" className="rounded-md" />
-          <button className="bg-red text-white w-[200px] px-2 py-1 rounded-full" onClick={handleDelete}>
-            წაშლა
-          </button>
-          <button className="bg-[#2FA8FF] text-white py-1 w-[200px] px-2 rounded-full cursor-pointer" onClick={addCertificate}>
-            შენხვა
-          </button>
-        </div>
       ) : (
-        <label className="bg-[#2FA8FF] text-white py-[13px] px-2 rounded-lg cursor-pointer">
-          ატვირთე სერთიფიკატი
-          <input type="file" className="hidden" onChange={(e) => handleFileUpload(e.target.files?.[0])} />
-        </label>
+        <div>
+          {certificateImageUrl ? (
+            <div className="flex flex-col gap-12">
+              <Image src={API_ADMIN_STORAGE + certificateImageUrl} width={300} height={300} alt="Certificate" className="rounded-md" />
+              <button className="bg-red text-white py-1 w-[200px] px-2 rounded-full cursor-pointer" onClick={handleDelete}>
+                წაშლა
+              </button>
+            </div>
+          ) : uploadedImage ? (
+            <div className="flex flex-col gap-12">
+              <Image src={URL.createObjectURL(uploadedImage)} width={300} height={300} alt="Certificate" className="rounded-md" />
+              <button className="bg-red text-white w-[200px] px-2 py-1 rounded-full" onClick={handleDelete}>
+                წაშლა
+              </button>
+              <button className="bg-[#2FA8FF] text-white py-1 w-[200px] px-2 rounded-full cursor-pointer" onClick={addCertificate}>
+                შენხვა
+              </button>
+            </div>
+          ) : (
+            <label className="bg-[#2FA8FF] text-white py-[13px] px-2 rounded-lg cursor-pointer">
+              ატვირთე სერთიფიკატი
+              <input type="file" className="hidden" onChange={(e) => handleFileUpload(e.target.files?.[0])} />
+            </label>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
