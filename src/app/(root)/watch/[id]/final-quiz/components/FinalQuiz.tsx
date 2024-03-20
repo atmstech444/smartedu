@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Arrow from "../../../../../../public/assets/icons/arrowLeft.svg";
-import { Get_Lecture } from "@/services/AllCourses";
+import { CERTIFICATE, Get_Lecture } from "@/services/AllCourses";
 import { useAppSelector } from "@/redux/store";
 
 const FinalQuiz = () => {
@@ -11,6 +11,7 @@ const FinalQuiz = () => {
   const token = useAppSelector((state) => state.user.user?.token);
   const [remainingTime, setRemainingTime] = useState<any>(null);
   const [lecture, setLecture] = useState<any>();
+  const [certificate, setCertificate] = useState();
 
   useEffect(() => {
     if (lecture?.final_quiz_percent !== null && lecture?.final_quiz_percent < 49) {
@@ -61,8 +62,18 @@ const FinalQuiz = () => {
       console.error("Error fetching lecture:", error);
     }
   };
+
+  const fetchCertificate = async () => {
+    try {
+      const certificate = await CERTIFICATE(token, params.id);
+      setCertificate(certificate);
+    } catch (error) {
+      console.error("Error fetching certificate:", error);
+    }
+  };
   useEffect(() => {
     fetchData();
+    fetchCertificate();
   }, []);
 
   return (
@@ -76,7 +87,7 @@ const FinalQuiz = () => {
             <div>
               <h1 className="text-xl m-0">ქვიზი</h1>
             </div>
-            {lecture?.final_quiz_percent > 49 ? (
+            {certificate ? (
               <button className="flex gap-2 my-auto text-[#006CFA] font-medium" onClick={navigateToCertificate}>
                 მიიღე სერთიფიკატი
                 <svg className="m-auto" xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 6 12" fill="none">
@@ -104,7 +115,6 @@ const FinalQuiz = () => {
               <p className="m-0 text-[#E6AC3A]">მეორე და საბოლოო ცდა , თავიდან დაწყებას შეძლებ {formatTime(remainingTime)}</p>
             </div>
           )}
-          {/* {quiz === "final quiz unavailable" || (percent && percent > 49 && <hr />)} */}
           <hr />
 
           {lecture?.final_quiz === "final quiz unavailable" || lecture?.final_quiz_percent > 49 ? null : (
