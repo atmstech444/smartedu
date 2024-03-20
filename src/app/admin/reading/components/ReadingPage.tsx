@@ -69,12 +69,12 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
   };
   return (
     <div className="flex flex-col gap-6 mb-40 mr-10">
-      <div className="flex justify-between gap-20">
-        <h2 className="text-black font-bold text-xl">წასაკითხი მასალა</h2>
+      <div className="flex flex-col justify-between gap-20">
         <div className="flex justify-center relative cursor-pointer" onClick={() => router.back()}>
           <img src={"/assets/img/admin/go-back-arrow.svg"} alt="go-back" className="w-7 h-7 -ml-20 absolute" />
           <button className="text-black  py-1 px-7 rounded-lg w-[200px]">უკან</button>
         </div>
+        <h2 className="text-black font-bold text-xl">წასაკითხი მასალა</h2>
       </div>
       {readingsData?.map((reading: ReadingData, index: number) => (
         <div key={index} className="flex flex-col gap-6 items-start">
