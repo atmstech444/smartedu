@@ -25,9 +25,9 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMess
   }
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex justify-center relative cursor-pointer" onClick={() => router.back()}>
-        <img src={"/assets/img/admin/go-back-arrow.svg"} alt="go-back" className="w-7 h-7 -ml-20 absolute" />
-        <button className="text-black  py-1 px-7 rounded-lg w-[200px]">უკან</button>
+      <div className="flex justify-start relative cursor-pointer" onClick={() => router.back()}>
+        <img src={"/assets/img/admin/go-back-arrow.svg"} alt="go-back" className="w-7 h-7  absolute" />
+        <button className="text-black  py-1 px-7 rounded-lg w-[120px]">უკან</button>
       </div>
       {quizzes?.length === 0 || quizzes === undefined ? (
         <div className="flex flex-col gap-3 items-start text-base ">
