@@ -133,3 +133,18 @@ export async function POST_VIDEO(token: any, id: any) {
     throw error;
   }
 }
+
+export async function CERTIFICATE(token: any, id: any) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const response = await axios.get(url + `user-certificate/${id}`, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error", error);
+    throw error;
+  }
+}

@@ -5,7 +5,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import Arrow from "../../../../public/assets/icons/arrowLeft.svg";
 import Image from "next/image";
 import arrow from "../../../../public/assets/icons/courserow.svg";
-import { Get_Lecture } from "@/services/AllCourses";
+import { CERTIFICATE, Get_Lecture } from "@/services/AllCourses";
 import { API_STORAGE } from "@/api/API_PATH";
 import { closeNavbar } from "@/redux/slices/mobileMenuSlice";
 import { useAppDispatch } from "@/redux/store";
@@ -37,6 +37,7 @@ export const Navigation = () => {
   const courses = useAppSelector((state) => state.courses.courses);
   const course = courses.find((cours) => cours.id == params.id);
   const [data, setData] = useState<DataTypes | null>(null);
+  const [certificate, setCertificate] = useState();
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -68,8 +69,17 @@ export const Navigation = () => {
       console.error("Error fetching lecture:", error);
     }
   };
+  const fetchCertificate = async () => {
+    try {
+      const certificate = await CERTIFICATE(token, params.id);
+      setCertificate(certificate);
+    } catch (error) {
+      console.error("Error fetching certificate:", error);
+    }
+  };
   useEffect(() => {
     fetchData();
+    fetchCertificate();
   }, []);
 
   const navigateToAboutCourse = () => {
@@ -148,7 +158,7 @@ export const Navigation = () => {
                 className={`flex gap-2 items-center text-mainGray text-base rounded-md p-3 cursor-pointer ${pathname === `/watch/${params.id}/certificate` ? "bg-lightestBlue" : "bg-transparent"}`}
                 onClick={() => router.push(`/watch/${params.id}/certificate`)}
               >
-                {data?.final_quiz_percent && data.final_quiz_percent > 49 && <p>სერთიფიკატი</p>}
+                {certificate && <p>სერთიფიკატი</p>}
               </div>
             </>
           )}
