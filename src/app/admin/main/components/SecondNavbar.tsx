@@ -242,9 +242,9 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
         <button className="bg-mainBlue rounded-faqBordeR text-base mt-20 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddFinalQuiz}>
           დაამატე საბოლოო ქვიზი
         </button>
-        <button className="bg-mainBlue rounded-faqBordeR text-base mt-5 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddCertificate}>
+        {/* <button className="bg-mainBlue rounded-faqBordeR text-base mt-5 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddCertificate}>
           სერთიფიკატი
-        </button>
+        </button> */}
       </div>
     </div>
   );
