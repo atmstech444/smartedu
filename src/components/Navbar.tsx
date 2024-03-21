@@ -22,7 +22,7 @@ const Navbar = () => {
           <NavbarBox src={UsersIcon} alt="Users Icon" text="მომხმარებლები" isActive={pathname === "/admin/users"} />
         </Link>
         <Link href="/admin/users-certificates">
-          <NavbarBox src={UsersIcon} alt="Users Icon" text="გაცემული სერთფიკატები" isActive={pathname === "/admin/users-certificates"} />
+          <NavbarBox src={UsersIcon} alt="Users Icon" text="გაცემული სერთიფიკატები" isActive={pathname === "/admin/users-certificates"} />
         </Link>
       </div>
       <LogOut />
