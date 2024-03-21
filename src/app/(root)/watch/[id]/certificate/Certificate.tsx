@@ -1,23 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Arrow from "../../../../../public/assets/icons/arrowLeft.svg";
 import { useParams, useRouter } from "next/navigation";
 import { CERTIFICATE } from "@/services/AllCourses";
 import { useAppSelector } from "@/redux/store";
-import { API_STORAGE } from "@/api/API_PATH";
-// import html2pdf from "html2pdf.js";
-// import html2canvas from "html2canvas";
-// import jsPDF from "jspdf";
+import CertificateImage from "@/public/assets/certificat.png";
+import html2pdf from "html2pdf.js/dist/html2pdf.min.js";
+
+interface CertificateTypes {
+  time: string;
+  user_name: string;
+  surname: string;
+  course_name: string;
+  code: number;
+}
 
 const Certificate = () => {
   const router = useRouter();
   const params = useParams();
-  const [certificate, setCertificate] = useState();
+  const [certificate, setCertificate] = useState<CertificateTypes>();
   const token = useAppSelector((state) => state.user.user?.token);
 
   const navigateToQuiz = () => {
     router.push(`/watch/${params.id}/final-quiz`);
   };
+
   const fetchCertificate = async () => {
     try {
       const certificate = await CERTIFICATE(token, params.id);
@@ -31,31 +38,19 @@ const Certificate = () => {
     fetchCertificate();
   }, []);
 
-  const handleDownload = () => {
-    // const capture = document.getElementById("divContent");
-    // const image = document.querySelector("#divContent img") as HTMLImageElement | null;
-    // if (image) {
-    //   console.log("Image element found.");
-    //   image.onload = () => {
-    //     console.log("Image loaded successfully.");
-    //     html2canvas(capture as HTMLElement)
-    //       .then((canvas) => {
-    //         console.log("Canvas generated successfully.");
-    //         const imgData = canvas.toDataURL("image/png");
-    //         const doc = new jsPDF("p", "mm", "a4");
-    //         const componentsWidth = doc.internal.pageSize.getWidth();
-    //         const componentHeight = doc.internal.pageSize.getHeight();
-    //         console.log("Document created:", doc);
-    //         doc.addImage(imgData, "PNG", 0, 0, componentsWidth, componentHeight);
-    //         doc.save("certificate.pdf");
-    //       })
-    //       .catch((error) => {
-    //         console.error("An error occurred during html2canvas:", error);
-    //       });
-    //   };
-    // } else {
-    //   console.error("Image element not found.");
-    // }
+  const contentRef = useRef(null);
+
+  const handleDownload = async () => {
+    const content = contentRef.current;
+    const opt = {
+      margin: 1,
+      filename: "certificate.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+
+    html2pdf().from(content).set(opt).save();
   };
 
   return (
@@ -95,10 +90,24 @@ const Certificate = () => {
               />
             </svg>
           </button>
-          <div className=" relative w-[500px] h-[387px]" id="divContent">
-            {/* <img src={API_STORAGE + certificate?.certificate_image} width={500} height={387} alt="image not found" className=" relative" />
-            <p className=" absolute bottom-[25px] right-[22px]">{certificate?.time}</p> */}
-          </div>
+          {certificate && (
+            <div className="relative w-[500px] h-[387px]">
+              <div className="hidden">
+                <div ref={contentRef}>
+                  <Image src={CertificateImage} alt="" width={500} height={387} />
+                  <p style={{ position: "absolute", bottom: "35px", right: "150px" }}>{certificate?.time}</p>
+                  <p className="absolute bottom-[210px] left-[205px] text-1xl text-[#006CFA] font-bold">Google sheet-ის ონლაინ კურსი </p>
+                  <p className="absolute bottom-[180px] left-[205px] text-[#2d6af1] text-sm">{certificate?.user_name + " " + certificate?.surname}</p>
+                </div>
+              </div>
+              <div>
+                <Image src={CertificateImage} alt="" width={500} height={387} />
+                <p style={{ position: "absolute", bottom: "25px", right: "22px" }}>{certificate?.time}</p>
+                <p className="absolute bottom-[200px] left-[205px] text-1xl text-[#006CFA] font-bold">Google sheet-ის ონლაინ კურსი </p>
+                <p className="absolute bottom-[170px] left-[205px] text-[#2d6af1] text-sm">{certificate?.user_name + " " + certificate?.surname}</p>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </>
