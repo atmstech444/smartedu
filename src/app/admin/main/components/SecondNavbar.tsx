@@ -124,6 +124,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   };
 
   const updateLecture = async (lectureId: number, newLectureName: string) => {
+    console.log(lectureId);
     try {
       const response = await editLectureName(token, { lecture_name: newLectureName }, lectureId);
       if (response.message === "Lecture updated successfully") {
@@ -172,8 +173,10 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
                 className="w-[150px] border border-black rounded-md p-1"
                 placeholder={lecture.lecture_name}
                 onChange={(e) => setNewLectureName(e.target.value)}
-                onBlur={() => {
-                  setEditingLectureId(null);
+                onBlur={(e) => {
+                  if (e.target.value !== newLectureName) {
+                    setEditingLectureId(null);
+                  }
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -183,13 +186,25 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
                 }}
               />
             ) : (
-              <h1 className="cursor-pointer underline w-[150px]" onClick={() => handleOpenTabs(lecture.id)}>
+              <h1 className="cursor-pointer w-auto" onClick={() => handleOpenTabs(lecture.id)}>
                 {lecture.lecture_name}
               </h1>
             )}
             {editingLectureId === lecture.id ? (
-              <div className="flex gap-2 items-center">
-                <p
+              <div className="flex w-full justify-between ml-10 gap-2 items-center">
+                <button
+                  onClick={() => {
+                    updateLecture(lecture.id, newLectureName);
+                    setEditingLectureId(null);
+                  }}
+                >
+                  შენახვა
+                </button>
+                <Image
+                  src={"/assets/img/admin/closeIcon.png"}
+                  width={10}
+                  height={10}
+                  alt="Close"
                   className="cursor-pointer"
                   onClick={() => {
                     if (editingLectureId === lecture.id) {
@@ -199,9 +214,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
                       setNewLectureName(lecture.lecture_name);
                     }
                   }}
-                >
-                  გაუქმება
-                </p>
+                />
               </div>
             ) : (
               <div className="flex gap-4 items-center">
