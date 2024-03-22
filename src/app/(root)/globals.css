@@ -1,0 +1,75 @@
+/* @import url("//cdn.web-fonts.ge/fonts/bpg-arial/css/bpg-arial.min.css"); */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "ArialGeo";
+  src: url("../../../public//assets/fonts/Arial\ GEO.ttf") format("truetype");
+}
+
+*:not(i) {
+  font-family: "BPG Arial", sans-serif !important;
+}
+.hello {
+  color: black;
+}
+
+.logo {
+  width: 150px;
+}
+
+.main-menu ul li a {
+  font-size: 18px !important;
+}
+.hero__promotion-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero__promotion.education {
+  right: -6% !important;
+  left: auto !important;
+}
+
+@media (max-width: 480px) {
+  .section__title {
+    font-size: 24px !important;
+  }
+}
+span.yellow-shape img {
+  bottom: -5px !important;
+}
+span.yellow-bg-big img {
+  bottom: 0px !important;
+}
+
+@media (min-width: 1080px) {
+  .only-mob {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  .only-des {
+    display: none !important;
+  }
+}
+
+nextjs-portal {
+  display: none;
+}
+
+.progress-wrap,
+.active-progress {
+  display: none;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.btnFont {
+  font-family: "BPG Arial", monospace !important;
+}

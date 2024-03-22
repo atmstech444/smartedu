@@ -1,0 +1,141 @@
+"use client";
+import React, { Suspense, useEffect, useState } from "react";
+import Navbar from "../add-lecture/components/Navbar";
+import { parseCookies } from "nookies";
+import { useSearchParams } from "next/navigation";
+import EditQuiz from "./components/EditQuiz";
+import { getQuiz } from "../quizzes/services/getQuiz";
+import Header from "@/components/Header";
+import { getAllCourses } from "../main/services/getCourses";
+
+export interface Quiz {
+  answer: string[];
+  correct_answer: string[];
+  id: number;
+  question: string;
+  url: string | null;
+}
+
+interface Lecture {
+  id: any;
+  name: any;
+}
+
+const useQueryParams = () => {
+  const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
+  const [lectures, setLectures] = useState<Lecture[]>([]);
+  const [courseData, setCourseData] = useState<any | null>(null);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const id = searchParams.get("lectureId");
+    const lecturesParam = searchParams.get("lectures");
+    const courseDataParam = searchParams.get("courseData");
+
+    setLectureId(id);
+    if (lecturesParam) {
+      const lecturesArray: Lecture[] = JSON.parse(decodeURIComponent(lecturesParam));
+      setLectures(lecturesArray);
+    }
+
+    if (courseDataParam) {
+      const parsedCourseData = JSON.parse(decodeURIComponent(courseDataParam));
+      setCourseData(parsedCourseData);
+    }
+  }, []);
+
+  return { lectureId, lectures, courseData };
+};
+
+const Page = () => {
+  const cookies = parseCookies();
+  const token = cookies.authToken;
+  const { lectures, courseData } = useQueryParams();
+  const [, setActiveTab] = useState("");
+  const [, setRefreshTabs] = useState(false);
+  const [quizData, setQuizData] = useState<Quiz[] | null>(null);
+  const [swalMessage, setSwalMessage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true); 
+  const searchParams = useSearchParams();
+
+  const lectureId = searchParams.get("lectureId");
+
+  const handleRefreshTabs = () => {
+    setRefreshTabs(true);
+  };
+
+  const handleLectureClick = (lectureId: number) => {
+    setActiveTab("");
+    handleRefreshTabs();
+  };
+
+  const handleDeleteAnswer = (quizId: number, answerIndex: number) => {
+    if (quizData) {
+      const updatedQuizData = quizData.map((quiz) => {
+        if (quiz.id === quizId) {
+          return {
+            ...quiz,
+            answer: quiz.answer.filter((_, index) => index !== answerIndex),
+            correct_answer: quiz.correct_answer.filter((_, index) => index !== answerIndex),
+          };
+        }
+        return quiz;
+      });
+      setQuizData(updatedQuizData);
+    }
+  };
+
+  const handleAddAnswer = (quizId: number) => {
+    if (quizData) {
+      const updatedQuizData = quizData.map((quiz) => {
+        if (quiz.id === quizId) {
+          return {
+            ...quiz,
+            answer: [...quiz.answer, ""],
+            correct_answer: [...quiz.correct_answer, ""],
+          };
+        }
+        return quiz;
+      });
+      setQuizData(updatedQuizData);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await getQuiz(token, lectureId);
+        setQuizData(response.quizzes);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <>
+      <Header />
+      <div className="flex gap-8 w-[100%]">
+        <Navbar lectures={lectures} courseData={courseData}  />
+        <div className="w-[45%] mt-6 mb-20">
+          <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} isLoading={isLoading}/>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const PageWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Page />
+    </Suspense>
+  );
+};
+
+export default PageWrapper;
