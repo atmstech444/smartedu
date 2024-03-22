@@ -97,7 +97,7 @@ const Lecture = () => {
 
   const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
-
+  console.log(lectureDetail.videos.length);
   return (
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (
@@ -130,7 +130,7 @@ const Lecture = () => {
             ""
           )}
 
-          {lectureDetail && lectureDetail.videos.length > 1
+          {lectureDetail && lectureDetail.videos.length > 0
             ? lectureDetail.videos.map((video, index) => (
                 <div className="flex gap-3 cursor-pointer" key={index} onClick={() => navigateToVideo(lectureDetail.id, video.id)}>
                   {video.user_made_videos?.[0]?.completed === 1 ? (
@@ -141,7 +141,7 @@ const Lecture = () => {
                     <Image src={Video} alt="video" />
                   )}
                   <div>
-                    <p className=" m-0 font-medium	 text-black">{video.title}</p>
+                    <p className=" m-0 font-medium text-black">{video.title}</p>
                     <p className=" m-0">ვიდეო</p>
                   </div>
                 </div>

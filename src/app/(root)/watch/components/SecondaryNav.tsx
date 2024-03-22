@@ -41,10 +41,12 @@ const SecondaryNav = ({ isDone }: Props) => {
   }
   const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
+
+  console.log(lectureDetail);
   return (
     <>
       <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full">
-        <p className="hidden lg:block text-lg font-bold	text-black">ლექცია {lectureDetail?.course_id}</p>
+        <p className="hidden lg:block text-lg font-bold	text-black">{lectureDetail?.lecture_name}</p>
         <div className="flex items-center justify-between mb-3 lg:hidden">
           <Image src={arrow} alt="arrow" onClick={closeMenu} />
           <div className="flex items-center justify-center gap-3">
