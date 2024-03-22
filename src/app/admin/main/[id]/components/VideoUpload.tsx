@@ -218,8 +218,10 @@ const VideoUpload = () => {
                         className="w-[150px] border border-black rounded-md p-1"
                         placeholder={video.title}
                         onChange={(e) => setNewVideoTitle(e.target.value)}
-                        onBlur={() => {
-                          setEditingVideoId(null);
+                        onBlur={(e) => {
+                          if (e.target.value !== newVideoTitle) {
+                            setEditingVideoId(null);
+                          }
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -230,8 +232,23 @@ const VideoUpload = () => {
                       />
                     </div>
 
+                    <div>
+                      <button
+                        onClick={() => {
+                          updateLecture(video.id, newVideoTitle);
+                          setEditingVideoId(null);
+                        }}
+                      >
+                        შენახვა
+                      </button>
+                    </div>
+
                     <div className="flex gap-2 items-center">
-                      <p
+                      <Image
+                        src={"/assets/img/admin/closeIcon.png"}
+                        width={10}
+                        height={10}
+                        alt="Close"
                         className="cursor-pointer"
                         onClick={() => {
                           if (editingVideoId === video.id) {
@@ -241,9 +258,7 @@ const VideoUpload = () => {
                             setNewVideoTitle(video.title);
                           }
                         }}
-                      >
-                        გაუქმება
-                      </p>
+                      />
                     </div>
                   </div>
                 ) : (
