@@ -1,7 +1,7 @@
 import React from "react";
 import { Quiz } from "../page";
 import { useRouter } from "next/navigation";
-import { API_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE } from "@/api/API_PATH";
 import SecondLoadingSpinner from "@/components/LoadingSpinner";
 
 interface QuizPageProps {
@@ -12,7 +12,7 @@ interface QuizPageProps {
   handleDeleteQuizById: any;
 }
 
-const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMessage, isLoading, handleDeleteQuizById }) => {
+const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, isLoading, handleDeleteQuizById }) => {
   const router = useRouter();
 
   if (isLoading) {
@@ -47,7 +47,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, swalMess
                   <span>{index + 1}.</span>
                   <p>{quiz.question}</p>
                 </div>
-                {quiz.url && <img src={`${API_STORAGE}${quiz.url}`} alt="Quiz Image" className="w-32 h-auto" />}
+                {quiz.url && <img src={`${API_ADMIN_STORAGE}${quiz.url}`} alt="Quiz Image" className="w-96 h-auto" />}
 
                 <div>
                   {quiz.answer.map((answer, answerIndex) => (

@@ -11,7 +11,7 @@ const AddCertificate = ({ courseId }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const [data, setData] = useState<any>(null);
+  const [, setData] = useState<any>(null);
 
   const handleFileUpload = (file: File | undefined) => {
     if (file) {

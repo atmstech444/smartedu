@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { addlectureTitleAndDescription } from "../services/addlectureTitleAndDescription";
 import { parseCookies } from "nookies";
 import Swal from "sweetalert2";
 import { addLecture } from "../../services/addLecture";
 import { getAllVideos } from "../../services/getAllVideos";
 import LoadingSpinner from "./LoadingSpinner";
 import { deleteVideo } from "../services/deleteVideo";
-import ChunkedVideoUpload from "./ChunkedVideoUpload";
-import LectureTitleAndDescription from "./LectureTitleAndDescription";
 import VideoUploadModal from "./VideoUploadModal";
-import { API_ADMIN_STORAGE, API_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE } from "@/api/API_PATH";
 import SecondLoadingSpinner from "@/components/LoadingSpinner";
 import { editVideoTitle } from "../services/editVideoTitle";
 
@@ -119,7 +116,7 @@ const VideoUpload = () => {
     setVideoFile(null);
   };
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       if (lectureId !== undefined) {
         setIsLoading(true);
@@ -132,11 +129,11 @@ const VideoUpload = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [lectureId, token]);
 
   useEffect(() => {
     fetchData();
-  }, [lectureId]);
+  }, [fetchData, lectureId]);
 
   const handleDeleteVideoFromData = async (idToDelete: any) => {
     try {

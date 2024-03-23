@@ -8,9 +8,8 @@ import { createCourse } from "./services/createCourse";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
 import { redirect, useRouter } from "next/navigation";
-import Lecture, { LectureOption } from "./components/Lecture";
+import { LectureOption } from "./components/Lecture";
 import ImageUpload from "./components/ImageUpload";
-import IntroUploader from "./components/IntroUploader";
 import CourseDetails from "./components/CourseDetails";
 import { CourseTitleInput } from "./components/CourseTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -32,7 +31,7 @@ const AddCourse = () => {
     if (!token) {
       redirect("/");
     }
-  }, []);
+  }, [token]);
   useEffect(() => {
     if (componentMounted.current) {
       checkedIndexes.length > 0 ? checkedIndexes[0] : null;

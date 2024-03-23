@@ -1,5 +1,5 @@
 "use client";
-import { API_ADMIN_STORAGE, API_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE } from "@/api/API_PATH";
 import React, { useState } from "react";
 
 const CourseDescription = ({ data, onFileChange }: any) => {

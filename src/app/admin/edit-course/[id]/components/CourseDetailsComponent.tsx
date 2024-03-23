@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import CustomSelect from "./CustomSelect";
 // @ts-ignore
 import { OptionsType } from "react-select";
-import { API_ADMIN_STORAGE, API_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE } from "@/api/API_PATH";
 
 interface CourseDetailsProps {
   data: any;

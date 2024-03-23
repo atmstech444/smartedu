@@ -32,7 +32,7 @@ const Users = () => {
     if (!token) {
       redirect("/");
     }
-  }, []);
+  }, [token]);
 
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);

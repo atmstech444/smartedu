@@ -4,7 +4,6 @@ import Navbar from "../add-lecture/components/Navbar";
 import QuizPage from "./components/QuizPage";
 import { getQuiz } from "./services/getQuiz";
 import { parseCookies } from "nookies";
-import { useSearchParams } from "next/navigation";
 import { deleteQuiz } from "./services/deleteQuiz";
 import Swal from "sweetalert2";
 import Header from "@/components/Header";
@@ -74,7 +73,7 @@ const Page = () => {
 
       fetchData();
     }
-  }, [courseId]);
+  }, [courseId, token]);
 
   const handleDeleteQuiz = async () => {
     try {

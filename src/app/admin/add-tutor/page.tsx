@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { parseCookies } from "nookies";
 import Swal from "sweetalert2";
 
@@ -27,7 +27,7 @@ const AddTutor = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [data, setData] = useState<Lecturer[]>([]);
 
-  const getData = () => {
+  const getData = useCallback(() => {
     const fetchData = async () => {
       try {
         const response = await getLecturers(token);
@@ -37,19 +37,16 @@ const AddTutor = () => {
       }
     };
     fetchData();
-  };
+  }, [token]);
 
   useLayoutEffect(() => {
     if (!token) {
       redirect("/");
     }
-  }, []);
+  }, [token]);
 
   const handleCreateTutor = async () => {
     const fullNameInput = document.getElementById("name") as HTMLInputElement;
-    const description = document.getElementById(
-      "description"
-    ) as HTMLInputElement;
 
     const fullName = fullNameInput.value.trim();
     const match = fullName.match(/(.+)/);
@@ -100,9 +97,7 @@ const AddTutor = () => {
     try {
       const response = await deleteTutor(token, deletedTutor.id);
       if (response.message) {
-        const updatedData = data.filter(
-          (tutor) => tutor.id !== deletedTutor.id
-        );
+        const updatedData = data.filter((tutor) => tutor.id !== deletedTutor.id);
         setData(updatedData);
         Swal.fire({
           icon: "success",
@@ -126,7 +121,7 @@ const AddTutor = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   return (
     <div>
@@ -140,30 +135,12 @@ const AddTutor = () => {
             <div className="flex flex-col gap-3 mt-6">
               <h1 className="text-black text-xl font-normal">დაამატე ტუტორი</h1>
 
-              <FileUpload
-                onFileChange={(file: React.SetStateAction<File | null>) =>
-                  setSelectedImage(file)
-                }
-                onDeletePhoto={() => setSelectedImage(null)}
-                selectedImage={selectedImage}
-              />
+              <FileUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedImage(file)} onDeletePhoto={() => setSelectedImage(null)} selectedImage={selectedImage} />
 
               <TutorForm onHandleCreateTutor={handleCreateTutor} />
             </div>
 
-            <div className="mt-6 mr-44 flex flex-col gap-5">
-              {data ? (
-                data?.map((lecture, index) => (
-                  <LecturerItem
-                    key={index}
-                    lecture={lecture}
-                    onDeleteClick={handleDeleteTutor}
-                  />
-                ))
-              ) : (
-                <LoadingSpinner />
-              )}
-            </div>
+            <div className="mt-6 mr-44 flex flex-col gap-5">{data ? data?.map((lecture, index) => <LecturerItem key={index} lecture={lecture} onDeleteClick={handleDeleteTutor} />) : <LoadingSpinner />}</div>
           </div>
         </div>
       </div>

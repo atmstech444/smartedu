@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const AddSeeCertificate = ({ courseId, courseData, lectures }: any) => {
+const AddSeeCertificate = ({ courseData, lectures }: any) => {
   const router = useRouter();
   const handleAddCertificate = () => {
     router.push(`/admin/add-certificate?lectures=${encodeURIComponent(JSON.stringify(lectures))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);

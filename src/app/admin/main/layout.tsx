@@ -1,5 +1,4 @@
 import Header from "@/components/Header";
-import Navbar from "@/components/Navbar";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,9 +6,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div>
         <Header />
       </div>
-      <div className="flex gap-8">
-        {children}
-      </div>
+      <div className="flex gap-8">{children}</div>
     </section>
   );
 }

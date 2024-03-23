@@ -18,10 +18,7 @@ interface LectureProps {
   onLectureChange: (selectedLecture: LectureOption[]) => void;
 }
 
-const Lecture: React.FC<LectureProps> = ({
-  selectedLecture,
-  onLectureChange,
-}) => {
+const Lecture: React.FC<LectureProps> = ({ selectedLecture, onLectureChange }) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const [lectures, setLectures] = useState<LectureOption[]>([]);
@@ -37,21 +34,16 @@ const Lecture: React.FC<LectureProps> = ({
     };
 
     fetchLectures();
-  }, []);
+  }, [token]);
 
   const options: OptionsType<LectureOption> = lectures.map((lecturer) => ({
     value: lecturer.id,
     label: `${lecturer.first_name} ${lecturer.last_name}`,
   }));
 
-  const selectedOptions = options.find(
-    (opt: { value: LectureOption[] }) => opt.value === selectedLecture
-  );
+  const selectedOptions = options.find((opt: { value: LectureOption[] }) => opt.value === selectedLecture);
 
-  const handleLectureChange = (
-    selectedOption: ValueType<LectureOption>,
-    actionMeta: ActionMeta<LectureOption>
-  ) => {
+  const handleLectureChange = (selectedOption: ValueType<LectureOption>) => {
     if (selectedOption) {
       const selectedLectureId = (selectedOption as LectureOption).value;
       onLectureChange(selectedLectureId);
@@ -62,12 +54,7 @@ const Lecture: React.FC<LectureProps> = ({
   };
   return (
     <div className="cursor-pointer">
-      <Select
-        options={options}
-        value={selectedOptions}
-        onChange={handleLectureChange}
-        className="basic-single"
-      />
+      <Select options={options} value={selectedOptions} onChange={handleLectureChange} className="basic-single" />
     </div>
   );
 };

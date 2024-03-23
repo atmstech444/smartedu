@@ -7,13 +7,9 @@ interface IntroVideoUploadProps {
   onDelete: () => void;
 }
 
-const IntroUploader: React.FC<IntroVideoUploadProps> = ({
-  selectedIntro,
-  onUpload,
-  onDelete,
-}) => {
+const IntroUploader: React.FC<IntroVideoUploadProps> = ({ selectedIntro, onUpload, onDelete }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [, setIsInputVisible] = useState(false);
 
   const handleAddFileClick = () => {
     setIsInputVisible(true);
@@ -34,10 +30,7 @@ const IntroUploader: React.FC<IntroVideoUploadProps> = ({
     <div>
       {selectedIntro && selectedIntro ? (
         <div className="flex flex-col w-[288px] gap-2 mt-2 justify-center items-center pb-4">
-          <button
-            onClick={onDelete}
-            className="bg-[#D9EBF4] text-black rounded-faqBordeR p-1"
-          >
+          <button onClick={onDelete} className="bg-[#D9EBF4] text-black rounded-faqBordeR p-1">
             Delete Intro
           </button>
           <video controls>
@@ -46,18 +39,10 @@ const IntroUploader: React.FC<IntroVideoUploadProps> = ({
           </video>
         </div>
       ) : (
-        <div
-          className="rounded-mediumBorder h-[134px] border border-[#C1C1C1] justify-center px-20 py-8 my-4 cursor-pointer flex flex-col gap-2 items-center"
-          onClick={handleAddFileClick}
-        >
+        <div className="rounded-mediumBorder h-[134px] border border-[#C1C1C1] justify-center px-20 py-8 my-4 cursor-pointer flex flex-col gap-2 items-center" onClick={handleAddFileClick}>
           <PlusIcon />
           <h1>დაამატე ინტრო</h1>
-          <input
-            type="file"
-            className={"hidden"}
-            ref={fileInputRef}
-            onChange={handleFileInputChange}
-          />
+          <input type="file" className={"hidden"} ref={fileInputRef} onChange={handleFileInputChange} />
         </div>
       )}
     </div>

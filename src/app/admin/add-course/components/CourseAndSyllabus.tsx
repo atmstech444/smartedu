@@ -12,11 +12,6 @@ const CourseAndSyllabus = ({ onCourseDescriptionChange }: any) => {
     if (!showDescription) setShowSyllabus(false);
   };
 
-  const toggleSyllabus = () => {
-    setShowSyllabus(true);
-    if (!showSyllabus) setShowDescription(false);
-  };
-
   const handleTextareaChange = (event: any) => {
     const text = event.target.value;
     onCourseDescriptionChange(text);
@@ -25,30 +20,11 @@ const CourseAndSyllabus = ({ onCourseDescriptionChange }: any) => {
   return (
     <div>
       <div className="flex gap-2 mt-9">
-        <p
-          onClick={toggleDescription}
-          className={`cursor-pointer ${
-            showDescription ? "text-black" : "text-[#DCDCDC]"
-          }`}
-        >
+        <p onClick={toggleDescription} className={`cursor-pointer ${showDescription ? "text-black" : "text-[#DCDCDC]"}`}>
           კურსის აღწერა
         </p>
-        {/* <div className="border border-[#E2E2E2]"></div> */}
-        {/* <p
-          onClick={toggleSyllabus}
-          className={`cursor-pointer ${
-            showSyllabus ? "text-black" : "text-[#DCDCDC]"
-          }`}
-        >
-          დაამატე სილაბუსი
-        </p> */}
       </div>
-      {showDescription && (
-        <textarea
-          className="w-[720px] h-[280px] border border-[#DCDCDC] rounded-[32px] mt-8 resize-none outline-none p-4"
-          onChange={handleTextareaChange}
-        ></textarea>
-      )}
+      {showDescription && <textarea className="w-[720px] h-[280px] border border-[#DCDCDC] rounded-[32px] mt-8 resize-none outline-none p-4" onChange={handleTextareaChange}></textarea>}
 
       {showSyllabus && (
         <div className="flex gap-1 items-center justify-center border border-[#c2c2c2] px-5 py-2 rounded-buttonBorder w-40 mt-7 cursor-pointer">

@@ -31,7 +31,6 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number[]>>({});
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const id = useQueryParams();
   const [sections, setSections] = useState<Section[]>([{ id: 1, question: "", answers: [] }]);
   const handleAddContent = (id: number) => {
     setSections((prevSections) =>

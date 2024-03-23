@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/navigation";
 
-const SeeCertificate = ({ courseId, courseData, lectures }: any) => {
+const SeeCertificate = ({ courseData }: any) => {
   const router = useRouter();
   const cookies = parseCookies();
   const token = cookies.authToken;

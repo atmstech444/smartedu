@@ -70,7 +70,7 @@ const UsersCertificates = () => {
     };
 
     fetchAllUsers();
-  }, []);
+  }, [token]);
 
   const filteredDataSource = dataSource.filter(
     (item) =>

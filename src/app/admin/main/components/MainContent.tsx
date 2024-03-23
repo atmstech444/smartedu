@@ -47,7 +47,7 @@ const MainContent: FC<pageProps> = ({ params }) => {
     if (!token) {
       redirect("/");
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const fetchCourseById = async () => {
@@ -61,7 +61,7 @@ const MainContent: FC<pageProps> = ({ params }) => {
       }
     };
     fetchCourseById();
-  }, []);
+  }, [params.id, token]);
 
   const addVideoSchema = yup.object({
     title: yup.string().required("გთხოვთ მიუთითოთ ლექციის სახელი"),

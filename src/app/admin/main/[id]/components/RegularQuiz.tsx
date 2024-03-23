@@ -3,7 +3,6 @@ import Image from "next/image";
 import { addQuiz } from "../services/addQuiz";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
-import { useRouter } from "next/navigation";
 
 interface Section {
   id: number;

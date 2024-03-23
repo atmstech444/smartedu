@@ -8,14 +8,9 @@ interface Lecture {
   name: any;
 }
 
-interface CourseDataProps {
-  title: string;
-  cover_image: string;
-}
-
 const Navbar = ({ lectures, courseData }: { lectures: Lecture[]; courseData: any }) => {
   const router = useRouter();
-  const [currentLectureId, setCurrentLectureId] = useState<number | null>(null);
+  const [, setCurrentLectureId] = useState<number | null>(null);
   const handleOpenTabs = (lectureId: number) => {
     const lecturesData = lectures.map((lecture) => ({
       id: lecture.id,
@@ -32,7 +27,7 @@ const Navbar = ({ lectures, courseData }: { lectures: Lecture[]; courseData: any
       <div className=" flex flex-col gap-4 w-[200px] max-w-[200px]">
         {courseData && (
           <>
-            <img src={`${API_ADMIN_STORAGE}${courseData?.cover_image}`} className="rounded-2xl" />
+            <img src={`${API_ADMIN_STORAGE}${courseData?.cover_image}`} className="rounded-2xl" alt="cover_image" />
             <p className="text-base text-black font-semibold">{courseData?.title}</p>
           </>
         )}
@@ -41,7 +36,7 @@ const Navbar = ({ lectures, courseData }: { lectures: Lecture[]; courseData: any
 
         {lectures.map((lecture) => (
           <div key={lecture.id} className="flex justify-between items-center">
-            <h1 className="cursor-pointer underline" onClick={() => handleOpenTabs(lecture.id)}>
+            <h1 className="cursor-pointer" onClick={() => handleOpenTabs(lecture.id)}>
               {lecture.name}
             </h1>
           </div>

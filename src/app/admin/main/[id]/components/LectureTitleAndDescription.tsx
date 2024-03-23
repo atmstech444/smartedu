@@ -12,9 +12,8 @@ import SecondLoadingSpinner from "@/components/LoadingSpinner";
 const LectureTitleAndDescription = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const [isTypingInput, setIsTypingInput] = useState(false);
   const [isTypingTextarea, setIsTypingTextarea] = useState(false);
-  const [lectureTitle, setLectureTitle] = useState("");
+  const [, setLectureTitle] = useState("");
   const [lectureDescription, setLectureDescription] = useState("");
   const [titleDescriptionData, setTitleDescriptionData] = useState<{ id: number; title: string; description: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,18 +22,8 @@ const LectureTitleAndDescription = () => {
 
   const lectureId = searchParams.get("lectureId");
 
-  const handleTypingInput = () => {
-    setIsTypingInput(true);
-  };
-
   const handleTypingTextarea = () => {
     setIsTypingTextarea(true);
-  };
-
-  const handleBlurInput = () => {
-    if (isTypingInput) {
-      setIsTypingInput(false);
-    }
   };
 
   const handleBlurTextarea = () => {
@@ -145,7 +134,7 @@ const LectureTitleAndDescription = () => {
     if (lectureId !== undefined && lectureId !== null) {
       fetchData();
     }
-  }, [lectureId]);
+  }, [lectureId, token]);
 
   return (
     <>

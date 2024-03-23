@@ -22,7 +22,7 @@ interface LectureName {
   lecture_name: any;
 }
 
-const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNames: LectureName[] }) => {
+const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureName[] }) => {
   const router = useRouter();
   const cookies = parseCookies();
   const token = cookies.authToken;
@@ -115,13 +115,6 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
     }));
     router.push(`/admin/add-final-quiz?&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
   };
-  const handleAddCertificate = () => {
-    const lecturesData = lectures.map((lecture) => ({
-      id: lecture.id,
-      name: lecture.lecture_name,
-    }));
-    router.push(`/admin/certificate?&lectures=${encodeURIComponent(JSON.stringify(lecturesData))}&courseData=${encodeURIComponent(JSON.stringify(courseData))}`);
-  };
 
   const updateLecture = async (lectureId: number, newLectureName: string) => {
     console.log(lectureId);
@@ -161,7 +154,7 @@ const SecondNavbar = ({ courseData, lectureNames }: { courseData: any; lectureNa
   return (
     <div className="w-80 mt-11 px-4 border-r-2 border-[#D9EBF4] mb-12 min-h-[calc(100vh-150px)] flex flex-col justify-between">
       <div className=" flex flex-col gap-4 w-[280px] ">
-        <img src={`${API_ADMIN_STORAGE}${courseData?.cover_image}`} className="rounded-2xl" />
+        <img src={`${API_ADMIN_STORAGE}${courseData?.cover_image}`} className="rounded-2xl" alt="cover_image" />
         <p className="text-base text-black font-semibold">{courseData?.title}</p>
         <div className="w-full h-[1px] bg-[#D1D1D1]"></div>
         {lectures.map((lecture) => (

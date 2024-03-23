@@ -32,7 +32,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
     if (!token) {
       redirect("/");
     }
-  }, []);
+  }, [token]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,7 +52,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [params.id, token]);
   const handleCheckboxChange = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
   };

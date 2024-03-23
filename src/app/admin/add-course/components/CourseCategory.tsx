@@ -36,7 +36,7 @@ const CourseCategory = ({ onCheckChange }: { onCheckChange: (checkedIndexes: num
     };
 
     fetchCategories();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (checkedIndexes.length > 0) {
@@ -59,12 +59,12 @@ const CourseCategory = ({ onCheckChange }: { onCheckChange: (checkedIndexes: num
 
   const handleNewCategorySubmit = async (e: any, id: number) => {
     e.preventDefault();
-    let category = addCategoryInput.find((category, index) => index === id);
+    let category = addCategoryInput.find((_category, index) => index === id);
     const response = await storeCategory(category);
     if (response && response.status === 201) {
       const newCategory = response.data.category;
       setCategories((prevState) => [...prevState, newCategory]);
-      setAddCategoryInput((prevState) => prevState.filter((category, index) => index !== id));
+      setAddCategoryInput((prevState) => prevState.filter((_category, index) => index !== id));
     }
   };
 
@@ -76,7 +76,7 @@ const CourseCategory = ({ onCheckChange }: { onCheckChange: (checkedIndexes: num
   };
 
   const deleteNewCategoryInput = (id: number) => {
-    setAddCategoryInput((prevState) => prevState.filter((category, index) => index !== id));
+    setAddCategoryInput((prevState) => prevState.filter((_category, index) => index !== id));
   };
 
   return (
@@ -86,7 +86,7 @@ const CourseCategory = ({ onCheckChange }: { onCheckChange: (checkedIndexes: num
         {loading ? (
           <LoadingSpinner />
         ) : (
-          categories.map((category, index) => (
+          categories.map((category, _index) => (
             <div className="flex justify-between" key={category.id}>
               <Checkbox key={category.id} label={category.title} checked={checkedIndexes.includes(category.id)} onChange={() => handleExclusiveCheckboxChange(category.id)} />
               <Image onClick={() => handleDeleteCategory(category.id)} src={BlackTrashIcon} alt="delete category" className="hover:cursor-pointer" />

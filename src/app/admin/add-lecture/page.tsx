@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import SecondNavbar from "../main/components/SecondNavbar";
 import QuizUpload from "../main/[id]/components/QuizUpload";
 import ReadingUpload from "../main/[id]/components/ReadingUpload";
 import VideoUpload from "../main/[id]/components/VideoUpload";
@@ -44,10 +43,10 @@ const useQueryParams = () => {
 const AddLecturePage = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
-  const { lectureId, lectures, courseData } = useQueryParams();
+  const { lectures, courseData } = useQueryParams();
   const [activeTab, setActiveTab] = useState("");
   const [lectureNames, setLectureNames] = useState([]);
-  const [refreshTabs, setRefreshTabs] = useState(false);
+  const [refreshTabs] = useState(false);
 
   useEffect(() => {
     const fetchAllCourses = async () => {
@@ -60,14 +59,6 @@ const AddLecturePage = () => {
     };
     fetchAllCourses();
   }, [token]);
-
-  const handleRefreshTabs = () => {
-    setRefreshTabs(true);
-  };
-  const handleLectureClick = (lectureId: number) => {
-    setActiveTab("");
-    handleRefreshTabs();
-  };
 
   let content = null;
   if (activeTab === "წასაკითხი") {

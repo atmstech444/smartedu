@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { addReading } from "../services/addReading";
@@ -37,7 +37,7 @@ const Reading = ({ lectures, courseData }: any) => {
   const fileInputRefs = useRef<HTMLInputElement[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   const [readingsData, setReadingsData] = useState<ReadingData[]>([]);
 
   const handleTyping = () => {
@@ -119,7 +119,7 @@ const Reading = ({ lectures, courseData }: any) => {
     }
   };
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       if (id !== undefined) {
         setIsLoading(true);
@@ -132,11 +132,11 @@ const Reading = ({ lectures, courseData }: any) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id, token]);
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [fetchData, id]);
 
   return (
     <div>
@@ -183,7 +183,7 @@ const Reading = ({ lectures, courseData }: any) => {
               <div className="flex justify-between max-w-[780px]">
                 <div className="flex flex-col gap-2">
                   {inputs.map((url, index) => (
-                    <div className="relative w-[220px] flex items-center gap-1" key={index}>
+                    <div className="relative w-[200px] flex items-center gap-1" key={index}>
                       <input
                         id={`text-${index}`}
                         ref={(element) => (fileInputRefs.current[index] = element!)}
@@ -193,7 +193,6 @@ const Reading = ({ lectures, courseData }: any) => {
                         value={url}
                         onChange={(e) => handleInputChange(index, e)}
                       />
-                      <Image src="/assets/img/admin/AddFile.png" width={16} height={16} alt={"Add Icon"} />
                       <Image src={"/assets/img/admin/closeIcon.png"} width={10} height={10} alt="delete icon" className="hover:cursor-pointer absolute top-4 -right-0" onClick={() => handleDeleteInput(index)} />
                     </div>
                   ))}

@@ -62,11 +62,6 @@ const Page = () => {
     setRefreshTabs(true);
   };
 
-  const handleLectureClick = (lectureId: number) => {
-    setActiveTab("");
-    handleRefreshTabs();
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,7 +76,7 @@ const Page = () => {
     };
 
     fetchData();
-  }, []);
+  }, [lectureId, token]);
 
   const handleDeleteQuiz = async () => {
     try {

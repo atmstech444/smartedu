@@ -12,7 +12,7 @@ const Page = () => {
     if (!token) {
       redirect("/admin");
     }
-  }, []);
+  }, [token]);
   return (
     <main className="w-[85%] flex gap-8">
       <Navbar />

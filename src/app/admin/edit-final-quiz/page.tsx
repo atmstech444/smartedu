@@ -2,11 +2,9 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Navbar from "../add-lecture/components/Navbar";
 import { parseCookies } from "nookies";
-import { useSearchParams } from "next/navigation";
 import EditQuiz from "./components/EditQuiz";
 import Header from "@/components/Header";
 import { getFinalQuiz } from "./services/getFinalQuiz";
-import SecondNavbar from "../main/components/SecondNavbar";
 
 export interface Quiz {
   answer: string[];
@@ -57,9 +55,6 @@ const Page = () => {
   const { lectures, courseData, courseId } = useQueryParams();
   const [quizData, setQuizData] = useState<Quiz[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const searchParams = useSearchParams();
-
-  const lectureId = searchParams.get("lectureId");
 
   const handleDeleteAnswer = (quizId: number, answerIndex: number) => {
     if (quizData) {
@@ -109,7 +104,7 @@ const Page = () => {
 
       fetchData();
     }
-  }, [courseId]);
+  }, [courseId, token]);
 
   return (
     <>

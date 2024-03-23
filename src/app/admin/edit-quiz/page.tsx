@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import EditQuiz from "./components/EditQuiz";
 import { getQuiz } from "../quizzes/services/getQuiz";
 import Header from "@/components/Header";
-import { getAllCourses } from "../main/services/getCourses";
 
 export interface Quiz {
   answer: string[];
@@ -51,23 +50,12 @@ const Page = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const { lectures, courseData } = useQueryParams();
-  const [, setActiveTab] = useState("");
-  const [, setRefreshTabs] = useState(false);
   const [quizData, setQuizData] = useState<Quiz[] | null>(null);
-  const [swalMessage, setSwalMessage] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true); 
+  const [] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
 
   const lectureId = searchParams.get("lectureId");
-
-  const handleRefreshTabs = () => {
-    setRefreshTabs(true);
-  };
-
-  const handleLectureClick = (lectureId: number) => {
-    setActiveTab("");
-    handleRefreshTabs();
-  };
 
   const handleDeleteAnswer = (quizId: number, answerIndex: number) => {
     if (quizData) {
@@ -109,21 +97,21 @@ const Page = () => {
         setQuizData(response.quizzes);
       } catch (error) {
         console.error("Error fetching courses:", error);
-      }finally {
+      } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [lectureId, token]);
 
   return (
     <>
       <Header />
       <div className="flex gap-8 w-[100%]">
-        <Navbar lectures={lectures} courseData={courseData}  />
+        <Navbar lectures={lectures} courseData={courseData} />
         <div className="w-[45%] mt-6 mb-20">
-          <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} isLoading={isLoading}/>
+          <EditQuiz quizzes={quizData} onDeleteAnswer={handleDeleteAnswer} onAddAnswer={handleAddAnswer} setQuizData={setQuizData} isLoading={isLoading} />
         </div>
       </div>
     </>

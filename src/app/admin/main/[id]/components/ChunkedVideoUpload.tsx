@@ -4,7 +4,7 @@ import Image from "next/image";
 import { parseCookies } from "nookies";
 import { API_ADMIN_PATH } from "@/api/API_PATH";
 
-const ChunkedVideoUpload = ({ videoFile, handleDeleteVideo, handleFileInputChange }: any) => {
+const ChunkedVideoUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const chunkSize = 100 * 1024 * 1024;
   const cookies = parseCookies();

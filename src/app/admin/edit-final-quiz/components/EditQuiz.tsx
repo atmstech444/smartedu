@@ -4,8 +4,7 @@ import { Quiz } from "../page";
 import { useRouter } from "next/navigation";
 import { parseCookies } from "nookies";
 import { editQuiz } from "../services/editQuiz";
-import { boolean } from "yup";
-import { API_STORAGE } from "@/api/API_PATH";
+import { API_ADMIN_STORAGE } from "@/api/API_PATH";
 import SecondLoadingSpinner from "@/components/LoadingSpinner";
 import Swal from "sweetalert2";
 
@@ -39,9 +38,9 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData, isLoading
   const [checkedAnswers, setCheckedAnswers] = useState<CheckedAnswers>({});
   const [editingQuizId, setEditingQuizId] = useState<number | null>(null);
   const [newAnswer, setNewAnswer] = useState<string>("");
-  const [editedQuestion, setEditedQuestion] = useState<string>("");
+  const [, setEditedQuestion] = useState<string>("");
   const [editedAnswers, setEditedAnswers] = useState<{ [quizId: number]: string[] }>({});
-  const [isCancel, setIsCancelled] = useState(false);
+  const [, setIsCancelled] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<{ [quizId: number]: File | null }>({});
   const [showImage, setShowImage] = useState<{ [quizId: number]: boolean }>({});
   const [editedScores, setEditedScores] = useState<{ [quizId: number]: string }>({});
@@ -275,7 +274,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData, isLoading
                 )}
               </span>
             </div>
-            {quiz.url === null || showImage[quiz.id] === false ? "" : <img src={`${API_STORAGE}${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
+            {quiz.url === null || showImage[quiz.id] === false ? "" : <img src={`${API_ADMIN_STORAGE}${quiz.url}`} alt="Quiz Image" className="w-56 h-auto" />}
             {editingQuizId === quiz.id && (
               <>
                 {showImage && quiz.url && (

@@ -3,9 +3,8 @@ import Image from "next/image";
 import AddButton from "@/public/assets/icons/AddButton.svg";
 import { FormEvent, useEffect, useState } from "react";
 import SyllabusForm from "../components/SyllabusForm";
-import { useParams } from "next/navigation";
 import { getSyllabus, postSyllabus } from "@/services/syllabus";
-import { Description, syllabusData } from "../[id]/types";
+import { syllabusData } from "../[id]/types";
 import Lecture from "../components/Lecture";
 import Swal from "sweetalert2";
 import { Syllabus } from "../[id]/page";
@@ -20,14 +19,14 @@ const SyllabusContent = ({ params }: PageProps) => {
 
   const { id } = params;
 
-  const fetchSyllabus = async () => {
-    const data = await getSyllabus(id as string);
-    setSyllabus(data.syllabus);
-  };
-
   useEffect(() => {
+    const fetchSyllabus = async () => {
+      const data = await getSyllabus(id as string);
+      setSyllabus(data.syllabus);
+    };
+
     fetchSyllabus();
-  }, []);
+  }, [id]);
 
   const addForm = () => {
     setFormCount((prevState) => [...prevState, { id: prevState.length, title: "", descriptions: { 0: "" } }]);
@@ -71,7 +70,7 @@ const SyllabusContent = ({ params }: PageProps) => {
       ))}
 
       <form onSubmit={handleSubmit}>
-        {formCount.map((count, index) => (
+        {formCount.map((_count, index) => (
           <SyllabusForm key={index} id={index} setFormCount={setFormCount} formCount={formCount} />
         ))}
         <Image onClick={addForm} src={AddButton} alt="add button" className="hover:cursor-pointer mt-5 mb-7" />
