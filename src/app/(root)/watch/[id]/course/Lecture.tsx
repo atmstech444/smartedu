@@ -20,7 +20,7 @@ export interface LectureTypes {
   id: number;
   lecture_name: string;
   lecture_content: {
-    title: string;
+    description: string;
   };
   mideterm_quiz_check_answers: any;
   mideterm_quiz_answer_percents: any;
@@ -109,7 +109,7 @@ const Lecture = () => {
         <div className="flex gap-[24px] flex-col p-[24px] w-[90%]  bg-white rounded-md ">
           <Image onClick={toggleMenuVisibility} src={Arrow} width={24} height={24} alt="image" className="lg:hidden mb-4" />
           <h1 className="text-base font-bold text-black">ლექციის აღწერა</h1>
-          <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content?.title}</p>
+          <p className="text-base	font-normal text-black">{lectureDetail?.lecture_content?.description}</p>
           <p className="text-base font-bold	text-black">{lectureDetail?.lecture_name}</p>
 
           {lectureDetail && lectureDetail.readings && lectureDetail.readings.length > 0 ? (
