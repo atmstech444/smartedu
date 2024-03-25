@@ -27,6 +27,8 @@ const QuizStart = () => {
   const router = useRouter();
   const [selectedAnswers, setSelectedAnswers] = useState<AnswerState[]>([]);
   const [finalQuiz, setFinalQuiz] = useState<QuizesTypes[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalImageUrl, setModalImageUrl] = useState<string>("");
   const token = useAppSelector((state) => state.user.user?.token);
 
   const handleCheckboxChange = (questionIndex: number, answer: any) => {
@@ -109,6 +111,17 @@ const QuizStart = () => {
       handleQuizSubmit(results);
     }
   };
+
+  const openModal = (url: any) => {
+    setModalImageUrl(url);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalImageUrl("");
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <main className="relative w-full bg-white">
@@ -124,7 +137,22 @@ const QuizStart = () => {
                 <h1 className="text-black text-base m-0 w-[70%]">{`${index + 1}. ${item.question}`}</h1>
                 <p className="text-black font-bold bg-[#CCE2FE] px-2 py-1 rounded-sm">{item.score + " ქულა"}</p>
               </div>
-              {item.url && <Image src={process.env.NEXT_PUBLIC_API_STORAGE + item.url} width="200" height="200" alt="back" />}
+              {item.url && <Image src={process.env.NEXT_PUBLIC_API_STORAGE + item.url} onClick={() => openModal(item.url)} className="cursor-pointer" width={200} height={200} alt="back" />}
+              {isModalOpen && (
+                <div className="fixed z-10 inset-0 overflow-y-auto flex justify-center items-center">
+                  <div className="absolute w-full h-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-md flex justify-center items-center">
+                    <div className="relative w-[70%] lg:w-[30%] mt-[20%] lg:mt-[50px]">
+                      <button onClick={closeModal} className="absolute top-2 right-2 text-gray-700 hover:text-gray-900 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                      <img src={process.env.NEXT_PUBLIC_API_STORAGE + modalImageUrl} alt="Image" className="w-full" />
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <ul className="mt-[25px]">
                 {item.is_open ? (
                   <input

@@ -9,10 +9,6 @@ import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
 import { POST_QUIZ } from "@/services/AllCourses";
 
-interface Props {
-  id: any;
-}
-
 interface AnswerState {
   questionIndex: number;
   answer: any;
@@ -22,6 +18,8 @@ const Quiz = () => {
   const router = useRouter();
   const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
   const [selectedAnswers, setSelectedAnswers] = useState<AnswerState[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalImageUrl, setModalImageUrl] = useState<string>("");
   const token = useAppSelector((state) => state.user.user?.token);
 
   const handleCheckboxChange = (questionIndex: number, answer: any) => {
@@ -61,7 +59,6 @@ const Quiz = () => {
     try {
       const result = await POST_QUIZ(token, requestData);
       router.push(`/watch/${params.id}/quiz/${lectureDetail.id}`);
-      console.log("Quiz submission successful!", result);
     } catch (error) {
       console.error("Error submitting quiz:", error);
     }
@@ -93,6 +90,17 @@ const Quiz = () => {
       }
     });
   };
+
+  const openModal = (url: any) => {
+    setModalImageUrl(url);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalImageUrl("");
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <main className="relative w-full bg-white">
@@ -115,8 +123,23 @@ const Quiz = () => {
                       <h1 className="text-black text-base m-0 w-[70%]">{`${index + 1}. ${ans.course_lecture_quizzes.question}`}</h1>
                       <p className="text-black font-bold bg-[#CCE2FE] px-2 py-1 rounded-sm h-[37px]"> {ans.correct_answer ? "1/1 ქულა" : "0/1 ქულა"} </p>
                     </div>
-                    {ans.course_lecture_quizzes.url && <Image src={process.env.NEXT_PUBLIC_API_STORAGE + ans.course_lecture_quizzes.url} width="200" height="200" alt="back" />}
-
+                    {ans.course_lecture_quizzes.url && (
+                      <Image src={process.env.NEXT_PUBLIC_API_STORAGE + ans.course_lecture_quizzes.url} onClick={() => openModal(ans.course_lecture_quizzes.url)} className="cursor-pointer" width={200} height={200} alt="back" />
+                    )}
+                    {isModalOpen && (
+                      <div className="fixed z-10 inset-0 overflow-y-auto flex justify-center items-center">
+                        <div className="absolute w-full h-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-md flex justify-center items-center">
+                          <div className="relative w-[70%]">
+                            <button onClick={closeModal} className="absolute top-2 right-2 text-gray-700 hover:text-gray-900 focus:outline-none">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                            <img src={process.env.NEXT_PUBLIC_API_STORAGE + modalImageUrl} alt="Image" className="w-full" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     <div className=" bg-[#F5FDF6] rounded-sm h-10 flex items-center pl-3 mt-3">
                       {ans.correct_answer ? (
                         <div className="flex gap-2">
@@ -150,7 +173,21 @@ const Quiz = () => {
                     <h1 className="text-black text-base m-0 w-[70%]">{`${questionIndex + 1}. ${item.question}`}</h1>
                     <p className="text-black font-bold bg-[#CCE2FE] px-2 py-1 rounded-sm">1 ქულა</p>
                   </div>
-                  {item.url && <Image src={process.env.NEXT_PUBLIC_API_STORAGE + item.url} width="200" height="200" alt="back" />}
+                  {item.url && <Image src={process.env.NEXT_PUBLIC_API_STORAGE + item.url} onClick={() => openModal(item.url)} className="cursor-pointer" width={200} height={200} alt="back" />}
+                  {isModalOpen && (
+                    <div className="fixed z-10 inset-0 overflow-y-auto flex justify-center items-center">
+                      <div className="absolute w-full h-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-md flex justify-center items-center">
+                        <div className="relative w-[70%]">
+                          <button onClick={closeModal} className="absolute top-2 right-2 text-gray-700 hover:text-gray-900 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                          <img src={process.env.NEXT_PUBLIC_API_STORAGE + modalImageUrl} alt="Image" className="w-full" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   <ul className="mt-[25px]">
                     {item.is_open ? (
                       <input
