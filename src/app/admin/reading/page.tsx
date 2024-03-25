@@ -57,6 +57,7 @@ const Page = () => {
   const searchParams = useSearchParams();
   const [readingsData, setReadingsData] = useState<ReadingData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const lectureId = searchParams.get("lectureId");
 
@@ -85,7 +86,7 @@ const Page = () => {
       <div className="flex gap-8 w-[100%]">
         <Navbar lectures={lectures} courseData={courseData} />
         <div className="flex justify-between w-[85%] mt-6">
-          <ReadingPage readingsData={readingsData} setReadingsData={setReadingsData} isLoading={isLoading} />
+          <ReadingPage readingsData={readingsData} setReadingsData={setReadingsData} isLoading={isLoading} loading={loading} setLoading={setLoading} />
         </div>
       </div>
     </>

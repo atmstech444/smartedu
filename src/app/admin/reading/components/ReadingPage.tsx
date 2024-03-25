@@ -12,9 +12,11 @@ type ReadingData = {
   url: string[];
   isLoading: any;
   pdf_file: any;
+  loading: any;
+  setLoading: any;
 };
 
-const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
+const ReadingPage = ({ readingsData, setReadingsData, isLoading, loading, setLoading }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const router = useRouter();
@@ -49,6 +51,7 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
 
   const handleDeleteReading = async (readingId: number) => {
     try {
+      setLoading(true);
       const response = await deleteReading(token, readingId);
       if (response.message === "Reading remove successfully") {
         setReadingsData((prevReadings: ReadingData[]) => prevReadings.filter((reading: ReadingData) => reading.id !== readingId));
@@ -69,6 +72,8 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -109,9 +114,13 @@ const ReadingPage = ({ readingsData, setReadingsData, isLoading }: any) => {
             )}
           </ul>
 
-          <button className="p-2 bg-red rounded-xl w-[200px] text-white " onClick={() => handleDeleteReading(reading.id)}>
-            წაშლა
-          </button>
+          {loading ? (
+            "იტვირთება..."
+          ) : (
+            <button className="p-2 bg-red rounded-xl w-[200px] text-white " onClick={() => handleDeleteReading(reading.id)}>
+              წაშლა
+            </button>
+          )}
         </div>
       ))}
     </div>
