@@ -42,6 +42,7 @@ const VideoUpload = () => {
   const [totalSizeUploaded, setTotalSizeUploaded] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [editingVideoId, setEditingVideoId] = useState<number | null>(null);
   const [newVideoTitle, setNewVideoTitle] = useState<string>("");
@@ -136,6 +137,7 @@ const VideoUpload = () => {
 
   const handleDeleteVideoFromData = async (idToDelete: any) => {
     try {
+      setLoading(true);
       const response = await deleteVideo(token, idToDelete);
       if (response.message === "video remove successfully") {
         const updatedVideosData = videosData.filter((video) => video.id !== idToDelete);
@@ -157,11 +159,14 @@ const VideoUpload = () => {
       }
     } catch (error) {
       console.error("Error deleting video:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const updateLecture = async (videoId: number, newVideoTitle: string) => {
     try {
+      setLoading(true);
       const response = await editVideoTitle(token, { title: newVideoTitle }, videoId);
       if (response.message === "Video title change successfully") {
         setVideosData((prevVideos) => prevVideos.map((video) => (video.id === videoId ? { ...video, title: newVideoTitle } : video)));
@@ -181,6 +186,8 @@ const VideoUpload = () => {
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -229,14 +236,18 @@ const VideoUpload = () => {
                     </div>
 
                     <div>
-                      <button
-                        onClick={() => {
-                          updateLecture(video.id, newVideoTitle);
-                          setEditingVideoId(null);
-                        }}
-                      >
-                        შენახვა
-                      </button>
+                      {loading ? (
+                        "იტვირთება..."
+                      ) : (
+                        <button
+                          onClick={() => {
+                            updateLecture(video.id, newVideoTitle);
+                            setEditingVideoId(null);
+                          }}
+                        >
+                          შენახვა
+                        </button>
+                      )}
                     </div>
 
                     <div className="flex gap-2 items-center">
@@ -286,9 +297,13 @@ const VideoUpload = () => {
                     <source src={`${API_ADMIN_STORAGE}${video.video}`} type="video/mp4" />
                   </video>
                 )}
-                <button className="text-white bg-[#2FA8FF] py-2 px-2 w-[150px] rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
-                  წაშლა
-                </button>
+                {loading ? (
+                  "იტვირთება..."
+                ) : (
+                  <button className="text-white bg-[#2FA8FF] py-2 px-2 w-[150px] rounded-lg" onClick={() => handleDeleteVideoFromData(video.id)}>
+                    წაშლა
+                  </button>
+                )}
               </div>
             ))}
           </div>
