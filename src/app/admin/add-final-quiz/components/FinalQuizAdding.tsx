@@ -32,6 +32,7 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const [sections, setSections] = useState<Section[]>([{ id: 1, question: "", answers: [] }]);
+  const [loading, setLoading] = useState(false);
   const handleAddContent = (id: number) => {
     setSections((prevSections) =>
       prevSections.map((section) =>
@@ -108,6 +109,7 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
 
   const handleCreateQuiz = async () => {
     try {
+      setLoading(true);
       const isValid = validateForm();
       if (!isValid) {
         return;
@@ -157,6 +159,8 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -313,9 +317,13 @@ const FinalQuizAdding = ({ courseId, courseData, lectures }: any) => {
 
       <div className="self-end mr-28 mb-6 ">
         <div className="w-full flex col-span-2">
-          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleCreateQuiz}>
-            შენახვა
-          </button>
+          {loading ? (
+            "იტვირთება..."
+          ) : (
+            <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleCreateQuiz}>
+              შენახვა
+            </button>
+          )}
         </div>
       </div>
     </main>
