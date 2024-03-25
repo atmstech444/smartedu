@@ -18,7 +18,6 @@ export async function POST_Purchase(data: POST_Purchase_Params, dispatch: any) {
 
   try {
     const response = await axios.post(API_PATH + "purchases/bog/create-order/" + data.course_id, null, config);
-    console.log(response.data);
     const paymentHref = response.data.links.redirect.href;
     window.location.href = paymentHref;
     // toast.success("კურსი ნაყიდია", {

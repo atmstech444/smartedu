@@ -12,7 +12,6 @@ const SeeCertificate = ({ courseData }: any) => {
   const deleteCertificate = async () => {
     try {
       const response = await deleteCertificat(token, courseData?.certificate?.id);
-      console.log(response);
       if (response.message === "Certificate deleted successfully") {
         Swal.fire({
           icon: "success",

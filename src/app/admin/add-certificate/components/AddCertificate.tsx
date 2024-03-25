@@ -31,7 +31,6 @@ const AddCertificate = ({ courseId }: any) => {
     formData.append("course_id", courseId);
     try {
       const response = await addCertificat(token, formData);
-      console.log(response);
       setData(response[0]);
       if (response.message === "Certificate added successfully") {
         Swal.fire({

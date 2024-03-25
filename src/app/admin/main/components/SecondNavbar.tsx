@@ -117,7 +117,6 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
   };
 
   const updateLecture = async (lectureId: number, newLectureName: string) => {
-    console.log(lectureId);
     try {
       const response = await editLectureName(token, { lecture_name: newLectureName }, lectureId);
       if (response.message === "Lecture updated successfully") {

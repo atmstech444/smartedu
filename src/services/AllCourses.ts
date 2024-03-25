@@ -88,7 +88,6 @@ export async function POST_QUIZ(token: any, data: any) {
 }
 
 export async function POST_FINAL_QUIZ(token: any, data: any) {
-  console.log(data);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

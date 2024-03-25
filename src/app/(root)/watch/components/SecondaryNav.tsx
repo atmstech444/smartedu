@@ -42,7 +42,6 @@ const SecondaryNav = ({ isDone }: Props) => {
   const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
 
-  console.log(lectureDetail);
   return (
     <>
       <div className="md:p-[24px] md:mt-0 md:w-[30%] lg:w-[30%] bg-white rounded-md md:h-full">

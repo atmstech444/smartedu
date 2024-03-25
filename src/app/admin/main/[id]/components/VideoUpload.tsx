@@ -121,7 +121,6 @@ const VideoUpload = () => {
       if (lectureId !== undefined) {
         setIsLoading(true);
         const response = await getAllVideos(token, lectureId);
-        console.log(response);
         setVideosData(response.lecture_videos);
       }
     } catch (error) {

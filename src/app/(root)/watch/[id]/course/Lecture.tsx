@@ -97,7 +97,7 @@ const Lecture = () => {
 
   const completedReading = lectureDetail.readings[0]?.user_made_readings?.[0]?.completed ?? 0;
   const quizResult = lectureDetail.mideterm_quiz_answer_percents[0]?.percent;
-  console.log(lectureDetail.videos.length);
+
   return (
     <main className="relative w-full flex items-center justify-center lg:block">
       {isMenuOpened && (

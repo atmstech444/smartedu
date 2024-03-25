@@ -45,7 +45,6 @@ const Reading = () => {
     try {
       const result = await POST_READING(token, data);
       fetchData();
-      console.log("submitted", result);
     } catch (error) {
       console.error("Error submitting quiz:", error);
     }

@@ -16,7 +16,6 @@ const ChunkedVideoUpload = () => {
 
     for (let i = 0; i < totalChunks; i++) {
       const start = i * chunkSize;
-      console.log(start);
       const end = Math.min(file.size, start + chunkSize);
       const chunk = file.slice(start, end);
 

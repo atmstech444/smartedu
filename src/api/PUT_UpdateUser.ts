@@ -45,8 +45,6 @@ export async function PUT_UpdateUser(data: PUT_UpdateUser_Params, user: User, di
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
     });
-    console.log(response.data.user);
-    console.log({ ...user, ...response.data.user });
     dispatch(setUser({ ...user, ...response.data.user }));
     return response.data;
   } catch (error: any) {

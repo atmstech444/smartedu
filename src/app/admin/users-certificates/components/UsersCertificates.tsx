@@ -63,7 +63,6 @@ const UsersCertificates = () => {
       try {
         const data = await getUsersCertificate(token);
         setDataSource(data);
-        console.log(data);
       } catch (error) {
         console.error(error);
       }
