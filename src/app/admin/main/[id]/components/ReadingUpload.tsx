@@ -6,6 +6,7 @@ import { addReading } from "../services/addReading";
 import { parseCookies } from "nookies";
 import { getReadings } from "../services/getReadings";
 import { useRouter } from "next/navigation";
+import { set } from "js-cookie";
 
 type ReadingData = {
   id: number;
@@ -39,6 +40,7 @@ const Reading = ({ lectures, courseData }: any) => {
   const [fileName, setFileName] = useState<string | null>(null);
   const [, setIsLoading] = useState(true);
   const [readingsData, setReadingsData] = useState<ReadingData[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleTyping = () => {
     setIsTyping(true);
@@ -84,6 +86,7 @@ const Reading = ({ lectures, courseData }: any) => {
     });
 
     try {
+      setLoading(true);
       const response = await addReading(token, formData, id);
       if (response.message === "reading add successfully") {
         Swal.fire({
@@ -104,6 +107,8 @@ const Reading = ({ lectures, courseData }: any) => {
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -204,9 +209,13 @@ const Reading = ({ lectures, courseData }: any) => {
             </div>
             <div className="col-span-1">
               <div className="w-full flex mt-[300px] col-span-2">
-                <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleCreateReading}>
-                  შენახვა
-                </button>
+                {loading ? (
+                  "იტვირთება..."
+                ) : (
+                  <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg" onClick={handleCreateReading}>
+                    შენახვა
+                  </button>
+                )}
               </div>
             </div>
           </div>
