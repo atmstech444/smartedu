@@ -14,6 +14,8 @@ const Course = () => {
   const [courses, setCourses] = useState<AllCourses[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openedIndex, setOpenedIndex] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const toggleVisibility = (index: any) => {
     setOpenedIndex((prevIndex) => (prevIndex === index ? null : index));
   };
@@ -23,6 +25,7 @@ const Course = () => {
   useEffect(() => {
     const fetchAllCourses = async () => {
       try {
+        setIsLoading(true);
         const data = await getAllCourses(token);
         setCourses(data.courses);
       } catch (error) {
@@ -32,10 +35,11 @@ const Course = () => {
       }
     };
     fetchAllCourses();
-  }, []);
+  }, [token]);
 
   const handleDeleteLecture = async (courseid: any) => {
     try {
+      setLoading(true);
       const response = await deleteCourse(token, courseid);
       if (response) {
         Swal.fire({
@@ -57,6 +61,8 @@ const Course = () => {
       setCourses(data.courses);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -78,7 +84,7 @@ const Course = () => {
         ) : courses?.length > 0 ? (
           courses.map((itm, index) => (
             <div className="col-span-1" key={itm.id}>
-              <CourseBox data={itm} handleDeleteLecture={handleDeleteLecture} isOpen={openedIndex === index} toggleVisibility={() => toggleVisibility(index)} />
+              <CourseBox data={itm} handleDeleteLecture={handleDeleteLecture} isOpen={openedIndex === index} toggleVisibility={() => toggleVisibility(index)} isLoading={loading} />
             </div>
           ))
         ) : (

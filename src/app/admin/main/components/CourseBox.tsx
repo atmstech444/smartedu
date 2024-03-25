@@ -12,9 +12,10 @@ interface Props {
   handleDeleteLecture: any;
   isOpen: boolean;
   toggleVisibility: (id: number) => void;
+  isLoading: any;
 }
 
-const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleVisibility }) => {
+const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleVisibility, isLoading }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const { cover_image, title, id } = data;
@@ -94,15 +95,19 @@ const CourseBox: React.FC<Props> = ({ data, handleDeleteLecture, isOpen, toggleV
             <h2>ნამდვილად გსურთ წაშალოთ კურსი</h2>
             <p>{data.title}</p>
             <div className="flex gap-4 mt-5">
-              <button
-                className="bg-dark rounded-mediumBorder py-3 px-8 text-white  transition-all ease-in-out delay-150 hover:opacity-75"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeleteLecture(data.id);
-                }}
-              >
-                დადასტურება
-              </button>
+              {isLoading ? (
+                "იტვირთება..."
+              ) : (
+                <button
+                  className="bg-dark rounded-mediumBorder py-3 px-8 text-white  transition-all ease-in-out delay-150 hover:opacity-75"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteLecture(data.id);
+                  }}
+                >
+                  დადასტურება
+                </button>
+              )}
 
               <button className="bg-transparent border border-dark rounded-mediumBorder py-3 px-10 text-dark  transition-all ease-in-out delay-150 hover:opacity-75" onClick={closeModal}>
                 უარყოფა
