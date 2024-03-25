@@ -8,6 +8,7 @@ import { getLectureAndDescriptions } from "../services/getLectureAndDescriptions
 import { deleteTitleAndDescription } from "../services/deleteTitleAndDescription";
 import { useSearchParams } from "next/navigation";
 import SecondLoadingSpinner from "@/components/LoadingSpinner";
+import { set } from "js-cookie";
 
 const LectureTitleAndDescription = () => {
   const cookies = parseCookies();
@@ -17,6 +18,7 @@ const LectureTitleAndDescription = () => {
   const [lectureDescription, setLectureDescription] = useState("");
   const [titleDescriptionData, setTitleDescriptionData] = useState<{ id: number; title: string; description: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
 
@@ -58,6 +60,7 @@ const LectureTitleAndDescription = () => {
     formData.append("description", lectureDescription);
 
     try {
+      setLoading(true);
       const response = await addlectureTitleAndDescription(token, formData, lectureId);
       if (response.message === "lecture contet create successfully") {
         setTitleDescriptionData(response.lecture_content);
@@ -78,6 +81,8 @@ const LectureTitleAndDescription = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,6 +91,7 @@ const LectureTitleAndDescription = () => {
 
     const { id } = titleDescriptionData;
     try {
+      setLoading(true);
       const response = await deleteTitleAndDescription(token, id);
       if (response.message === "lecture content delete successfully") {
         Swal.fire({
@@ -108,6 +114,8 @@ const LectureTitleAndDescription = () => {
       }
     } catch (error) {
       console.error("Error deleting video:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -169,9 +177,13 @@ const LectureTitleAndDescription = () => {
             {!isTypingTextarea && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
           </div>
 
-          <button className="text-white bg-red py-1 px-7 rounded-lg w-36" onClick={handleDeleteTitleAndDescription}>
-            წაშლა
-          </button>
+          {loading ? (
+            "იტვირთება..."
+          ) : (
+            <button className="text-white bg-red py-1 px-7 rounded-lg w-36" onClick={handleDeleteTitleAndDescription}>
+              წაშლა
+            </button>
+          )}
         </div>
       ) : (
         <div className="relative flex flex-col gap-4">
@@ -199,9 +211,13 @@ const LectureTitleAndDescription = () => {
             {!isTypingTextarea && <Image src="/assets/img/admin/pencil.png" className="absolute top-3 left-2" alt={""} width={12} height={12} />}
           </div>
 
-          <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-36" onClick={handleSaveLecture}>
-            შენახვა
-          </button>
+          {loading ? (
+            "იტვირთება..."
+          ) : (
+            <button className="text-white bg-[#2FA8FF] py-1 px-7 rounded-lg w-36" onClick={handleSaveLecture}>
+              შენახვა
+            </button>
+          )}
         </div>
       )}
     </>
