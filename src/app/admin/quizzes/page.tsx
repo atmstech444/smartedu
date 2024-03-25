@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, use, useEffect, useState } from "react";
 import Navbar from "../add-lecture/components/Navbar";
 import QuizPage from "./components/QuizPage";
 import { getQuiz } from "./services/getQuiz";
@@ -50,17 +50,13 @@ const Page = () => {
   const cookies = parseCookies();
   const token = cookies.authToken;
   const { lectures, courseData } = useQueryParams();
-  const [, setActiveTab] = useState("");
-  const [, setRefreshTabs] = useState(false);
   const [quizData, setQuizData] = useState<any>();
   const [swalMessage, setSwalMessage] = useState<string>("");
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const lectureId = searchParams.get("lectureId");
-  const handleRefreshTabs = () => {
-    setRefreshTabs(true);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,6 +76,7 @@ const Page = () => {
 
   const handleDeleteQuiz = async () => {
     try {
+      setLoading(true);
       const response = await deleteQuiz(token, lectureId);
       setQuizData(response.quizzes);
       if (response.message === "All Quiz remove successfully") {
@@ -101,11 +98,14 @@ const Page = () => {
       }
     } catch (error) {
       console.error("Error deleting quiz:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDeleteQuizById = async (id: number) => {
     try {
+      setLoading(true);
       const response = await deleteQuizById(token, id, lectureId);
       setQuizData(response.quizzes);
       if (response.message === "Quiz remove successfully") {
@@ -127,6 +127,8 @@ const Page = () => {
       }
     } catch (error) {
       console.error("Error deleting quiz:", error);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -135,7 +137,7 @@ const Page = () => {
       <div className="flex gap-8 w-[100%]">
         <Navbar lectures={lectures} courseData={courseData} />
         <div className="flex justify-between w-[85%] mt-6">
-          <QuizPage quizzes={quizData} handleDeleteQuiz={handleDeleteQuiz} swalMessage={swalMessage} isLoading={isLoading} handleDeleteQuizById={handleDeleteQuizById} />
+          <QuizPage quizzes={quizData} handleDeleteQuiz={handleDeleteQuiz} swalMessage={swalMessage} isLoading={isLoading} handleDeleteQuizById={handleDeleteQuizById} loading={loading} />
         </div>
       </div>
     </>
