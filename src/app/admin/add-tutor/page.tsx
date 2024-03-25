@@ -13,6 +13,7 @@ import { addTutor } from "./services.ts/addTutor";
 import { deleteTutor } from "./services.ts/deleteTutor";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { redirect } from "next/navigation";
+import { set } from "js-cookie";
 
 type Lecturer = {
   id: any;
@@ -26,14 +27,18 @@ const AddTutor = () => {
   const token = cookies.authToken;
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [data, setData] = useState<Lecturer[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const getData = useCallback(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await getLecturers(token);
         setData(response.lecturers);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -66,6 +71,7 @@ const AddTutor = () => {
       }
 
       try {
+        setLoading(true);
         const response = await addTutor(token, formData);
         if (response.success) {
           setData((prevData) => [...prevData, response.createdTutor]);
@@ -87,6 +93,8 @@ const AddTutor = () => {
         }
       } catch (error) {
         console.error("An unexpected error occurred", error);
+      } finally {
+        setLoading(false);
       }
     } else {
       console.error("Invalid full name format");
@@ -95,6 +103,7 @@ const AddTutor = () => {
 
   const handleDeleteTutor = async (deletedTutor: any) => {
     try {
+      setLoading(true);
       const response = await deleteTutor(token, deletedTutor.id);
       if (response.message) {
         const updatedData = data.filter((tutor) => tutor.id !== deletedTutor.id);
@@ -116,6 +125,8 @@ const AddTutor = () => {
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,7 +148,7 @@ const AddTutor = () => {
 
               <FileUpload onFileChange={(file: React.SetStateAction<File | null>) => setSelectedImage(file)} onDeletePhoto={() => setSelectedImage(null)} selectedImage={selectedImage} />
 
-              <TutorForm onHandleCreateTutor={handleCreateTutor} />
+              <TutorForm onHandleCreateTutor={handleCreateTutor} loading={loading} />
             </div>
 
             <div className="mt-6 mr-44 flex flex-col gap-5">{data ? data?.map((lecture, index) => <LecturerItem key={index} lecture={lecture} onDeleteClick={handleDeleteTutor} />) : <LoadingSpinner />}</div>
