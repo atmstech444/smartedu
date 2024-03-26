@@ -2,20 +2,17 @@ import React from "react";
 
 interface tutorForm {
   onHandleCreateTutor: () => void;
+  loading: any;
 }
 
-const TutorForm = ({ onHandleCreateTutor }: tutorForm) => {
+const TutorForm = ({ onHandleCreateTutor, loading }: tutorForm) => {
   return (
     <div className="flex flex-col gap-5">
       <div className="w-[340px] flex flex-col gap-2 mt-3">
         <label htmlFor="">
           <p>სახელი / გვარი</p>
         </label>
-        <input
-          id="name"
-          type="text"
-          className="rounded-borderHalf bg-[#F5F5F5] w-full h-12 outline-none pl-2"
-        />
+        <input id="name" type="text" className="rounded-borderHalf bg-[#F5F5F5] w-full h-12 outline-none pl-2" />
       </div>
       {/* <div className="w-[340px] flex flex-col gap-2">
         <label htmlFor="">
@@ -28,12 +25,14 @@ const TutorForm = ({ onHandleCreateTutor }: tutorForm) => {
           className="rounded-borderHalf bg-[#F5F5F5] p-2 outline-none"
         ></textarea>
       </div> */}
-      <button
-        className="mt-5 mb-28 py-3 px-12 outline-none bg-dark rounded-[32px] text-white self-start"
-        onClick={onHandleCreateTutor}
-      >
-        შენახვა
-      </button>
+
+      {loading ? (
+        "იტვირთება..."
+      ) : (
+        <button className="mt-5 mb-28 py-3 px-12 outline-none bg-dark rounded-[32px] text-white self-start" onClick={onHandleCreateTutor}>
+          შენახვა
+        </button>
+      )}
     </div>
   );
 };

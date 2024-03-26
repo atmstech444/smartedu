@@ -10,9 +10,10 @@ interface QuizPageProps {
   swalMessage: string;
   isLoading: any;
   handleDeleteQuizById: any;
+  loading: any;
 }
 
-const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, isLoading, handleDeleteQuizById }) => {
+const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, isLoading, handleDeleteQuizById, loading }) => {
   const router = useRouter();
 
   if (isLoading) {
@@ -58,15 +59,23 @@ const QuizPage: React.FC<QuizPageProps> = ({ quizzes, handleDeleteQuiz, isLoadin
                   ))}
                 </div>
               </section>
-              <button className="text-white bg-red py-1 px-7 rounded-lg" onClick={() => handleDeleteQuizById(quiz.id)}>
-                წაშალე
-              </button>
+              {loading ? (
+                "იტვირთება..."
+              ) : (
+                <button className="text-white bg-red py-1 px-7 rounded-lg" onClick={() => handleDeleteQuizById(quiz.id)}>
+                  წაშალე
+                </button>
+              )}
             </div>
           ))}
           <div>
-            <button className="text-white bg-red py-1 px-7 rounded-lg w-[200px]" onClick={handleDeleteQuiz}>
-              წაშალე ქვიზი
-            </button>
+            {loading ? (
+              "იტვირთება..."
+            ) : (
+              <button className="text-white bg-red py-1 px-7 rounded-lg w-[200px]" onClick={handleDeleteQuiz}>
+                წაშალე ქვიზი
+              </button>
+            )}
           </div>
         </>
       )}

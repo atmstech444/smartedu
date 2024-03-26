@@ -2,9 +2,6 @@
 import SecondNavbar from "../components/SecondNavbar";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import QuizUpload from "./components/QuizUpload";
-import ReadingUpload from "./components/ReadingUpload";
-import VideoUpload from "./components/VideoUpload";
 
 const Page = () => {
   const { id } = useParams();

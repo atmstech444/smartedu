@@ -14,16 +14,17 @@ interface EditFullCourseProps {
   handleFileChange: (selectedFile: File) => void;
   handleIntroChange: (selectedFile: File) => void;
   handleEdit: () => void;
+  loading: boolean;
 }
 
-const EditFullCourse: React.FC<EditFullCourseProps> = ({ data, categories, selectedCategoryId, handleCheckboxChange, lectures, selectedLecturerId, handleLecturerChange, handleFileChange, handleEdit, handleIntroChange }) => {
+const EditFullCourse: React.FC<EditFullCourseProps> = ({ data, categories, selectedCategoryId, handleCheckboxChange, lectures, selectedLecturerId, handleLecturerChange, handleFileChange, handleEdit, handleIntroChange, loading }) => {
   return (
     <div className="flex justify-between w-full">
       <CourseDescription data={data} onFileChange={handleFileChange} />
       <div className="flex flex-col items-end">
         <CourseCategories categories={categories} selectedCategoryId={selectedCategoryId} handleCheckboxChange={handleCheckboxChange} />
         <CourseDetailsComponent data={data} lectures={lectures} selectedLecturerId={selectedLecturerId} handleLecturerChange={handleLecturerChange} handleFileChange={handleIntroChange} />
-        <EditButton handleEdit={handleEdit} />
+        <EditButton handleEdit={handleEdit} loading={loading} />
       </div>
     </div>
   );

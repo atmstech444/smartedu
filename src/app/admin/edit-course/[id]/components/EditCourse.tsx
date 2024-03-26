@@ -28,6 +28,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(initialSelectedCategoryId);
   const initialSelectedLecturerId = data?.lecturer?.id ?? null;
   const [selectedLecturerId, setSelectedLecturerId] = useState<number | null>(initialSelectedLecturerId);
+  const [loading, setLoading] = useState(false);
   useLayoutEffect(() => {
     if (!token) {
       redirect("/");
@@ -36,15 +37,15 @@ const Editcourse: FC<pageProps> = ({ params }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch course by ID
+        // course by ID
         const courseResponse = await getCourseById(token, params.id);
         setData(courseResponse.course);
         setSelectedCategoryId(courseResponse.course.category.id);
         setSelectedLecturerId(courseResponse.course.lecturer_id);
-        // Fetch categories
+        // categories
         const categoriesResponse = await getCategories(token);
         setCategories(categoriesResponse.course_categories);
-        // Fetch lectures
+        // lectures
         const lecturesResponse = await getLecturers(token);
         setLectures(lecturesResponse.lecturers);
       } catch (error) {
@@ -87,6 +88,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
       formData.append("intro", selectedIntro);
     }
     try {
+      setLoading(true);
       const response = await editCourseById(token, params.id, formData);
       if (response.message) {
         Swal.fire({
@@ -106,6 +108,8 @@ const Editcourse: FC<pageProps> = ({ params }) => {
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
   const handleFileChange = (selectedFile: File) => {
@@ -133,6 +137,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
               handleFileChange={handleFileChange}
               handleIntroChange={handleIntroChange}
               handleEdit={handleEdit}
+              loading={loading}
             />
           </div>
         </div>

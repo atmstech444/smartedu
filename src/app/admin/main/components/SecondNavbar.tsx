@@ -33,6 +33,7 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
 
   const [editingLectureId, setEditingLectureId] = useState<number | null>(null);
   const [newLectureName, setNewLectureName] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (courseData) {
@@ -52,6 +53,7 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
     });
 
     try {
+      setLoading(true);
       const response = await addLecture(token, formData, id);
       if (response.success) {
         const newLectures = response.lectures;
@@ -73,11 +75,14 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDeleteLecture = async (lectureId: number) => {
     try {
+      setLoading(true);
       const response = await deleteLecture(token, lectureId);
       if (response.message) {
         setLectures((prevLectures) => prevLectures.filter((lecture) => lecture.id !== lectureId));
@@ -97,6 +102,8 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -118,6 +125,7 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
 
   const updateLecture = async (lectureId: number, newLectureName: string) => {
     try {
+      setLoading(true);
       const response = await editLectureName(token, { lecture_name: newLectureName }, lectureId);
       if (response.message === "Lecture updated successfully") {
         setLectures((prevLectures) =>
@@ -147,6 +155,8 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
       }
     } catch (error) {
       console.error("An unexpected error occurred", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -225,8 +235,7 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
                     }
                   }}
                 />
-
-                <Image src={"/assets/img/admin/closeIcon.png"} width={15} height={15} alt={""} className="cursor-pointer" onClick={() => handleDeleteLecture(lecture.id)} />
+                {editingLectureId === lecture.id ? loading ? "იტვირთება..." : "" : <Image src={"/assets/img/admin/closeIcon.png"} width={15} height={15} alt={""} className="cursor-pointer" onClick={() => handleDeleteLecture(lecture.id)} />}
               </div>
             )}
           </div>
@@ -240,9 +249,13 @@ const SecondNavbar = ({ courseData }: { courseData: any; lectureNames: LectureNa
         ))}
         <Image src="/assets/img/admin/plusicon.png" alt={""} width={20} height={20} className="cursor-pointer" onClick={handleImageClick} />
         <div>
-          <button onClick={handleCreateLecture} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-4 py-2">
-            შენახვა
-          </button>
+          {loading ? (
+            "იტვირთება..."
+          ) : (
+            <button onClick={handleCreateLecture} className="bg-mainBlue rounded-faqBordeR text-base mt-2 text-center text-white hover:opacity-75 transition-all ease-in-out px-4 py-2">
+              შენახვა
+            </button>
+          )}
         </div>
         <button className="bg-mainBlue rounded-faqBordeR text-base mt-20 text-start text-white hover:opacity-75 transition-all ease-in-out px-3 py-2" onClick={handleAddFinalQuiz}>
           დაამატე საბოლოო ქვიზი
