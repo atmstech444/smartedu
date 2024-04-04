@@ -8,12 +8,17 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 const AddCertificate = ({ courseId }: any) => {
-  const router = useRouter();
   const cookies = parseCookies();
   const token = cookies.authToken;
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [, setData] = useState<any>(null);
-
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   const handleFileUpload = (file: File | undefined) => {
     if (file) {
       setUploadedImage(file);
@@ -25,13 +30,6 @@ const AddCertificate = ({ courseId }: any) => {
   };
 
   const addCertificate = async () => {
-    const router = useRouter();
-    useEffect(() => {
-      const authToken = Cookies.get('authToken');
-      if (!authToken) {
-        router.replace('/admin/');
-      }
-    }, [router]);
     const formData = new FormData();
     if (uploadedImage instanceof File) {
       formData.append("certificate_image", uploadedImage);
