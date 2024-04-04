@@ -4,11 +4,12 @@ import Navbar from "../add-lecture/components/Navbar";
 import QuizPage from "./components/QuizPage";
 import { getQuiz } from "./services/getQuiz";
 import { parseCookies } from "nookies";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { deleteQuiz } from "./services/deleteQuiz";
 import Swal from "sweetalert2";
 import Header from "@/components/Header";
 import { deleteQuizById } from "./services/deleteQuizById";
+import Cookies from "js-cookie";
 
 export interface Quiz {
   answer: string[];
@@ -27,6 +28,14 @@ const useQueryParams = () => {
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [courseData, setCourseData] = useState<Quiz[] | null>(null);
 
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
+  
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const lecturesParam = searchParams.get("lectures");

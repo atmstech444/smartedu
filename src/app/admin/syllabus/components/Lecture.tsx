@@ -7,7 +7,7 @@ import PenIcon from "@/public/assets/icons/PenIcon.svg";
 import BlackPenIcon from "@/public/assets/icons/BlackPenIcon.svg";
 import BlackTrashIcon from "@/public/assets/icons/BlackTrashIcon.svg";
 import PlusIcon from "@/public/assets/icons/plus.png";
-import { addNewDescription, changeDescription, deleteDescription, deleteLecture } from "@/services/syllabus";
+import { addNewDescription, changeDescription, changeSyllabusTitle, deleteDescription, deleteLecture } from "@/services/syllabus";
 import Swal from "sweetalert2";
 
 interface DescriptionCountObject {
@@ -49,6 +49,7 @@ const Lecture = ({ id, lecture, removeSyllabus }: { id: number; lecture: Syllabu
   };
 
   const submitTitleChange = async () => {
+    await changeSyllabusTitle(id, formData.title);
     setEditTitle(false);
   };
 

@@ -8,6 +8,8 @@ import Header from "@/components/Header";
 import { getAllCourses } from "../main/services/getCourses";
 import { parseCookies } from "nookies";
 import Navbar from "./components/Navbar";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface Lecture {
   id: any;
@@ -19,6 +21,14 @@ const useQueryParams = () => {
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [courseData, setCourseData] = useState<any | null>(null);
 
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
+  
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("lectureId");

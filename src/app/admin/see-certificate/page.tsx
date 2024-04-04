@@ -3,6 +3,8 @@ import React, { Suspense, useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Navbar from "../add-lecture/components/Navbar";
 import SeeCertificate from "./components/SeeCertificate";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface Lecture {
   id: any;
@@ -13,7 +15,13 @@ const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [courseData, setCourseData] = useState<any | null>(null);
-
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("lectureId");

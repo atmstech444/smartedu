@@ -69,7 +69,7 @@ const UsersIdContent = () => {
   useLayoutEffect(() => {
     const cookies = parseCookies();
     if (!cookies.authToken) {
-      redirect("/");
+      redirect("/admin");
     }
   }, []);
 

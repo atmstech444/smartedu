@@ -8,6 +8,8 @@ import { deleteQuiz } from "./services/deleteQuiz";
 import Swal from "sweetalert2";
 import Header from "@/components/Header";
 import { deleteQuizById } from "./services/deleteQuizById";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export interface Quiz {
   answer: string[];
@@ -28,6 +30,14 @@ const useQueryParams = () => {
   const [courseData, setCourseData] = useState<Quiz[] | null>(null);
   const [courseId, setCourseId] = useState<string | undefined | null>(undefined);
 
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
+  
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const lecturesParam = searchParams.get("lectures");

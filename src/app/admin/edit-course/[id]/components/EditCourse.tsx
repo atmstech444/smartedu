@@ -10,7 +10,8 @@ import { getLecturers } from "@/app/admin/add-course/services/getLecturers";
 import Swal from "sweetalert2";
 import { editCourseById } from "../../services/editCourseById";
 import EditFullCourse from "./EditFullCourse";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 interface pageProps {
   params: { id: number };
 }
@@ -20,7 +21,13 @@ const Editcourse: FC<pageProps> = ({ params }) => {
   const [categories, setCategories] = useState<any[]>([]);
   const [lectures, setLectures] = useState<any[]>([]);
   const [data, setData] = useState<any>([]);
-
+ const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [selectedIntro, setSelectedIntro] = useState<File | null>(null);
 
@@ -31,7 +38,7 @@ const Editcourse: FC<pageProps> = ({ params }) => {
   const [loading, setLoading] = useState(false);
   useLayoutEffect(() => {
     if (!token) {
-      redirect("/");
+      redirect("/admin");
     }
   }, [token]);
   useEffect(() => {

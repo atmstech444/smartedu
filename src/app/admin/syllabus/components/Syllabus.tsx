@@ -8,6 +8,8 @@ import { syllabusData } from "../[id]/types";
 import Lecture from "../components/Lecture";
 import Swal from "sweetalert2";
 import { Syllabus } from "../[id]/page";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface PageProps {
   params: { id: string };
@@ -18,7 +20,13 @@ const SyllabusContent = ({ params }: PageProps) => {
   const [formCount, setFormCount] = useState<[] | syllabusData[]>([]);
 
   const { id } = params;
-
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   useEffect(() => {
     const fetchSyllabus = async () => {
       const data = await getSyllabus(id as string);
@@ -40,7 +48,7 @@ const SyllabusContent = ({ params }: PageProps) => {
       return;
     }
     const response = await postSyllabus(id as string, filteredArray);
-
+    console.log(response)
     if (emptyObjectTitle.length > 0) {
       setFormCount(emptyObjectTitle);
     } else {

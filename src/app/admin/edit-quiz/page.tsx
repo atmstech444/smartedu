@@ -2,10 +2,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Navbar from "../add-lecture/components/Navbar";
 import { parseCookies } from "nookies";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import EditQuiz from "./components/EditQuiz";
 import { getQuiz } from "../quizzes/services/getQuiz";
 import Header from "@/components/Header";
+import Cookies from "js-cookie";
 
 export interface Quiz {
   answer: string[];
@@ -24,7 +25,13 @@ const useQueryParams = () => {
   const [lectureId, setLectureId] = useState<string | undefined | null>(undefined);
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [courseData, setCourseData] = useState<any | null>(null);
-
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("lectureId");

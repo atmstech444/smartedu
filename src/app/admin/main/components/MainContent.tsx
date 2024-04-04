@@ -45,7 +45,7 @@ const MainContent: FC<pageProps> = ({ params }) => {
 
   useLayoutEffect(() => {
     if (!token) {
-      redirect("/");
+      redirect("/admin");
     }
   }, [token]);
 

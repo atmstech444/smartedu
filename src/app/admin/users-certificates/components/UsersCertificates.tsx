@@ -5,6 +5,8 @@ import { parseCookies } from "nookies";
 import { getUsersCertificate } from "../services/getUsersCertificates";
 import { exportToExcel } from "../../users/[id]/components/exportToExcel";
 import { SearchOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface UserData {
   user_name: string;
@@ -57,7 +59,13 @@ const UsersCertificates = () => {
   const handleSearch = (e: any) => {
     setSearchText(e.target.value);
   };
-
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {

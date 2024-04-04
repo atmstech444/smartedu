@@ -12,8 +12,9 @@ import { getLecturers } from "../add-course/services/getLecturers";
 import { addTutor } from "./services.ts/addTutor";
 import { deleteTutor } from "./services.ts/deleteTutor";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { set } from "js-cookie";
+import Cookies from "js-cookie";
 
 type Lecturer = {
   id: any;
@@ -29,6 +30,14 @@ const AddTutor = () => {
   const [data, setData] = useState<Lecturer[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
+  
   const getData = useCallback(() => {
     const fetchData = async () => {
       try {
@@ -46,7 +55,7 @@ const AddTutor = () => {
 
   useLayoutEffect(() => {
     if (!token) {
-      redirect("/");
+      redirect("/admin");
     }
   }, [token]);
 

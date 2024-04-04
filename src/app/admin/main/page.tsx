@@ -1,9 +1,10 @@
 "use client";
 import Course from "@/components/Course";
 import Navbar from "@/components/Navbar";
-import { redirect } from "next/navigation";
+import Cookies from "js-cookie";
+import { redirect, useRouter } from "next/navigation";
 import { parseCookies } from "nookies";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 const Page = () => {
   const cookies = parseCookies();
@@ -13,6 +14,13 @@ const Page = () => {
       redirect("/admin");
     }
   }, [token]);
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   return (
     <main className="w-[85%] flex gap-8">
       <Navbar />

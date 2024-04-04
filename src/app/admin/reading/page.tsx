@@ -1,11 +1,12 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { parseCookies } from "nookies";
 import React, { Suspense, useEffect, useState } from "react";
 import Navbar from "../add-lecture/components/Navbar";
 import Header from "@/components/Header";
 import { getReadings } from "../main/[id]/services/getReadings";
 import ReadingPage from "./components/ReadingPage";
+import Cookies from "js-cookie";
 
 export interface Quiz {
   answer: string[];
@@ -30,7 +31,13 @@ type ReadingData = {
 const useQueryParams = () => {
   const [lectures, setLectures] = useState<Lecture[]>([]);
   const [courseData, setCourseData] = useState<Quiz[] | null>(null);
-
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const lecturesParam = searchParams.get("lectures");

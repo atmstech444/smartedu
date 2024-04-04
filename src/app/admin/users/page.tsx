@@ -12,6 +12,7 @@ import { getAllUsers } from "./services/getAllUsers";
 import download from "@/public/assets/icons/Received.svg";
 import date from "@/public/assets/icons/date.svg";
 import { exportToExcel } from "./components/downloadDataAsExcel";
+import Cookies from "js-cookie";
 
 export interface UserProps {
   id: number;
@@ -30,10 +31,15 @@ const Users = () => {
   const router = useRouter();
   useLayoutEffect(() => {
     if (!token) {
-      redirect("/");
+      redirect("/admin");
     }
   }, [token]);
-
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   const startDateRef = useRef<HTMLInputElement>(null);
   const endDateRef = useRef<HTMLInputElement>(null);
 

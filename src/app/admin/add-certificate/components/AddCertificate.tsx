@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { parseCookies } from "nookies";
 import { addCertificat } from "../services/addCertificate";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const AddCertificate = ({ courseId }: any) => {
   const router = useRouter();
@@ -24,6 +25,13 @@ const AddCertificate = ({ courseId }: any) => {
   };
 
   const addCertificate = async () => {
+    const router = useRouter();
+    useEffect(() => {
+      const authToken = Cookies.get('authToken');
+      if (!authToken) {
+        router.replace('/admin/');
+      }
+    }, [router]);
     const formData = new FormData();
     if (uploadedImage instanceof File) {
       formData.append("certificate_image", uploadedImage);

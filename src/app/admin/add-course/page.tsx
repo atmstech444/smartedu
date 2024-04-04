@@ -13,6 +13,7 @@ import ImageUpload from "./components/ImageUpload";
 import CourseDetails from "./components/CourseDetails";
 import { CourseTitleInput } from "./components/CourseTitle";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import Cookies from "js-cookie";
 
 const AddCourse = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const AddCourse = () => {
   const token = cookies.authToken;
   useLayoutEffect(() => {
     if (!token) {
-      redirect("/");
+      redirect("/admin");
     }
   }, [token]);
   useEffect(() => {
@@ -145,6 +146,12 @@ const AddCourse = () => {
       hideLoadingSpinner();
     }
   };
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
   return (
     <div>
       <Header />

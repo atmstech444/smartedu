@@ -18,6 +18,7 @@ interface PageProps {
 }
 
 const page = ({ params }: PageProps) => {
+  
   return <Syllabus params={params} />;
 };
 

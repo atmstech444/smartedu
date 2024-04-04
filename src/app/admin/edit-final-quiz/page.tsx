@@ -5,6 +5,8 @@ import { parseCookies } from "nookies";
 import EditQuiz from "./components/EditQuiz";
 import Header from "@/components/Header";
 import { getFinalQuiz } from "./services/getFinalQuiz";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export interface Quiz {
   answer: string[];
@@ -26,6 +28,14 @@ const useQueryParams = () => {
   const [courseData, setCourseData] = useState<any | null>(null);
   const [courseId, setCourseId] = useState<string | undefined | null>(undefined);
 
+  const router = useRouter();
+  useEffect(() => {
+    const authToken = Cookies.get('authToken');
+    if (!authToken) {
+      router.replace('/admin/');
+    }
+  }, [router]);
+  
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get("lectureId");
