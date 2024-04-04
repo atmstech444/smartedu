@@ -13,7 +13,7 @@ import { useState } from "react";
 
 // Define the Page component
 const Page = () => {
-  // Initialize useRouter hook
+  const [errorText, setErrorText] = useState<string>('')
   const router = useRouter();
 
   // Define yup schema for form validation
@@ -51,8 +51,10 @@ const Page = () => {
         router.push("/admin/main");
       } else {
         console.error("Token not found in the response");
+        setErrorText("მეილი ან პაროლი არასწორია")
       }
     } catch (error) {
+      console.log(123)
       console.error("Error during login:", error);
     } finally {
       setLoading(false); // Set loading state to false when request completes (success or error)
@@ -64,9 +66,11 @@ const Page = () => {
     <>
       <FormProvider {...methods}>
         <form className="bg-lightGray h-screen flex items-center justify-center" onSubmit={handleSubmit(onSubmit)}>
-          <div className="w-[486px] h-[520px] flex flex-col items-center bg-white rounded-[8px] pt-12">
+          <div className="w-[486px] h-[570px] flex flex-col items-center bg-white rounded-[8px] pt-12">
             <Image src={logo} alt="logo" className="w-1/2 h-auto" />
             <p className="text-xl tablet:text-2xl font-semibold mt-6">Smartedu ადმინ პანელი</p>
+            <p className=" text-red text-2xl font-bold">{errorText}</p>
+
             <div className="w-full px-7 flex flex-col gap-1">
               <Input label="ელ-ფოსტა" placeholder="ელ-ფოსტა" name="email" error={errors.email?.message} id="email" />
               <PasswordInput label="პაროლი" name="password" placeholder="პაროლი" error={errors.password?.message} id="password" />
