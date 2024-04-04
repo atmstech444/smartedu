@@ -38,7 +38,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData, isLoading
   const [checkedAnswers, setCheckedAnswers] = useState<CheckedAnswers>({});
   const [editingQuizId, setEditingQuizId] = useState<number | null>(null);
   const [newAnswer, setNewAnswer] = useState<string>("");
-  const [, setEditedQuestion] = useState<string>("");
+  const [editedQuestion, setEditedQuestion] = useState<string>("");
   const [editedAnswers, setEditedAnswers] = useState<{ [quizId: number]: string[] }>({});
   const [, setIsCancelled] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<{ [quizId: number]: File | null }>({});
@@ -81,6 +81,10 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData, isLoading
 
   const toggleEditing = (quizId: number) => {
     setEditingQuizId(quizId === editingQuizId ? null : quizId);
+    if (quizId !== editingQuizId) {
+      const editedQuestion = quizzes?.find((quiz) => quiz.id === quizId)?.question || "";
+      setEditedQuestion(editedQuestion);
+    }
   };
 
   const handleScoreChange = (quizId: number, value: string) => {
@@ -109,7 +113,7 @@ const EditQuiz = ({ quizzes, onDeleteAnswer, onAddAnswer, setQuizData, isLoading
       const updatedScore = newScore === "" ? oldScore : parseInt(newScore);
 
       const updatedQuizData: QuizData = {
-        question: currentQuiz?.question || "",
+        question: editedQuestion,
         answer: editedAnswers[quizId].slice(0, currentQuiz?.answer.length || 0),
         correct_answer: checkedIndices.map((index) => currentQuiz?.answer[index] || ""),
         url: uploadedFiles[quizId] === null ? "" : uploadedFiles[quizId],
